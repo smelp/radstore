@@ -7,7 +7,7 @@ gem 'rails', '3.2.2'
 
 gem 'json'
 gem 'bcrypt-ruby', '3.0.1'
-gem 'bootstrap-sass', '2.0.0'
+gem "less-rails-bootstrap"
 gem 'haml'
 
 # Gems used only for assets and not required

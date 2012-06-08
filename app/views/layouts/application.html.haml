@@ -1,0 +1,23 @@
+!!! 5
+%html
+  %head
+    %title User Tutorial
+    = stylesheet_link_tag 'application', :media => 'all'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+    
+  %body
+    %header{ class:'navbar navbar-fixed-top' }
+      %div{class: 'navbar-inner'}
+        %div.container
+          
+          %nav
+            = link_to "sample app", '#', id: "logo"
+            %ul{class:'nav pull-right'}
+              %li= link_to "Home",    '#'
+              %li= link_to "Info",    '#'
+              %li= link_to "Sign in",    '#' 
+              
+    %div.container
+      = yield
+    
