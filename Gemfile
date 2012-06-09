@@ -37,7 +37,7 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'ruby-debug'
+#gem 'ruby-debug19'
 
 group :production do
   gem 'pg', '0.12.2'
@@ -47,4 +47,9 @@ group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails', '2.10.0'
   gem 'annotate', :git => 'git://github.com/jeremyolliver/annotate_models.git', :branch => 'rake_compatibility'
+end
+
+group :test do
+  gem 'capybara', '1.1.2'
+  gem 'factory_girl_rails', '1.4.0'
 end

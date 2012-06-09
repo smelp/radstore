@@ -1,0 +1,7 @@
+provide(:title, 'Contact')
+%div{class: 'center hero-unit'}
+  %h1 Contact
+  
+  %h2 This is the home page for the
+  
+  =link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" 
