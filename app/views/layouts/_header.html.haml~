@@ -1,11 +1,22 @@
 %header{ class:'navbar navbar-fixed-top' }
   %div{class: 'navbar-inner'}
     %div.container
-          
+      = link_to "sample app", root_path, id: "logo"    
       %nav
-        = link_to "sample app", '#', id: "logo"
         %ul{class:'nav pull-right'}
           %li= link_to "Home",    root_path
-          %li= link_to "",    "#"
-          %li= link_to "Sign in",    "#" 
-    
+          %li= link_to "Help",    help_path
+          = if signed_in?
+            %li= link_to "Users",    "#" 
+            %li#fat-menu.dropdown 
+              %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} 
+              Account %b.caret 
+              
+              %ul.dropdown-menu
+                = link_to "Profile", current_user
+                = link_to "Settings", '#'
+                %li.divider
+                %li= link_to "Sign out", signout_path, method: "delete"
+          - else
+            %li= link_to "Sign in", signin_path
+              
