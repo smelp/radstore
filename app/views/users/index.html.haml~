@@ -1,3 +1,9 @@
-%h1 Users
-%p Find me in app/views/users/index.html.haml
-= link_to "Sign up now!", '#', class: "btn btn-large btn-primary"
+= provide(:title, 'All users')
+%h1 All users
+
+= will_paginate
+
+%ul.users
+  %li= render @users 
+
+= will_paginate

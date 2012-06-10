@@ -9,11 +9,10 @@
           = if signed_in?
             %li= link_to "Users",    "#" 
             %li#fat-menu.dropdown 
-              %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} 
-              Account %b.caret 
-              
+              %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} Account<b class="caret"></b> 
               %ul.dropdown-menu
                 = link_to "Profile", current_user
+                = link_to "Settings", edit_user_path(current_user)
                 = link_to "Settings", '#'
                 %li.divider
                 %li= link_to "Sign out", signout_path, method: "delete"
