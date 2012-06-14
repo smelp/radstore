@@ -13,7 +13,6 @@
               %ul.dropdown-menu
                 = link_to "Profile", current_user
                 = link_to "Settings", edit_user_path(current_user)
-                = link_to "Settings", '#'
                 %li.divider
                 %li= link_to "Sign out", signout_path, method: "delete"
           - else
