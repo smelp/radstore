@@ -6,6 +6,7 @@ namespace :db do
                          password: "foobar",
                          password_confirmation: "foobar")
     admin.toggle!(:admin)
+    
     99.times do |n|
       name  = Faker::Name.name
       email = "example-#{n+1}@railstutorial.org"
@@ -15,5 +16,11 @@ namespace :db do
                    password: password,
                    password_confirmation: password)
     end
+    
+    firm = Firm.new(name: "Example Firm",
+                         corporate_id: "1234567-8",
+                         location: "Helsinki")
+    firm.resource = Bakery.new(description: "Sample description")
+    firm.save!
   end
 end

@@ -1,7 +1,3 @@
-- provide(:title, 'Home')
-%div{class: 'center hero-unit'}
-  %h1 Welcome to the Sample App
-  
-  %h2 This is the home page for the
-  
-  =link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" 
+%h2= @firm.name
+
+

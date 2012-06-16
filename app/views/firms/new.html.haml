@@ -1,0 +1,20 @@
+- provide(:title, 'Luo yritys')
+%h1 Luo yritys
+.row
+  .span6.offset3
+    = form_for @firm do |f|
+      %p
+        = f.label :name, "Nimi"
+        = f.text_field :name 
+      %p
+        = f.label :corporate_id, "Y-tunnus" 
+        = f.text_field :corporate_id
+      %p
+        = f.label :location, "Sijainti"
+        = f.text_field :location 
+         
+      = fields_for :resource do |b|
+        = b.label :description, "Kuvaus"
+        = b.text_field :description
+        
+      = f.submit "Luo yritys", class: "btn btn-large btn-primary"

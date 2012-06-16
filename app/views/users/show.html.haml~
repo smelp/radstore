@@ -1,4 +1,12 @@
 - provide(:title, @user.name)
-%h1
-  = gravatar_for @user
-  = @user.name
+.row
+  %aside.span4
+    %section
+      %h1
+        = gravatar_for @user
+        = @user.name
+    %h3 Yritykset
+    
+    %ul.firms
+      - @firms.each do |firm|
+        %li= render firm

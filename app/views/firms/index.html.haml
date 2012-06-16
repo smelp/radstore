@@ -1,0 +1,10 @@
+= provide(:title, 'Yritykset')
+%h1 Yritykset
+
+= will_paginate
+
+%ul.firms
+  - @firms.each do |firm|
+    %li= render firm
+
+= will_paginate

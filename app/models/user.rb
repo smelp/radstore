@@ -11,8 +11,10 @@
 #  remember_token  :string(255)
 #  admin           :boolean         default(FALSE)
 #
-
+# encoding: utf-8
 class User < ActiveRecord::Base
+	has_and_belongs_to_many :firms
+	
 	attr_accessible :name, :email, :password, :password_confirmation
 	has_secure_password
 	

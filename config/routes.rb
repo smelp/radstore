@@ -1,5 +1,5 @@
 UserTutorial::Application.routes.draw do
-  get "firms/new"
+  #get "firms/new"
 
   root to: "static_pages#home"
 
@@ -13,6 +13,8 @@ UserTutorial::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete
 
   resources :users
+  
+  resources :firms
 
   resources :sessions, only: [:new, :create, :destroy]
 

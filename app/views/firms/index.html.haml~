@@ -1,0 +1,12 @@
+= provide(:title, 'Yritykset')
+%h1 Yritykset
+
+= if is_admin? will_paginate
+
+%ul.firms
+  - @firms.each do |firm|
+    %li= render firm
+
+= if is_admin? 
+  = will_paginate
+

@@ -1,0 +1,12 @@
+- provide(:title, @firm.name)
+.row
+  %aside.span4
+    %section
+      %h1
+        %p Nimi: #{@firm.name}
+        %p Y-tunnus: #{@firm.corporate_id}
+        %p Sijainti: #{@firm.location}
+        %p Toimiala: #{@firm.resource_type}
+        %p Kuvaus:   #{@bakery.description}
+      %p= link_to "Muokkaa tietoja",    edit_firm_path
+      %p= link_to "Kaikki yritykset",    firms_path

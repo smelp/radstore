@@ -5,3 +5,8 @@
       %h1
         = gravatar_for @user
         = @user.name
+    %h3 Yritykset
+    
+    %ul.firms
+      - @firms.each do |firm|
+        %li= render firm

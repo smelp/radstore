@@ -60,6 +60,11 @@ describe Firm do
     it { should_not be_valid }
   end
   
+  describe "when resource_type is valid" do
+    before { @firm.resource_type = "Bakery" }
+    it { should be_valid }
+  end
+  
   describe "when corporate_id format is invalid" do
     it "should be invalid" do
       ids = %w[123 1234567.2

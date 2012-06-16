@@ -11,14 +11,17 @@
 #  created_at    :datetime        not null
 #  updated_at    :datetime        not null
 #
-
+# encoding: utf-8
 class Firm < ActiveRecord::Base
-  belongs_to :resource, :polymorphic => true
-  attr_accessible :name, :corporate_id, :location
+  has_and_belongs_to_many :users
+  belongs_to :resource, :polymorphic => true, :autosave => true
+  
+  attr_accessible :name, :corporate_id, :location, :resource
   validates :name, presence: true, :length => { :maximum => 50 }
   VALID_CORPORATE_ID_REGEX = /\d{7}-\d{1}/i
-  validates :corporate_id, presence: true, :length => { :minimum => 9, :maximum => 9 }, :format => { :with => VALID_CORPORATE_ID_REGEX }, :uniqueness => { :case_sensitive => false }
+  validates :corporate_id, presence: true, :length => { :minimum => 9, :maximum => 10 }, :format => { :with => VALID_CORPORATE_ID_REGEX }, :uniqueness => { :case_sensitive => false }
   validates :location, :length => { :maximum => 50 }
   validates :resource_type, presence: true
   validates_inclusion_of :resource_type, :in => ["Bakery"], :allow_nil => false 
+
 end

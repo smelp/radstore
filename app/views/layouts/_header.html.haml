@@ -1,20 +1,24 @@
 %header{ class:'navbar navbar-fixed-top' }
   %div{class: 'navbar-inner'}
     %div.container
-      = link_to "sample app", root_path, id: "logo"    
+      = link_to "devlfin", root_path, id: "logo"    
       %nav
-        %ul{class:'nav pull-right'}
-          %li= link_to "Home",    root_path
-          %li= link_to "Help",    help_path
+        %ul{class:'nav pull-left'}
           = if signed_in?
-            %li= link_to "Users", users_path 
+            %li= link_to "Yritykset",  firms_path
+        %ul{class:'nav pull-right'}
+          %li= link_to "Koti",    root_path
+          %li= link_to "Apua",    help_path
+          = if signed_in?
+            = if is_admin?
+              %li= link_to "Käyttäjät", users_path             
             %li#fat-menu.dropdown 
-              %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} Account<b class="caret"></b> 
+              %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} Tili<b class="caret"></b> 
               %ul.dropdown-menu
-                = link_to "Profile", current_user
-                = link_to "Settings", edit_user_path(current_user)
+                = link_to "Profiili", current_user
+                = link_to "Asetukset", edit_user_path(current_user)
                 %li.divider
-                %li= link_to "Sign out", signout_path, method: "delete"
+                %li= link_to "Kirjaudu ulos", signout_path, method: "delete"
           - else
-            %li= link_to "Sign in", signin_path
+            %li= link_to "Kirjaudu", signin_path
               

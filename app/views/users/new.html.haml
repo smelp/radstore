@@ -1,19 +1,19 @@
-- provide(:title, 'Sign up')
-%h1 Sign up
+- provide(:title, 'Luo käyttäjä')
+%h1 Luo käyttäjä
 .row
   .span6.offset3
     = form_for @user do |f|
       = render 'shared/error_messages'
       %p
-        = f.label :name 
+        = f.label :name, "Nimi" 
         = f.text_field :name 
       %p
-        = f.label :email 
+        = f.label :email, "Sähköposti"
         = f.text_field :email 
       %p
-        = f.label :password 
+        = f.label :password, "Salasana"
         = f.password_field :password 
       %p
-        = f.label :password_confirmation, "Confirmation" 
+        = f.label :password_confirmation, "Varmistus" 
         = f.password_field :password_confirmation 
-        = f.submit "Create my account", class: "btn btn-large btn-primary"
+        = f.submit "Luo tilini", class: "btn btn-large btn-primary"

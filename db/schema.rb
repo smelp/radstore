@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614094453) do
+ActiveRecord::Schema.define(:version => 20120615113244) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
@@ -27,6 +27,26 @@ ActiveRecord::Schema.define(:version => 20120614094453) do
     t.string   "resource_type"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+  end
+
+  create_table "firms_users", :id => false, :force => true do |t|
+    t.integer "firm_id"
+    t.integer "user_id"
+  end
+
+  add_index "firms_users", ["firm_id", "user_id"], :name => "index_firms_users_on_firm_id_and_user_id", :unique => true
+  add_index "firms_users", ["user_id"], :name => "index_firms_users_on_user_id"
+
+  create_table "materials", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "recipes", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

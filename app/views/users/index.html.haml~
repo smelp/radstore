@@ -4,6 +4,7 @@
 = will_paginate
 
 %ul.users
-  %li= render @users 
+  - @users.each do |user|
+    %li= render user
 
 = will_paginate

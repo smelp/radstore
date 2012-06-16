@@ -68,7 +68,7 @@ describe Firm do
   describe "when corporate_id format is invalid" do
     it "should be invalid" do
       ids = %w[123 1234567.2
-                     123456-7 12345678-9]
+                     123456-7 12345678-99]
       ids.each do |invalid_id|
         @firm.corporate_id = invalid_id
         @firm.should_not be_valid

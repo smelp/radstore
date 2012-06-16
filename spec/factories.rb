@@ -12,7 +12,8 @@ FactoryGirl.define do
   
   factory :firm do
     sequence(:name)  { |n| "Firm #{n}" }
-    sequence(:corporate_id) { |n| "Corporate Id #{n}"}   
+    sequence(:corporate_id) { |n| "1234567-#{n}"}   
     sequence(:location)  { |n| "Location #{n}" } 
+    resource_type "Bakery"
   end
 end

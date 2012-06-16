@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe "Static pages" do
@@ -5,11 +6,18 @@ describe "Static pages" do
   subject { page }
 
   describe "Home page" do
-    before { visit root_path }
+    let(:user) { FactoryGirl.create(:user) }
 
-    it { should have_selector('h1',    text: 'Sample App') }
+    after { User.delete_all }
+
+    before do
+      sign_in user
+      visit root_path
+    end
+    
+    it { should_not have_selector('h1',    text: 'Yritykset') }
     it { should have_selector('title', text: full_title('')) }
-    it { should_not have_selector 'title', text: '| Home' }
+    it { should_not have_selector 'title', text: '| Koti' }
   end
 
   describe "Help page" do
@@ -31,5 +39,20 @@ describe "Static pages" do
 
     it { should have_selector('h1',    text: 'Contact') }
     it { should have_selector('title', text: full_title('Contact')) }
+  end
+  
+  it "should have the right links on the layout" do
+    visit root_path
+    click_link "About"
+    page.should have_selector 'title', text: full_title('About Us')
+    click_link "Help"
+    page.should # fill in
+    click_link "Contact"
+    page.should # fill in
+    click_link "Koti"
+    click_link "Luo käyttäjä!"
+    page.should # fill in
+    #click_link "devlfin"
+    #page.should # fill in
   end
 end
