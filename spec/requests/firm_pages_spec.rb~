@@ -20,12 +20,18 @@ describe "Firm pages" do
     it { should have_selector('h1',    text: 'Yritykset') }
     
     describe "pagination" do
+      describe "as an admin user" do
+        let(:admin) { FactoryGirl.create(:admin) }
+        before do
+          sign_in admin
+          visit users_path
+        end
+        it { should have_selector('div.pagination') }
 
-      it { should have_selector('div.pagination') }
-
-      it "should list each firm" do
-        Firm.paginate(page: 1).each do |firm|
-          page.should have_selector('li', text: firm.name)
+        it "should list each firm" do
+          Firm.paginate(page: 1).each do |firm|
+            page.should have_selector('li', text: firm.name)
+          end
         end
       end
     end

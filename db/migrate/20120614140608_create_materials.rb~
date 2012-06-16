@@ -6,8 +6,4 @@ class CreateMaterials < ActiveRecord::Migration
       t.timestamps
     end
   end
-  
-  def down
-    drop_table :materials
-  end
 end

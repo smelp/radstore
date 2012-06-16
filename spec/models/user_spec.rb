@@ -11,6 +11,7 @@
 #  remember_token  :string(255)
 #  admin           :boolean         default(FALSE)
 #
+# encoding: utf-8
 
 require 'spec_helper'
 
