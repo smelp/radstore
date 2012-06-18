@@ -27,9 +27,13 @@ describe Firm do
   it { should respond_to(:name) }
   it { should respond_to(:corporate_id) }
   it { should respond_to(:location) }
+  it { should respond_to(:resource) }
   
   it { should be_valid }
-
+  
+  it { should belong_to(:resource) }
+  it { should have_and_belong_to_many(:users) }
+  
   describe "when name is not present" do
     before { @firm.name = nil }
     it { should_not be_valid }

@@ -1,0 +1,8 @@
+- if @material.errors.any?
+  #error_explanation
+    .alert.alert-error
+      The form contains  
+      = pluralize(@material.errors.count, "error")
+    %ul
+      - @material.errors.full_messages.each do |msg|
+        %li* #{msg} 

@@ -17,7 +17,14 @@
         %p
           = b.label :description, "Kuvaus"
           = b.text_field :description
-        
-        = f.submit "Tallenna", class: "btn btn-large btn-primary"
+    
+      %h4 Lisää käyttäjät:
+      %p#firm_users
+          
+      %p.well  
+        = select("post", "user_id", User.all.collect {|u| [ u.email, u.id ] }, {:prompt => 'Valitse käyttäjä'})
+        = button_to_function "Lisää", "add_material(event)", :class => "btn btn-mini"
+      
+      = f.submit "Tallenna", class: "btn btn-large btn-primary"
     
     %p= link_to "Kaikki yritykset",    firms_path

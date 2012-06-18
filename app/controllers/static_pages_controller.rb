@@ -4,7 +4,19 @@ class StaticPagesController < ApplicationController
   before_filter :signed_in_user, only: [:home]
   
   def home
-    @firm = current_user.firms.first
+    if current_user.admin?
+      sql = " SELECT *
+      FROM firms "
+      # Could also be done like : Firm.paginate(:page: params[:page])
+      @firms = Firm.paginate_by_sql(sql, :page => params[:page])
+    else
+      sql = " SELECT *
+      FROM firms AS f
+      WHERE f.id IN (SELECT u.firm_id 
+        FROM firms_users AS u 
+        WHERE user_id='#{current_user.id}')"
+      @firms = Firm.paginate_by_sql(sql, :page => params[:page])
+    end
   end
 
   def help

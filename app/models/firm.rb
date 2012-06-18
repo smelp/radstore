@@ -11,9 +11,10 @@
 #  created_at    :datetime        not null
 #  updated_at    :datetime        not null
 #
-# encoding: utf-8
 class Firm < ActiveRecord::Base
   has_and_belongs_to_many :users
+  has_many :recipes
+  has_many :materials
   belongs_to :resource, :polymorphic => true, :autosave => true
   
   attr_accessible :name, :corporate_id, :location, :resource

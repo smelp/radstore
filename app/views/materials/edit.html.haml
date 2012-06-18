@@ -1,0 +1,11 @@
+- provide(:title, 'Muokkaa raaka-aine')
+%h1 Muokkaa raaka-ainetta
+.row
+  .span6.offset3
+    = form_for @material do |f|
+      = render 'shared/material_error_messages'
+      %p
+        = f.label :name, "Nimi" 
+        = f.text_field :name 
+      
+      = f.submit "Tallenna", class: "btn btn-large btn-primary"

@@ -1,12 +1,54 @@
 - provide(:title, @firm.name)
-.row
-  %aside.span4
-    %section
-      %h1
-        %p Nimi: #{@firm.name}
-        %p Y-tunnus: #{@firm.corporate_id}
-        %p Sijainti: #{@firm.location}
-        %p Toimiala: #{@firm.resource_type}
-        %p Kuvaus:   #{@bakery.description}
-      %p= link_to "Muokkaa",    edit_firm_path
-      %p= link_to "Kaikki yritykset",    firms_path
+
+%div
+  %h2 @firm.name
+  - if is_admin?
+    .row.well
+      %aside.span4
+        %section
+          %h1
+            %p Nimi: #{@firm.name}
+            %p Y-tunnus: #{@firm.corporate_id}
+            %p Sijainti: #{@firm.location}
+            %p Toimiala: #{@firm.resource_type}
+            %p Kuvaus:   #{@bakery.description}
+          = link_to "Muokkaa tietoja",    edit_firm_path
+          |
+          = link_to "Kaikki yritykset",    firms_path
+  - else
+    .row.well
+      %h2 Reseptit
+      %table.table.table-striped
+        %thead
+          - @recipes.each do |recipe|
+            %tr
+              %td= link_to recipe.name, recipe
+    
+      = link_to :controller => "recipes", :action => "new", :firm_id => @firm.id do
+        %i.icon-plus
+        Lisää resepti
+
+    .row.well
+      %h2 Raaka-aineet
+      %table.table.table-striped
+        %thead
+          - @materials.each do |material|
+            %tr
+              %td= link_to material.name, material
+  
+      = link_to :controller => "materials", :action => "new", :firm_id => @firm.id do
+        %i.icon-plus
+        Lisää raaka-aine
+    
+.row.well
+  %h2 Käyttäjät
+  %table.table.table-striped
+    %thead
+      - @firm.users.each do |user|
+        %tr
+          %td= link_to user.name, user
+  
+  = link_to :controller => "firms", :action => "edit" do
+    %i.icon-plus
+    Lisää käyttäjä
+  

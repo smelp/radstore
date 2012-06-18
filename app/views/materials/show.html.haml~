@@ -1,0 +1,13 @@
+- provide(:title, @material.name)
+.row
+  %h2= @material.name
+  
+  %h4 Osana reseptejä:
+  
+  %ul.recipes
+    - @material.recipes.each do |recipe|
+      %li= link_to recipe.name, recipe
+  
+  = link_to :controller => "materials", :action => "edit", :id => @material.id do
+    %i.icon-plus
+    Muokkaa

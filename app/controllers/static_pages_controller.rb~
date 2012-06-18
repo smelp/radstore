@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
   before_filter :signed_in_user, only: [:home]
   
   def home
-    @firm = current_user.firms.first
+    @firms = current_user.firms
   end
 
   def help

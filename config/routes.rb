@@ -1,5 +1,4 @@
 UserTutorial::Application.routes.draw do
-  #get "firms/new"
 
   root to: "static_pages#home"
 
@@ -7,14 +6,17 @@ UserTutorial::Application.routes.draw do
   match '/about',   to: 'static_pages#about'
   match '/contact', to: 'static_pages#contact'
 
-  #get "users/new"
   match '/signup',  to: 'users#new'
   match '/signin',  to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete
 
+  match '/firms/:firm_id/recipes', to: 'recipes#index'
+  
   resources :users
   
   resources :firms
+  resources :recipes
+  resources :materials
 
   resources :sessions, only: [:new, :create, :destroy]
 

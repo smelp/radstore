@@ -1,12 +1,22 @@
 # encoding: utf-8
 class FirmsController < ApplicationController
-  before_filter :signed_in_user, only: [:index, :edit, :update, :destroy]
+  before_filter :signed_in_user
   #before_filter :correct_user,   only: [:edit, :update]
-  before_filter :admin_user,     only: [:index, :edit, :update, :destroy]
+  before_filter :admin_user,     only: [:new, :create, :destroy]
 
   def show
     @firm = Firm.find(params[:id])
-    @bakery = Bakery.find(params[:id])
+    if current_user.admin?  
+      if @firm.resource.class == Bakery
+        @bakery = Bakery.find(params[:id])
+      end
+    else
+      if @firm.resource.class == Bakery
+        @bakery = Bakery.find(params[:id])
+        @recipes = @firm.recipes
+        #@materials = @firm.materials
+      end
+    end
   end
   
   def index
@@ -57,7 +67,7 @@ class FirmsController < ApplicationController
     @firm.resource = bakery
     
     if @firm.save
-      flash[:success] = "Yrityksen tiedot paivitetty"
+      flash[:success] = "Yrityksen tiedot päivitetty"
       redirect_to @firm
     else
       render 'edit'
@@ -75,7 +85,7 @@ class FirmsController < ApplicationController
     def signed_in_user
       unless signed_in?
         store_location
-        redirect_to signin_path, notice: "Kirjaudu sisaan."
+        redirect_to signin_path, notice: "Kirjaudu sisään."
       end
     end
 
@@ -85,6 +95,10 @@ class FirmsController < ApplicationController
     end
     
     def admin_user
-      redirect_to(root_path) unless current_user.admin?
+      if current_user
+        redirect_to(root_path) unless current_user.admin?
+      else
+        redirect_to(root_path)
+      end
     end
 end

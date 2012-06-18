@@ -1,3 +1,10 @@
-= link_to firm.name, firm
-- if current_user.admin?
-    = link_to "delete", firm, method: :delete, confirm: "You sure?"
+.well.span11
+  .span8
+    %h3= link_to firm.name, firm
+    %p Toimiala: #{firm.resource_type}
+    %p Työntekijöitä: #{firm.users.count}
+  .span2
+    - if current_user.admin?
+      = button_to "Muokkaa", { controller: :firms, action: :edit, :id => firm.id }, method: :get, class: "btn btn-mini btn-primary"      
+      = button_to "Poista", firm, controller: :firms, method: :delete, confirm: "Haluatko varmasti poistaa yrityksen?", class: "btn btn-mini btn-danger"
+

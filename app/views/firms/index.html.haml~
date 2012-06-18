@@ -1,12 +1,14 @@
 = provide(:title, 'Yritykset')
+
 %h1 Yritykset
 
-= if is_admin? will_paginate
-
-%ul.firms
+= will_paginate
+.container.bordered
   - @firms.each do |firm|
-    %li= render firm
+    = render firm
 
-= if is_admin? 
-  = will_paginate
+= will_paginate
 
+= link_to new_firm_path do
+  %i.icon-plus
+  Lisää yritys

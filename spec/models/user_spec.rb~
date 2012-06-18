@@ -30,6 +30,9 @@ describe User do
 
   it { should be_valid }
   it { should_not be_admin }
+  
+  it { should have_and_belong_to_many(:firms) }
+  it { should have_and_belong_to_many(:recipes) }
 
   describe "with admin attribute set to 'true'" do
     before { @user.toggle!(:admin) }

@@ -1,0 +1,7 @@
+class CreateRecipesUsersTable < ActiveRecord::Migration
+  def up
+  end
+
+  def down
+  end
+end

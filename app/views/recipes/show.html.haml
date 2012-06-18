@@ -1,0 +1,15 @@
+- provide(:title, @recipe.name)
+.row
+  %h2= @recipe.name
+  
+  %h4 Ainesosat:
+  
+  %ul.materials
+    - @recipe.materials.each do |material|
+      %li= link_to material.name, material
+  
+  %h4 Ohje:
+  
+  = link_to :controller => "recipes", :action => "edit", :id => @recipe.id do
+    %i.icon-edit
+    Muokkaa

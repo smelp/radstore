@@ -11,7 +11,6 @@
 #  remember_token  :string(255)
 #  admin           :boolean         default(FALSE)
 #
-# encoding: utf-8
 
 require 'spec_helper'
 
@@ -31,6 +30,8 @@ describe User do
 
   it { should be_valid }
   it { should_not be_admin }
+  
+  it { should have_and_belong_to_many(:firms) }
 
   describe "with admin attribute set to 'true'" do
     before { @user.toggle!(:admin) }

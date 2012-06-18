@@ -1,0 +1,22 @@
+- provide(:title, 'Luo resepti')
+  
+%h1 Luo resepti
+.row
+  .span6.offset3
+    = form_for @recipe do |f|
+      = render 'shared/recipe_error_messages'
+      
+      %p#recipe_materials
+        = f.label :name, "Nimi" 
+        = f.text_field :name 
+        
+        = hidden_field_tag :firm_id, @firm.id
+        
+        %h4 Raaka-aineet:
+      
+      %p.well  
+        = select("post", "material_id", Material.all.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
+        = button_to_function "Lisää", "add_material(event)", :class => "btn btn-mini"
+        
+        
+      = f.submit "Luo resepti", class: "btn btn-large btn-primary"

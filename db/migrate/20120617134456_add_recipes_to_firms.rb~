@@ -1,0 +1,5 @@
+class AddRecipesToFirms < ActiveRecord::Migration
+  def change
+    add_column :recipe, :firm_id, :integer
+  end
+end

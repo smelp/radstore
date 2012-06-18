@@ -1,0 +1,17 @@
+- provide(:title, 'Luo raaka-aine')
+%h1 Luo raaka-aine
+.row
+  .span6.offset3
+    = form_for @material do |f|
+      = render 'shared/material_error_messages'
+      %p
+        = f.label :name, "Nimi" 
+        = f.text_field :name 
+      
+      = fields_for @firm do |l|
+        = l.label :name, "Yritykseen:"
+        = l.text_field :name, disabled: true
+        
+      = hidden_field_tag :firm_id, @firm.id
+      
+      = f.submit "Luo raaka-aine", class: "btn btn-large btn-primary"

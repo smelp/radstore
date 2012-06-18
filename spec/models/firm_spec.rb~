@@ -27,9 +27,13 @@ describe Firm do
   it { should respond_to(:name) }
   it { should respond_to(:corporate_id) }
   it { should respond_to(:location) }
+  it { should respond_to(:resource) }
   
   it { should be_valid }
-
+  
+  it { should belong_to(:resource) }
+  it { should have_many(:users) }
+  
   describe "when name is not present" do
     before { @firm.name = nil }
     it { should_not be_valid }
@@ -68,7 +72,7 @@ describe Firm do
   describe "when corporate_id format is invalid" do
     it "should be invalid" do
       ids = %w[123 1234567.2
-                     123456-7 12345678-9]
+                     123456-7 12345678-99]
       ids.each do |invalid_id|
         @firm.corporate_id = invalid_id
         @firm.should_not be_valid

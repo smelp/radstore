@@ -1,0 +1,28 @@
+- provide(:title, 'Muokkaa resepti')
+%h1 Muokkaa reseptiä
+.row
+  .span6.offset3
+    = form_for @recipe do |f|
+      %p
+        = f.label :name, "Nimi"
+        = f.text_field :name 
+      
+      %h4 Raaka-aineet:
+      
+      %ul.materials
+        - @recipe.materials.each do |material|
+          %li= link_to material.name, material
+      
+      %p#recipe_materials
+      %h4 Lisää nämä:
+          
+      %p.well  
+        = select("post", "material_id", Material.all.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
+        = button_to_function "Lisää", "add_material(event)", :class => "btn btn-mini"
+      
+      = f.submit "Tallenna", class: "btn btn-large btn-primary"
+      
+    %p
+      = link_to "Kaikki reseptit",    recipes_path
+      |
+      = link_to "Poista", @recipe, method: :delete, confirm: "Haluatko varmasti poistaa reseptin?"
