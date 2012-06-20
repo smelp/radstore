@@ -1,7 +1,8 @@
 - provide(:title, @firm.name)
+- #encoding: utf:8
 
 %div
-  %h2= @firm.name
+  %h2.bordered-bottom= @firm.name
   - if is_admin?
     .row.well
       %aside.span4

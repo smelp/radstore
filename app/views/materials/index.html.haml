@@ -1,0 +1,18 @@
+= provide(:title, 'Raaka-aineet')
+
+%h1 Raaka-aineet
+
+= will_paginate
+
+.container.bordered
+  - @materials.each do |material|
+    = render material
+
+= will_paginate
+
+.container
+  .span6.offset3
+    = link_to :controller => "materials", :action => "new", :firm_id => @firm.id do
+      %i.icon-plus
+      Lisää raaka-aine
+

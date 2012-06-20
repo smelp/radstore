@@ -11,7 +11,9 @@
       = f.submit "Tallenna", class: "btn btn-large btn-primary"
     
     %p
-      = link_to "Takaisin", request.env["HTTP_REFERER"] 
+      = link_to request.env["HTTP_REFERER"] do
+        %i.icon-arrow-left
+        Takaisin
       |
       = link_to "Kaikki raaka-aineet", materials_path
       |

@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: recipes
@@ -6,13 +7,12 @@
 #  name       :string(255)
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
-#
 
 class Recipe < ActiveRecord::Base
   has_and_belongs_to_many :materials
   belongs_to :firm
 
   attr_accessible :name
-  validates :name, presence: true, :length => { :maximum => 50 }
+  validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }
   #validates_uniqueness_of :materials
 end

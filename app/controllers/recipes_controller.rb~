@@ -4,6 +4,16 @@ class RecipesController < ApplicationController
   before_filter :firm_admin
   before_filter :admin_user, only: []
 
+  def index
+    list = []
+    @firm.recipes.each { |e| list.push e.id }
+    sql = " SELECT *
+      FROM recipes AS r
+      WHERE r.id IN (#{list.join(',')})"
+        
+    @recipes = Recipe.paginate_by_sql(sql, :page => params[:page])
+  end
+  
   def show
     @firm = @recipe.firm
   end
@@ -15,11 +25,12 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(params[:recipe])
     @recipe.firm = @firm
-    params[:materials].each do |material_id|
-      mat = Material.find(material_id)
-      @recipe.materials.push mat
+    if params[:materials]
+      params[:materials].each do |material_id|
+        mat = Material.find(material_id)
+        @recipe.materials.push mat
+      end
     end
-    
     if @recipe.save
       flash[:success] = "Uusi resepti luotu!"
       redirect_to @recipe
@@ -33,15 +44,27 @@ class RecipesController < ApplicationController
   
   def update
     
-    params[:materials].each do |material_id|
-      mat = Material.find(material_id)
-      @recipe.materials.push mat
+    if params[:old_materials]
+      params[:old_materials].each do |material_id|
+        mat = Material.find(material_id)
+        @added_materials.push mat
+      end
+    end
+    
+    if params[:new_materials]
+      params[:new_materials].each do |material_id|
+        mat = Material.find(material_id)
+        @added_materials.push mat
+      end
     end
     
     if @recipe.update_attributes(params[:recipe])
+      @recipe.materials = []
+      @recipe.materials << @added_materials
       flash[:success] = "Resepti tallennettu"
       redirect_to @recipe
-    else
+    else 
+      flash.now[:error] = params
       render 'edit'
     end
   end
@@ -62,10 +85,16 @@ class RecipesController < ApplicationController
     end
     
     def firm_admin
+      
+      @added_materials = []
       if params[:id]
         @recipe = Recipe.find(params[:id])
+        @firm = @recipe.firm
       elsif params[:firm_id]
-        @firm = Firm.find(params[:firm_id])
+        @firm = Firm.find_by_id(params[:firm_id])
+        if !@firm
+          @recipe = nil
+        end
       end
       
       if @recipe and @recipe.firm

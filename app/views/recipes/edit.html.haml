@@ -3,6 +3,7 @@
 .row
   .span6.offset3.well.green
     = form_for @recipe do |f|
+      = render 'shared/recipe_error_messages'
       %p
         = f.label :name, "Nimi"
         = f.text_field :name 
@@ -11,11 +12,16 @@
       
       %ul.materials
         - @recipe.materials.each do |material|
-          %li= link_to material.name, material
-          = link_to "delete", material, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen reseptistä?"
-          
+          %li{:id=> "#{material.id}"}
+            = hidden_field_tag "old_materials[#{material.id}]", material.id
+            = link_to material.name, material
+            |
+            = link_to_function "poista", "remove_list_element(#{material.id})" 
+              
       %h4 Lisää nämä:
-      %p#recipe_materials
+      %ul#recipe_materials
+        - @added_materials.each do |material|
+          %li= link_to material[0].name, material[0]
           
       %p.well  
         = select("post", "material_id", Material.all.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
@@ -28,6 +34,6 @@
         %i.icon-arrow-left
         Takaisin
       |
-      = link_to "Kaikki reseptit",    recipes_path
+      = link_to "Kaikki reseptit", :controller => "recipes", :action => "index", :firm_id => @firm.id
       |
       = link_to "Poista", @recipe, method: :delete, confirm: "Haluatko varmasti poistaa reseptin?"

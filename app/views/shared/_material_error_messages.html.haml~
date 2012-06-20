@@ -3,5 +3,5 @@
     .alert.alert-error
       Lomake sisältää #{@material.errors.count} virhettä
     %ul
-      - @material.errors.each_with_index do |msg|
-        %li* #{msg[1]}
+      - @material.errors.each_with_index do |msg, i|
+        %li* #{msg[i+1]}

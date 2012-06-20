@@ -3,5 +3,5 @@
     .alert.alert-error
       Lomake sisältää #{@recipe.errors.count} virhettä
     %ul
-      - @recipe.errors.each_with_index do |msg|
+      - @recipe.errors.each_with_index do |msg, i|
         %li* #{msg[1]}

@@ -1,0 +1,20 @@
+= provide(:title, 'Reseptit')
+
+%h1 Reseptit
+
+.span6.offset3
+  = will_paginate
+
+.container.bordered
+  
+  - @recipes.each do |recipe|
+    = render recipe
+
+.container
+  .span6.offset3
+    = link_to :controller => "recipes", :action => "new", :firm_id => @firm.id do
+      %i.icon-plus
+      Lisää resepti
+.span6.offset3
+  = will_paginate
+

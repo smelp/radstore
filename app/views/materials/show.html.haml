@@ -12,7 +12,6 @@
         %tbody
           - @material.recipes.each do |recipe|
             %tr
-      
               %td= link_to recipe.name, recipe
       = link_to request.env["HTTP_REFERER"] do
         %i.icon-arrow-left

@@ -1,3 +1,4 @@
+# encoding: utf-8
 # == Schema Information
 #
 # Table name: materials
@@ -13,6 +14,6 @@ class Material < ActiveRecord::Base
   belongs_to :firm
     
   attr_accessible :name, :firm
-  validates :name, presence: true, :length => { :maximum => 50 }
+  validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :maximum => 50, :message => "Nimen pituus 5-50 merkkiä" } 
 
 end

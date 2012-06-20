@@ -1,8 +1,7 @@
 - if @user.errors.any?
   #error_explanation
     .alert.alert-error
-      The form contains  
-      = pluralize(@user.errors.count, "error")
+      Lomake sisältää #{@user.errors.count} virhettä
     %ul
-      - @user.errors.full_messages.each do |msg|
-        %li* #{msg} 
+      - @user.errors.each_with_index do |msg|
+        %li* #{msg[1]}

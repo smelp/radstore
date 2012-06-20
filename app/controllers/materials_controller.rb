@@ -1,8 +1,18 @@
 # encoding: utf-8
 class MaterialsController < ApplicationController
   before_filter :signed_in_user
-  before_filter :firm_admin, only: [:new, :create, :edit, :update, :destroy]
+  before_filter :firm_admin, only: [:index, :new, :create, :edit, :update, :destroy]
   before_filter :admin_user, only: []
+
+  def index
+    list = []
+    @firm.materials.each { |e| list.push e.id }
+    sql = " SELECT *
+      FROM materials AS m
+      WHERE m.id IN (#{list.join(',')})"
+        
+    @materials = Material.paginate_by_sql(sql, :page => params[:page])
+  end
 
   def show
     @material = Material.find(params[:id])
@@ -54,8 +64,13 @@ class MaterialsController < ApplicationController
     def firm_admin
       if params[:id]
         @material = Material.find(params[:id])
+        @firm = @material.firm
       elsif params[:firm_id]
-        @firm = Firm.find(params[:firm_id])
+        @firm = Firm.find_by_id(params[:firm_id])
+        if !@firm 
+          @material = nil
+          @firm = nil
+        end
       end
       
       if @material and @material.firm

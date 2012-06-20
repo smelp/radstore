@@ -14,15 +14,16 @@
 class Firm < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :recipes
-  has_many :maerials
+  has_many :materials
   belongs_to :resource, :polymorphic => true, :autosave => true
   
+  resource_list = ["Bakery"]
   attr_accessible :name, :corporate_id, :location, :resource
-  validates :name, presence: true, :length => { :maximum => 50 }
+  validates :name, presence: { :message => "Nimi pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen pituus 2-50 merkkiä" }
   VALID_CORPORATE_ID_REGEX = /\d{7}-\d{1}/i
-  validates :corporate_id, presence: true, :length => { :minimum => 9, :maximum => 10 }, :format => { :with => VALID_CORPORATE_ID_REGEX }, :uniqueness => { :case_sensitive => false }
-  validates :location, :length => { :maximum => 50 }
-  validates :resource_type, presence: true
-  validates_inclusion_of :resource_type, :in => ["Bakery"], :allow_nil => false 
+  validates :corporate_id, presence: { :message => "Y-tunnus vaaditaan" }, :length => { :minimum => 9, :maximum => 10, :message => "Y-tunnuksen täytyy olla 9 merkkiä pitkä" }, :format => { :with => VALID_CORPORATE_ID_REGEX }, :uniqueness => { :case_sensitive => false }
+  validates :location, :length => { :maximum => 50, :message => "Sijainnin maksimipituus on 50 merkkiä" }
+  validates :resource_type, presence: { :message => "Toimiala pakollinen" }
+  validates_inclusion_of :resource_type, :in => ["Bakery"], :allow_nil => false, :message => "Toimialan täytyy olla joku seuraavista: #{resource_list}"
 
 end
