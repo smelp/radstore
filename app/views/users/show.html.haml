@@ -1,13 +1,17 @@
 - provide(:title, @user.name)
-.row
-  %aside.span4
-    %section
-      %h1
-        = gravatar_for @user
-        = @user.name
-.row
-  %h2.bordered Yritykset
-    
-  %ul.ul_no_disc
-    - @firms.each do |firm|
-      %li= render firm
+.container
+  .span6.offset3
+    .row.well.green
+      = gravatar_for @user
+      = @user.name
+      
+      %table.table.table-striped
+        %thead
+          %th Yritykset
+        %tbody
+          - @firms.each do |firm|
+            %td= link_to firm.name, firm
+      
+      = link_to "Takaisin", request.env["HTTP_REFERER"] 
+      
+             

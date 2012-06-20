@@ -10,9 +10,9 @@
 
 class Recipe < ActiveRecord::Base
   has_and_belongs_to_many :materials
-  has_and_belongs_to_many :firms
+  belongs_to :firm
 
   attr_accessible :name
   validates :name, presence: true, :length => { :maximum => 50 }
-
+  validates_uniqueness_of :materials
 end

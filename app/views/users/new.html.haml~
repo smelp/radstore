@@ -16,4 +16,4 @@
       %p
         = f.label :password_confirmation, "Varmistus" 
         = f.password_field :password_confirmation 
-        = f.submit "Create my account", class: "btn btn-large btn-primary"
+        = f.submit "Luo tilini", class: "btn btn-large btn-primary"

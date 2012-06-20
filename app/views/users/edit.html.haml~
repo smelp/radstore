@@ -19,4 +19,4 @@
         = f.submit "Tallenna muutokset", class: "btn btn-large btn-primary"
         
     = gravatar_for @user
-    %a{href: "http://gravatar.com/emails"} change
+    %a{href: "http://gravatar.com/emails"} vaihda

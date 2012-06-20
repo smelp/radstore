@@ -20,3 +20,5 @@
         
     = gravatar_for @user
     %a{href: "http://gravatar.com/emails"} vaihda
+    
+    = link_to "Takaisin", request.env["HTTP_REFERER"] 

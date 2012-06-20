@@ -9,9 +9,13 @@
         = f.text_field :name 
       
       = fields_for @firm do |l|
-        = l.label :name, "Yritykseen"
+        = l.label :name, "Yritykseen:"
         = l.text_field :name, disabled: true
         
       = hidden_field_tag :firm_id, @firm.id
       
       = f.submit "Luo raaka-aine", class: "btn btn-large btn-primary"
+    
+    = link_to request.env["HTTP_REFERER"] do
+        %i.icon-arrow-left
+        Takaisin

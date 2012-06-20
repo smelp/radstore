@@ -1,7 +1,7 @@
 - provide(:title, 'Muokkaa resepti')
 %h1 Muokkaa reseptiä
 .row
-  .span6.offset3
+  .span6.offset3.well.green
     = form_for @recipe do |f|
       %p
         = f.label :name, "Nimi"
@@ -12,7 +12,8 @@
       %ul.materials
         - @recipe.materials.each do |material|
           %li= link_to material.name, material
-      
+          = link_to "delete", material, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen reseptistä?"
+          
       %h4 Lisää nämä:
       %p#recipe_materials
           
@@ -23,6 +24,10 @@
       = f.submit "Tallenna", class: "btn btn-large btn-primary"
       
     %p
+      = link_to request.env["HTTP_REFERER"] do
+        %i.icon-arrow-left
+        Takaisin
+      |
       = link_to "Kaikki reseptit",    recipes_path
       |
       = link_to "Poista", @recipe, method: :delete, confirm: "Haluatko varmasti poistaa reseptin?"

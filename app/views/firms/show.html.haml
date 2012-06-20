@@ -1,7 +1,7 @@
 - provide(:title, @firm.name)
 
 %div
-  %h2= @firm.name
+  %h2.bordered-bottom= @firm.name
   - if is_admin?
     .row.well
       %aside.span4
@@ -16,38 +16,57 @@
           |
           = link_to "Kaikki yritykset",    firms_path
   - else
-    .row.well
+    .row.well.green
       %h2 Reseptit
-      %table.table.table-striped
+      %table.table.table-condensed.table-striped.table-bordered
         %thead
+          %th Nimi
+          %th Hinta
+          %th
+          
+        %tbody  
           - @recipes.each do |recipe|
             %tr
-              %td= link_to recipe.name, recipe
-    
+              %td.span4= link_to recipe.name, recipe
+              %td.span3
+              %td.span3
+              
       = link_to :controller => "recipes", :action => "new", :firm_id => @firm.id do
         %i.icon-plus
         Lisää resepti
 
-    .row.well
+    .row.well.blue
       %h2 Raaka-aineet
-      %table.table.table-striped
+      %table.table.table-condensed.table-striped.table-bordered
         %thead
+          %th Nimi
+          %th Hinta
+          %th
+        %tbody
           - @materials.each do |material|
             %tr
-              %td= link_to material.name, material
-  
+              %td.span4= link_to material.name, material
+              %td.span3
+              %td.span3
+              
       = link_to :controller => "materials", :action => "new", :firm_id => @firm.id do
         %i.icon-plus
         Lisää raaka-aine
     
 .row.well
   %h2 Käyttäjät
-  %table.table.table-striped
+  %table.table.table-condensed.table-striped.table-bordered
     %thead
+      %th Nimi
+      %th Email
+      %th
+    %tbody
       - @firm.users.each do |user|
         %tr
-          %td= link_to user.name, user
-  
+          %td.span4= link_to user.name, user
+          %td.span3= user.email
+          %td.span3
+          
   = link_to :controller => "firms", :action => "edit" do
     %i.icon-plus
     Lisää käyttäjä

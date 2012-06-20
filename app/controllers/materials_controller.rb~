@@ -1,10 +1,11 @@
 # encoding: utf-8
 class MaterialsController < ApplicationController
   before_filter :signed_in_user
-  before_filter :firm_admin 
+  before_filter :firm_admin, only: [:new, :create, :edit, :update, :destroy]
   before_filter :admin_user, only: []
 
   def show
+    @material = Material.find(params[:id]
   end
   
   def new
@@ -17,7 +18,7 @@ class MaterialsController < ApplicationController
     
     if @material.save
       flash[:success] = "Uusi raaka-aine luotu!"
-      redirect_to firm_path, :controller => "firms", :id => @firm.id
+      redirect_to @firm
     else
       render 'new'
     end

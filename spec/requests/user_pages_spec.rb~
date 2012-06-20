@@ -26,8 +26,8 @@ describe "User pages" do
         visit users_path
       end
 
-      it { should_not have_selector('title', text: 'Käyttäjät') }
-      it { should_not have_selector('h1',    text: 'Kaikki käyttäjät') }
+      it { should have_selector('title', text: 'Käyttäjät') }
+      it { should have_selector('h1',    text: 'Kaikki käyttäjät') }
     end
       
     describe "pagination" do
@@ -79,7 +79,7 @@ describe "User pages" do
     let(:user) { FactoryGirl.create(:user) }
     before { visit user_path(user) }
 
-    it { should have_selector('h1',    text: user.name) }
+    it { should have_text(user.name) }
     it { should have_selector('title', text: user.name) }
   end
   

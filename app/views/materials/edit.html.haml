@@ -1,7 +1,7 @@
 - provide(:title, 'Muokkaa raaka-aine')
 %h1 Muokkaa raaka-ainetta
 .row
-  .span6.offset3
+  .span6.offset3.well.green
     = form_for @material do |f|
       = render 'shared/material_error_messages'
       %p
@@ -9,3 +9,12 @@
         = f.text_field :name 
       
       = f.submit "Tallenna", class: "btn btn-large btn-primary"
+    
+    %p
+      = link_to request.env["HTTP_REFERER"] do
+        %i.icon-arrow-left
+        Takaisin
+      |
+      = link_to "Kaikki raaka-aineet", materials_path
+      |
+      = link_to "Poista", @material, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen?"

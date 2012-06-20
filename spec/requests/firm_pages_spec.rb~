@@ -24,7 +24,7 @@ describe "Firm pages" do
         let(:admin) { FactoryGirl.create(:admin) }
         before do
           sign_in admin
-          visit users_path
+          visit firms_path
         end
         it { should have_selector('div.pagination') }
 

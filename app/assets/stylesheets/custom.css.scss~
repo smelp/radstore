@@ -177,10 +177,22 @@ input, textarea, select, .uneditable-input {
 
 .ul_no_disc {
   list-style: none;
-  background-color: #f00;
 }
 
 .bordered {
   padding-top: 20px;
   border-top: 1px solid $grayLighter;
 }
+
+.bordered-bottom {
+  border-bottom: 1px solid $grayLighter;
+}
+
+.green {
+  background-color: $successBackground;
+}
+  
+.blue {
+  background-color: $infoBackground;
+}
+

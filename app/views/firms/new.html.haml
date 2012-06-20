@@ -16,5 +16,12 @@
       = fields_for :resource do |b|
         = b.label :description, "Kuvaus"
         = b.text_field :description
-        
+      
+      %h4 Lisää käyttäjät:
+      %p#firm_users
+          
+      %p.well  
+        = select("post", "user_id", User.all.collect {|u| [ u.email, u.id ] }, {:prompt => 'Valitse käyttäjä'})
+        = button_to_function "Lisää", "add_user_to_firm(event)", :class => "btn btn-mini"
+      
       = f.submit "Luo yritys", class: "btn btn-large btn-primary"

@@ -32,12 +32,12 @@ class RecipesController < ApplicationController
   end
   
   def update
-    
-    params[:materials].each do |material_id|
-      mat = Material.find(material_id)
-      @recipe.materials.push mat
+    if params[:materials]
+      params[:materials].each do |material_id|
+        mat = Material.find(material_id)
+        @recipe.materials.push mat
+      end
     end
-    
     if @recipe.update_attributes(params[:recipe])
       flash[:success] = "Resepti tallennettu"
       redirect_to @recipe

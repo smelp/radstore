@@ -46,6 +46,13 @@ class FirmsController < ApplicationController
     @firm.attributes = params[:firm]
     @firm.resource = bakery
     
+    if params[:users]
+      params[:users].each do |user_id|
+        user = User.find(user_id)
+        @firm.users.push user
+      end
+    end
+    
     if @firm.save
       flash[:success] = "Yritys onnistuneesti luotu"
       redirect_to firms_path
@@ -65,6 +72,13 @@ class FirmsController < ApplicationController
     bakery = Bakery.find(params[:id])
     @firm.attributes = params[:firm]
     @firm.resource = bakery
+    
+    if params[:users]
+      params[:users].each do |user_id|
+        user = User.find(user_id)
+        @firm.users.push user
+      end
+    end
     
     if @firm.save
       flash[:success] = "Yrityksen tiedot päivitetty"

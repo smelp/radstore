@@ -1,7 +1,7 @@
 - provide(:title, 'Muokkaa resepti')
 %h1 Muokkaa reseptiä
 .row
-  .span6.offset3
+  .span6.offset3.well.green
     = form_for @recipe do |f|
       %p
         = f.label :name, "Nimi"
@@ -12,9 +12,10 @@
       %ul.materials
         - @recipe.materials.each do |material|
           %li= link_to material.name, material
-      
-      %p#recipe_materials
+          = link_to "delete", material, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen reseptistä?"
+          
       %h4 Lisää nämä:
+      %p#recipe_materials
           
       %p.well  
         = select("post", "material_id", Material.all.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})

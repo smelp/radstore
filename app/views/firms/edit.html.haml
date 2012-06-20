@@ -1,7 +1,7 @@
 - provide(:title, 'Muokkaa yritys')
 %h1 Muokkaa tietoja
 .row
-  .span6.offset3
+  .span6.offset3.well.green
     = form_for @firm do |f|
       %p
         = f.label :name, "Nimi"
@@ -23,8 +23,10 @@
           
       %p.well  
         = select("post", "user_id", User.all.collect {|u| [ u.email, u.id ] }, {:prompt => 'Valitse käyttäjä'})
-        = button_to_function "Lisää", "add_material(event)", :class => "btn btn-mini"
+        = button_to_function "Lisää", "add_user_to_firm(event)", :class => "btn btn-mini"
       
       = f.submit "Tallenna", class: "btn btn-large btn-primary"
     
-    %p= link_to "Kaikki yritykset",    firms_path
+    = link_to "Takaisin", request.env["HTTP_REFERER"] 
+    |
+    = link_to "Kaikki yritykset",    firms_path

@@ -30,7 +30,7 @@ describe "Firm pages" do
 
         it "should list each firm" do
           Firm.paginate(page: 1).each do |firm|
-            page.should have_selector('li', text: firm.name)
+            page.should have_selector('h3', text: firm.name)
           end
         end
       end

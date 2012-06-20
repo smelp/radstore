@@ -17,3 +17,6 @@
         = f.label :password_confirmation, "Varmistus" 
         = f.password_field :password_confirmation 
         = f.submit "Luo tilini", class: "btn btn-large btn-primary"
+    
+    = link_to "Takaisin", request.env["HTTP_REFERER"] 
+      

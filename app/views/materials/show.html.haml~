@@ -1,13 +1,23 @@
 - provide(:title, @material.name)
-.row
-  %h2= @material.name
+
+.container
+  .span6.offset3
+    .row.well.green
+
+      %h2= @material.name
   
-  %h4 Osana reseptejä:
-  
-  %ul.recipes
-    - @material.recipes.each do |recipe|
-      %li= link_to recipe.name, recipe
-  
-  = link_to :controller => "materials", :action => "edit", :id => @material.id do
-    %i.icon-plus
-    Muokkaa
+      %table.table.table-striped
+        %thead
+          %th Osana reseptejä:
+        %tbody
+          - @material.recipes.each do |recipe|
+            %tr
+      
+              %td= link_to recipe.name, recipe
+      = link_to request.env["HTTP_REFERER"] do
+        %i.icon-arrow-left
+        Takaisin
+      |
+      = link_to :controller => "materials", :action => "edit", :id => @material.id do
+        %i.icon-edit
+        Muokkaa

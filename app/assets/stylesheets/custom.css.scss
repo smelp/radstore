@@ -183,3 +183,16 @@ input, textarea, select, .uneditable-input {
   padding-top: 20px;
   border-top: 1px solid $grayLighter;
 }
+
+.bordered-bottom {
+  border-bottom: 1px solid $gray;
+}
+
+.green {
+  background-color: $successBackground;
+}
+  
+.blue {
+  background-color: $infoBackground;
+}
+

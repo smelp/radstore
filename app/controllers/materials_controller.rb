@@ -1,10 +1,11 @@
 # encoding: utf-8
 class MaterialsController < ApplicationController
   before_filter :signed_in_user
-  before_filter :firm_admin 
+  before_filter :firm_admin, only: [:new, :create, :edit, :update, :destroy]
   before_filter :admin_user, only: []
 
   def show
+    @material = Material.find(params[:id])
   end
   
   def new
