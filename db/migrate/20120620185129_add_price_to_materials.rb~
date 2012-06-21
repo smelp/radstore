@@ -1,0 +1,4 @@
+class AddPriceToMaterials < ActiveRecord::Migration
+  def change
+  end
+end

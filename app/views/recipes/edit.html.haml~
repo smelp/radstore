@@ -7,6 +7,8 @@
       %p
         = f.label :name, "Nimi"
         = f.text_field :name 
+        = f.label :price, "Hinta"
+        = f.text_field :price, disabled: true
       
       %h4 Raaka-aineet:
       
@@ -15,6 +17,7 @@
           %li{:id=> "#{material.id}"}
             = hidden_field_tag "old_materials[#{material.id}]", material.id
             = link_to material.name, material
+            |
             = link_to_function "poista", "remove_list_element(#{material.id})" 
               
       %h4 Lisää nämä:

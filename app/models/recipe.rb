@@ -12,7 +12,12 @@ class Recipe < ActiveRecord::Base
   has_and_belongs_to_many :materials
   belongs_to :firm
 
-  attr_accessible :name
+  attr_accessible :name, :price
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }
   #validates_uniqueness_of :materials
+  
+  def save
+    self.price = self.materials.sum(:price)
+    super
+  end
 end

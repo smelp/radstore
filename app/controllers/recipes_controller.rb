@@ -25,16 +25,20 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(params[:recipe])
     @recipe.firm = @firm
-    if params[:materials]
-      params[:materials].each do |material_id|
+    if params[:new_materials]
+      params[:new_materials].each do |material_id|
         mat = Material.find(material_id)
         @recipe.materials.push mat
       end
     end
+    
     if @recipe.save
+      @recipe.price = @recipe.materials.sum(:price)
+      @recipe.save
       flash[:success] = "Uusi resepti luotu!"
       redirect_to @recipe
     else
+      flash[:success] = params
       render 'new'
     end
   end
@@ -61,6 +65,8 @@ class RecipesController < ApplicationController
     if @recipe.update_attributes(params[:recipe])
       @recipe.materials = []
       @recipe.materials << @added_materials
+      
+      @recipe.save
       flash[:success] = "Resepti tallennettu"
       redirect_to @recipe
     else 
@@ -72,7 +78,7 @@ class RecipesController < ApplicationController
   def destroy
     @recipe.destroy
     flash[:success] = "Resepti poistettu."
-    redirect_to recipes_path
+    redirect_to @firm
   end
   
   private

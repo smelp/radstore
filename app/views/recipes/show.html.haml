@@ -3,15 +3,20 @@
   .span6.offset3
     .row.well.green
       %h2.bordered-bottom= @recipe.name
-  
+      
       %table.table.table-striped
         %thead
           %th Raaka-aineet
+          %th Hinta
         %tbody
           - @recipe.materials.each do |material|
             %tr
               %td= link_to material.name, material
-      
+              %td= material.price
+        %thead
+          %th Hinta yht.
+          %th #{@recipe.price} €
+            
       = link_to request.env["HTTP_REFERER"] do
         %i.icon-arrow-left
         Takaisin

@@ -1,6 +1,7 @@
 # encoding: utf-8
 class FirmsController < ApplicationController
   before_filter :signed_in_user
+  before_filter :set_tax
   #before_filter :correct_user,   only: [:edit, :update]
   before_filter :admin_user,     only: [:new, :create, :destroy]
 
@@ -95,6 +96,10 @@ class FirmsController < ApplicationController
   end
   
   private
+    
+    def set_tax
+      @alv = 0.22
+    end
     
     def signed_in_user
       unless signed_in?

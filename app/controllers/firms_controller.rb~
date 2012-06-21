@@ -1,6 +1,7 @@
 # encoding: utf-8
 class FirmsController < ApplicationController
   before_filter :signed_in_user
+  befor_filter :set_tax
   #before_filter :correct_user,   only: [:edit, :update]
   before_filter :admin_user,     only: [:new, :create, :destroy]
 
@@ -46,6 +47,13 @@ class FirmsController < ApplicationController
     @firm.attributes = params[:firm]
     @firm.resource = bakery
     
+    if params[:users]
+      params[:users].each do |user_id|
+        user = User.find(user_id)
+        @firm.users.push user
+      end
+    end
+    
     if @firm.save
       flash[:success] = "Yritys onnistuneesti luotu"
       redirect_to firms_path
@@ -88,6 +96,10 @@ class FirmsController < ApplicationController
   end
   
   private
+    
+    def set_tax
+      @alv = 0.22
+    end
     
     def signed_in_user
       unless signed_in?

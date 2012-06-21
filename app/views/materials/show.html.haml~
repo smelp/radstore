@@ -5,14 +5,14 @@
     .row.well.green
 
       %h2.bordered-bottom= @material.name
-  
+      %h2 Hinta: #{@material.price} € 
+      
       %table.table.table-striped
         %thead
           %th Osana reseptejä:
         %tbody
           - @material.recipes.each do |recipe|
             %tr
-      
               %td= link_to recipe.name, recipe
       = link_to request.env["HTTP_REFERER"] do
         %i.icon-arrow-left

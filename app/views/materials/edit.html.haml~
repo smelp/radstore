@@ -7,7 +7,9 @@
       %p
         = f.label :name, "Nimi" 
         = f.text_field :name 
-      
+        = f.label :price, "Hinta"
+        = f.number_field :price
+        
       = f.submit "Tallenna", class: "btn btn-large btn-primary"
     
     %p
@@ -15,6 +17,6 @@
         %i.icon-arrow-left
         Takaisin
       |
-      = link_to "Kaikki raaka-aineet", materials_path
+      = link_to "Kaikki raaka-aineet", :controller => "materials", :action => "index", :firm_id => @firm.id
       |
       = link_to "Poista", @material, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen?"

@@ -27,6 +27,7 @@ class MaterialsController < ApplicationController
     @material.firm = @firm
     
     if @material.save
+      @material.recipes.each { |r| r.save }
       flash[:success] = "Uusi raaka-aine luotu!"
       redirect_to @firm
     else
@@ -39,6 +40,7 @@ class MaterialsController < ApplicationController
   
   def update
     if @material.update_attributes(params[:material])
+      @material.recipes.each { |r| r.save }
       flash[:success] = "Raaka-aine tallennettu"
       redirect_to @material
     else
@@ -48,8 +50,9 @@ class MaterialsController < ApplicationController
   
   def destroy
     @material.destroy
+    Recipe.all.each { |r| r.reload }
     flash[:success] = "Raaka-aine poistettu."
-    redirect_to materials_path
+    redirect_to @firm
   end
   
   private
@@ -67,8 +70,10 @@ class MaterialsController < ApplicationController
         @firm = @material.firm
       elsif params[:firm_id]
         @firm = Firm.find_by_id(params[:firm_id])
-        @material = nil
-        @firm = nil
+        if !@firm 
+          @material = nil
+          @firm = nil
+        end
       end
       
       if @material and @material.firm

@@ -10,10 +10,13 @@
 #
 
 class Material < ActiveRecord::Base
-  has_and_belongs_to_many :recipes
+  has_and_belongs_to_many :recipes, :autosave => true
   belongs_to :firm
     
-  attr_accessible :name, :firm
+  attr_accessible :name, :firm, :price
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :maximum => 50, :message => "Nimen pituus 5-50 merkkiä" } 
-
+  validates :price, presence: { :message => "Hinta on pakollinen" }
+  validates_numericality_of :price, :message => "Hinnan täytyy olla numero!"
+  
+  
 end

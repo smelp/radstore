@@ -21,15 +21,15 @@
       %table.table.table-condensed.table-striped.table-bordered
         %thead
           %th Nimi
-          %th Hinta
-          %th
+          %th Veroton hinta
+          %th Verollinen hinta
           
         %tbody  
           - @recipes.each do |recipe|
             %tr
               %td.span4= link_to recipe.name, recipe
-              %td.span3
-              %td.span3
+              %td.span3= recipe.price
+              %td.span3= recipe.price + (recipe.price * @alv)
               
       = link_to :controller => "recipes", :action => "new", :firm_id => @firm.id do
         %i.icon-plus
@@ -40,14 +40,14 @@
       %table.table.table-condensed.table-striped.table-bordered
         %thead
           %th Nimi
-          %th Hinta
-          %th
+          %th Veroton hinta (€)
+          %th Verollinen hinta (€)
         %tbody
           - @materials.each do |material|
             %tr
               %td.span4= link_to material.name, material
-              %td.span3
-              %td.span3
+              %td.span3= material.price
+              %td.span3= material.price + (material.price * @alv)
               
       = link_to :controller => "materials", :action => "new", :firm_id => @firm.id do
         %i.icon-plus
@@ -59,13 +59,13 @@
     %thead
       %th Nimi
       %th Email
-      %th
+    
     %tbody
       - @firm.users.each do |user|
         %tr
           %td.span4= link_to user.name, user
           %td.span3= user.email
-          %td.span3
+          
           
   = link_to :controller => "firms", :action => "edit" do
     %i.icon-plus
