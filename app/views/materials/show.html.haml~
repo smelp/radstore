@@ -10,10 +10,16 @@
       %table.table.table-striped
         %thead
           %th Osana reseptejä:
+          %th Veroton hinta (€):
+          %th Verollinen hinta (€):
+          
         %tbody
           - @material.recipes.each do |recipe|
             %tr
               %td= link_to recipe.name, recipe
+              %td= link_to recipe.price, recipe
+              %td= link_to recipe.price + (recipe.price * @tax), recipe
+              
       = link_to request.env["HTTP_REFERER"] do
         %i.icon-arrow-left
         Takaisin

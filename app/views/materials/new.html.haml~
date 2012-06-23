@@ -7,8 +7,8 @@
       %p
         = f.label :name, "Nimi" 
         = f.text_field :name 
-        = f.label :price, "Hinta"
-        = f.number_field :price
+        = f.label :price, "Kilohinta"
+        = f.text_field :price
         
       = fields_for @firm do |l|
         = l.label :name, "Yritykseen:"

@@ -7,26 +7,33 @@
       %p
         = f.label :name, "Nimi"
         = f.text_field :name 
-        = f.label :price, "Hinta"
-        = f.number_field :price, disabled: true
-      
+        
+        = f.label :price, "Hinta (€)"
+        = f.number_field :price, disabled: true, min: 0
+        
       %h4 Raaka-aineet:
       
       %ul.materials
-        - @recipe.materials.each do |material|
-          %li{:id=> "#{material.id}"}
-            = hidden_field_tag "old_materials[#{material.id}]", material.id
-            = link_to material.name, material
+        - @recipe.hasmaterials.each do |material|
+          %li{:id=> "#{material.material_id}"}
+            - mat = Material.find(material.material_id)
+            = hidden_field_tag "old_materials[#{material.material_id}, #{material.amount}]", material.amount
+            = link_to mat.name, mat
+            , #{material.amount} g
             |
-            = link_to_function "poista", "remove_list_element(#{material.id})" 
+            = link_to_function "poista", "remove_list_element(#{material.material_id})" 
               
       %h4 Lisää nämä:
       %ul#recipe_materials
-        - @added_materials.each do |material|
+        - @added_materials.each do |material, amount|
           %li= link_to material[0].name, material[0]
           
       %p.well  
-        = select("post", "material_id", Material.all.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
+        = select("post", "material_id", @firm.materials.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
+        = fields_for :material do |h|
+          = h.label :amount, "Määrä (g)"
+          = h.number_field :amount, min: 0
+        
         = button_to_function "Lisää", "add_material(event)", :class => "btn btn-mini"
       
       = f.submit "Tallenna", class: "btn btn-large btn-primary"

@@ -1,0 +1,6 @@
+class MaterialsRecipes < ActiveRecord::Base
+  has_many :materials
+  
+  attr_accessible :amount
+  
+end

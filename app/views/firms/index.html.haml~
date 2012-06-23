@@ -2,13 +2,11 @@
 
 %h1 Yritykset
 
-= will_paginate
 .container.bordered
-  - @firms.each do |firm|
-    = render firm
+
+= will_paginate
+- @firms.each do |firm|
+  = render firm
 
 = will_paginate
 
-= link_to new_firm_path do
-  %i.icon-plus
-  Lisää yritys

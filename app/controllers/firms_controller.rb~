@@ -1,7 +1,7 @@
 # encoding: utf-8
 class FirmsController < ApplicationController
   before_filter :signed_in_user
-  befor_filter :set_tax
+  before_filter :set_tax
   #before_filter :correct_user,   only: [:edit, :update]
   before_filter :admin_user,     only: [:new, :create, :destroy]
 
@@ -24,8 +24,9 @@ class FirmsController < ApplicationController
     if current_user.admin?
       sql = " SELECT *
       FROM firms "
-      # Could also be done like : Firm.paginate(:page: params[:page])
-      @firms = Firm.paginate_by_sql(sql, :page => params[:page])
+      #Could also be done like : Firm.paginate(:page: params[:page])
+      @firms = Firm.paginate(page: params[:page], per_page:10)
+      #@firms = Firm.paginate_by_sql(sql, :page => params[:page])
     else
       sql = " SELECT *
       FROM firms AS f

@@ -50,7 +50,7 @@ class MaterialsController < ApplicationController
   
   def destroy
     @material.destroy
-    Recipe.all.each { |r| r.reload }
+    Recipe.all.each { |r| r.save; r.reload }
     flash[:success] = "Raaka-aine poistettu."
     redirect_to @firm
   end
@@ -65,6 +65,8 @@ class MaterialsController < ApplicationController
     end
     
     def firm_admin
+      @tax = 0.13
+      
       if params[:id]
         @material = Material.find(params[:id])
         @firm = @material.firm

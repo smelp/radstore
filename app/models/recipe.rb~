@@ -9,15 +9,26 @@
 #  updated_at :datetime        not null
 
 class Recipe < ActiveRecord::Base
-  has_and_belongs_to_many :materials, :autosave => true
+  has_many :hasmaterials
+  has_many :materials, :through => :hasmaterials
+  
   belongs_to :firm
-
-  attr_accessible :name, :price
+  
+  attr_accessible :name, :price, :materials
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }
   #validates_uniqueness_of :materials
   
+  def update_price
+    saved_price = self.price
+    self.price = 0
+    self.hasmaterials.each do |material|
+      price = Material.find(material.material_id).price
+      self.price += (material.amount/1000 * price)
+    end
+    self.save
+  end
+  
   def save
-    self.price = self.materials.sum(:price)
     super
   end
 end

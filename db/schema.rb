@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120620190346) do
+ActiveRecord::Schema.define(:version => 20120621144043) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
@@ -37,6 +37,17 @@ ActiveRecord::Schema.define(:version => 20120620190346) do
   add_index "firms_users", ["firm_id", "user_id"], :name => "index_firms_users_on_firm_id_and_user_id", :unique => true
   add_index "firms_users", ["user_id"], :name => "index_firms_users_on_user_id"
 
+  create_table "hasmaterials", :force => true do |t|
+    t.integer  "material_id"
+    t.integer  "recipe_id"
+    t.float    "amount",      :default => 0.0
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+  end
+
+  add_index "hasmaterials", ["material_id", "recipe_id"], :name => "index_hasmaterials_on_material_id_and_recipe_id", :unique => true
+  add_index "hasmaterials", ["recipe_id"], :name => "index_hasmaterials_on_recipe_id"
+
   create_table "materials", :force => true do |t|
     t.string   "name"
     t.datetime "created_at",                  :null => false
@@ -44,14 +55,6 @@ ActiveRecord::Schema.define(:version => 20120620190346) do
     t.integer  "firm_id"
     t.float    "price",      :default => 0.0
   end
-
-  create_table "materials_recipes", :id => false, :force => true do |t|
-    t.integer "material_id"
-    t.integer "recipe_id"
-  end
-
-  add_index "materials_recipes", ["material_id", "recipe_id"], :name => "index_materials_recipes_on_material_id_and_recipe_id", :unique => true
-  add_index "materials_recipes", ["recipe_id"], :name => "index_materials_recipes_on_recipe_id"
 
   create_table "recipes", :force => true do |t|
     t.string   "name"

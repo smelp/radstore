@@ -24,8 +24,9 @@ class FirmsController < ApplicationController
     if current_user.admin?
       sql = " SELECT *
       FROM firms "
-      # Could also be done like : Firm.paginate(:page: params[:page])
-      @firms = Firm.paginate_by_sql(sql, :page => params[:page])
+      #Could also be done like : Firm.paginate(:page: params[:page])
+      @firms = Firm.paginate(page: params[:page], per_page:10)
+      #@firms = Firm.paginate_by_sql(sql, :page => params[:page])
     else
       sql = " SELECT *
       FROM firms AS f
@@ -98,7 +99,7 @@ class FirmsController < ApplicationController
   private
     
     def set_tax
-      @alv = 0.22
+      @tax = 0.13
     end
     
     def signed_in_user

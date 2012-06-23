@@ -15,6 +15,7 @@ class RecipesController < ApplicationController
   end
   
   def show
+    @hasmaterials = @recipe.hasmaterials
     @firm = @recipe.firm
   end
   
@@ -25,20 +26,20 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(params[:recipe])
     @recipe.firm = @firm
-    if params[:new_materials]
-      params[:new_materials].each do |material_id|
-        mat = Material.find(material_id)
-        @recipe.materials.push mat
-      end
-    end
     
     if @recipe.save
-      @recipe.price = @recipe.materials.sum(:price)
-      @recipe.save
+      if params[:new_materials]
+        params[:new_materials].each do |material|
+          Hasmaterial.create(:material_id => material[0], :recipe_id => @recipe.id, :amount => material[1])      
+        end
+      end
+      @recipe.update_price
+      
       flash[:success] = "Uusi resepti luotu!"
       redirect_to @recipe
     else
-      flash[:success] = params
+      #debugging
+      #flash[:error] = params
       render 'new'
     end
   end
@@ -47,30 +48,25 @@ class RecipesController < ApplicationController
   end
   
   def update
-    
+    Hasmaterial.destroy_all(:recipe_id => @recipe.id)
     if params[:old_materials]
-      params[:old_materials].each do |material_id|
-        mat = Material.find(material_id)
-        @added_materials.push mat
+      params[:old_materials].each do |material|
+        Hasmaterial.create(:material_id => material[0], :recipe_id => @recipe.id, :amount => material[1])
       end
     end
     
     if params[:new_materials]
-      params[:new_materials].each do |material_id|
-        mat = Material.find(material_id)
-        @added_materials.push mat
+      params[:new_materials].each do |material|
+        Hasmaterial.create(:material_id => material[0], :recipe_id => @recipe.id, :amount => material[1])     
       end
     end
     
-    if @recipe.update_attributes(params[:recipe])
-      @recipe.materials = []
-      @recipe.materials << @added_materials
-      
-      @recipe.save
+    if @recipe.update_attributes(params[:recipe]) && @recipe.save
+      @recipe.update_price
       flash[:success] = "Resepti tallennettu"
       redirect_to @recipe
     else 
-      flash.now[:error] = params
+      #flash.now[:error] = params
       render 'edit'
     end
   end
@@ -93,6 +89,7 @@ class RecipesController < ApplicationController
     def firm_admin
       
       @added_materials = []
+      @tax = 0.13
       if params[:id]
         @recipe = Recipe.find(params[:id])
         @firm = @recipe.firm

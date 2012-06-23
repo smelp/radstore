@@ -17,10 +17,36 @@ namespace :db do
                    password_confirmation: password)
     end
     
-    firm = Firm.new(name: "Example Firm",
-                         corporate_id: "1234567-8",
+    #Firms
+    firm = Firm.new(name: "Firma 1",
+                         corporate_id: "2234567-8",
                          location: "Helsinki")
     firm.resource = Bakery.new(description: "Sample description")
     firm.save!
+    
+    99.times do |n|
+      name  = Faker::Company.name
+      corporate_id = "1234567-#{n}"
+      location = Faker::Address.city
+      resource = Bakery.new(description: "Sample description #{n}")
+      f = Firm.create!(name: name,
+                   corporate_id: corporate_id,
+                   location: location,
+                   resource: resource)
+      #Materials
+      material = Material.new(name: "Kala",
+                        price: 1.3)
+      material.save!
+    
+      20.times do |n|
+        name  = Faker::Name.name
+        price = n
+        firm = f
+        Material.create!(name: name,
+                     price: price,
+                     firm: firm)
+      end
+    
+    end
   end
 end
