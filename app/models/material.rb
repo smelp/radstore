@@ -14,10 +14,10 @@ class Material < ActiveRecord::Base
   has_many :recipes, :through => :hasmaterials
   belongs_to :firm
     
-  attr_accessible :name, :firm, :price, :recipes
+  attr_accessible :name, :firm, :price
   
-  validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :maximum => 50, :message => "Nimen pituus 5-50 merkkiä" } 
+  validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen pituus 5-50 merkkiä" } 
   validates :price, presence: { :message => "Hinta on pakollinen" }
-  validates_numericality_of :price, :message => "Hinnan täytyy olla numero!"
+  validates_numericality_of :price, { :greater_than_or_equal_to => 0, :message => "Hinnan täytyy olla positiivinen numero!" }
   
 end

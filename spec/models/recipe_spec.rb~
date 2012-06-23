@@ -17,11 +17,13 @@ describe Recipe do
   subject { @recipe }
 
   it { should respond_to(:name) }
+  it { should respond_to(:price) }
   
   it { should be_valid }
   
-  it { should have_and_belong_to_many(:materials) }
-  it { should have_one(:firm) }
+  it { should have_many(:materials) }
+  it { should have_many(:hasmaterials) }
+  it { should belong_to(:firm) }
   
   describe "when name is not present" do
     before { @recipe.name = " " }
@@ -30,6 +32,16 @@ describe Recipe do
   
   describe "when name is too long" do
     before { @recipe.name = "a" * 51 }
+    it { should_not be_valid }
+  end
+  
+  describe "when price is ok" do
+    before { @recipe.price = 2.3 }
+    it { should be_valid }
+  end
+  
+  describe "when price is negative" do
+    before { @recipe.price = -2 }
     it { should_not be_valid }
   end
   

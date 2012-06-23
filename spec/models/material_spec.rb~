@@ -12,15 +12,18 @@
 require 'spec_helper'
 
 describe Recipe do
-  before { @material = Recipe.new(name: "Example Material") }
+  before { @material = Material.new(name: "Example Material") }
 
   subject { @material }
 
   it { should respond_to(:name) }
+  it { should respond_to(:firm) }
+  it { should respond_to(:price) }
   
   it { should be_valid }
   
-  it { should have_and_belong_to_many(:recipes) }
+  it { should have_many(:recipes) }
+  it { should have_many(:hasmaterials) }
   
   describe "when name is not present" do
     before { @material.name = " " }

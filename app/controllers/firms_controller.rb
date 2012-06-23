@@ -2,7 +2,6 @@
 class FirmsController < ApplicationController
   before_filter :signed_in_user
   before_filter :set_tax
-  #before_filter :correct_user,   only: [:edit, :update]
   before_filter :admin_user,     only: [:new, :create, :destroy]
 
   def show
@@ -22,11 +21,7 @@ class FirmsController < ApplicationController
   
   def index
     if current_user.admin?
-      sql = " SELECT *
-      FROM firms "
-      #Could also be done like : Firm.paginate(:page: params[:page])
       @firms = Firm.paginate(page: params[:page], per_page:10)
-      #@firms = Firm.paginate_by_sql(sql, :page => params[:page])
     else
       sql = " SELECT *
       FROM firms AS f
@@ -107,11 +102,6 @@ class FirmsController < ApplicationController
         store_location
         redirect_to signin_path, notice: "Kirjaudu sisään."
       end
-    end
-
-    def correct_user
-      @user = User.find(params[:id])
-      redirect_to(root_path) unless current_user?(@user)
     end
     
     def admin_user
