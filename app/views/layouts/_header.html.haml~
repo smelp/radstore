@@ -11,6 +11,10 @@
           = if signed_in?
             = if is_admin?
               %li= link_to "Käyttäjät", users_path             
+            %li
+              = link_to :controller => "firms", :action => "index" do
+                %i.icon-list-alt.icon-white
+                Yritykset
             %li#fat-menu.dropdown 
               %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} 
                 %i.icon-cog.icon-white
@@ -22,11 +26,4 @@
                 %li.divider
                 %li= link_to "Kirjaudu ulos", signout_path, method: "delete"
           - else
-            %li= link_to "Kirjaudu", signin_path
-        %ul{class:'nav pull-right'}
-          = if signed_in?
-            %li
-              = link_to :controller => "firms", :action => "index" do
-                %i.icon-list-alt.icon-white
-                Yritykset
-              
+            %li= link_to "Kirjaudu", signin_path      

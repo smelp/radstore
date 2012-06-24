@@ -8,7 +8,7 @@
             = link_to :controller => "static_pages", :action => "home" do
               %i.icon-home.icon-white
               Koti
-          = if signed_in?
+          - if signed_in?
             = if is_admin?
               %li= link_to "Käyttäjät", users_path             
             %li
