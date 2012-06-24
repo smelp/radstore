@@ -6,7 +6,7 @@ class MaterialsController < ApplicationController
 
   def index
     list = []
-    @firm.materials.each { |e| list.push e.id }
+    @bakery.materials.each { |e| list.push e.id }
     sql = " SELECT *
       FROM materials AS m
       WHERE m.id IN (#{list.join(',')})"
@@ -25,12 +25,12 @@ class MaterialsController < ApplicationController
   
   def create
     @material = Material.new(params[:material])
-    @material.firm = @firm
+    @material.bakery = @bakery
     
     if @material.save
       @material.recipes.each { |r| r.save }
       flash[:success] = "Uusi raaka-aine luotu!"
-      redirect_to @firm
+      redirect_to @bakery
     else
       render 'new'
     end
@@ -53,7 +53,7 @@ class MaterialsController < ApplicationController
     @material.destroy
     Recipe.all.each { |r| r.save; r.reload }
     flash[:success] = "Raaka-aine poistettu."
-    redirect_to @firm
+    redirect_to @bakery
   end
   
   private
@@ -70,19 +70,19 @@ class MaterialsController < ApplicationController
       
       if params[:id]
         @material = Material.find(params[:id])
-        @firm = @material.firm
-      elsif params[:firm_id]
-        @firm = Firm.find_by_id(params[:firm_id])
-        if !@firm 
+        @bakery = @material.bakery
+      elsif params[:bakery_id]
+        @bakery = Bakery.find_by_id(params[:bakery_id])
+        if !@bakery 
           @material = nil
-          @firm = nil
+          @bakery = nil
         end
       end
       
-      if @material and @material.firm
-        admins = @material.firm.users #later change to include only admins
-      elsif @firm
-        admins = @firm.users #later change to include only admins
+      if @material and @material.bakery
+        admins = @material.bakery.firm.users #later change to include only admins
+      elsif @bakery
+        admins = @bakery.firm.users #later change to include only admins
       else 
         admins = []
         flash[:error] = "Ei lupaa tehdä muutoksia."

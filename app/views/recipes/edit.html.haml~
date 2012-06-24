@@ -31,7 +31,7 @@
       %p.well  
         = select("post", "material_id", @firm.materials.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
         = fields_for :material do |h|
-          = h.label :amount, "Määrä"
+          = h.label :amount, "Määrä (g)"
           = h.number_field :amount, min: 0
         
         = button_to_function "Lisää", "add_material(event)", :class => "btn btn-mini"
@@ -43,6 +43,6 @@
         %i.icon-arrow-left
         Takaisin
       |
-      = link_to "Kaikki reseptit", :controller => "recipes", :action => "index", :firm_id => @firm.id
+      = link_to "Kaikki reseptit", :controller => "recipes", :action => "index", :bakery_id => @bakery.id
       |
       = link_to "Poista", @recipe, method: :delete, confirm: "Haluatko varmasti poistaa reseptin?"

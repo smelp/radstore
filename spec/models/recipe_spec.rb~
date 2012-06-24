@@ -30,6 +30,11 @@ describe Recipe do
     it { should_not be_valid }
   end
   
+  describe "when name is too short" do
+    before { @recipe.name = "a" }
+    it { should_not be_valid }
+  end
+  
   describe "when name is too long" do
     before { @recipe.name = "a" * 51 }
     it { should_not be_valid }

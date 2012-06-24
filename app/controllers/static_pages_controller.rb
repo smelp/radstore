@@ -8,14 +8,14 @@ class StaticPagesController < ApplicationController
       sql = " SELECT *
       FROM firms "
       # Could also be done like : Firm.paginate(:page: params[:page])
-      @firms = Firm.paginate_by_sql(sql, :page => params[:page])
+      @static_pages = Firm.paginate(:page => params[:page], :per_page => 10)
     else
       sql = " SELECT *
       FROM firms AS f
       WHERE f.id IN (SELECT u.firm_id 
         FROM firms_users AS u 
         WHERE user_id='#{current_user.id}')"
-      @firms = Firm.paginate_by_sql(sql, :page => params[:page])
+      @static_pages = Firm.paginate_by_sql(sql, :page => params[:page], :per_page => 10)
     end
   end
 

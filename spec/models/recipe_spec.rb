@@ -23,7 +23,7 @@ describe Recipe do
   
   it { should have_many(:materials) }
   it { should have_many(:hasmaterials) }
-  it { should belong_to(:firm) }
+  it { should belong_to(:bakery) }
   
   describe "when name is not present" do
     before { @recipe.name = " " }

@@ -3,17 +3,19 @@
     %div.container
       = link_to "devlfin", root_path, id: "logo"    
       %nav
-        %ul{class:'nav pull-left'}
-          = if signed_in?
-              %li= link_to "Yritykset",  firms_path
         %ul{class:'nav pull-right'}
-          %li= link_to "Koti",    root_path
-          %li= link_to "Apua",    help_path
+          %li
+            = link_to :controller => "static_pages", :action => "home" do
+              %i.icon-home.icon-white
+              Koti
           = if signed_in?
             = if is_admin?
               %li= link_to "Käyttäjät", users_path             
             %li#fat-menu.dropdown 
-              %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} Tili<b class="caret"></b> 
+              %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} 
+                %i.icon-cog.icon-white
+                Tili<b class="caret"></b> 
+              
               %ul.dropdown-menu
                 = link_to "Profiili", current_user
                 = link_to "Asetukset", edit_user_path(current_user)
@@ -21,4 +23,10 @@
                 %li= link_to "Kirjaudu ulos", signout_path, method: "delete"
           - else
             %li= link_to "Kirjaudu", signin_path
+        %ul{class:'nav pull-right'}
+          = if signed_in?
+            %li
+              = link_to :controller => "firms", :action => "index" do
+                %i.icon-list-alt.icon-white
+                Yritykset
               

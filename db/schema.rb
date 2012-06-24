@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(:version => 20120621144043) do
     t.string   "name"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
-    t.integer  "firm_id"
+    t.integer  "bakery_id"
     t.float    "price",      :default => 0.0
   end
 
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20120621144043) do
     t.string   "name"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
-    t.integer  "firm_id"
+    t.integer  "bakery_id"
     t.float    "price",      :default => 0.0
   end
 

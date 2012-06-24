@@ -14,8 +14,6 @@
 #
 class Firm < ActiveRecord::Base
   has_and_belongs_to_many :users
-  has_many :recipes
-  has_many :materials
   belongs_to :resource, :polymorphic => true, :autosave => true
   
   resource_list = ["Bakery"]

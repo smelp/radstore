@@ -1,11 +1,11 @@
-= provide(:title, 'Yritykset')
+= provide(:title, 'Konditoriat')
 
-%h1 Yritykset
+%h1 Konditoriat
 
 .container.bordered
 
   = will_paginate
-  - @firms.each do |firm|
+  - @bakeries.each do |firm|
     = render firm
 
   = will_paginate

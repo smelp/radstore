@@ -17,26 +17,44 @@
           = link_to "Kaikki yritykset",    firms_path
   - else
     .row.well.green
-      %h2 Reseptit
+      .row
+        .span2
+          %h2 Reseptit
+        .span5
+          = form_tag({ :controller => "bakeries", :action => "show" }, :class => "form-search form-inline") do
+            = text_field_tag :search_recipe, "", :class => "input search-query input-medium", :placeholder => "Etsi reseptejä"
+            = submit_tag "Etsi", :class => "btn btn-small"
+
+      = will_paginate @recipes, :previous_label => "Edellinen", :next_label => "Seuraava"
       %table.table.table-condensed.table-striped.table-bordered
         %thead
           %th Nimi
           %th Veroton hinta
           %th Verollinen hinta
           
-        %tbody  
+        %tbody
           - @recipes.each do |recipe|
             %tr
               %td.span4= link_to recipe.name, recipe
               %td.span3= (recipe.price).round(2)
               %td.span3= (recipe.price + (recipe.price * @tax)).round(2)
               
-      = link_to :controller => "recipes", :action => "new", :firm_id => @firm.id do
+      = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
         %i.icon-plus
         Lisää resepti
 
     .row.well.blue
-      %h2 Raaka-aineet
+      .row
+        .span2
+          %h2 Raaka-aineet
+        .span5
+          .span5
+            = form_tag({ :controller => "bakeries", :action => "show" }, :class => "form-search form-inline") do
+              = text_field_tag :search_material, "", :class => "input search-query input-medium", :placeholder => "Etsi raaka-aineita"
+              = submit_tag "Etsi", :class => "btn btn-small"
+      
+      
+      = will_paginate @materials, :previous_label => "Edellinen", :next_label => "Seuraava"
       %table.table.table-condensed.table-striped.table-bordered
         %thead
           %th Nimi
@@ -48,13 +66,14 @@
               %td.span4= link_to material.name, material
               %td.span3= (material.price).round(2)
               %td.span3= (material.price + (material.price * @tax)).round(2)
-              
-      = link_to :controller => "materials", :action => "new", :firm_id => @firm.id do
+                
+      = link_to :controller => "materials", :action => "new", :bakery_id => @bakery.id do
         %i.icon-plus
         Lisää raaka-aine
     
 .row.well
   %h2 Käyttäjät
+  = will_paginate @users, :previous_label => "Edellinen", :next_label => "Seuraava"
   %table.table.table-condensed.table-striped.table-bordered
     %thead
       %th Nimi

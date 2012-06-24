@@ -4,9 +4,9 @@
 
 .container.bordered
 
-  = will_paginate
+  = will_paginate, :previous_label => "Edellinen", :next_label => "Seuraava"
   - @firms.each do |firm|
     = render firm
 
-  = will_paginate
+  = will_paginate, :previous_label => "Edellinen", :next_label => "Seuraava"
 

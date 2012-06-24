@@ -2,10 +2,15 @@
 %h1 Yrityksesi
 
 .container.bordered
-  - @firms.each do |firm|
-    = render firm
 
-- if is_admin?
-  = link_to new_firm_path do
-    %i.icon-plus
-    Lisää yritys
+  = will_paginate
+  - @static_pages.each do |firm|
+    = render firm
+    
+= will_paginate
+
+.container
+  - if is_admin?
+    = link_to new_firm_path do
+      %i.icon-plus
+      Lisää yritys

@@ -15,44 +15,7 @@
           = link_to "Muokkaa tietoja",    edit_firm_path
           |
           = link_to "Kaikki yritykset",    firms_path
-  - else
-    .row.well.green
-      %h2 Reseptit
-      %table.table.table-condensed.table-striped.table-bordered
-        %thead
-          %th Nimi
-          %th Veroton hinta
-          %th Verollinen hinta
           
-        %tbody  
-          - @recipes.each do |recipe|
-            %tr
-              %td.span4= link_to recipe.name, recipe
-              %td.span3= (recipe.price).round(2)
-              %td.span3= (recipe.price + (recipe.price * @tax)).round(2)
-              
-      = link_to :controller => "recipes", :action => "new", :firm_id => @firm.id do
-        %i.icon-plus
-        Lisää resepti
-
-    .row.well.blue
-      %h2 Raaka-aineet
-      %table.table.table-condensed.table-striped.table-bordered
-        %thead
-          %th Nimi
-          %th Veroton kilohinta (€)
-          %th Verollinen kilohinta (€)
-        %tbody
-          - @materials.each do |material|
-            %tr
-              %td.span4= link_to material.name, material
-              %td.span3= (material.price).round(2)
-              %td.span3= (material.price + (material.price * @tax)).round(2)
-              
-      = link_to :controller => "materials", :action => "new", :firm_id => @firm.id do
-        %i.icon-plus
-        Lisää raaka-aine
-    
 .row.well
   %h2 Käyttäjät
   %table.table.table-condensed.table-striped.table-bordered

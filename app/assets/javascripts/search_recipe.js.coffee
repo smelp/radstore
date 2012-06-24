@@ -1,0 +1,19 @@
+window.add_material = (e) ->
+  choice = $('#post_material_id').get(0)
+  amount = $('#material_amount').get(0).value
+  val = choice.value
+  elem = document.createElement('input')
+  list_elem = document.createElement('li')
+    
+  for option in choice
+    if option.value == val && option.innerHTML != "Valitse raaka-aine"
+      list_elem.innerHTML = option.innerHTML + ", määrä: " + amount + " g</br>"  
+      material = [val, amount]
+      elem.type = "hidden"
+      elem.name = "new_materials[" + material + "]"
+      elem.value = amount
+      $('#recipe_materials').append elem
+      $('#recipe_materials').append list_elem
+  
+  console.log val
+  console.log amount

@@ -24,7 +24,7 @@ namespace :db do
     firm.resource = Bakery.new(description: "Sample description")
     firm.save!
     
-    99.times do |n|
+    20.times do |n|
       name  = Faker::Company.name
       corporate_id = "1234567-#{n}"
       location = Faker::Address.city
@@ -38,13 +38,13 @@ namespace :db do
                         price: 1.3)
       material.save!
     
-      20.times do |n|
+      10.times do |n|
         name  = Faker::Name.name
         price = n
-        firm = f
+        bakery = resource
         Material.create!(name: name,
                      price: price,
-                     firm: firm)
+                     bakery: bakery)
       end
     
     end

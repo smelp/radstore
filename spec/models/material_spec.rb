@@ -17,13 +17,14 @@ describe Recipe do
   subject { @material }
 
   it { should respond_to(:name) }
-  it { should respond_to(:firm) }
+  it { should respond_to(:bakery) }
   it { should respond_to(:price) }
   
   it { should be_valid }
   
   it { should have_many(:recipes) }
   it { should have_many(:hasmaterials) }
+  it { should belong_to(:bakery) }
   
   describe "when name is not present" do
     before { @material.name = " " }

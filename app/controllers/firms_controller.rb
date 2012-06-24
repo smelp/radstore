@@ -13,22 +13,22 @@ class FirmsController < ApplicationController
     else
       if @firm.resource.class == Bakery
         @bakery = Bakery.find(params[:id])
-        @recipes = @firm.recipes
-        @materials = @firm.materials
+        @recipes = @bakery.recipes
+        @materials = @bakery.materials
       end
     end
   end
   
   def index
     if current_user.admin?
-      @firms = Firm.paginate(page: params[:page], per_page:10)
+      @firms = Firm.paginate(:page => params[:page], :per_page => 10)
     else
       sql = " SELECT *
       FROM firms AS f
       WHERE f.id IN (SELECT u.firm_id 
         FROM firms_users AS u 
         WHERE user_id='#{current_user.id}')"
-      @firms = Firm.paginate_by_sql(sql, :page => params[:page])
+      @firms = Firm.paginate_by_sql(sql, :page => params[:page], :per_page => 10)
     end
   end
   
@@ -39,9 +39,8 @@ class FirmsController < ApplicationController
   
   def create
     @firm = Firm.new(params[:firm])
-    bakery = Bakery.new(params[:resource])
     @firm.attributes = params[:firm]
-    @firm.resource = bakery
+    @firm.resource = Bakery.new(params[:resource])
     
     if params[:users]
       params[:users].each do |user_id|
@@ -54,7 +53,7 @@ class FirmsController < ApplicationController
       flash[:success] = "Yritys onnistuneesti luotu"
       redirect_to firms_path
     else
-      flash.now[:error] = params
+      flash.now[:error] = "Yrityksen luonti ei onnistunut."
       render 'new'
     end
   end

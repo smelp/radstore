@@ -12,9 +12,9 @@ class Recipe < ActiveRecord::Base
   has_many :hasmaterials
   has_many :materials, :through => :hasmaterials
   
-  belongs_to :firm
+  belongs_to :bakery
   
-  attr_accessible :name, :price
+  attr_accessible :name, :price, :bakery
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }
   validates_numericality_of :price, { :greater_than_or_equal_to => 0, :message => "Hinnan täytyy olla positiivinen numero!" }
   #validates_uniqueness_of :materials
@@ -30,5 +30,11 @@ class Recipe < ActiveRecord::Base
   
   def save
     super
+  end
+  
+  def self.search(search, page)
+    paginate :per_page => 5, :page => page,
+           :conditions => ['name like ?', "%#{search}%"],
+           :order => 'name'
   end
 end

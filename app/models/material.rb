@@ -12,9 +12,9 @@
 class Material < ActiveRecord::Base
   has_many :hasmaterials
   has_many :recipes, :through => :hasmaterials
-  belongs_to :firm
+  belongs_to :bakery
     
-  attr_accessible :name, :firm, :price
+  attr_accessible :name, :bakery, :price
   
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen pituus 5-50 merkkiä" } 
   validates :price, presence: { :message => "Hinta on pakollinen" }

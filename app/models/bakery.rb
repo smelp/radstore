@@ -10,6 +10,10 @@
 
 class Bakery < ActiveRecord::Base
   has_one :firm, :as => :resource
-  attr_accessible :description
+  has_many :recipes
+  has_many :materials
+  
+  attr_accessible :description, :firm
   validates :description, presence: true, :length => { :maximum => 500 }
+  
 end

@@ -6,7 +6,7 @@ class RecipesController < ApplicationController
 
   def index
     list = []
-    @firm.recipes.each { |e| list.push e.id }
+    @bakery.recipes.each { |e| list.push e.id }
     sql = " SELECT *
       FROM recipes AS r
       WHERE r.id IN (#{list.join(',')})"
@@ -16,7 +16,7 @@ class RecipesController < ApplicationController
   
   def show
     @hasmaterials = @recipe.hasmaterials
-    @firm = @recipe.firm
+    @bakery = @recipe.bakery
   end
   
   def new
@@ -25,7 +25,7 @@ class RecipesController < ApplicationController
   
   def create
     @recipe = Recipe.new(params[:recipe])
-    @recipe.firm = @firm
+    @recipe.bakery = @bakery
     
     if @recipe.save
       if params[:new_materials]
@@ -66,7 +66,7 @@ class RecipesController < ApplicationController
       flash[:success] = "Resepti tallennettu"
       redirect_to @recipe
     else 
-      #flash.now[:error] = params
+      flash.now[:error] = "Reseptin tallennus ei onnistunut."
       render 'edit'
     end
   end
@@ -74,7 +74,7 @@ class RecipesController < ApplicationController
   def destroy
     @recipe.destroy
     flash[:success] = "Resepti poistettu."
-    redirect_to @firm
+    redirect_to @bakery
   end
   
   private
@@ -92,18 +92,18 @@ class RecipesController < ApplicationController
       @tax = 0.13
       if params[:id]
         @recipe = Recipe.find(params[:id])
-        @firm = @recipe.firm
-      elsif params[:firm_id]
-        @firm = Firm.find_by_id(params[:firm_id])
-        if !@firm
+        @bakery = @recipe.bakery
+      elsif params[:bakery_id]
+        @bakery = Bakery.find_by_id(params[:bakery_id])
+        if !@bakery
           @recipe = nil
         end
       end
       
-      if @recipe and @recipe.firm
-        admins = @recipe.firm.users #later change to include only admins
-      elsif @firm
-        admins = @firm.users #later change to include only admins
+      if @recipe and @recipe.bakery
+        admins = @recipe.bakery.firm.users #later change to include only admins
+      elsif @bakery
+        admins = @bakery.firm.users #later change to include only admins
       else
         flash[:error] = "Ei lupaa tehdä muutoksia." 
         admins = []
