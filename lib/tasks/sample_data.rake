@@ -53,9 +53,9 @@ namespace :db do
   desc "Create admin to database"
   task create_admin: :environment do
     admin = User.create!(name: "admin",
-                         email: "example@foo.bar",
-                         password: "foobar",
-                         password_confirmation: "foobar")
+                         email: "foo@gmail.com",
+                         password: "thisisnotinuse",
+                         password_confirmation: "thisisnotinuse")
     admin.toggle!(:admin)
   end  
   
