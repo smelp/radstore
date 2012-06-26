@@ -2,17 +2,31 @@
 
 %h1 Raaka-aineet
 
-= will_paginate
-
-.container.bordered
-  - @materials.each do |material|
-    = render material
+.container
+  .span6.offset3
+    = render "shared/nav"
 
 = will_paginate
 
 .container
   .span6.offset3
-    = link_to :controller => "materials", :action => "new", :firm_id => @firm.id do
+    %table.table
+      %thead
+        %th Nimi
+        %th Kilohinta
+      %tbody
+        - @materials.each do |material|
+          %tr
+            %td= link_to material.name, material
+            %td 
+              = material.price
+              €
+
+= will_paginate
+
+.container
+  .span6.offset3
+    = link_to :controller => "materials", :action => "new", :bakery_id => @bakery.id do
       %i.icon-plus
       Lisää raaka-aine
 

@@ -12,12 +12,13 @@
         
         = hidden_field_tag :bakery_id, @bakery.id
         
-        %h4 Raaka-aineet:
-        
-        %p#recipe_materials
+        %table.table#recipe_materials
+          %thead
+            %th Lisättävät
+        %tbody
         
       %p.well  
-        = select("post", "material_id", @firm.materials.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
+        = select("post", "material_id", @bakery.materials.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
         = fields_for :material do |h|
           = h.label :amount, "Määrä (g)"
           = h.number_field :amount, min: 0

@@ -3,10 +3,20 @@
 %h1 Yritykset
 
 .container.bordered
-
-  = will_paginate
-  - @firms.each do |firm|
-    = render firm
-
-  = will_paginate
+  .span9.offset1
+    = will_paginate
+    - if @firms.empty?
+      .well.span7.offset1.alert-error
+        %p Tiliisi ei vielä ole liitetty yrityksiä. Jos haluat liittää yrityksen, ota yhteyttä meihin.
+    - else
+      .well.span7.offset1.blue
+        - @firms.each do |firm|
+          = render firm
+.container
+  .span9.offset1
+    = will_paginate
+    - if is_admin?
+      = link_to new_firm_path do
+        %i.icon-plus
+        Lisää yritys
 

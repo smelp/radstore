@@ -1,5 +1,10 @@
 - provide(:title, 'Luo raaka-aine')
 %h1 Luo raaka-aine
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+    
 .row
   .span6.offset3
     = form_for @material do |f|
@@ -13,7 +18,3 @@
       = hidden_field_tag :bakery_id, @bakery.id
       
       = f.submit "Luo raaka-aine", class: "btn btn-large btn-primary"
-    
-    = link_to request.env["HTTP_REFERER"] do
-      %i.icon-arrow-left
-      Takaisin

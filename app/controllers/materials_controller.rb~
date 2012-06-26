@@ -6,12 +6,13 @@ class MaterialsController < ApplicationController
 
   def index
     list = []
-    @firm.materials.each { |e| list.push e.id }
-    sql = " SELECT *
-      FROM materials AS m
-      WHERE m.id IN (#{list.join(',')})"
-        
-    @materials = Material.paginate_by_sql(sql, :page => params[:page])
+    @bakery.materials.each { |e| list.push e.id }
+    #obsolete:
+    #sql = " SELECT *
+    #  FROM materials AS m
+    #  WHERE m.id IN (#{list.join(',')})"
+    #    
+    @materials = @bakery.materials.paginate(:page => params[:page]).order('name')
   end
 
   def show
@@ -25,12 +26,12 @@ class MaterialsController < ApplicationController
   
   def create
     @material = Material.new(params[:material])
-    @material.firm = @firm
+    @material.bakery = @bakery
     
     if @material.save
       @material.recipes.each { |r| r.save }
       flash[:success] = "Uusi raaka-aine luotu!"
-      redirect_to @firm
+      redirect_to @bakery
     else
       render 'new'
     end

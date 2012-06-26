@@ -1,5 +1,10 @@
 - provide(:title, 'Luo raaka-aine')
 %h1 Luo raaka-aine
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+    
 .row
   .span6.offset3
     = form_for @material do |f|
@@ -9,12 +14,8 @@
         = f.text_field :name 
         = f.label :price, "Kilohinta (€)"
         = f.text_field :price
-        
-      = fields_for @firm do |l|
-        = l.label :name, "Yritykseen:"
-        = l.text_field :name, disabled: true
-        
-      = hidden_field_tag :firm_id, @firm.id
+          
+      = hidden_field_tag :bakery_id, @bakery.id
       
       = f.submit "Luo raaka-aine", class: "btn btn-large btn-primary"
     

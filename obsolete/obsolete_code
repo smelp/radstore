@@ -1,0 +1,6 @@
+#obsolete:
+    #sql = " SELECT *
+    #  FROM materials AS m
+    #  WHERE m.id IN (#{list.join(',')})"
+    #    
+    

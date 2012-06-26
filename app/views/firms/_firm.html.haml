@@ -1,10 +1,10 @@
-.well.span11
-  .span8
+.well.span6
+  .span4
     - #smart way to make links to any kind of firms..
     %h3= link_to firm.name, firm.resource.class.find(firm.resource_id)
     %p Toimiala: #{firm.resource_type}
     %p Työntekijöitä: #{firm.users.count}
-  .span2
+  .span1
     - if current_user.admin?
       = button_to "Muokkaa", { controller: :firms, action: :edit, :id => firm.id }, method: :get, class: "btn btn-mini btn-primary"      
       = button_to "Poista", firm, controller: :firms, method: :delete, confirm: "Haluatko varmasti poistaa yrityksen?", class: "btn btn-mini btn-danger"

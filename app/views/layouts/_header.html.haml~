@@ -8,9 +8,12 @@
             = link_to :controller => "static_pages", :action => "home" do
               %i.icon-home.icon-white
               Koti
-          = if signed_in?
-            = if is_admin?
-              %li= link_to "Käyttäjät", users_path             
+          - if signed_in?
+            - if is_admin?
+              %li
+                = link_to controller: :users, action: :index do
+                  %i.icon-user.icon-white
+                  Käyttäjät             
             %li
               = link_to :controller => "firms", :action => "index" do
                 %i.icon-list-alt.icon-white
@@ -26,4 +29,7 @@
                 %li.divider
                 %li= link_to "Kirjaudu ulos", signout_path, method: "delete"
           - else
-            %li= link_to "Kirjaudu", signin_path      
+            %li
+              = link_to controller: :sessions, action: :new do
+                %i.icon-chevron-right.icon-white
+                Kirjaudu     

@@ -1,10 +1,12 @@
-= provide(:title, 'All users')
-%h1 All users
+= provide(:title, 'Käyttäjät')
+%h1 Kaikki käyttäjät
 
-= will_paginate
-
-%ul.users
-  - @users.each do |user|
-    %li= render user
-
-= will_paginate
+.container.bordered
+  .span7.offset1
+    .span7.offset1
+      = will_paginate
+    .well.span7.offset1
+      %ul.users
+        - @users.each do |user|
+          %li= render user
+      = will_paginate

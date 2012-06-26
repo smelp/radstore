@@ -9,8 +9,11 @@
               %i.icon-home.icon-white
               Koti
           - if signed_in?
-            = if is_admin?
-              %li= link_to "Käyttäjät", users_path             
+            - if is_admin?
+              %li
+                = link_to controller: :users, action: :index do
+                  %i.icon-user.icon-white
+                  Käyttäjät             
             %li
               = link_to :controller => "firms", :action => "index" do
                 %i.icon-list-alt.icon-white
@@ -18,7 +21,7 @@
             %li#fat-menu.dropdown 
               %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} 
                 %i.icon-cog.icon-white
-                Tili<b class="caret"></b> 
+                <b class="caret"></b> 
               
               %ul.dropdown-menu
                 = link_to "Profiili", current_user
@@ -26,4 +29,7 @@
                 %li.divider
                 %li= link_to "Kirjaudu ulos", signout_path, method: "delete"
           - else
-            %li= link_to "Kirjaudu", signin_path      
+            %li
+              = link_to controller: :sessions, action: :new do
+                %i.icon-chevron-right.icon-white
+                Kirjaudu     

@@ -23,10 +23,9 @@
         .span5
           = form_tag({ :controller => "bakeries", :action => "show" }, :class => "form-search form-inline") do
             = text_field_tag :search_recipe, "", :class => "input search-query input-medium", :placeholder => "Etsi reseptejä"
-            .hidden
-              = submit_tag "Etsi", :class => "btn btn-small"
+            = submit_tag "Etsi", :class => "btn btn-small"
 
-      = will_paginate @recipes, :previous_label => "Edellinen", :next_label => "Seuraava"
+      = will_paginate @recipes, :param_name => 'recipe_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_recipe => @search_params
       %table.table.table-condensed.table-striped.table-bordered
         %thead
           %th Nimi
@@ -55,7 +54,7 @@
               = submit_tag "Etsi", :class => "btn btn-small"
       
       
-      = will_paginate @materials, :previous_label => "Edellinen", :next_label => "Seuraava"
+      = will_paginate @materials, :param_name => 'material_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_material => @search_params
       %table.table.table-condensed.table-striped.table-bordered
         %thead
           %th Nimi

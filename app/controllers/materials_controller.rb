@@ -7,11 +7,7 @@ class MaterialsController < ApplicationController
   def index
     list = []
     @bakery.materials.each { |e| list.push e.id }
-    sql = " SELECT *
-      FROM materials AS m
-      WHERE m.id IN (#{list.join(',')})"
-        
-    @materials = Material.paginate_by_sql(sql, :page => params[:page])
+    @materials = @bakery.materials.paginate(:page => params[:page]).order('name')
   end
 
   def show

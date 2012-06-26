@@ -6,6 +6,7 @@ class FirmsController < ApplicationController
 
   def show
     @firm = Firm.find(params[:id])
+    @email_us = "jjaukka@cs.helsinki.fi"
     if current_user.admin?  
       if @firm.resource.class == Bakery
         @bakery = Bakery.find(params[:id])

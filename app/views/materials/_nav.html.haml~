@@ -1,0 +1,6 @@
+= link_to request.env["HTTP_REFERER"] do
+  %i.icon-arrow-left
+  Takaisin
+  |
+  = link_to "Oma sivu", :controller => "bakeries", :action => "show", :id => @bakery.id
+  

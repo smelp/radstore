@@ -2,17 +2,29 @@
 
 %h1 Reseptit
 
+.container
+  .span6.offset3
+    = render "shared/nav"
+
 .span6.offset3
   = will_paginate
 
-.container.bordered
-  
-  - @recipes.each do |recipe|
-    = render recipe
-
 .container
   .span6.offset3
-    = link_to :controller => "recipes", :action => "new", :firm_id => @firm.id do
+    %table.table
+      %thead
+        %th Nimi
+        %th Hinta
+      %tbody
+        - @recipes.each do |recipe|
+          %tr
+            %td= link_to recipe.name, recipe
+            %td 
+              = recipe.price
+              €
+.container
+  .span6.offset3
+    = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
       %i.icon-plus
       Lisää resepti
 

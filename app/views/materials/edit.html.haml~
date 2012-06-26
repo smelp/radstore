@@ -1,4 +1,9 @@
 - provide(:title, 'Muokkaa raaka-aine')
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+
 %h1 Muokkaa raaka-ainetta
 .row
   .span6.offset3.well.green
@@ -17,6 +22,6 @@
         %i.icon-arrow-left
         Takaisin
       |
-      = link_to "Kaikki raaka-aineet", :controller => "materials", :action => "index", :firm_id => @firm.id
+      = link_to "Kaikki raaka-aineet", :controller => "materials", :action => "index", :bakery_id => @bakery.id
       |
       = link_to "Poista", @material, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen?"

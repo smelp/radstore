@@ -1,4 +1,9 @@
 - provide(:title, @recipe.name)
+
+.container
+  .span8.offset2
+    = render "shared/nav"
+    
 .container
   .span8.offset2
     .row.well.green
@@ -23,15 +28,13 @@
               %td= (material.price * (amount/1000) + (material.price * (amount/1000) * @tax)).round(2)
         %thead
           %th yht.
-          %th= @hasmaterials.sum(:amount)
+          %th
+            = @hasmaterials.sum(:amount)
+            g
           %th
           %th #{@recipe.price.round(2)} €
           %th #{(@recipe.price + (@recipe.price * @tax)).round(2)} €
             
-      = link_to request.env["HTTP_REFERER"] do
-        %i.icon-arrow-left
-        Takaisin
-      |
       = link_to :controller => "recipes", :action => "edit", :id => @recipe.id do
         %i.icon-edit
         Muokkaa

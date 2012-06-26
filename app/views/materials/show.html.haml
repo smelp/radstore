@@ -2,6 +2,10 @@
 
 .container
   .span6.offset3
+    = render "shared/nav"
+
+.container
+  .span6.offset3
     .row.well.green
 
       %h2.bordered-bottom= @material.name
@@ -20,10 +24,6 @@
               %td= link_to (recipe.price).round(2), recipe
               %td= link_to (recipe.price + (recipe.price * @tax)).round(2), recipe
               
-      = link_to request.env["HTTP_REFERER"] do
-        %i.icon-arrow-left
-        Takaisin
-      |
       = link_to :controller => "materials", :action => "edit", :id => @material.id do
         %i.icon-edit
         Muokkaa

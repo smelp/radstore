@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 # == Schema Information
 #
 # Table name: bakeries
@@ -14,6 +16,6 @@ class Bakery < ActiveRecord::Base
   has_many :materials
   
   attr_accessible :description, :firm
-  validates :description, presence: true, :length => { :maximum => 500 }
+  validates :description, presence: { :message => "Kuvaus on pakollinen" }, :length => { :maximum => 500, :message => "Kuvaus voi olla enintään 500 merkkiä pitkä" }
   
 end

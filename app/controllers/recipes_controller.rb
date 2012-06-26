@@ -7,11 +7,7 @@ class RecipesController < ApplicationController
   def index
     list = []
     @bakery.recipes.each { |e| list.push e.id }
-    sql = " SELECT *
-      FROM recipes AS r
-      WHERE r.id IN (#{list.join(',')})"
-        
-    @recipes = Recipe.paginate_by_sql(sql, :page => params[:page], :per_page => 3)
+    @recipes = @bakery.recipes.paginate(:page => params[:page], :per_page => 10).order('name')
   end
   
   def show
@@ -38,8 +34,6 @@ class RecipesController < ApplicationController
       flash[:success] = "Uusi resepti luotu!"
       redirect_to @recipe
     else
-      #debugging
-      #flash[:error] = params
       render 'new'
     end
   end
@@ -48,27 +42,42 @@ class RecipesController < ApplicationController
   end
   
   def update
-    Hasmaterial.destroy_all(:recipe_id => @recipe.id)
-    if params[:old_materials]
-      params[:old_materials].each do |material|
-        Hasmaterial.create(:material_id => material[0], :recipe_id => @recipe.id, :amount => material[1])
-      end
-    end
     
     if params[:new_materials]
       params[:new_materials].each do |material|
-        Hasmaterial.create(:material_id => material[0], :recipe_id => @recipe.id, :amount => material[1])     
+        mat = Material.find(material[0])
+        if mat
+          @added_materials.push [mat, material[1]]   
+        end
       end
     end
-    
-    if @recipe.update_attributes(params[:recipe]) && @recipe.save
-      @recipe.update_price
-      flash[:success] = "Resepti tallennettu"
-      redirect_to @recipe
-    else 
+    if @recipe.update_attributes(params[:recipe])
+      Hasmaterial.destroy_all(:recipe_id => @recipe.id)
+      if params[:old_materials]
+        params[:old_materials].each do |material|
+          Hasmaterial.create(:material_id => material[0], :recipe_id => @recipe.id, :amount => material[1])
+        end
+      end
+      
+      if params[:new_materials]
+        params[:new_materials].each do |material|
+          Hasmaterial.create(:material_id => material[0], :recipe_id => @recipe.id, :amount => material[1])     
+        end
+      end
+      
+      if @recipe.save
+        @recipe.update_price
+        flash[:success] = "Resepti tallennettu"
+        redirect_to @recipe
+      else
+        flash.now[:error] = "Reseptin tallennus ei onnistunut."
+        render 'edit'
+      end
+    else
       flash.now[:error] = "Reseptin tallennus ei onnistunut."
       render 'edit'
     end
+    
   end
   
   def destroy

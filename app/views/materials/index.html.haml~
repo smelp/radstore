@@ -1,18 +1,28 @@
-= provide(:title, 'Reseptit')
+= provide(:title, 'Raaka-aineet')
 
-%h1 Reseptit
-
-= will_paginate
-
-.container.bordered
-  - @recipes.each do |recipe|
-    = render recipe
+%h1 Raaka-aineet
 
 = will_paginate
 
 .container
   .span6.offset3
-    = link_to :controller => "recipes", :action => "new", :firm_id => @firm.id do
+    %table.table
+      %thead
+        %th Nimi
+        %th Kilohinta
+      %tbody
+        - @materials.each do |material|
+          %tr
+            %td= link_to material.name, material
+            %td 
+              = material.price
+              €
+
+= will_paginate
+
+.container
+  .span6.offset3
+    = link_to :controller => "materials", :action => "new", :bakery_id => @bakery.id do
       %i.icon-plus
-      Lisää resepti
+      Lisää raaka-aine
 
