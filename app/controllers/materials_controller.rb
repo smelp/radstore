@@ -37,8 +37,17 @@ class MaterialsController < ApplicationController
   
   def update
     if @material.update_attributes(params[:material])
-      @material.recipes.each { |r| r.save }
+      changed = []
+      changed.push "Reseptien hinnat muuttuneet: "
+      @material.recipes.each do |r|
+        before = r.price.round(3)
+        r.update_price
+        after = r.price.round(3)
+        changed.push "#{r.name}: #{before} €  -->  #{after} €"
+        r.save 
+      end
       flash[:success] = "Raaka-aine tallennettu"
+      flash[:info] = changed.join("</br>").html_safe
       redirect_to @material
     else
       render 'edit'

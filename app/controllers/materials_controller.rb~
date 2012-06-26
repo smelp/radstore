@@ -7,11 +7,6 @@ class MaterialsController < ApplicationController
   def index
     list = []
     @bakery.materials.each { |e| list.push e.id }
-    #obsolete:
-    #sql = " SELECT *
-    #  FROM materials AS m
-    #  WHERE m.id IN (#{list.join(',')})"
-    #    
     @materials = @bakery.materials.paginate(:page => params[:page]).order('name')
   end
 
@@ -42,8 +37,18 @@ class MaterialsController < ApplicationController
   
   def update
     if @material.update_attributes(params[:material])
-      @material.recipes.each { |r| r.save }
+      changed = []
+      base = "Reseptien hinnat muuttuneet: "
+      @material.recipes.each do |r|
+        before = r.price.round(3)
+        r.update_price
+        after = r.price.round(3)
+        changed.push "#{r.name}: #{before} €  -->  #{after} €"
+        r.save 
+      end
       flash[:success] = "Raaka-aine tallennettu"
+      flash[:info] = base
+      flash[:notice] = changed.join("</br>").html_safe
       redirect_to @material
     else
       render 'edit'

@@ -32,7 +32,7 @@ class Recipe < ActiveRecord::Base
   end
   
   def self.search(search, page)
-    paginate :per_page => 5, :page => page,
+    paginate :per_page => 15, :page => page,
            :conditions => ['name like ?', "%#{search}%"],
            :order => 'name'
   end

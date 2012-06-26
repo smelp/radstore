@@ -9,13 +9,14 @@
     .row.well.green
 
       %h2.bordered-bottom= @material.name
-      %h2 Hinta: #{@material.price} € 
+      %h3.well Kilohinta: #{@material.price} € 
       
+      %h4 Osana reseptejä:
       %table.table.table-striped
         %thead
-          %th Osana reseptejä:
-          %th Veroton hinta (€):
-          %th Verollinen hinta (€):
+          %th Resepti
+          %th Veroton hinta (€)
+          %th Verollinen hinta (€)
           
         %tbody
           - @material.recipes.each do |recipe|
