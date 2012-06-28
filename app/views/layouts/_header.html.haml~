@@ -1,7 +1,7 @@
 %header{ class:'navbar navbar-fixed-top' }
   %div{class: 'navbar-inner'}
     %div.container
-      = link_to "devlfin", root_path, id: "logo"    
+      = link_to "devlfin", root_path, id: "logo", class: "text-green"    
       %nav
         %ul{class:'nav pull-right'}
           %li
@@ -21,7 +21,7 @@
             %li#fat-menu.dropdown 
               %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} 
                 %i.icon-cog.icon-white
-                Tili<b class="caret"></b> 
+                <b class="caret"></b> 
               
               %ul.dropdown-menu
                 = link_to "Profiili", current_user

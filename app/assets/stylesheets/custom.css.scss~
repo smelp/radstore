@@ -205,6 +205,10 @@ form {
   background-color: $successBackground;
 }
 
+#logo {
+  color: #00FF00;
+}
+  
 .blue {
   background-color: $infoBackground;
 }
