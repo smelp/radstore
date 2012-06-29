@@ -19,9 +19,10 @@
       = will_paginate @firms
       
 .container
-  .span9.offset1
-    - if is_admin?
-      = link_to new_firm_path do
-        %i.icon-plus
-        Lisää yritys
+  .span7.offset1
+    .span7.offset1
+      - if is_admin?
+        = link_to new_firm_path do
+          %i.icon-plus
+          Lisää yritys
 

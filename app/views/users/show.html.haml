@@ -1,13 +1,13 @@
 - provide(:title, @user.name)
 .container
   .span6.offset3
-    .row.well.green
+    .row.well
       = gravatar_for @user
       = @user.name
       
       %table.table.table-striped
         %thead
-          %th Yritykset
+          %th Liitetyt yritykset:
         %tbody
           - @firms.each do |firm|
             %td= link_to firm.name, firm

@@ -1,7 +1,7 @@
 - provide(:title, @user.name)
 .container
   .span6.offset3
-    .row.well.green
+    .row.well
       = gravatar_for @user
       = @user.name
       
@@ -11,4 +11,7 @@
         %tbody
           - @firms.each do |firm|
             %td= link_to firm.name, firm
+      
+      = link_to "Takaisin", request.env["HTTP_REFERER"] 
+      
              

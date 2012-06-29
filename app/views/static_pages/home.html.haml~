@@ -5,7 +5,7 @@
   .span7.offset1
     - if @firms.empty?
       .well.span7.offset1.alert-error
-        %p Tiliisi ei vielä ole liitetty yrityksiä. Jos haluat liittää yrityksen, ota yhteyttä meihin:
+        %p Tiliisi ei vielä ole liitetty yrityksiä. Jos haluat liittää yrityksen, ota yhteyttä: 
         = @email_us
     - else
       .span7.offset1
@@ -18,8 +18,9 @@
       = will_paginate @firms
 
 .container
-  .span9.offset1
-    - if is_admin?
-      = link_to new_firm_path do
-        %i.icon-plus
-        Lisää yritys
+  .span7.offset1
+    .span7.offset1
+      - if is_admin?
+        = link_to new_firm_path do
+          %i.icon-plus
+          Lisää yritys
