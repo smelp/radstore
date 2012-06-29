@@ -1,10 +1,11 @@
 - provide(:title, 'Muokkaa raaka-aine')
 
+%h1 Muokkaa raaka-ainetta
+
 .container
   .span6.offset3
     = render "shared/nav"
 
-%h1 Muokkaa raaka-ainetta
 .row
   .span6.offset3.well.green
     = form_for @material do |f|

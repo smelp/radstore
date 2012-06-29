@@ -16,7 +16,7 @@
           |
           = link_to "Kaikki yritykset",    firms_path
   - else
-    .row.well.green
+    .row.well.blue
       .row
         .span2
           %h2 Reseptit
@@ -29,21 +29,21 @@
       %table.table.table-condensed.table-striped.table-bordered
         %thead
           %th Nimi
-          %th Veroton hinta
-          %th Verollinen hinta
+          %th Veroton hinta (€)
+          %th Verollinen hinta (€)
           
         %tbody
           - @recipes.each do |recipe|
             %tr
               %td.span4= link_to recipe.name, recipe
-              %td.span3= (recipe.price).round(2)
-              %td.span3= (recipe.price + (recipe.price * @tax)).round(2)
+              %td.span3= recipe.get_price.round(2)
+              %td.span3= recipe.get_taxed_price.round(2)
               
       = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
         %i.icon-plus
         Lisää resepti
 
-    .row.well.blue
+    .row.well
       .row
         .span2
           %h2 Raaka-aineet

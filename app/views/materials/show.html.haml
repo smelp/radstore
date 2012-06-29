@@ -6,7 +6,7 @@
 
 .container
   .span6.offset3
-    .row.well.green
+    .row.well
 
       %h2.bordered-bottom= @material.name
       %h3.well Kilohinta: #{@material.price} € 
@@ -22,8 +22,8 @@
           - @material.recipes.each do |recipe|
             %tr
               %td= link_to recipe.name, recipe
-              %td= link_to (recipe.price).round(2), recipe
-              %td= link_to (recipe.price + (recipe.price * @tax)).round(2), recipe
+              %td= link_to (recipe.get_price).round(2), recipe
+              %td= link_to (recipe.get_price + (recipe.get_price * @tax)).round(2), recipe
               
       = link_to :controller => "materials", :action => "edit", :id => @material.id do
         %i.icon-edit

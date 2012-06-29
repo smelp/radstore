@@ -6,12 +6,30 @@
     
 .container
   .span8.offset2
-    .row.well.green
+    .row.well.blue
       %h2.bordered-bottom= @recipe.name
       
-      %table.table.table-striped
+      %table.table.table-striped.well
+        - if @recipe.subrecipes.count > 0 
+          %thead
+            %th Reseptit
+            %th Määrä (kpl)
+            %th À Hinta (€)
+            %th Hinta yht.(€)
+            %th Verollinen hinta yht.(€)
+          
+          %tbody
+            - @recipe.subrecipes.each do |subrecipe|
+              %tr
+                - amount = @recipe.hasrecipes.find_by_subrecipe_id(subrecipe.id).amount 
+                %td= link_to subrecipe.name, subrecipe
+                %td= amount
+                %td= (subrecipe.get_price).round(2)
+                %td= (subrecipe.get_price * amount).round(2)
+                %td= (subrecipe.get_taxed_price * amount).round(2)
+      %table.table.table-striped.well  
         %thead
-          %th Raaka-aine
+          %th Raaka-aineet
           %th Määrä (g)
           %th Kilohinta (€)
           %th Hinta yht.(€)
@@ -26,12 +44,21 @@
               %td= (material.price).round(2)
               %td= (material.price * (amount/1000)).round(2)
               %td= (material.price * (amount/1000) + (material.price * (amount/1000) * @tax)).round(2)
+      %table.table.table-striped.well  
         %thead
-          %th yht.
-          %th= @hasmaterials.sum(:amount)
-          %th
-          %th #{@recipe.price.round(2)} €
-          %th #{(@recipe.price + (@recipe.price * @tax)).round(2)} €
+          %th.well Yhteensä
+          %th.well Määrä
+          %th.well Veroton hinta
+          %th.well Verollinen hinta
+        %tbody
+          %tr
+            %td
+            %td.well
+              = @hasmaterials.sum(:amount) + @subrecipe_sum_amount
+              g
+            %td.well #{@recipe.get_price.round(2)} €
+            %td.well #{@recipe.get_taxed_price.round(2)} €
+        
             
       = link_to :controller => "recipes", :action => "edit", :id => @recipe.id do
         %i.icon-edit

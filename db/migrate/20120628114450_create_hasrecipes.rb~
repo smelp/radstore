@@ -1,0 +1,14 @@
+class CreateHasrecipes < ActiveRecord::Migration
+  def change
+    create_table :hasrecipes do |t|
+      t.integer :recipe_id
+      t.integer :subrecipe_id
+      t.float :amount, default: 0
+        
+      add_index :hasrecipes, [:recipe_id, :subrecipe_id], :unique => true
+      add_index :hasrecipes, :subrecipe_id, :unique => false
+    
+      t.timestamps
+    end
+  end
+end

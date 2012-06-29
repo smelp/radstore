@@ -18,7 +18,3 @@
       = hidden_field_tag :bakery_id, @bakery.id
       
       = f.submit "Luo raaka-aine", class: "btn btn-large btn-primary"
-    
-    = link_to request.env["HTTP_REFERER"] do
-      %i.icon-arrow-left
-      Takaisin

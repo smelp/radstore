@@ -4,11 +4,6 @@
     #  WHERE m.id IN (#{list.join(',')})"
     #    
     
-    def update
-    @@blacklist.clear
-    @@blacklist[self.id] = true
-    self.update_price
-  end
     
     def update_price
     self.price = 0
