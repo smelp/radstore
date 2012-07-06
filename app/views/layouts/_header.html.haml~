@@ -1,9 +1,10 @@
-%header{ class:'navbar navbar-fixed-top' }
-  %div{class: 'navbar-inner'}
+%header.navbar.navbar-fixed-top
+  .navbar-inner
     %div.container
-      = link_to "devlfin", root_path, id: "logo", class: "text-green"    
+      = link_to "devlfin", root_path, id: "logo"    
       %nav
-        %ul{class:'nav pull-right'}
+        %ul.nav.pull-right
+          %li.divider-vertical
           %li
             = link_to :controller => "static_pages", :action => "home" do
               %i.icon-home.icon-white
@@ -16,7 +17,7 @@
                   Käyttäjät             
             %li
               = link_to :controller => "firms", :action => "index" do
-                %i.icon-list-alt.icon-white
+                %i.icon-briefcase.icon-white
                 Yritykset
             %li#fat-menu.dropdown 
               %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} 

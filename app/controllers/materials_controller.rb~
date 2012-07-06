@@ -39,7 +39,7 @@ class MaterialsController < ApplicationController
     
     
     if @material.recipes.empty?
-      changed = []
+      changed = nil
     else
       changed = ["Reseptien hinnat muuttuneet: "]
     end
@@ -56,7 +56,9 @@ class MaterialsController < ApplicationController
         changed[r.id] << "-->  #{after} €"
       end
       flash[:success] = "Raaka-aine tallennettu"
-      flash[:info] = changed.compact.join("</br>").html_safe
+      if changed
+        flash[:info] = changed.compact.join("</br>").html_safe
+      end
       redirect_to @material
     else
       render 'edit'
@@ -64,6 +66,7 @@ class MaterialsController < ApplicationController
   end
   
   def destroy
+    Hasmaterial.find_all_by_material_id(@material.id).destroy_all
     @material.destroy
     Recipe.all.each { |r| r.save; r.reload }
     flash[:success] = "Raaka-aine poistettu."

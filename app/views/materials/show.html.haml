@@ -1,20 +1,26 @@
 - provide(:title, @material.name)
 
 .container
-  .span6.offset3
+  .span8.offset2
     = render "shared/nav"
 
 .container
-  .span6.offset3
-    .row.well
+  .span8.offset2
+    .row.bordered
 
       %h2.bordered-bottom= @material.name
-      %h3.well Kilohinta: #{@material.price} € 
       
-      %h4 Osana reseptejä:
       %table.table.table-striped
         %thead
-          %th Resepti
+          %th Kilohinta (€)
+        %tbody
+          %tr
+            %td= @material.price
+      
+      %table.table.table-striped
+        %caption.align-left Osana reseptejä
+        %thead
+          %th Nimi
           %th Veroton hinta (€)
           %th Verollinen hinta (€)
           
@@ -22,9 +28,13 @@
           - @material.recipes.each do |recipe|
             %tr
               %td= link_to recipe.name, recipe
-              %td= link_to (recipe.get_price).round(2), recipe
-              %td= link_to (recipe.get_price + (recipe.get_price * @tax)).round(2), recipe
+              %td= recipe.get_price.round(2)
+              %td= (recipe.get_price + (recipe.get_price * @tax)).round(2)
               
       = link_to :controller => "materials", :action => "edit", :id => @material.id do
         %i.icon-edit
         Muokkaa
+      
+      %a.nav-link{href: "#", onclick: "window.print()"}
+        %i.icon-print.margin-left10
+        Tulosta

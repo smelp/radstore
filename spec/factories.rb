@@ -14,6 +14,14 @@ FactoryGirl.define do
     sequence(:name)  { |n| "Firm #{n}" }
     sequence(:corporate_id) { |n| "1234567-#{n}"}   
     sequence(:location)  { |n| "Location #{n}" } 
-    resource_type "Bakery"
+    sequence(:resource)  { |n| Bakery.create(description: "test#{n}") }
+  end
+  
+  factory :material do
+    sequence(:name)  { |n| "Material #{n}" }  
+  end
+  
+  factory :recipe do
+    sequence(:name)  { |n| "Recipe #{n}" }  
   end
 end

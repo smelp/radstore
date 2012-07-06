@@ -19,7 +19,7 @@ describe "Authentication" do
       before { click_button "Kirjaudu" }
 
       it { should have_selector('title', text: 'Kirjaudu') }
-      it { should have_selector('div.alert.alert-error', text: 'Invalid') }
+      it { should have_selector('div.alert.alert-error', text: 'Epäkelpo') }
     
       describe "after visiting another page" do
         before { click_link "Koti" }
@@ -31,11 +31,11 @@ describe "Authentication" do
       let(:admin) { FactoryGirl.create(:admin) }
       before { sign_in admin }
 
-      it { should have_selector('title', text: user.name) }
+      it { should have_selector('title', text: admin.name) }
       
       it { should have_link('Käyttäjät',    href: users_path) }
-      it { should have_link('Profiili',  href: user_path(user)) }
-      it { should have_link('Asetukset', href: edit_user_path(user)) }
+      it { should have_link('Profiili',  href: user_path(admin)) }
+      it { should have_link('Asetukset', href: edit_user_path(admin)) }
       it { should have_link('Kirjaudu ulos', href: signout_path) }
       
       it { should_not have_link('Kirjaudu', href: signin_path) }

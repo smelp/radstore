@@ -29,8 +29,10 @@
       %table.table.table-condensed.table-striped.table-bordered
         %thead
           %th Nimi
-          %th Veroton hinta (€)
-          %th Verollinen hinta (€)
+          %th Hinta ennen ALV:a (€)
+          %th ALV hinta (€)
+          %th Kate-%
+          %th Myyntihinta (€)
           
         %tbody
           - @recipes.each do |recipe|
@@ -38,12 +40,14 @@
               %td.span4= link_to recipe.name, recipe
               %td.span3= recipe.get_price.round(2)
               %td.span3= recipe.get_taxed_price.round(2)
+              %td.span3= recipe.coverage.round(2)
+              %td.span3= recipe.get_coveraged_price.round(2)
               
       = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
         %i.icon-plus
         Lisää resepti
 
-    .row.well
+    .row.well.green
       .row
         .span2
           %h2 Raaka-aineet

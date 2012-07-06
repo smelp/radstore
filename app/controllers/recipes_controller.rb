@@ -12,7 +12,7 @@ class RecipesController < ApplicationController
   
   def show
     @hasmaterials = @recipe.hasmaterials
-    @subrecipe_sum_price, @subrecipe_sum_amount = @recipe.subrecipes_sum 
+    @subrecipe_sum_amount = @recipe.subrecipes_sum
     @bakery = @recipe.bakery
   end
   
@@ -46,6 +46,9 @@ class RecipesController < ApplicationController
   end
   
   def edit
+    @bakery.recipes.each do |r|
+      @safe_recipes.push(r) unless r.has_circular? @recipe.name
+    end
   end
   
   def update
@@ -68,6 +71,8 @@ class RecipesController < ApplicationController
   end
   
   def destroy
+    Hasrecipe.destroy_all(:recipe_id => @recipe.id)
+    Hasrecipe.destroy_all(:subrecipe_id => @recipe.id)
     @recipe.destroy
     flash[:success] = "Resepti poistettu."
     redirect_to @bakery
@@ -83,7 +88,7 @@ class RecipesController < ApplicationController
     end
     
     def firm_admin
-      
+      @safe_recipes = []
       @added_materials = []
       @added_recipes = []
       @tax = 0.13
@@ -160,7 +165,7 @@ class RecipesController < ApplicationController
     def add_recipes
       params[:new_recipes].each do |recipe|
         res = Recipe.find(recipe[0])
-        if res
+        if res and not res.has_circular? @recipe.name
           @added_recipes.push [res, recipe[1]]   
         end
       end

@@ -11,14 +11,21 @@
 require 'spec_helper'
 
 describe Bakery do
-  before { @bakery = Bakery.new(description: "this is sample description") }
+  before do 
+    @bakery = Bakery.new(description: "sample description")
+  end
   
   subject { @bakery }
 
   it { should respond_to(:description) }
+  it { should respond_to(:firm) }
   
   it { should be_valid }
 
+  it { should have_one(:firm) }
+  it { should have_many(:recipes) }
+  it { should have_many(:materials) }
+  
   describe "when description is not present" do
     before { @bakery.description = nil }
     it { should_not be_valid }

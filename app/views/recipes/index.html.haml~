@@ -2,12 +2,16 @@
 
 %h1 Reseptit
 
+.container
+  .span6.offset3
+    = render "shared/nav"
+
 .span6.offset3
   = will_paginate
 
 .container
-  .span6.offset3
-    %table.table
+  .span6.offset3.well
+    %table.table.table-striped
       %thead
         %th Nimi
         %th Hinta
@@ -16,7 +20,7 @@
           %tr
             %td= link_to recipe.name, recipe
             %td 
-              = recipe.price
+              = recipe.get_price.round(2)
               €
 .container
   .span6.offset3

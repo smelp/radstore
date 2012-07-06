@@ -192,6 +192,10 @@ form {
   list-style: none;
 }
 
+.margin-left10 {
+  margin-left: 10px;
+}
+
 .bordered {
   padding-top: 20px;
   border-top: 1px solid $grayLighter;
@@ -199,6 +203,10 @@ form {
 
 .bordered-bottom {
   border-bottom: 1px solid $gray;
+}
+
+.align-left {
+  text-align: left;
 }
 
 .green {
@@ -211,4 +219,8 @@ form {
 
 .hidden {
   display: none;
+}
+
+legend {
+  font-size: 14px;
 }

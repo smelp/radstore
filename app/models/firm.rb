@@ -18,11 +18,12 @@ class Firm < ActiveRecord::Base
   
   resource_list = ["Bakery"]
   attr_accessible :name, :corporate_id, :location, :resource
-  validates :name, presence: { :message => "Nimi pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen pituus 2-50 merkkiä" }
+  validates :name, presence: { :message => "Nimi pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen pituus 2-50 merkkiä" }, :uniqueness => { :message => "Yrityksen nimi on jo käytössä." }
   VALID_CORPORATE_ID_REGEX = /\d{7}-\d{1}/i
-  validates :corporate_id, presence: { :message => "Y-tunnus vaaditaan" }, :length => { :minimum => 9, :maximum => 10, :message => "Y-tunnuksen täytyy olla 9 merkkiä pitkä" }, :format => { :with => VALID_CORPORATE_ID_REGEX }, :uniqueness => { :case_sensitive => false }
+  validates :corporate_id, presence: { :message => "Y-tunnus vaaditaan" }, :length => { :minimum => 9, :maximum => 10, :message => "Y-tunnuksen täytyy olla 9 merkkiä pitkä" }, :format => { :with => VALID_CORPORATE_ID_REGEX }, :uniqueness => { :case_sensitive => false, :message => "Y-tunnus on jo käytössä." }
   validates :location, :length => { :maximum => 50, :message => "Sijainnin maksimipituus on 50 merkkiä" }
   validates :resource_type, presence: { :message => "Toimiala pakollinen" }
+  validates :resource_id, presence: { :message => "Toimiala pakollinen" }, :uniqueness => { :message => "Toimialan yritys on jo liitetty toiseen yritykseen." }
   validates_inclusion_of :resource_type, :in => ["Bakery"], :allow_nil => false, :message => "Toimialan täytyy olla joku seuraavista: #{resource_list}"
 
 end

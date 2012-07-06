@@ -15,7 +15,7 @@ describe "Static pages" do
       visit root_path
     end
     
-    it { should_not have_selector('h1',    text: 'Yritykset') }
+    it { should have_selector('h1',    text: 'Yritykset') }
     it { should have_selector('title', text: full_title('')) }
     it { should_not have_selector 'title', text: '| Koti' }
   end
@@ -45,8 +45,6 @@ describe "Static pages" do
     visit root_path
     click_link "About"
     page.should have_selector 'title', text: full_title('About Us')
-    click_link "Apua"
-    page.should # fill in
     click_link "Contact"
     page.should # fill in
     click_link "Koti"

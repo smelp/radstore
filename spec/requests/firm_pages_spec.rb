@@ -9,7 +9,10 @@ describe "Firm pages" do
     let(:user) { FactoryGirl.create(:user) }
     
     before(:all) { 40.times { FactoryGirl.create(:firm) } }
-    after(:all)  { Firm.delete_all }
+    after(:all)  do
+      Firm.delete_all
+      Bakery.delete_all
+    end
 
     before(:each) do
       sign_in user
@@ -29,7 +32,7 @@ describe "Firm pages" do
         it { should have_selector('div.pagination') }
 
         it "should list each firm" do
-          Firm.paginate(page: 1).each do |firm|
+          Firm.paginate(page: 1, per_page: 10).each do |firm|
             page.should have_selector('h3', text: firm.name)
           end
         end

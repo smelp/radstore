@@ -66,6 +66,7 @@ class MaterialsController < ApplicationController
   end
   
   def destroy
+    Hasmaterial.destroy_all( :material_id => @material.id)
     @material.destroy
     Recipe.all.each { |r| r.save; r.reload }
     flash[:success] = "Raaka-aine poistettu."

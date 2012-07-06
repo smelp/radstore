@@ -23,9 +23,19 @@ class Recipe < ActiveRecord::Base
   
   belongs_to :bakery
   
-  attr_accessible :name, :price, :bakery
-  validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }
+  attr_accessible :name, :price, :bakery, :coverage
+  validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }, :uniqueness => { :message => "Reseptin nimi on jo käytössä" }
   validates_numericality_of :price, { :greater_than_or_equal_to => 0, :message => "Hinnan täytyy olla positiivinen numero!" }
+  validates_numericality_of :coverage, { :greater_than_or_equal_to => 0, :message => "Katteen täytyy olla positiivinen numero!" }
+  
+  validate :subrecipes_cannot_form_circular_dependencies, :on => :update
+  
+  def subrecipes_cannot_form_circular_dependencies
+    name = self.name
+    if self.subrecipes.any? { |s| s.has_circular? name }
+      errors.add(:subrecipes_cannot, "form circular dependencies")
+    end
+  end
   
   def get_price
     price = 0
@@ -38,22 +48,36 @@ class Recipe < ActiveRecord::Base
       amount = self.hasrecipes.find_by_subrecipe_id(subrecipe.id).amount
       price += subrecipe.get_price * amount
     end
-    price
+    price.round(2)
   end
   
   def get_taxed_price
     price = self.get_price
     price + (@@tax * price)
+    price.round(2)
+  end
+  
+  def get_coveraged_price
+    price = self.get_taxed_price
+    price + (self.coverage/100 * price)
+    price.round(2)
   end
   
   def subrecipes_sum
-    price_sum = amount_sum = 0
+    amount_sum = 0.0
     self.subrecipes.each do |subrecipe|
       amount = self.hasrecipes.find_by_subrecipe_id(subrecipe.id).amount 
-      price_sum += subrecipe.get_price * amount
-      amount_sum += amount * subrecipe.materials.sum(:amount)
+      amount_sum += (amount * subrecipe.materials.sum(:amount).to_f)
     end
-    return price_sum, amount_sum
+    amount_sum
+  end
+  
+  def self.get_tax
+    @@tax
+  end
+  
+  def self.set_tax(tax)
+    @@tax = tax
   end
   
   def self.search(search, page)
@@ -61,4 +85,13 @@ class Recipe < ActiveRecord::Base
            :conditions => ['name like ?', "%#{search}%"],
            :order => 'name'
   end
+  
+  def has_circular?(name)
+    if name == self.name
+      return true
+    else
+      return self.subrecipes.any? { |r| r.has_circular? name }
+    end
+  end
+  
 end

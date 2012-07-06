@@ -1,3 +1,4 @@
+# encoding: utf-8
 class SessionsController < ApplicationController
   def new    
   end
@@ -8,7 +9,7 @@ class SessionsController < ApplicationController
       sign_in user
       redirect_back_or user
     else
-      flash.now[:error] = 'Invalid email/password combination'
+      flash.now[:error] = 'Väärä email/salasana yhdistelmä'
       render 'new'
     end
   end

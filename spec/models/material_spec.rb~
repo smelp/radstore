@@ -24,6 +24,7 @@ describe Recipe do
   
   it { should have_many(:recipes) }
   it { should have_many(:hasmaterials) }
+  it { should belong_to(:bakery) }
   
   describe "when name is not present" do
     before { @material.name = " " }
@@ -47,6 +48,11 @@ describe Recipe do
   
   describe "when price is negative" do
     before { @material.price = -2 }
+    it { should_not be_valid }
+  end
+  
+  describe "when price is too big" do
+    before { @material.price = 100000001 }
     it { should_not be_valid }
   end
   

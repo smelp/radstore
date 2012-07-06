@@ -12,7 +12,8 @@
 require 'spec_helper'
 
 describe Recipe do
-  before { @material = Material.new(name: "Example Material") }
+  before { @material = Material.create(name: "Example Material") }
+  after { Material.delete_all }
 
   subject { @material }
 
@@ -29,6 +30,11 @@ describe Recipe do
   describe "when name is not present" do
     before { @material.name = " " }
     it { should_not be_valid }
+  end
+  
+  describe "when name is already taken" do
+    before { @material2 = Material.new(name: "Example Material") }
+    it { @material2.should_not be_valid }
   end
   
   describe "when name is too short" do
@@ -48,6 +54,11 @@ describe Recipe do
   
   describe "when price is negative" do
     before { @material.price = -2 }
+    it { should_not be_valid }
+  end
+  
+  describe "when price is too big" do
+    before { @material.price = 100000001 }
     it { should_not be_valid }
   end
   

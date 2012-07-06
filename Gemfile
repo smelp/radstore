@@ -39,7 +39,7 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-#gem 'ruby-debug19'
+gem 'ruby-debug19'
 
 group :production do
   gem 'pg', '0.12.2'

@@ -11,22 +11,27 @@
     = form_for @recipe do |f|
       = render 'shared/recipe_error_messages'
       
-      .span5
+      %fieldset.span4.well
         = f.label :name, "Nimi"
         = f.text_field :name 
         
         = f.label :get_price, "Hinta (€)"
         = f.text_field :get_price, disabled: true
       
-        .well  
-          = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
+        = f.label :coverage, "Kate-%"
+        = f.text_field :coverage
+      
+        %fieldset.well  
+          %legend Reseptit
+          = select("post", "subrecipe_id", @safe_recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
           = fields_for :subrecipe do |h|
             = h.label :amount, "Määrä (kpl)"
-            = h.text_field :amount, min: 0
+            = h.number_field :amount, min: 0
           
           = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
         
-        .well  
+        %fieldset.well
+          %legend Raaka-aineet
           = select("post", "material_id", @bakery.materials.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
           = fields_for :material do |h|
             = h.label :amount, "Määrä (g)"
@@ -34,10 +39,10 @@
           
           = button_to_function "Lisää", "add_material(event)", :class => "btn btn-mini"
       
-      .span4
+      .span4.well
         %table.table.recipes
           %thead
-            %th Reseptit
+            %th Sisältää reseptit:
           %tbody
             - @recipe.hasrecipes.each do |subrecipe|
               %tr{:id => "#{subrecipe.subrecipe_id}"}
@@ -45,13 +50,13 @@
                   - res = Recipe.find(subrecipe.subrecipe_id)
                   = hidden_field_tag "old_recipes[#{subrecipe.subrecipe_id}, #{subrecipe.amount}]", subrecipe.amount
                   = link_to res.name, res
-                  , #{ subrecipe.amount } g
+                  , #{ subrecipe.amount.round(0) } kpl
                 %td
                   %a.nav-link{href: "#", onclick: "remove_table_element(#{subrecipe.subrecipe_id})"}
                     %i.icon-remove
         %table.table.materials
           %thead
-            %th Raaka-aineet
+            %th Sisältää raaka-aineet:
           %tbody
             - @recipe.hasmaterials.each do |material|
               %tr{:id=> "#{material.material_id}"}
@@ -64,7 +69,7 @@
                   %a.nav-link{href: "#", onclick: "remove_table_element(#{material.material_id})"}
                     %i.icon-remove
                 
-      .span4  
+      .span4.well
         %table.table.well
           %thead.green
             %th Lisättävät reseptit:

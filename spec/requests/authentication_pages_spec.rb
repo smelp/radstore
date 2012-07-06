@@ -19,7 +19,7 @@ describe "Authentication" do
       before { click_button "Kirjaudu" }
 
       it { should have_selector('title', text: 'Kirjaudu') }
-      it { should have_selector('div.alert.alert-error', text: 'Invalid') }
+      it { should have_selector('div.alert.alert-error', text: 'Väärä') }
     
       describe "after visiting another page" do
         before { click_link "Koti" }

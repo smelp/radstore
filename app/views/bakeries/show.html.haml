@@ -23,14 +23,16 @@
         .span5
           = form_tag({ :controller => "bakeries", :action => "show" }, :class => "form-search form-inline") do
             = text_field_tag :search_recipe, "", :class => "input search-query input-medium", :placeholder => "Etsi reseptejä"
-            = submit_tag "Etsi", :class => "btn btn-small"
+            = submit_tag "Hae", :class => "btn btn-small"
 
       = will_paginate @recipes, :param_name => 'recipe_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_recipe => @search_params
       %table.table.table-condensed.table-striped.table-bordered
         %thead
           %th Nimi
-          %th Veroton hinta (€)
-          %th Verollinen hinta (€)
+          %th Hinta ennen ALV:a (€)
+          %th ALV hinta (€)
+          %th Kate-%
+          %th Myyntihinta (€)
           
         %tbody
           - @recipes.each do |recipe|
@@ -38,6 +40,8 @@
               %td.span4= link_to recipe.name, recipe
               %td.span3= recipe.get_price.round(2)
               %td.span3= recipe.get_taxed_price.round(2)
+              %td.span3= recipe.coverage.round(2)
+              %td.span3= recipe.get_coveraged_price.round(2)
               
       = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
         %i.icon-plus
@@ -51,7 +55,7 @@
           .span5
             = form_tag({ :controller => "bakeries", :action => "show" }, :class => "form-search form-inline") do
               = text_field_tag :search_material, "", :class => "input search-query input-medium", :placeholder => "Etsi raaka-aineita"
-              = submit_tag "Etsi", :class => "btn btn-small"
+              = submit_tag "Hae", :class => "btn btn-small"
       
       
       = will_paginate @materials, :param_name => 'material_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_material => @search_params

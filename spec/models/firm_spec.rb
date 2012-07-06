@@ -18,8 +18,10 @@ describe Firm do
 
   before do 
     @firm = Firm.new(name: "Example Firm", corporate_id: "1234567-8", location:"Helsinki")
-    bakery = Bakery.new(description: "sample description")
-    @firm.resource = bakery
+    @bakery = Bakery.new(description: "sample description")
+    @bakery.save
+    @firm.resource = @bakery
+    @firm.save
   end
   
   subject { @firm }
@@ -59,8 +61,8 @@ describe Firm do
     it { should_not be_valid }
   end
   
-  describe "when resource_type is invalid" do
-    before { @firm.resource_type = "a" * 51 }
+  describe "when resource_type is not present" do
+    before { @firm.resource_type = nil }
     it { should_not be_valid }
   end
   
@@ -89,4 +91,43 @@ describe Firm do
       end      
     end
   end
+  
+  describe "when corporate_id is already in use" do
+    it "should not be valid" do
+      @firm2 = Firm.new(name: "Example Firm2", corporate_id: "1234567-8", location:"Helsinki")
+      bakery = Bakery.new(description: "sample description")
+      bakery.save
+      @firm2.resource = bakery
+      @firm2.should_not be_valid
+    end
+  end
+  
+  describe "when corporate_id is not in use" do
+    it "should be valid" do
+      @firm3 = Firm.new(name: "Example Firm2", corporate_id: "1234567-9", location:"Helsinki")
+      bakery = Bakery.new(description: "sample description")
+      bakery.save
+      @firm3.resource = bakery
+      @firm3.should be_valid
+    end
+  end
+  
+  describe "when resource_id is already in use" do
+    it "should not be valid" do
+      @firm4 = Firm.new(name: "Example Firm2", corporate_id: "1234567-9", location:"Helsinki")
+      @firm4.resource = @bakery
+      @firm4.should_not be_valid
+    end
+  end
+  
+  describe "when name is already in use" do
+    it "should not be valid" do
+      @firm5 = Firm.new(name: "Example Firm", corporate_id: "1234567-9", location:"Helsinki")
+      bakery = Bakery.new(description: "sample description")
+      bakery.save 
+      @firm5.resource = bakery
+      @firm5.should_not be_valid
+    end
+  end
+  
 end
