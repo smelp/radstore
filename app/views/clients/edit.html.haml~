@@ -1,0 +1,28 @@
+- provide(:title, 'Muokkaa asiakas')
+
+%h1 Muokkaa asiakasta
+
+.row
+  .span8.offset2.well
+    = form_for @client do |f|
+      = render 'shared/client_error_messages'
+      %p
+        = f.label :name, "Nimi" 
+        = f.text_field :name 
+        = f.label :address, "Osoite"
+        = f.text_field :address
+        = f.label :name, "Kaupunki" 
+        = f.text_field :city
+        = f.label :phone, "Puhelinnumero" 
+        = f.text_field :phone 
+        
+      = f.submit "Tallenna", class: "btn btn-large btn-primary"
+    
+    %p
+      = link_to request.env["HTTP_REFERER"] do
+        %i.icon-arrow-left
+        Takaisin
+      |
+      = link_to "Kaikki asiakkaat", :controller => "clients", :action => "index", :firm_id => @firm.id
+      |
+      = link_to "Poista", @client, method: :delete, confirm: "Haluatko varmasti poistaa asiakkaan?"

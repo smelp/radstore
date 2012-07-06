@@ -1,0 +1,9 @@
+%li
+  = link_to :controller => "recipes", :action => "index", :bakery_id => current_user.primary_firm.resource.id do
+    Reseptit
+%li
+  = link_to :controller => "materials", :action => "index", :bakery_id => current_user.primary_firm.resource.id do
+    Raaka-aineet
+%li
+  = link_to :controller => "clients", :action => "index", :firm_id => current_user.primary_firm.id do
+    Asiakkaat

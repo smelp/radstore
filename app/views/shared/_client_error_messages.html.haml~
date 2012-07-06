@@ -1,0 +1,7 @@
+- if @material.errors.any?
+  #error_explanation
+    .alert.alert-error
+      Lomake sisältää #{@material.errors.count} virhettä
+    %ul
+      - @material.errors.each_with_index do |msg|
+        %li* #{msg[1]}

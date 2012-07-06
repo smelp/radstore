@@ -6,9 +6,17 @@
         %ul.nav.pull-right
           %li.divider-vertical
           %li
-            = link_to :controller => "static_pages", :action => "home" do
-              %i.icon-home.icon-white
-              Koti
+            - if current_user && current_user.primary_firm
+              - if current_user.primary_firm.resource_type == "Bakery"
+                = link_to :controller => "bakeries", :action => "show", :id => current_user.primary_firm.resource.id do
+                  %i.icon-home.icon-white
+                  Koti
+            - else 
+              - if current_user && current_user.firms
+                = link_to :controller => "bakeries", :action => "show", :id => current_user.firms.first.id do
+                  %i.icon-home.icon-white
+                  Koti
+              
           - if signed_in?
             - if is_admin?
               %li
@@ -17,7 +25,7 @@
                   Käyttäjät             
             %li
               = link_to :controller => "firms", :action => "index" do
-                %i.icon-briefcase.icon-white
+                %i.icon-list.icon-white
                 Yritykset
             %li#fat-menu.dropdown 
               %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} 
@@ -33,4 +41,7 @@
             %li
               = link_to controller: :sessions, action: :new do
                 %i.icon-chevron-right.icon-white
-                Kirjaudu     
+                Kirjaudu
+        %ul.nav.pull-right
+          - if current_user && current_user.primary_firm && current_user.primary_firm.resource_type == "Bakery"
+            = render "layouts/bakery"

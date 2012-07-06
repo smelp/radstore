@@ -16,12 +16,14 @@
 class User < ActiveRecord::Base
 	has_and_belongs_to_many :firms
 	
-	attr_accessible :name, :email, :password, :password_confirmation
+	belongs_to :primary_firm, :class_name => "Firm", :foreign_key => "primary_firm_id"
+	
+	attr_accessible :name, :email, :password, :password_confirmation, :primary_firm_id
 	has_secure_password
 	
 	validates :name, :presence => { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-    validates :email, :presence => { :message => "Sähköpostiosoite on pakollinen" }, :format => { :with => VALID_EMAIL_REGEX, :message => "Sähköpostiosoitteen muoto on virheellinen" }, :uniqueness => { :case_sensitive => false }
+    validates :email, :presence => { :message => "Sähköpostiosoite on pakollinen" }, :format => { :with => VALID_EMAIL_REGEX, :message => "Sähköpostiosoitteen muoto on virheellinen" }, :uniqueness => { :case_sensitive => false, :message => "Sähköpostiosoite on jo käytössä" }
     validates :password, presence: { :message => "Salasana on pakollinen" }, length: { minimum: 6, :message => "Salasanan täytyy olla vähintään 6 merkkiä pitkä" }
     validates :password_confirmation, presence: { :message => "Salasanan vahvistus on pakollinen" }
     

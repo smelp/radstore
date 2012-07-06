@@ -1,6 +1,6 @@
 class CreateFirmsUsersTable < ActiveRecord::Migration
   def up
-  create_table :firms_users, :id => false do |t|
+    create_table :firms_users, :id => false do |t|
         t.references :firm
         t.references :user
     end

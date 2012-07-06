@@ -1,0 +1,31 @@
+= provide(:title, 'Asiakkaat')
+
+%h1 Asiakkaat
+
+= will_paginate
+
+.container
+  .span8.offset2
+    %table.table
+      %thead
+        %th Nimi
+        %th Osoite
+        %th Kaupunki
+        %th Puhelinnumero
+        
+      %tbody
+        - @clients.each do |client|
+          %tr
+            %td= link_to client.name, client
+            %td= client.address
+            %td= client.city
+            %td= client.phone
+
+= will_paginate
+
+.container
+  .span8.offset2
+    = link_to :controller => "clients", :action => "new", :firm_id => @firm.id do
+      %i.icon-plus
+      Lisää asiakas
+

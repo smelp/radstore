@@ -1,0 +1,15 @@
+class CreateClientTable < ActiveRecord::Migration
+  def up
+    create_table :clients do |t|
+      t.string :name
+      t.string :address
+      t.string :phone
+      t.string :city
+      
+      t.timestamps
+    end
+  end
+
+  def down
+  end
+end

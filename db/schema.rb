@@ -11,12 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120706074446) do
+ActiveRecord::Schema.define(:version => 20120706153109) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "clients", :force => true do |t|
+    t.string   "name"
+    t.string   "address"
+    t.string   "city"
+    t.string   "phone"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "firm_id"
   end
 
   create_table "firms", :force => true do |t|
@@ -81,6 +91,7 @@ ActiveRecord::Schema.define(:version => 20120706074446) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "admin",           :default => false
+    t.integer  "primary_firm_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

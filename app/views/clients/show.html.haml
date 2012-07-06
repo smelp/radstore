@@ -1,0 +1,27 @@
+- provide(:title, @client.name)
+
+.container
+  .span6.offset3
+    .row.bordered
+
+      %h2.bordered-bottom= @client.name
+      
+      %table.table.table-striped
+        %tbody
+          %tr
+            %td 
+              %b Osoite:
+            %td= @client.address
+          %tr
+            %td 
+              %b Kaupunki:
+            %td= @client.city
+          %tr
+            %td 
+              %b Puhelinnumero:
+            %td= @client.phone
+              
+      = link_to :controller => "clients", :action => "edit", :id => @client.id do
+        %i.icon-edit
+        Muokkaa
+      

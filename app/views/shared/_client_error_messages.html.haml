@@ -1,0 +1,7 @@
+- if @client.errors.any?
+  #error_explanation
+    .alert.alert-error
+      Lomake sisältää #{@client.errors.count} virhettä
+    %ul
+      - @client.errors.each_with_index do |msg|
+        %li* #{msg[1]}

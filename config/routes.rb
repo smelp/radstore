@@ -1,5 +1,7 @@
 UserTutorial::Application.routes.draw do
 
+  get "clients/new"
+
   root to: "static_pages#home"
 
   match '/help',    to: 'static_pages#help'
@@ -15,6 +17,7 @@ UserTutorial::Application.routes.draw do
   match 'bakeries/:id', to: 'bakeries#show', as: 'bakery', via: [:get, :post]
   
   resources :users
+  resources :clients
   
   resources :firms
   resources :bakeries

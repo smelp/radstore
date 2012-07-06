@@ -33,6 +33,7 @@ class UsersController < ApplicationController
   end
   
   def update
+      
     if @user.update_attributes(params[:user])
       flash[:success] = "Profiili päivitetty"
       sign_in @user

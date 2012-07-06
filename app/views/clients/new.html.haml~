@@ -1,0 +1,20 @@
+- provide(:title, 'Luo asiakas')
+%h1 Luo asiakas
+    
+.row
+  .span6.offset3.well
+    = form_for @client do |f|
+      = render 'shared/client_error_messages'
+      %p
+        = f.label :name, "Nimi" 
+        = f.text_field :name 
+        = f.label :address, "Osoite"
+        = f.text_field :address
+        = f.label :name, "Kaupunki" 
+        = f.text_field :city
+        = f.label :phone, "Puhelinnumero" 
+        = f.text_field :phone 
+         
+      = hidden_field_tag :firm_id, @firm.id
+      
+      = f.submit "Luo asiakas", class: "btn btn-large btn-primary"
