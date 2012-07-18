@@ -1,0 +1,54 @@
+= provide(:title, 'Tilaukset')
+
+- if @billed_only
+  %h1 Laskut
+- else
+  %h1 Tilaukset
+
+.container
+  .span8.offset2
+    = render "shared/nav"
+
+= will_paginate
+
+.container
+  .span8.offset2.bordered
+    %table.table
+      %thead
+        %th Nro
+        %th Tilauspäivä
+        %th Toimitustapa
+        - if @billed_only
+          %th Eräpäivä
+        %th Tila
+        %th Loppusumma
+      %tbody
+        - @bakerybills.each do |bakerybill|
+          %tr
+            %td= link_to bakerybill.id, bakerybill
+            - if bakerybill.bill
+              %td= bakerybill.bill.created_at.to_date
+              %td= bakerybill.bill.delivery_type
+              - if @billed_only
+                - if bakerybill.bill.due_date < Date.today
+                  %td.text-alert= bakerybill.bill.due_date
+                - else
+                  %td.text-success= bakerybill.bill.due_date
+              %td= bakerybill.bill.state
+              %td.alert-info #{bakerybill.bill.total_amount} €
+              %td
+                = link_to :controller => "bakerybills", :action => "edit", :id => bakerybill.id do
+                  %i.icon-edit
+            
+
+= will_paginate
+
+.container
+  .span8.offset2
+    - if @billed_only
+      - #nop
+    - else
+      = link_to :controller => "bakerybills", :action => "new", :bakery_id => @bakery.id do
+        %i.icon-plus
+      Lisää tilaus
+

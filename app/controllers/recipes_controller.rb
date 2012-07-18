@@ -46,6 +46,7 @@ class RecipesController < ApplicationController
   end
   
   def edit
+    # make so that only safe choices are shown
     @bakery.recipes.each do |r|
       @safe_recipes.push(r) unless r.has_circular? @recipe.name
     end

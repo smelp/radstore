@@ -9,7 +9,7 @@
 = will_paginate
 
 .container
-  .span6.offset3
+  .span6.offset3.bordered
     %table.table
       %thead
         %th Nimi
@@ -21,6 +21,9 @@
             %td 
               = material.price
               €
+            %td
+              = link_to :controller => "materials", :action => "edit", :id => material.id do
+                %i.icon-edit
 
 = will_paginate
 

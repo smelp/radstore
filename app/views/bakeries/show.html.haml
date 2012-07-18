@@ -42,6 +42,9 @@
               %td.span3= recipe.get_taxed_price.round(2)
               %td.span3= recipe.coverage.round(2)
               %td.span3= recipe.get_coveraged_price.round(2)
+              %td.span1
+                = link_to :controller => "recipes", :action => "edit", :id => recipe.id do
+                  %i.icon-edit
               
       = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
         %i.icon-plus
@@ -70,6 +73,9 @@
               %td.span4= link_to material.name, material
               %td.span3= (material.price).round(2)
               %td.span3= (material.price + (material.price * @tax)).round(2)
+              %td.span1
+                = link_to :controller => "materials", :action => "edit", :id => material.id do
+                  %i.icon-edit
                 
       = link_to :controller => "materials", :action => "new", :bakery_id => @bakery.id do
         %i.icon-plus

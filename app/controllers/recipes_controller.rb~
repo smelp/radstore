@@ -1,4 +1,6 @@
 # encoding: utf-8
+require 'will_paginate/array'
+
 class RecipesController < ApplicationController
   before_filter :signed_in_user
   before_filter :firm_admin
@@ -46,6 +48,7 @@ class RecipesController < ApplicationController
   end
   
   def edit
+    # make so that only safe choices are shown
     @bakery.recipes.each do |r|
       @safe_recipes.push(r) unless r.has_circular? @recipe.name
     end
@@ -88,7 +91,7 @@ class RecipesController < ApplicationController
     end
     
     def firm_admin
-      
+      @safe_recipes = []
       @added_materials = []
       @added_recipes = []
       @tax = 0.13

@@ -2,29 +2,33 @@
 
 %h1 Asiakkaat
 
+.container
+  .span8.offset2
+    = render "shared/nav"
+
 = will_paginate
 
 .container
-  .span6.offset3
+  .span8.offset2
     %table.table
       %thead
         %th Nimi
-        %th Osoite
+        %th.span2 Puhelinnumero
+        %th.span3 Osoite
         %th Kaupunki
-        %th Puhelinnumero
         
       %tbody
         - @clients.each do |client|
           %tr
             %td= link_to client.name, client
+            %td= client.phone
             %td= client.address
             %td= client.city
-            %td= client.phone
 
 = will_paginate
 
 .container
-  .span6.offset3
+  .span8.offset2
     = link_to :controller => "clients", :action => "new", :firm_id => @firm.id do
       %i.icon-plus
       Lisää asiakas

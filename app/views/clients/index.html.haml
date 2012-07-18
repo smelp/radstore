@@ -2,24 +2,28 @@
 
 %h1 Asiakkaat
 
+.container
+  .span8.offset2
+    = render "shared/nav"
+
 = will_paginate
 
 .container
-  .span8.offset2
+  .span8.offset2.bordered
     %table.table
       %thead
         %th Nimi
-        %th Osoite
+        %th.span2 Puhelinnumero
+        %th.span3 Osoite
         %th Kaupunki
-        %th Puhelinnumero
         
       %tbody
         - @clients.each do |client|
           %tr
             %td= link_to client.name, client
+            %td= client.phone
             %td= client.address
             %td= client.city
-            %td= client.phone
 
 = will_paginate
 

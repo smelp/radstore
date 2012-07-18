@@ -1,0 +1,4 @@
+class AddClientsToBills < ActiveRecord::Migration
+  def change
+  end
+end

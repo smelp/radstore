@@ -16,7 +16,7 @@ class Material < ActiveRecord::Base
     
   attr_accessible :name, :bakery, :price
   
-  validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen pituus 2-50 merkkiä" }, :uniqueness => { :message => "Raaka-aine on jo olemassa" } 
+  validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen pituus 2-50 merkkiä" } 
   validates :price, presence: { :message => "Hinta on pakollinen" }
   validates_numericality_of :price, { :greater_than_or_equal_to => 0, :less_than => 100000000, :message => "Hinnan täytyy olla positiivinen numero välillä 0 - 100.000.000!" }
   

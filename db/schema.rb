@@ -11,12 +11,42 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120706153109) do
+ActiveRecord::Schema.define(:version => 20120708072930) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "bakerybills", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "bakery_id"
+  end
+
+  create_table "billrecipes", :force => true do |t|
+    t.integer  "recipe_id"
+    t.integer  "bakerybill_id"
+    t.float    "amount",        :default => 0.0
+    t.float    "price",         :default => 0.0
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
+
+  add_index "billrecipes", ["bakerybill_id"], :name => "index_billrecipes_on_bakerybill_id"
+  add_index "billrecipes", ["recipe_id", "bakerybill_id"], :name => "index_billrecipes_on_recipe_id_and_bakerybill_id", :unique => true
+
+  create_table "bills", :force => true do |t|
+    t.string   "delivery_type"
+    t.date     "due_date"
+    t.float    "total_amount"
+    t.integer  "subbill_id"
+    t.string   "subbill_type"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.integer  "client_id"
+    t.string   "state",         :default => "Tilattu"
   end
 
   create_table "clients", :force => true do |t|

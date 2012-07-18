@@ -2,6 +2,7 @@
 class Client < ActiveRecord::Base
 
   belongs_to :firm
+  has_many :bills
     
   attr_accessible :name, :address, :phone, :city
   

@@ -1,0 +1,175 @@
+# encoding: utf-8
+require 'will_paginate/array'
+
+class BakerybillsController < ApplicationController
+  before_filter :signed_in_user
+  before_filter :firm_admin, only: [:index, :new, :create, :edit, :update, :destroy]
+  before_filter :admin_user, only: []
+
+  def index
+    list = []
+    @bakery.bakerybills.each do |e| 
+      if params[:billed_only]
+        @billed_only = true
+        if ["Laskutettu", "Maksettu", "Kirjattu"].include? e.bill.state 
+          list.push e
+        end
+      else
+        list.push e
+      end
+    end
+    @bakerybills = list.paginate(:page => params[:page])
+  end
+  
+  def show
+    @bakerybill = Bakerybill.find(params[:id])
+  end
+  
+  def new
+    @bill = Bill.new
+    @bakerybill = Bakerybill.new
+  end
+  
+  def create
+    @bill = Bill.new(params[:bill])
+    @bakerybill = Bakerybill.new(params[:bakerybill])
+    @bakerybill.bakery = @bakery
+    @bakerybill.bill = @bill
+    @bill.due_date = Date.today + 14.days
+    
+    create_bakerybill
+  end
+  
+  def edit
+  end
+  
+  def update
+    if params[:new_recipes]
+      add_recipes
+    end
+    
+    if @bill.update_attributes(params[:bill])
+      save_bakerybill
+    else
+      flash.now[:error] = "Tilauksen tallennus ei onnistunut."
+      render 'edit'
+    end
+  end
+  
+  def destroy
+    Billrecipe.destroy_all(:bakerybill_id => @bakerybill.id)
+    @bakerybill.bill.destroy
+    @bakerybill.destroy
+    flash[:success] = "Tilaus poistettu."
+    redirect_to :controller => "bakerybills", :action => "index", :bakery_id => @bakery.id
+  end
+  
+  private
+    
+    def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_path, notice: "Kirjaudu sisään kiitos."
+      end
+    end
+    
+    def firm_admin
+      @types = Bill.get_subbill_types
+      @states = Bill.get_state_list
+      @added_recipes = []
+      
+      if params[:id]
+        @bakerybill = Bakerybill.find(params[:id])
+        @bakery = @bakerybill.bakery
+        @bill = @bakerybill.bill
+        @clients = @bakery.firm.clients
+      elsif params[:bakery_id]
+        @bakery = Bakery.find_by_id(params[:bakery_id])
+        @clients = @bakery.firm.clients
+        if !@bakery 
+          @bakerybill = nil
+          @bakery = nil
+        end
+      end
+      
+      if @bakerybill and @bakerybill.bakery
+        admins = @bakerybill.bakery.firm.users #later change to include only admins
+      elsif @bakery
+        admins = @bakery.firm.users #later change to include only admins
+      else 
+        admins = []
+        flash[:error] = "Ei lupaa tehdä muutoksia."
+      end
+      redirect_to(root_path) unless admins.include? current_user
+    end
+    
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
+    end
+    
+    def add_recipes
+      params[:new_recipes].each do |recipe|
+        res = Recipe.find(recipe[0])
+        @added_recipes.push [res, recipe[1]]   
+      end
+    end
+    
+    def create_bakerybill
+      if @bakerybill.save
+        if params[:new_recipes]
+          total_amount = 0
+          params[:new_recipes].each do |recipe|
+            temp_recipe = Recipe.find(recipe[0])
+            total_amount += (recipe[1].to_f * temp_recipe.get_coveraged_price)
+            Billrecipe.create(:recipe_id => recipe[0], :bakerybill_id => @bakerybill.id, :amount => recipe[1], :price => temp_recipe.get_coveraged_price * recipe[1].to_f)      
+          end
+          @bill.total_amount = total_amount
+        else
+          @bill.total_amount = 0
+        end
+        
+        if @bill.save
+          #@bakerybill.recipes.each { |r| r.save }
+          flash[:success] = "Uusi tilaus luotu!"
+          redirect_to :controller => "bakerybills", :action => "index", :bakery_id => @bakery.id
+        else
+          Bakerybill.destroy @bakerybill.id
+          flash.now[:error] = "Tilauksen luominen ei onnistunut."
+          render 'new'
+        end  
+      else
+        flash.now[:error] = "Tilauksen luominen ei onnistunut."
+        render 'new'
+      end
+    end
+    
+    def save_bakerybill
+      Billrecipe.destroy_all(:bakerybill_id => @bakerybill.id)
+      total_amount = 0
+      if params[:old_recipes]
+        params[:old_recipes].each do |recipe|
+          temp_recipe = Recipe.find recipe[0]
+          total_amount += (recipe[1].to_f * temp_recipe.get_coveraged_price)
+          Billrecipe.create(:recipe_id => recipe[0], :bakerybill_id => @bakerybill.id, :amount => recipe[1], :price => temp_recipe.get_coveraged_price * recipe[1].to_f)
+        end
+        @bill.total_amount = total_amount
+      end
+      
+      if params[:new_recipes]
+        params[:new_recipes].each do |recipe|
+          temp_recipe = Recipe.find recipe[0]
+          total_amount += (recipe[1].to_f * temp_recipe.get_coveraged_price)
+          Billrecipe.create(:recipe_id => recipe[0], :bakerybill_id => @bakerybill.id, :amount => recipe[1], :price => temp_recipe.get_coveraged_price * recipe[1].to_f.round(2))     
+        end
+        @bill.total_amount = total_amount
+      end
+      
+      if @bakerybill.save && @bill.save
+        flash[:success] = "Tilaus tallennettu"
+        redirect_to @bakerybill
+      else
+        flash.now[:error] = "Tilauksen tallennus ei onnistunut."
+        render 'edit'
+      end
+    end
+end

@@ -1,0 +1,44 @@
+- provide(:title, 'Luo tilaus')
+%h1 Luo tilaus
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+    
+.row
+  .span6.offset3.well
+    = form_for @bakerybill do |f|
+      = render 'shared/bakerybill_error_messages'
+      = render 'shared/bill_error_messages'
+      
+      = fields_for @bill do |b|
+        
+        = b.label :client, "Asiakas"
+        = b.collection_select :client_id, @clients, :id, :name, :prompt => "Valitse asiakas"
+        
+        = b.label :delivery_type, "Toimitustapa"
+        = b.select :delivery_type, @types, :prompt => "Valitse toimitustapa"
+        
+        = b.label :state, "Tila"
+        = b.select :state, @states, :prompt => "Valitse tila"
+        
+        %fieldset.well  
+          %legend Reseptit
+          = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
+          = fields_for :recipe do |h|
+            = h.label :amount, "Määrä (kpl)"
+            = h.number_field :amount, min: 0
+          = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
+         
+        .span4.well
+          %table.well.table.table#recipe_subrecipes
+            %thead.green
+              %th Lisättävät reseptit:
+              %th
+     
+          %tbody
+            
+      = hidden_field_tag :bakery_id, @bakery.id
+      
+      .span8
+        = f.submit "Luo tilaus", class: "btn btn-large btn-primary"

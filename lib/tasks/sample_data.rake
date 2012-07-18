@@ -21,14 +21,14 @@ namespace :db do
     firm = Firm.new(name: "Firma 1",
                          corporate_id: "2234567-8",
                          location: "Helsinki")
-    firm.resource = Bakery.new(description: "Sample description")
+    firm.resource = Bakery.create(description: "Sample description")
     firm.save!
     
     20.times do |n|
       name  = Faker::Company.name
       corporate_id = "1234567-#{n}"
       location = Faker::Address.city
-      resource = Bakery.new(description: "Sample description #{n}")
+      resource = Bakery.create(description: "Sample description #{n}")
       f = Firm.create!(name: name,
                    corporate_id: corporate_id,
                    location: location,
@@ -45,8 +45,7 @@ namespace :db do
         Material.create!(name: name,
                      price: price,
                      bakery: bakery)
-      end
-    
+      end    
     end
   end
   

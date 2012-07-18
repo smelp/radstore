@@ -1,7 +1,5 @@
 UserTutorial::Application.routes.draw do
 
-  get "clients/new"
-
   root to: "static_pages#home"
 
   match '/help',    to: 'static_pages#help'
@@ -24,7 +22,8 @@ UserTutorial::Application.routes.draw do
 
   resources :recipes
   resources :materials
-
+  
+  resources :bakerybills
   resources :sessions, only: [:new, :create, :destroy]
 
   # The priority is based upon order of creation:

@@ -2,6 +2,10 @@
 
 %h1 Raaka-aineet
 
+.container
+  .span6.offset3
+    = render "shared/nav"
+
 = will_paginate
 
 .container
@@ -17,6 +21,9 @@
             %td 
               = material.price
               €
+            %td
+              = link_to :controller => "materials", :action => "edit", :id => material.id do
+                %i.icon-edit
 
 = will_paginate
 

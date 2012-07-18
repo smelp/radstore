@@ -14,6 +14,7 @@ class Bakery < ActiveRecord::Base
   has_one :firm, :as => :resource
   has_many :recipes
   has_many :materials
+  has_many :bakerybills
   
   attr_accessible :description, :firm
   

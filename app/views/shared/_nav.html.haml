@@ -4,5 +4,7 @@
   |
   - if @material and @material.bakery
     = link_to "Oma sivu", :controller => "bakeries", :action => "show", :id => @material.bakery.id
+  - elsif @firm
+    = link_to "Oma sivu", :controller => "bakeries", :action => "show", :id => @firm.resource.id
   - else
     = link_to "Oma sivu", :controller => "bakeries", :action => "show", :id => @bakery.id

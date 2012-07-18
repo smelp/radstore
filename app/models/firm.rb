@@ -23,8 +23,8 @@ class Firm < ActiveRecord::Base
   VALID_CORPORATE_ID_REGEX = /\d{7}-\d{1}/i
   validates :corporate_id, presence: { :message => "Y-tunnus vaaditaan" }, :length => { :minimum => 9, :maximum => 10, :message => "Y-tunnuksen täytyy olla 9 merkkiä pitkä" }, :format => { :with => VALID_CORPORATE_ID_REGEX, :message => "Y-tunnuksen täytyy olla muotoa: 1234567-8" }, :uniqueness => { :case_sensitive => false, :message => "Y-tunnus on jo käytössä." }
   validates :location, :length => { :maximum => 50, :message => "Sijainnin maksimipituus on 50 merkkiä" }
-  validates :resource_type, presence: { :message => "Toimiala pakollinen" }
-  validates :resource_id, presence: { :message => "Toimiala pakollinen" }, :uniqueness => { :message => "Toimialan yritys on jo liitetty toiseen yritykseen." }
-  validates_inclusion_of :resource_type, :in => ["Bakery"], :allow_nil => false, :message => "Toimialan täytyy olla joku seuraavista: #{resource_list}"
+  validates :resource_type, presence: { :message => "Toimialan tyyppi pakollinen" }
+  validates :resource_id, presence: { :message => "Toimialan id pakollinen" }, :uniqueness => { :message => "Toimialan yritys on jo liitetty toiseen yritykseen." }
+  validates_inclusion_of :resource_type, :in => resource_list, :allow_nil => false, :message => "Toimialan täytyy olla joku seuraavista: #{resource_list}"
 
 end

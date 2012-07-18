@@ -10,7 +10,7 @@
   = will_paginate
 
 .container
-  .span6.offset3.well
+  .span6.offset3
     %table.table.table-striped
       %thead
         %th Nimi
@@ -20,8 +20,11 @@
           %tr
             %td= link_to recipe.name, recipe
             %td 
-              = recipe.get_price.round(2)
+              = recipe.get_price
               €
+            %td
+              = link_to :controller => "recipes", :action => "edit", :id => recipe.id do
+                %i.icon-edit
 .container
   .span6.offset3
     = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
