@@ -3,7 +3,7 @@ require 'will_paginate/array'
 
 class BakerybillsController < ApplicationController
   before_filter :signed_in_user
-  before_filter :firm_admin, only: [:index, :new, :create, :edit, :update, :destroy]
+  before_filter :firm_admin
   before_filter :admin_user, only: []
 
   def index

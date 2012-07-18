@@ -9,7 +9,7 @@
 = will_paginate
 
 .container
-  .span8.offset2
+  .span8.offset2.bordered
     %table.table
       %thead
         %th Nimi
@@ -24,6 +24,9 @@
             %td= client.phone
             %td= client.address
             %td= client.city
+            %td
+              = link_to :controller => "bakerybills", :action => "edit", :id => bakerybill.id do
+                %i.icon-edit
 
 = will_paginate
 

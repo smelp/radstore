@@ -24,6 +24,9 @@
             %td= client.phone
             %td= client.address
             %td= client.city
+            %td
+              = link_to :controller => "clients", :action => "edit", :id => client.id do
+                %i.icon-edit
 
 = will_paginate
 

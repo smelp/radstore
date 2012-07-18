@@ -1,4 +1,4 @@
-- provide(:title, "Tilaus #{@bakerybill.id})
+- provide(:title, "Tilaus #{@bakerybill.id}")
 
 .container
   .span8.offset2

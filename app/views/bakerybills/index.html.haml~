@@ -25,7 +25,12 @@
       %tbody
         - @bakerybills.each do |bakerybill|
           %tr
-            %td= link_to bakerybill.id, bakerybill
+            - if @billed_only
+              %td
+                = link_to :controller => "bakerybills", :action => "show", :id => current_user.primary_firm.resource.id, :billed_only => true do
+                  = bakerybill.id
+            - else
+              %td= link_to bakerybill.id, bakerybill
             - if bakerybill.bill
               %td= bakerybill.bill.created_at.to_date
               %td= bakerybill.bill.delivery_type
@@ -50,5 +55,5 @@
     - else
       = link_to :controller => "bakerybills", :action => "new", :bakery_id => @bakery.id do
         %i.icon-plus
-      Lisää tilaus
+        Lisää tilaus
 
