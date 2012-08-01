@@ -27,7 +27,7 @@
         %fieldset.well  
           %legend Reseptit
           = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
-          = fields_for :recipe do |h|
+          = fields_for :subrecipe do |h|
             = h.label :amount, "Määrä (kpl)"
             = h.number_field :amount, min: 0
           = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
@@ -57,6 +57,18 @@
           %tbody
             
       = hidden_field_tag :bakery_id, @bakery.id
+      
+      - if @billed_only
+        .span8
+          %h3 Laskukentät
+          %fieldset.span4.well
+            = fields_for @bill do |b|
+              
+              = b.label :reference_number, "Viitenumero"
+              = b.text_field :reference_number
+                
+              = b.label :total_amount, "Loppusumma"
+              = b.text_field :total_amount  
       
       .span8
         = f.submit "Tallenna", class: "btn btn-large btn-primary"

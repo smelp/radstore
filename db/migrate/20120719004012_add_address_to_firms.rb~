@@ -1,0 +1,4 @@
+class AddAddressToFirms < ActiveRecord::Migration
+  def change
+  end
+end

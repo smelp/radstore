@@ -29,20 +29,26 @@
       %table.table.table-condensed.table-striped.table-bordered
         %thead
           %th Nimi
-          %th Hinta ennen ALV:a (€)
-          %th ALV hinta (€)
+          %th Laskennal. hinta (€)
           %th Kate-%
+          %th Katettu hinta
+          %th 
+            Alv 
+            = Recipe.get_tax * 100
+            \%
+            (€)
           %th Myyntihinta (€)
           
         %tbody
           - @recipes.each do |recipe|
             %tr
               %td.span4= link_to recipe.name, recipe
-              %td.span3= recipe.get_price.round(2)
-              %td.span3= recipe.get_taxed_price.round(2)
-              %td.span3= recipe.coverage.round(2)
-              %td.span3= recipe.get_coveraged_price.round(2)
-              %td
+              %td.span3= recipe.get_price
+              %td.span3= recipe.coverage
+              %td.span3= recipe.get_coveraged_price
+              %td.span3= recipe.tax
+              %td.span3= recipe.get_taxed_price
+              %td.span1
                 = link_to :controller => "recipes", :action => "edit", :id => recipe.id do
                   %i.icon-edit
               
@@ -66,6 +72,11 @@
         %thead
           %th Nimi
           %th Veroton kilohinta (€)
+          %th 
+            Alv 
+            = Recipe.get_tax * 100
+            \%
+            (€)
           %th Verollinen kilohinta (€)
         %tbody
           - @materials.each do |material|

@@ -58,6 +58,20 @@
             
       = hidden_field_tag :bakery_id, @bakery.id
       
+      - if @billed_only
+        .span8
+          %h3 Laskukentät
+          %fieldset.span4.well
+            = fields_for @bill do |b|
+              
+              = b.label :reference_number, "Viitenumero"
+              = b.text_field :reference_number
+                
+              = b.label :total_amount, "Anna loppusumma"
+              = b.text_field :total_amount  
+              
+              = label :count, 'tai laske automaattisesti'  
+              = check_box_tag 'Laske summa'
       .span8
         = f.submit "Tallenna", class: "btn btn-large btn-primary"
     

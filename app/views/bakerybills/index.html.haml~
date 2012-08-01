@@ -27,7 +27,7 @@
           %tr
             - if @billed_only
               %td
-                = link_to :controller => "bakerybills", :action => "show", :id => current_user.primary_firm.resource.id, :billed_only => true do
+                = link_to :controller => "bakerybills", :action => "show", :id => bakerybill.id, :billed_only => true do
                   = bakerybill.id
             - else
               %td= link_to bakerybill.id, bakerybill

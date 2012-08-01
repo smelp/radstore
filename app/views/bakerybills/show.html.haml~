@@ -1,55 +1,166 @@
 - provide(:title, "Tilaus #{@bakerybill.id}")
 
-.container
-  .span8.offset2
-    .row.bordered
-
-      %h2.bordered-bottom Tilausnro: #{@bakerybill.id}
-      
-      %table.table.table-striped
-        %caption.align-left 
-          %b Tilaaja:
-        %tbody
-          - if @bakerybill.bill.client
-            %tr
-              %td Nimi
-              %td= link_to @bakerybill.bill.client.name
-            %tr
-              %td Osoite
-              %td= @bakerybill.bill.client.address
-            %tr
-              %td Kaupunki
-              %td= @bakerybill.bill.client.city  
-      
-      %table.table.table-striped
-        %caption.align-left 
-          %b Sisältää:
-        %thead
-          %th Nimi
-          %th Määrä
-          %th Hinta (€)
+-if @billed_only
+  .container
+    .span10.offset1
+      .row.bordered
+        .span5
+          .row
+            %table.table.table-condensed.table-borderless
+              %tbody
+                %tr
+                  %td
+                    %b= @bakery.firm.name
+                %tr
+                  %td= @bakery.firm.address
+                %tr
+                  %td= @bakery.firm.location
+                %tr
+                  %td
+                    Y 
+                    = @bakery.firm.corporate_id  
           
-        %tbody
-          - @bakerybill.recipes.each do |recipe|
-            %tr
-              %td= link_to recipe.name, recipe
-              %td= @bakerybill.billrecipes.find_by_recipe_id(recipe.id).amount
-              %td= @bakerybill.billrecipes.find_by_recipe_id(recipe.id).price
-              
-      %table.table.table-striped
-        %thead
-          %th Toimitustapa
-          %th Eräpäivä
-          %th Loppusumma
-        %tbody
-          %tr
-            %td= @bakerybill.bill.delivery_type
-            %td= @bakerybill.bill.due_date
-            %td #{@bakerybill.bill.total_amount} €
-      = link_to :controller => "bakerybills", :action => "edit", :id => @bakerybill.id do
+          .row
+            %table.table.table-condensed.table-borderless
+              %tbody
+                - if @bakerybill.bill.client
+                  %tr
+                    %td
+                  %tr
+                    %td
+                      %b= @bakerybill.bill.client.name
+                  %tr
+                    %td= @bakerybill.bill.client.address
+                  %tr
+                    %td= @bakerybill.bill.client.city  
+                    
+        .span5
+          %table.table.table-condensed.table-borderless
+            %tbody
+              %tr
+                %td
+                  %h4 LASKU
+              %tr
+                %td Päiväys
+                %td= @bakerybill.bill.created_at.to_date              
+              %tr
+                %td Laskun numero
+                %td= @bakerybill.id
+              %tr
+                %td Eräpäivä
+                %td= @bakerybill.bill.due_date
+              %tr
+                %td Viivästyskorko
+                %td 8,5%
+              %tr
+                %td Viitenumero
+                %td= @bakerybill.bill.reference_number
+              %tr
+                %td Maksuehto
+                %td 14pv netto
+              %tr
+                %td Pankki
+                %td Nordea
+              %tr
+                %td Tilinumero
+                %td= @bakery.firm.account_number
+              %tr
+                %td Swift/BIC
+                    
+      .row.bordered    
+        %table.table.table-bordered.table-condensed
+          %thead.gray
+            %th Kuvaus
+            %th Määrä (kpl)
+            %th Veroton hinta (€)
+            %th Alv €
+            %th Yhteensä
+            
+          %tbody
+            - @bakerybill.recipes.each do |recipe|
+              %tr
+                %td= link_to recipe.name, recipe
+                %td= @bakerybill.billrecipes.find_by_recipe_id(recipe.id).amount
+                %td= @bakerybill.billrecipes.find_by_recipe_id(recipe.id).price
+                %td= (Recipe.get_tax * @bakerybill.billrecipes.find_by_recipe_id(recipe.id).price).round(2)
+                %td= (@bakerybill.billrecipes.find_by_recipe_id(recipe.id).price + Recipe.get_tax * @bakerybill.billrecipes.find_by_recipe_id(recipe.id).price).round(2)
+        
+        .span4.offset6        
+          %table.table.table-borderless
+            %tbody
+              %tr
+                %td Veroton hinta yhteensä
+                %td.align-right #{(@bakerybill.bill.total_amount).round(2)} €
+              %tr
+                %td Alv yhteensä  
+                %td.align-right #{(@bakerybill.bill.total_amount * Recipe.get_tax).round(2)} €
+              %tr.gray
+                %td
+                  %b Yhteensä
+                  %td.align-right #{(@bakerybill.bill.total_amount + @bakerybill.bill.total_amount * Recipe.get_tax).round(2)} €
+                  
+      = link_to :controller => "bakerybills", :action => "edit", :id => @bakerybill.id, :billed_only => true do
         %i.icon-edit
         Muokkaa
-      
+          
       %a.nav-link{href: "#", onclick: "window.print()"}
         %i.icon-print.margin-left10
         Tulosta
+- else
+  .container
+    .span8.offset2
+      .row.bordered
+
+        %h2.bordered-bottom Tilaus
+        
+        %table.table.table-striped
+          %caption.align-left 
+            %b Tilaaja:
+          %tbody
+            - if @bakerybill.bill.client
+              %tr
+                %td.span4= link_to @bakerybill.bill.client.name
+              %tr
+                %td.span4= @bakerybill.bill.client.address
+              %tr
+                %td.span4= @bakerybill.bill.client.city  
+        
+        %table.table.table-striped
+          %tbody
+            - if @bakerybill.bill
+              %tr 
+                %td Tilausnro:
+                %td TODO
+              
+              %tr
+                %td Tila:
+                %td.span4= link_to @bakerybill.bill.state
+              %tr
+                %td Toimitustapa:
+                %td.span4= @bakerybill.bill.delivery_type
+              %tr 
+                %td Tilauksen pvm:
+                %td.span4= link_to @bakerybill.created_at
+              
+        %table.table.table-striped
+          %caption.align-left 
+            %b Sisältää:
+          %thead.blue
+            %th.span4 Resepti
+            %th Määrä (kpl)
+            %th Hinta (€)
+            
+          %tbody
+            - @bakerybill.recipes.each do |recipe|
+              %tr
+                %td.span4= link_to recipe.name, recipe
+                %td= @bakerybill.billrecipes.find_by_recipe_id(recipe.id).amount
+                %td= @bakerybill.billrecipes.find_by_recipe_id(recipe.id).price
+                
+        = link_to :controller => "bakerybills", :action => "edit", :id => @bakerybill.id do
+          %i.icon-edit
+          Muokkaa
+        
+        %a.nav-link{href: "#", onclick: "window.print()"}
+          %i.icon-print.margin-left10
+          Tulosta

@@ -1,0 +1,4 @@
+class AddReferenceNumberToBills < ActiveRecord::Migration
+  def change
+  end
+end

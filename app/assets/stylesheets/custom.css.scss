@@ -1,9 +1,34 @@
-@import "bootstrap";
 
 /* mixins, variables, etc. */
 
+
 $grayMediumLight: #eaeaea;
 
+/*
+$myOrange:#f89406;
+$myBlueDark: #304269;
+$myPurple: #3D368B;
+$myGreen: #46a546;
+$myBlue: #91BED4;
+$myBlueLight: #D9E8F5;
+$myWhite: #eee;
+$myGrayBlue: #43464C;
+*/
+
+/* colors */
+/*
+$navbarBackground: $myGreen;
+$navbarBackgroundHighlight: lighten($navbarBackground, 10);
+$navbarLinkColor: darken($myOrange, 10);
+$navbarLinkColorHover: $myOrange;
+$dropdownBackground: $myBlueDark;
+$dropdownLinkColor: $myOrange;
+$hrBorder: $myBlue;
+$heroUnitBackground: lighten($myOrange, 20);
+$dropdownLinkColorHover: $myOrange;
+*/
+
+@import "bootstrap";
 
 @mixin box_sizing {
   -moz-box-sizing: border-box; 
@@ -142,7 +167,7 @@ form {
   input, textarea, select, .uneditable-input {
     border: 1px solid #bbb;
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     height: auto;
     margin-bottom: 15px;
     @include box_sizing;
@@ -205,8 +230,21 @@ form {
   border-bottom: 1px solid $gray;
 }
 
+.table.table-borderless td,
+.table.table-borderless th {
+    border-top: 0;
+}
+
 .align-left {
   text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.gray {
+  background-color: $grayMediumLight;
 }
 
 .green {

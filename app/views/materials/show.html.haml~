@@ -6,7 +6,7 @@
 
 .container
   .span8.offset2
-    .row.well
+    .row.bordered
 
       %h2.bordered-bottom= @material.name
       
@@ -22,6 +22,10 @@
         %thead
           %th Nimi
           %th Veroton hinta (€)
+          %th 
+            Alv
+            = Recipe.get_tax * 100
+            \%
           %th Verollinen hinta (€)
           
         %tbody
@@ -29,6 +33,9 @@
             %tr
               %td= link_to recipe.name, recipe
               %td= recipe.get_price.round(2)
+              %td
+                = (recipe.get_price * @tax).round(2)
+                €
               %td= (recipe.get_price + (recipe.get_price * @tax)).round(2)
               
       = link_to :controller => "materials", :action => "edit", :id => @material.id do

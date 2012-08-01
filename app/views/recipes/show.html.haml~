@@ -1,23 +1,24 @@
 - provide(:title, @recipe.name)
 
 .container
-  .span8.offset2
+  .span10.offset1
     = render "shared/nav"
     
 .container
-  .span8.offset2
-    .row
+  .span10.offset1
+    .row.bordered
       %h2.bordered-bottom= @recipe.name
       
-      %table.table.table-striped.well
+      %table.table.table-condensed.table-bordered
         - if @recipe.subrecipes.count > 0 
           %caption.align-left Reseptit
           %thead
             %th Nimi
             %th Määrä (kpl)
-            %th À Hinta (€)
-            %th Hinta yht.(€)
-            %th Verollinen hinta yht.(€)
+            %th Katettu á hinta
+            %th Katettu hinta yht. (€)
+            %th Alv yht. €
+            %th Myyntihinta yht.(€)
             
           %tbody
             - @recipe.subrecipes.each do |subrecipe|
@@ -25,19 +26,21 @@
                 - amount = @recipe.hasrecipes.find_by_subrecipe_id(subrecipe.id).amount 
                 %td= link_to subrecipe.name, subrecipe
                 %td= amount
-                %td= subrecipe.get_price
-                %td= (subrecipe.get_price * amount).round(2)
+                %td= subrecipe.get_coveraged_price
+                %td= (subrecipe.get_coveraged_price * amount).round(2)
+                %td= (subrecipe.tax * amount).round(2)
                 %td= (subrecipe.get_taxed_price * amount).round(2)
       
-      %table.table.table-striped.well  
+      %table.table.table-condensed.table-bordered  
         - if @recipe.materials.count > 0
           %caption.align-left Raaka-aineet
           %thead
             %th Nimi
             %th Määrä (g)
             %th Kilohinta (€)
-            %th Hinta yht.(€)
-            %th Verollinen hinta yht.(€)
+            %th Veroton hinta yht.(€)
+            %th Alv yht. €
+            %th Verol. hinta yht.(€)
             
           %tbody
             - @recipe.materials.each do |material|
@@ -47,25 +50,31 @@
                 %td= amount
                 %td= (material.price).round(2)
                 %td= (material.price * (amount/1000)).round(2)
+                %td= ((material.price * (amount/1000) * @tax)).round(2)
                 %td= (material.price * (amount/1000) + (material.price * (amount/1000) * @tax)).round(2)
       
-      %table.table.table-striped.well  
+      %table.table.table-condensed.table-bordered 
         %caption.align-left Yhteensä
         %thead
-          %th.well Määrä
-          %th.well Hinta ennen ALV
-          %th.well ALV hinta
-          %th.well Kate
-          %th.well Myyntihinta
+          %th Määrä
+          %th Lasken. hinta
+          %th Kate
+          %th Katettu hinta
+          %th
+            Alv 
+            = Recipe.get_tax * 100
+            \%
+          %th Myyntihinta
         %tbody
           %tr
-            %td.well
+            %td
               = @hasmaterials.sum(:amount) + @subrecipe_sum_amount.to_f
               g
-            %td.well #{@recipe.get_price} €
-            %td.well #{@recipe.get_taxed_price} €
-            %td.well #{(@recipe.coverage).round(2)}%
-            %td.well #{@recipe.get_coveraged_price} €
+            %td #{@recipe.get_price} €
+            %td #{(@recipe.coverage).round(2)}%
+            %td #{@recipe.get_coveraged_price} €
+            %td #{@recipe.tax} €
+            %td #{@recipe.get_taxed_price} €
             
       = link_to :controller => "recipes", :action => "edit", :id => @recipe.id do
         %i.icon-edit

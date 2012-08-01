@@ -10,17 +10,17 @@
   = will_paginate
 
 .container
-  .span6.offset3
+  .span6.offset3.bordered
     %table.table.table-striped
       %thead
         %th Nimi
-        %th Hinta
+        %th Myyntihinta
       %tbody
         - @recipes.each do |recipe|
           %tr
             %td= link_to recipe.name, recipe
             %td 
-              = recipe.get_price
+              = recipe.get_taxed_price
               €
             %td
               = link_to :controller => "recipes", :action => "edit", :id => recipe.id do

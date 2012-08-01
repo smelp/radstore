@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120708072930) do
+ActiveRecord::Schema.define(:version => 20120719004336) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
@@ -43,10 +43,11 @@ ActiveRecord::Schema.define(:version => 20120708072930) do
     t.float    "total_amount"
     t.integer  "subbill_id"
     t.string   "subbill_type"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.integer  "client_id"
-    t.string   "state",         :default => "Tilattu"
+    t.string   "state",            :default => "Tilattu"
+    t.integer  "reference_number", :default => 0
   end
 
   create_table "clients", :force => true do |t|
@@ -65,8 +66,10 @@ ActiveRecord::Schema.define(:version => 20120708072930) do
     t.string   "location"
     t.integer  "resource_id"
     t.string   "resource_type"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "address"
+    t.string   "account_number"
   end
 
   create_table "firms_users", :id => false, :force => true do |t|

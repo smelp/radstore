@@ -10,7 +10,6 @@ class BakerybillsController < ApplicationController
     list = []
     @bakery.bakerybills.each do |e| 
       if params[:billed_only]
-        @billed_only = true
         if ["Laskutettu", "Maksettu", "Kirjattu"].include? e.bill.state 
           list.push e
         end
@@ -48,6 +47,12 @@ class BakerybillsController < ApplicationController
       add_recipes
     end
     
+    if params[:count_price]
+      @count = true
+    else
+      @count = false
+    end
+    
     if @bill.update_attributes(params[:bill])
       save_bakerybill
     else
@@ -77,6 +82,9 @@ class BakerybillsController < ApplicationController
       @types = Bill.get_subbill_types
       @states = Bill.get_state_list
       @added_recipes = []
+      if params[:billed_only]
+        @billed_only = true
+      end
       
       if params[:id]
         @bakerybill = Bakerybill.find(params[:id])
@@ -159,13 +167,17 @@ class BakerybillsController < ApplicationController
         params[:new_recipes].each do |recipe|
           temp_recipe = Recipe.find recipe[0]
           total_amount += (recipe[1].to_f * temp_recipe.get_coveraged_price)
-          Billrecipe.create(:recipe_id => recipe[0], :bakerybill_id => @bakerybill.id, :amount => recipe[1], :price => temp_recipe.get_coveraged_price * recipe[1].to_f.round(2))     
+          Billrecipe.create(:recipe_id => recipe[0], :bakerybill_id => @bakerybill.id, :amount => recipe[1], :price => (temp_recipe.get_coveraged_price * recipe[1].to_f).round(2))     
         end
         @bill.total_amount = total_amount
       end
       
+      if @changed_price = true
+        @bill.total_amount = params[:bill][:total_amount]
+      end
+      
       if @bakerybill.save && @bill.save
-        flash[:success] = "Tilaus tallennettu"
+        flash[:success] = params#"Tilaus tallennettu"
         redirect_to @bakerybill
       else
         flash.now[:error] = "Tilauksen tallennus ei onnistunut."

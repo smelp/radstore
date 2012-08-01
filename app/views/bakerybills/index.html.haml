@@ -41,10 +41,14 @@
                   %td.text-success= bakerybill.bill.due_date
               %td= bakerybill.bill.state
               %td.alert-info #{bakerybill.bill.total_amount} €
-              %td
-                = link_to :controller => "bakerybills", :action => "edit", :id => bakerybill.id do
-                  %i.icon-edit
-            
+              - if @billed_only
+                %td
+                  = link_to :controller => "bakerybills", :action => "edit", :id => bakerybill.id, :billed_only => true do
+                    %i.icon-edit
+              - else
+                %td
+                  = link_to :controller => "bakerybills", :action => "edit", :id => bakerybill.id do
+                    %i.icon-edit
 
 = will_paginate
 
