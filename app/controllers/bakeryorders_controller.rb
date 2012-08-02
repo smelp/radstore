@@ -37,13 +37,17 @@ class BakeryordersController < ApplicationController
       add_recipes
     end
     
-    if params[:count_price]
-      @count = true
+    if @bakeryorder.update_attributes(params[:bakeryorder]) 
+      if @order.update_attributes(params[:order])
+        save_bakeryorder
+      else
+        flash.now[:error] = "Tilauksen kaikkien tietojen tallentaminen ei onnistunut."
+        render 'edit'
+      end   
     else
-      @count = false
+      flash.now[:error] = "Tilauksen tallentaminen ei onnistunut."
+      render 'edit'
     end
-  
-    save_bakeryorder
   end
   
   def destroy
