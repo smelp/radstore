@@ -3,7 +3,7 @@ class CreateHasrecipes < ActiveRecord::Migration
     create_table :hasrecipes do |t|
       t.integer :recipe_id
       t.integer :subrecipe_id
-      t.float :amount, default: 0
+      t.decimal :amount, default: 0
         
       t.timestamps
     end

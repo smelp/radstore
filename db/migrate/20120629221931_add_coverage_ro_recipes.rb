@@ -1,5 +1,5 @@
 class AddCoverageRoRecipes < ActiveRecord::Migration
   def change
-    add_column :recipes, :coverage, :float, default: 0
+    add_column :recipes, :coverage, :decimal, default: 0
   end
 end

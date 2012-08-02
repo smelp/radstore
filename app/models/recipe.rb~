@@ -54,6 +54,11 @@ class Recipe < ActiveRecord::Base
     price.round(2)
   end
   
+  def tax
+    price = self.get_coveraged_price * @@tax
+    price.round(2)
+  end
+  
   def get_taxed_price
     price = self.get_coveraged_price
     price += (@@tax * price)

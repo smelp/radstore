@@ -20,7 +20,8 @@ namespace :db do
     #Firms
     firm = Firm.new(name: "Firma 1",
                          corporate_id: "2234567-8",
-                         location: "Helsinki")
+                         location: "Helsinki",
+                         account_number: "123456-12334")
     firm.resource = Bakery.create(description: "Sample description")
     firm.save!
     
@@ -32,7 +33,8 @@ namespace :db do
       f = Firm.create!(name: name,
                    corporate_id: corporate_id,
                    location: location,
-                   resource: resource)
+                   resource: resource,
+                   account_number: "123456-123#{n}")
       #Materials
       material = Material.new(name: "Kala",
                         price: 1.3)
@@ -45,7 +47,13 @@ namespace :db do
         Material.create!(name: name,
                      price: price,
                      bakery: bakery)
-      end    
+        
+        recipe_name  = Faker::Name.name
+        recipe_bakery = resource
+        Recipe.create!(name: recipe_name,
+                     bakery: recipe_bakery)
+      end
+          
     end
   end
   

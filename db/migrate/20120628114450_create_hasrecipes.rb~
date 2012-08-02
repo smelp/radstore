@@ -5,9 +5,6 @@ class CreateHasrecipes < ActiveRecord::Migration
       t.integer :subrecipe_id
       t.float :amount, default: 0
         
-      add_index :hasrecipes, [:recipe_id, :subrecipe_id], :unique => true
-      add_index :hasrecipes, :subrecipe_id, :unique => false
-    
       t.timestamps
     end
   end

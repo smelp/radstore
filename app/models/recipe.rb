@@ -26,9 +26,8 @@ class Recipe < ActiveRecord::Base
   has_many :bakerybills, :through => :billrecipes
   has_many :billrecipes
   
-  attr_accessible :name, :price, :bakery, :coverage
+  attr_accessible :name, :bakery, :coverage
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }, :uniqueness => { :message => "Reseptin nimi on jo käytössä" }
-  validates_numericality_of :price, { :greater_than_or_equal_to => 0, :message => "Hinnan täytyy olla positiivinen numero!" }
   validates_numericality_of :coverage, { :greater_than_or_equal_to => 0, :message => "Katteen täytyy olla positiivinen numero!" }
   
   validate :subrecipes_cannot_form_circular_dependencies, :on => :update
