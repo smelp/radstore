@@ -18,7 +18,7 @@ window.add_subrecipe = (e) ->
   
   for option in choice
     if option.value == val && option.innerHTML != "Valitse resepti" && amount != ""
-      td_elem.innerHTML = option.innerHTML + ", " + amount + " g</br>"  
+      td_elem.innerHTML = option.innerHTML + ", " + amount + " kpl</br>"  
       a_elem.href = "#"
       a_elem.setAttribute("class","nav-link")
       a_elem.setAttribute("onclick","remove_table_element(#{val})")

@@ -1,0 +1,59 @@
+- provide(:title, "Tilaus #{@bakeryorder.id}")
+
+.container
+  .span8.offset2
+    .row.bordered
+
+      %h2.bordered-bottom Tilaus
+        
+      %table.table.table-striped
+        %caption.align-left 
+          %b Tilaaja:
+        %tbody
+          - if @bakeryorder.order.client
+            %tr
+              %td.span4= link_to @bakeryorder.order.client.name, @bakeryorder.order.client
+            %tr
+              %td.span4= @bakeryorder.order.client.address
+            %tr
+              %td.span4= @bakeryorder.order.client.city  
+      
+      %table.table.table-striped
+        %tbody
+          - if @bakeryorder.order
+            %tr 
+              %td Tilausnro:
+              %td TODO
+            
+            %tr
+              %td Tila:
+              %td.span4= @bakeryorder.state
+            %tr
+              %td Toimitustapa:
+              %td.span4= @bakeryorder.delivery_type
+            %tr 
+              %td Tilauksen pvm:
+              %td.span4= @bakeryorder.created_at.to_date
+              
+      %table.table.table-striped
+        %caption.align-left 
+          %b Sisältää:
+        %thead.blue
+          %th.span4 Resepti
+          %th Määrä (kpl)
+          %th Hinta yht. (€)
+          
+        %tbody
+          - @bakeryorder.recipes.each do |recipe|
+            %tr
+              %td.span4= link_to recipe.name, recipe
+              %td= @bakeryorder.bakeryorderrecipes.find_by_recipe_id(recipe.id).amount
+              %td= @bakeryorder.bakeryorderrecipes.find_by_recipe_id(recipe.id).price
+              
+      = link_to :controller => "bakeryorders", :action => "edit", :id => @bakeryorder.id do
+        %i.icon-edit
+        Muokkaa
+      
+      %a.nav-link{href: "#", onclick: "window.print()"}
+        %i.icon-print.margin-left10
+        Tulosta

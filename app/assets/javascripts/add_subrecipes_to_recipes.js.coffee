@@ -23,7 +23,7 @@ window.add_subrecipe = (e) ->
       a_elem.setAttribute("class","nav-link")
       a_elem.setAttribute("onclick","remove_table_element(#{val})")
       
-      recipe = [val, amount]
+      recipe = val
       elem.type = "hidden"
       elem.name = "new_recipes[" + recipe + "]"
       elem.value = amount

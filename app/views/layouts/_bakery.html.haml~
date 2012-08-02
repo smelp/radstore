@@ -11,3 +11,6 @@
 %li
   = link_to :controller => "bakerybills", :action => "index", :bakery_id => current_user.primary_firm.resource.id do
     Tilaukset
+%li
+  = link_to :controller => "bakerybills", :action => "index", :bakery_id => current_user.primary_firm.resource.id, :billed_only => true do
+    Laskut

@@ -1,0 +1,7 @@
+- if @bakeryorder.errors.any?
+  #error_explanation
+    .alert.alert-error
+      Lomake sisältää #{@bakeryorder.errors.count} virhettä
+    %ul
+      - @bakeryorder.errors.each_with_index do |msg|
+        %li* #{msg[1]}

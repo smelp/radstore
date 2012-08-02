@@ -1,5 +1,13 @@
 UserTutorial::Application.routes.draw do
 
+  get "bakeryorders/new"
+
+  get "bakeryorders/create"
+
+  get "bakeryorders/edit"
+
+  get "bakeryorders/index"
+
   root to: "static_pages#home"
 
   match '/help',    to: 'static_pages#help'
@@ -23,7 +31,10 @@ UserTutorial::Application.routes.draw do
   resources :recipes
   resources :materials
   
-  resources :bakerybills
+  resources :bakeryorders
+  #resources :bills
+
+  #resources :bakerybills
   resources :sessions, only: [:new, :create, :destroy]
 
   # The priority is based upon order of creation:

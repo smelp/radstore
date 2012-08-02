@@ -1,0 +1,10 @@
+class CreateSuborders < ActiveRecord::Migration
+  def change
+    create_table :suborders do |t|
+      t.string :delivery_type
+      t.string :state
+
+      t.timestamps
+    end
+  end
+end

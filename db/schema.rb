@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120719004336) do
+ActiveRecord::Schema.define(:version => 20120801205116) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
@@ -19,35 +19,24 @@ ActiveRecord::Schema.define(:version => 20120719004336) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "bakerybills", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.integer  "bakery_id"
-  end
-
-  create_table "billrecipes", :force => true do |t|
+  create_table "bakeryorderrecipes", :force => true do |t|
     t.integer  "recipe_id"
-    t.integer  "bakerybill_id"
-    t.float    "amount",        :default => 0.0
-    t.float    "price",         :default => 0.0
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.integer  "bakeryorder_id"
+    t.decimal  "amount",         :default => 0.0
+    t.decimal  "price",          :default => 0.0
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
-  add_index "billrecipes", ["bakerybill_id"], :name => "index_billrecipes_on_bakerybill_id"
-  add_index "billrecipes", ["recipe_id", "bakerybill_id"], :name => "index_billrecipes_on_recipe_id_and_bakerybill_id", :unique => true
+  add_index "bakeryorderrecipes", ["bakeryorder_id"], :name => "index_bakeryorderrecipes_on_bakeryorder_id"
+  add_index "bakeryorderrecipes", ["recipe_id", "bakeryorder_id"], :name => "index_bakeryorderrecipes_on_recipe_id_and_bakeryorder_id", :unique => true
 
-  create_table "bills", :force => true do |t|
+  create_table "bakeryorders", :force => true do |t|
     t.string   "delivery_type"
-    t.date     "due_date"
-    t.float    "total_amount"
-    t.integer  "subbill_id"
-    t.string   "subbill_type"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
-    t.integer  "client_id"
-    t.string   "state",            :default => "Tilattu"
-    t.integer  "reference_number", :default => 0
+    t.string   "state"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "bakery_id"
   end
 
   create_table "clients", :force => true do |t|
@@ -66,10 +55,8 @@ ActiveRecord::Schema.define(:version => 20120719004336) do
     t.string   "location"
     t.integer  "resource_id"
     t.string   "resource_type"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.string   "address"
-    t.string   "account_number"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "firms_users", :id => false, :force => true do |t|
@@ -105,6 +92,14 @@ ActiveRecord::Schema.define(:version => 20120719004336) do
     t.datetime "updated_at",                  :null => false
     t.integer  "bakery_id"
     t.float    "price",      :default => 0.0
+  end
+
+  create_table "orders", :force => true do |t|
+    t.integer  "client_id"
+    t.integer  "suborder_id"
+    t.string   "suborder_type"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "recipes", :force => true do |t|

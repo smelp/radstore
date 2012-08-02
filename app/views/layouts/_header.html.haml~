@@ -12,7 +12,7 @@
                   %i.icon-home.icon-white
                   Koti
             - else 
-              - if current_user && current_user.firms
+              - if current_user && current_user.firms && current_user.firms.first
                 = link_to :controller => "bakeries", :action => "show", :id => current_user.firms.first.id do
                   %i.icon-home.icon-white
                   Koti
