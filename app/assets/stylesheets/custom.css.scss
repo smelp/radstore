@@ -167,7 +167,7 @@ form {
   input, textarea, select, .uneditable-input {
     border: 1px solid #bbb;
     width: 100%;
-    padding: 5px;
+    padding: 4px;
     height: auto;
     margin-bottom: 15px;
     @include box_sizing;
@@ -270,3 +270,5 @@ legend {
 .text-success {
   color: green;
 }
+
+  

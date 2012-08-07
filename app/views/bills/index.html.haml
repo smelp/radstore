@@ -1,0 +1,41 @@
+= provide(:title, 'Laskut')
+
+%h1 Laskut
+
+.container
+  .span8.offset2
+    = render "shared/nav"
+
+= will_paginate
+
+.container
+  .span8.offset2.bordered
+    %table.table
+      %thead
+        %th Nro
+        %th Laskun pvm
+        %th Eräpäivä
+        %th Asiakas
+        %th Loppusumma
+        %th Muokkaa
+      %tbody
+        - @bills.each do |bill|
+          %tr
+            %td= link_to bill.bill_number, bill
+            - if bill
+              %td= bill.dated_at.to_date
+              %td= bill.due_date
+              %td= link_to bill.client.name, bill.client
+              %td  #{bill.get_total_amount} €
+              %td
+                = link_to :controller => "bills", :action => "edit", :id => bill.id do
+                  %i.icon-edit
+
+= will_paginate
+
+.container
+  .span8.offset2
+    = link_to :controller => "bills", :action => "new", :firm_id => @firm.id do
+      %i.icon-plus
+      Lisää lasku
+

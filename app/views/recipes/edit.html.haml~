@@ -11,7 +11,7 @@
     = form_for @recipe do |f|
       = render 'shared/recipe_error_messages'
       
-      %fieldset.span5.well
+      %fieldset.span4.well
         = f.label :name, "Nimi"
         = f.text_field :name 
         

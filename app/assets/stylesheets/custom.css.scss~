@@ -13,12 +13,14 @@ $myBlue: #91BED4;
 $myBlueLight: #D9E8F5;
 $myWhite: #eee;
 $myGrayBlue: #43464C;
+*/
 
 /* colors */
+/*
 $navbarBackground: $myGreen;
 $navbarBackgroundHighlight: lighten($navbarBackground, 10);
-/*$navbarLinkColor: darken($myOrange, 10);
-$navbarLinkColorHover: $myOrange;*/
+$navbarLinkColor: darken($myOrange, 10);
+$navbarLinkColorHover: $myOrange;
 $dropdownBackground: $myBlueDark;
 $dropdownLinkColor: $myOrange;
 $hrBorder: $myBlue;
@@ -268,3 +270,5 @@ legend {
 .text-success {
   color: green;
 }
+
+  

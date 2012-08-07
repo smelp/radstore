@@ -15,6 +15,7 @@
 class Firm < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :clients
+  has_many :bills
   belongs_to :resource, :polymorphic => true, :autosave => true
   
   resource_list = ["Bakery"]
@@ -28,5 +29,17 @@ class Firm < ActiveRecord::Base
   validates :resource_type, presence: { :message => "Toimialan tyyppi pakollinen" }
   validates :resource_id, presence: { :message => "Toimialan id pakollinen" }, :uniqueness => { :message => "Toimialan yritys on jo liitetty toiseen yritykseen." }
   validates_inclusion_of :resource_type, :in => resource_list, :allow_nil => false, :message => "Toimialan täytyy olla joku seuraavista: #{resource_list}"
+
+  def get_orders
+    self.resource.get_orders
+  end
+  
+  def get_new_bill_number
+    if self.bills.any?
+      self.bills.last.bill_number + 1
+    else
+      1
+    end
+  end
 
 end

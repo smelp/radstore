@@ -1,0 +1,68 @@
+- provide(:title, 'Luo lasku')
+%h1 Luo lasku
+
+.container
+  .span10.offset1
+    = render "shared/nav"
+    
+.row
+  .span10.offset1.well
+    = form_for @bill do |f|
+      = render 'shared/bill_error_messages'
+      
+      .span4 
+        .span3 
+          = f.label :bill_number, "Laskun numero" 
+          = f.text_field :bill_number, value: @firm.get_new_bill_number, disabled: true 
+          = hidden_field_tag "bill[bill_number]", @firm.get_new_bill_number
+          
+          = f.label :client, "Maksaja"
+          = f.collection_select :client_id, @clients, :id, :name, :prompt => "Valitse maksaja"
+              
+          = f.label :bank, "Pankki"
+          = f.select :bank, @banks
+          
+          = f.label :reference_number, "Viitenumero" 
+          = f.text_field :reference_number, class: "input-large"
+          
+          = f.label :payment_condition, "Maksuehto" 
+          = f.text_field :payment_condition, class: "input-medium", placeholder: "esim. 14pv netto"
+        
+          .input-append
+            = f.label :delay_interest, "Viivästyskorko" 
+            = text_field_tag :delay_interest, params[:delay_interest], :id => "appendedInput", :class => "input-small"
+            %span.add-on %
+            
+      .span5
+        .span2
+          = f.label :dated_at, "Laskun pvm" 
+          = f.date_select :dated_at
+        
+        .span2
+          = f.label :due_date, "Eräpäivä" 
+          = f.date_select :due_date, :default => 14.days.from_now
+        
+        .span4
+          = f.label :info, "Lisätietoja" 
+          = f.text_area :info, rows: 8, placeholder: "Esim. sovitut hinnat" 
+      
+      .span9
+        .span3
+          %label Tilaukset
+          = select("post", "order_id", @orders.collect {|o| [ o.description, o.id ] }, {:prompt => 'Valitse tilaus'})
+                
+          = button_to_function "Lisää", "add_order(event)", :class => "btn btn-mini"
+          
+        .span4.offset1
+          %table.well.table.table#bill_orders
+            %thead.green
+              %th Lisättävät tilaukset:
+              %th
+            %tbody
+                     
+      = hidden_field_tag :firm_id, @firm.id
+      
+      .span8
+        %br
+        .span4  
+          = f.submit "Luo lasku", class: "btn btn-large btn-primary"

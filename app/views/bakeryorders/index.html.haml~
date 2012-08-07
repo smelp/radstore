@@ -13,21 +13,21 @@
     %table.table
       %thead
         %th Nro
+        %th Kuvaus
         %th Tilauspäivä
         %th Toimitustapa
-        - if @billed_only
-          %th Eräpäivä
         %th Tila
-        %th Loppusumma
+        %th Muokkaa
       %tbody
         - @bakeryorders.each do |bakeryorder|
           %tr  
             %td= link_to bakeryorder.id, bakeryorder
-            - if bakeryorder.bill
-              %td= bakeryorder.bill.created_at.to_date
-              %td= bakeryorder.bill.delivery_type
-              %td= bakeryorder.bill.state
-              %td.alert-info #{bakeryorder.bill.total_amount} €
+            - if bakeryorder
+              %td= bakeryorder.order.description
+              %td= bakeryorder.created_at.to_date
+              %td= bakeryorder.delivery_type
+              %td= bakeryorder.state
+              %td.alert-info #{bakeryorder.order.bill.get_total_amount} €
               %td
                 = link_to :controller => "bakeryorders", :action => "edit", :id => bakeryorder.id do
                   %i.icon-edit

@@ -1,28 +1,29 @@
 # encoding: utf-8
 class Bill < ActiveRecord::Base
-  belongs_to :subbill, :polymorphic => true, :autosave => true
   belongs_to :client
+  belongs_to :firm
+  has_many :orders
   
-  attr_accessible :delivery_type, :due_date, :total_amount, :state, :reference_number, :subbill, :client_id
-  subbill_list = ["Bakerybill"]
-  delivery_list = ["Posti", "Nouto"]
-  state_list = ["Tilattu", "Tehty", "Laskutettu", "Maksettu", "Kirjattu"]
-  validates :delivery_type, presence: { :message => "Toimitustapa on pakollinen" }
-  validates_inclusion_of :delivery_type, :in => delivery_list, :allow_nil => false, :message => "Toimitustavan täytyy olla joku seuraavista: #{delivery_list}"
-  validates :total_amount, presence: { :message => "Loppusumma on pakollinen" }
+attr_accessible :client_id, :firm_id, :reference_number, :due_date, :dated_at, :payment_condition, :bank, :info, :bill_number, :delay_interest
+  
+  validates :reference_number, presence: { :message => "Viitenumero on pakollinen" }
+  validates :bank, presence: { :message => "Pankki on pakollinen" }
+  validates :bill_number, presence: { :message => "Laskun numero on pakollinen" }
   validates :client, presence: { :message => "Asiakas pitää olla määritetty." }
   
-  #validates :subbill_type, presence: { :message => "Laskun tyyppi on pakollinen" }
-  #validates :subbill_id, presence: { :message => "Laskutyypin id on pakollinen" }
-  #validates_inclusion_of :subbill_type, :in => subbill_list, :allow_nil => false, :message => "Laskutyypin täytyy olla joku seuraavista: #{subbill_list}"
   validates_numericality_of :reference_number, { :greater_than_or_equal_to => 0, :message => "Viitenumeron täytyy olla positiivinen numero!" }
-  validates_inclusion_of :state, :in => state_list, :allow_nil => false, :message => "Tilan täytyy olla joku seuraavista: #{state_list}"
+  validates_numericality_of :bill_number, { :greater_than_or_equal_to => 0, :message => "Laskun numeron täytyy olla positiivinen numero!" }
 
-  def self.get_subbill_types
-    ["Posti", "Nouto"] 
+  def self.get_banks
+    ["Nordea", "Sampo", "Osuuspankki"]
   end
   
-  def self.get_state_list
-    ["Tilattu", "Tehty", "Laskutettu", "Maksettu", "Kirjattu"]
+  def get_total_amount
+    amount = 0
+    
+    self.orders.each do |o|
+      amount += o.get_total_amount
+    end
+    amount
   end
 end

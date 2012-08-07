@@ -13,19 +13,20 @@
     %table.table
       %thead
         %th Nro
+        %th Kuvaus
         %th Tilauspäivä
         %th Toimitustapa
         %th Tila
-        %th Loppusumma
+        %th Muokkaa
       %tbody
         - @bakeryorders.each do |bakeryorder|
           %tr  
             %td= link_to bakeryorder.id, bakeryorder
             - if bakeryorder
+              %td= bakeryorder.order.description
               %td= bakeryorder.created_at.to_date
               %td= bakeryorder.delivery_type
               %td= bakeryorder.state
-              - # %td.alert-info #{bakeryorder.bill.total_amount} €
               %td
                 = link_to :controller => "bakeryorders", :action => "edit", :id => bakeryorder.id do
                   %i.icon-edit

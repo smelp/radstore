@@ -26,6 +26,10 @@
               %td.span4= @bakeryorder.id
             
             %tr
+              %td Kuvaus:
+              %td.span4= @bakeryorder.order.description
+            
+            %tr
               %td Tila:
               %td.span4= @bakeryorder.state
             %tr
@@ -34,12 +38,17 @@
             %tr 
               %td Tilauksen pvm:
               %td.span4= @bakeryorder.created_at.to_date
+            %tr 
+              %td Kokonaishinta:
+              %td.span4.green #{@bakeryorder.get_total_amount} €
+              
               
       %table.table.table-striped
         %caption.align-left 
           %b Sisältää:
+          
         %thead.blue
-          %th.span4 Resepti
+          %th.span4 Tuote
           %th Määrä (kpl)
           %th Hinta yht. (€)
           

@@ -24,4 +24,13 @@ class Bakeryorder < ActiveRecord::Base
   def self.get_state_list
     ["Tilattu", "Tehty", "Laskutettu", "Maksettu", "Kirjattu"]
   end
+  
+  def get_total_amount
+    amount = 0
+    self.bakeryorderrecipes.each do |b|
+      amount += b.price
+    end
+    amount
+  end
+  
 end

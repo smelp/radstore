@@ -1,0 +1,170 @@
+# encoding: utf-8
+class BillsController < ApplicationController
+  
+  before_filter :signed_in_user
+  before_filter :firm_admin
+  before_filter :admin_user, only: []
+  
+  def index
+    @bills = @firm.bills.paginate(:page => params[:page]).order('bill_number').reverse
+  end
+  
+  def show
+    @bill = Bill.find(params[:id])
+  end
+  
+  def new
+    @bill = Bill.new
+    @clients = @firm.clients
+    @orders = @firm.get_orders
+    @banks = Bill.get_banks
+  end
+  
+  def create
+    @bill = Bill.new(params[:bill])
+    @bill.firm = @firm
+    @clients = @firm.clients
+    @orders = @firm.get_orders
+    @banks = Bill.get_banks
+    
+    create_bill
+  end
+  
+  def edit
+    @clients = @firm.clients
+    @orders = @firm.get_orders
+    @banks = Bill.get_banks
+  end
+  
+  def update
+    @clients = @firm.clients
+    @orders = @firm.get_orders
+    @banks = Bill.get_banks
+    
+    if params[:new_orders]
+      add_orders
+    end
+    
+    if @bill.update_attributes(params[:bill])
+      if save_bill
+        flash[:success] = "Lasku tallennettu"
+        redirect_to @bill
+      else
+        flash.now[:error] = "Laskun tallennus ei onnistunut!"
+        render 'edit'
+        return
+      end
+    else
+      flash.now[:error] = params#"Laskun tallennus ei onnistunut!"
+      render 'edit'
+    end
+  end
+  
+  def destroy
+    @bill.destroy
+    flash[:success] = "Lasku poistettu."
+    redirect_to bills_path
+  end
+  
+  private
+    
+    def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_path, notice: "Kirjaudu sisään kiitos."
+      end
+    end
+    
+    def firm_admin
+      @added_orders = []
+      # check that user has rights to show/modify bill info 
+      if params[:id]
+        @bill = Bill.find(params[:id])
+        @firm = @bill.firm
+      elsif params[:firm_id]
+        @firm = Firm.find_by_id(params[:firm_id])
+        if !@firm 
+          @bill = nil
+          @firm = nil
+        end
+      end
+      
+      if @bill and @bill.firm
+        admins = @bill.firm.users #later change to include only admins
+      elsif @firm
+        admins = @firm.users #later change to include only admins
+      else 
+        admins = []
+        flash[:error] = "Ei lupaa tehdä muutoksia."
+      end
+      redirect_to(root_path) unless admins.include? current_user
+    end
+    
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
+    end
+    
+    def create_bill
+      
+      if params[:new_orders]
+        params[:new_orders].each do |order_id|
+          order = Order.find_by_id(order_id)
+          if order && !order.bill
+            @bill.orders.push order
+          else
+            flash.now[:error] = "Laskun tallennus ei onnistunut!"
+            render 'new'
+            return
+          end
+        end
+      end
+      
+      if @bill.save
+        flash[:success] = "Uusi lasku luotu!"
+        redirect_to :controller => "bills", :action => "index", :firm_id => current_user.primary_firm.resource.id
+      else
+        flash.now[:error] = "Laskun tallennus ei onnistunut!"
+        render 'new'
+      end
+    end
+    
+    def save_bill
+      temp = Array.new(@bill.orders)
+      @bill.orders.clear
+      if params[:old_orders]
+        params[:old_orders].each do |order|
+          ord = Order.find_by_id(order[0])
+          if ord 
+            @bill.orders.push ord
+          else
+            @bill.orders = temp
+            return false
+          end
+        end
+      end
+      
+      if params[:new_orders]
+        params[:new_orders].each do |order|
+          ord = Order.find_by_id(order[0])
+          if ord && !ord.bill
+            @bill.orders.push ord
+          else
+            @bill.orders = temp
+            return false
+          end
+        end
+      end
+      true
+    end
+    
+    def add_orders
+      params[:new_orders].each do |order|
+        ord = Order.find(order[0])
+        if ord
+          @added_orders.push ord   
+        else 
+          return false
+        end
+      end
+    end
+end

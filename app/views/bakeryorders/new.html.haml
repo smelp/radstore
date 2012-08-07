@@ -13,6 +13,9 @@
       
       = fields_for @order do |o|
         
+        = o.label :description, "Kuvaus" 
+        = o.text_field :description
+            
         = o.label :client, "Asiakas"
         = o.collection_select :client_id, @clients, :id, :name, :prompt => "Valitse asiakas"
         
@@ -23,8 +26,8 @@
       = f.select :state, @states, :prompt => "Valitse tila"
         
       %fieldset.well  
-        %legend Reseptit
-        = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
+        %legend Tuotteet
+        = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse tuote'})
         = fields_for :subrecipe do |h|
           = h.label :amount, "Määrä (kpl)"
           = h.number_field :amount, min: 0, max: 999999999
@@ -34,7 +37,7 @@
       .span4.well
         %table.well.table.table#recipe_subrecipes
           %thead.green
-            %th Lisättävät reseptit:
+            %th Lisättävät tuotteet:
             %th
      
         %tbody

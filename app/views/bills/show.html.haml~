@@ -1,0 +1,114 @@
+- provide(:title, "Tilaus #{@bill.id}")  
+  
+.container
+  .span10.offset1
+    .row.bordered
+      .span5
+        .row
+          %table.table.table-condensed.table-borderless
+            %tbody
+              %tr
+                %td
+                  %b= @bill.firm.name
+              %tr
+                %td= @bill.firm.address
+              %tr
+                %td= @bill.firm.location
+              %tr
+                %td
+                  Y 
+                  = @bill.firm.corporate_id  
+        
+        .row
+          %table.table.table-condensed.table-borderless
+            %tbody
+              - if @bill.client
+                %tr
+                  %td
+                %tr
+                  %td
+                    %b= @bill.client.name
+                %tr
+                  %td= @bill.client.address
+                %tr
+                  %td= @bill.client.city  
+                  
+      .span5
+        %table.table.table-condensed.table-borderless
+          %tbody
+            %tr
+              %td
+                %h4 LASKU
+            %tr
+              %td Päiväys
+              %td= @bill.dated_at.to_date              
+            %tr
+              %td Laskun numero
+              %td= @bill.bill_number
+            %tr
+              %td Eräpäivä
+              %td= @bill.due_date
+            %tr
+              %td Viivästyskorko
+              %td= @bill.delay_interest
+            %tr
+              %td Viitenumero
+              %td= @bill.reference_number
+            %tr
+              %td Maksuehto
+              %td= @bill.payment_condition
+            %tr
+              %td Pankki
+              %td= @bill.bank
+            %tr
+              %td Tilinumero
+              %td= @bill.firm.account_number
+            %tr
+              %td Swift/BIC
+              %td
+                    
+    .row.bordered    
+      %table.table.table-bordered.table-condensed
+        %thead.gray
+          %th Tuotteet
+          %th Määrä (kpl)
+          %th Veroton hinta (€)
+          %th Alv €
+          %th Yhteensä (€)
+
+        %tbody
+        - @bill.orders.each do |order|
+          %tr.gray
+            %td= link_to order.description, order.suborder
+          - order.suborder.recipes.each do |recipe|
+            %tr
+              %td= link_to recipe.name, recipe
+              - line = order.suborder.bakeryorderrecipes.find_by_recipe_id(recipe.id)
+              %td= line.amount
+              %td= line.price
+              %td= (Recipe.get_tax * line.price).round(2)
+              %td= (line.price + Recipe.get_tax * line.price).round(2)
+        
+      .span4.offset6        
+        %table.table.table-borderless
+          %tbody
+            %tr
+              %td Veroton hinta yhteensä
+              %td.align-right #{@bill.get_total_amount} €
+            %tr
+              %td Alv yhteensä  
+              %td.align-right #{(@bill.get_total_amount * Recipe.get_tax).round(2)} €
+            %tr.gray
+              %td
+                %b Yhteensä
+                %td.align-right #{(@bill.get_total_amount + @bill.get_total_amount * Recipe.get_tax).round(2)} €
+
+                
+    = link_to :controller => "bills", :action => "edit", :id => @bill.id do
+      %i.icon-edit
+      Muokkaa
+          
+    %a.nav-link{href: "#", onclick: "window.print()"}
+      %i.icon-print.margin-left10
+      Tulosta
+

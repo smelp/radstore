@@ -23,21 +23,18 @@
       = f.select :state, @states, :prompt => "Valitse tila"
         
       %fieldset.well  
-        %legend Reseptit
-        = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
+        %legend Tuotteet
+        = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse tuote'})
         = fields_for :subrecipe do |h|
           = h.label :amount, "Määrä (kpl)"
           = h.number_field :amount, min: 0, max: 999999999
           
-          = h.label :price, "Muokattu hinta (€)"
-          %span.alert-error Huom! jos tämä on tyhjä, käytetään oletushintaa
-          = h.number_field :price, min: 0, max: 999999999
         = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
          
       .span4.well
         %table.well.table.table#recipe_subrecipes
           %thead.green
-            %th Lisättävät reseptit:
+            %th Lisättävät tuotteet:
             %th
      
         %tbody

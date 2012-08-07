@@ -24,7 +24,31 @@
             %td 
               %b Puhelinnumero:
             %td= @client.phone
-              
+      
+      %h4 Tilaukset:
+      
+      %table.table.bordered
+        %thead
+          %th Nro
+          %th Kuvaus
+          %th Tilauspäivä
+          %th Toimitustapa
+          %th Tila
+          %th Muokkaa
+        %tbody
+          - @client.orders.each do |order|
+            %tr  
+              %td= link_to order.suborder.id, order.suborder
+              - if order
+                %td= order.description
+                %td= order.suborder.created_at.to_date
+                %td= order.suborder.delivery_type
+                %td= order.suborder.state
+                %td
+                  = link_to :controller => "bakeryorders", :action => "edit", :id => order.suborder.id do
+                    %i.icon-edit
+        
+                   
       = link_to :controller => "clients", :action => "edit", :id => @client.id do
         %i.icon-edit
         Muokkaa

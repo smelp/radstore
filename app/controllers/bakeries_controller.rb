@@ -20,7 +20,7 @@ class BakeriesController < ApplicationController
       @recipes = @bakery.recipes.paginate(:page => params[:recipe_page], :per_page => 20).order('name')
       @materials = @bakery.materials.paginate(:page => params[:material_page], :per_page => 20).order('name')
     end
-    @users = @firm.users.paginate(:page => params[:page], :per_page => 2).order('name')
+    @users = @firm.users.paginate(:page => params[:page], :per_page => 5).order('name')
   end
   
   def index

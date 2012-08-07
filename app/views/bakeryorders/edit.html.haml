@@ -3,69 +3,76 @@
 %h1 Muokkaa tilausta
 
 .container
-  .span10.offset1
+  .span12
     = render "shared/nav"
     
 .row
-  .span10.offset1.well
+  .span12.well
     = form_for @bakeryorder do |f|
       = render 'shared/bakeryorder_error_messages'
       = render 'shared/order_error_messages'
       
-      %fieldset.span5.well
-        = fields_for @order do |o|
-          
-          = o.label :client, "Asiakas"
-          = o.collection_select :client_id, @clients, :id, :name, :prompt => "Valitse asiakas"
-          
-        = f.label :delivery_type, "Toimitustapa"
-        = f.select :delivery_type, @types, :prompt => "Valitse toimitustapa"
-        
-        = f.label :state, "Tila"
-        = f.select :state, @states, :prompt => "Valitse tila"
-        
-        %table.table.recipes
-          Sisältää reseptit:
-          %thead
-            %th Nimi
-            %th Kpl
-            %th Vanha hinta (€)
-            %th Uusi hinta (€)
-            %th Poista
-          %tbody
-            - @bakeryorder.bakeryorderrecipes.each do |subrecipe|
-              %tr{:id => "#{subrecipe.recipe_id}"}
-                %td
-                  - res = Recipe.find(subrecipe.recipe_id)
-                  = hidden_field_tag "old_recipes_amounts[#{subrecipe.recipe_id}]", subrecipe.amount
-                  = hidden_field_tag "old_recipes_prices[#{subrecipe.recipe_id}]", subrecipe.price
-                  = link_to res.name, res
-                %td #{ subrecipe.amount.round(2) }
-                %td #{ subrecipe.price.round(2) }
-                = fields_for "changed_recipes" do |s|
-                  %td= s.number_field "#{subrecipe.recipe_id}", min: 0
-                %td
-                  %a.nav-link{href: "#", onclick: "remove_table_element(#{subrecipe.recipe_id})"}
-                    %i.icon-remove  
-      
-      .span3.well
-        %fieldset.well  
-          %legend Lisää reseptejä
-          = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
-          = fields_for :subrecipe do |h|
-            = h.label :amount, "Määrä (kpl)"
-            = h.number_field :amount, min: 0
-          = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
-      
-      .span3.well
-        %table.well.table.table#recipe_subrecipes
-          %thead.green
-            %th Lisättävät reseptit:
-            %th
-     
-          %tbody
+      %fieldset.span11.well
+        .span4
+          = fields_for @order do |o|
             
-      = hidden_field_tag :bakery_id, @bakery.id
+            = o.label :description, "Kuvaus" 
+            = o.text_field :description
+        
+            = o.label :client, "Asiakas"
+            = o.collection_select :client_id, @clients, :id, :name, :prompt => "Valitse asiakas"
+            
+          = f.label :delivery_type, "Toimitustapa"
+          = f.select :delivery_type, @types, :prompt => "Valitse toimitustapa"
+          
+          = f.label :state, "Tila"
+          = f.select :state, @states, :prompt => "Valitse tila"
+        
+        .span3
+          %fieldset.well  
+            %legend Lisää tuotteita
+            = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse tuote'})
+            = fields_for :subrecipe do |h|
+              = h.label :amount, "Määrä (kpl)"
+              = h.number_field :amount, min: 0
+            = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
+        
+        .span3.well
+          %table.well.table.table#recipe_subrecipes
+            %thead.green
+              %th Lisättävät tuotteet:
+              %th
+       
+            %tbody
+            
+        .span7
+          %table.table.recipes
+            Sisältää tuotteet:
+            %thead
+              %th Nimi
+              %th Kpl
+              %th Lasken. hinta (€)
+              %th Hinta nyt (€)
+              %th Uusi hinta (€)
+              %th Poista
+            %tbody
+              - @bakeryorder.bakeryorderrecipes.each do |subrecipe|
+                %tr{:id => "#{subrecipe.recipe_id}"}
+                  %td
+                    - res = Recipe.find(subrecipe.recipe_id)
+                    = hidden_field_tag "old_recipes_amounts[#{subrecipe.recipe_id}]", subrecipe.amount
+                    = hidden_field_tag "old_recipes_prices[#{subrecipe.recipe_id}]", subrecipe.price
+                    = link_to res.name, res
+                  %td= subrecipe.amount
+                  %td= res.get_coveraged_price * subrecipe.amount
+                  %td= subrecipe.price
+                  = fields_for "changed_recipes" do |s|
+                    %td= s.text_field "#{subrecipe.recipe_id}", min: 0, class: "input-small"
+                  %td
+                    %a.nav-link{href: "#", onclick: "remove_table_element(#{subrecipe.recipe_id})"}
+                      %i.icon-remove    
+      
+        = hidden_field_tag :bakery_id, @bakery.id
       
       .span8
         = f.submit "Tallenna", class: "btn btn-large btn-primary"
