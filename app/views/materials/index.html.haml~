@@ -9,7 +9,7 @@
 = will_paginate
 
 .container
-  .span6.offset3
+  .span6.offset3.bordered
     %table.table
       %thead
         %th Nimi

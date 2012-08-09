@@ -1,4 +1,7 @@
 %li
+  = link_to "Tuotteet", products_path(:bakery_id => current_user.primary_firm.resource.id)
+%li
+  # TODO: change all below like above
   = link_to :controller => "recipes", :action => "index", :bakery_id => current_user.primary_firm.resource.id do
     Reseptit
 %li
@@ -12,5 +15,5 @@
   = link_to :controller => "bakeryorders", :action => "index", :bakery_id => current_user.primary_firm.resource.id do
     Tilaukset
 %li
-  = link_to :controller => "bills", :action => "index", :bakery_id => current_user.primary_firm.resource.id do
+  = link_to :controller => "bills", :action => "index", :firm_id => current_user.primary_firm.resource.id do
     Laskut

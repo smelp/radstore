@@ -26,7 +26,7 @@ UserTutorial::Application.routes.draw do
   resources :bakeryorders
   resources :bills
 
-  #resources :bakerybills
+  resources :products, :controller => :recipes
   resources :sessions, only: [:new, :create, :destroy]
 
   # The priority is based upon order of creation:

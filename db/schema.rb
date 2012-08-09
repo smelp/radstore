@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803095928) do
+ActiveRecord::Schema.define(:version => 20120807165220) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
@@ -124,11 +124,12 @@ ActiveRecord::Schema.define(:version => 20120803095928) do
 
   create_table "recipes", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "bakery_id"
     t.decimal  "price",      :default => 0.0
     t.decimal  "coverage",   :default => 0.0
+    t.boolean  "product",    :default => false
   end
 
   create_table "users", :force => true do |t|

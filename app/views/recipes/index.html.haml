@@ -1,40 +1,4 @@
-= provide(:title, 'Reseptit')
-
-%h1 Reseptit
-
-.container
-  .span6.offset3
-    = render "shared/nav"
-
-.span6.offset3
-  = will_paginate
-
-.container
-  .span6.offset3.bordered
-    %table.table.table-striped
-      %thead
-        %th Nimi
-        %th Laskennallinen hinta
-        %th Myyntihinta
-      %tbody
-        - @recipes.each do |recipe|
-          %tr
-            %td= link_to recipe.name, recipe
-            %td 
-              = recipe.get_price
-              €
-            %td 
-              = recipe.get_taxed_price
-              €
-            %td
-              = link_to :controller => "recipes", :action => "edit", :id => recipe.id do
-                %i.icon-edit
-.container
-  .span6.offset3
-    = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
-      %i.icon-plus
-      Lisää resepti
-
-  .span6.offset3
-    = will_paginate
-
+- if @is_product
+  = render "recipes/index_product"
+- else
+  = render "recipes/index_recipe"

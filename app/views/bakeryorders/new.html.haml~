@@ -13,6 +13,9 @@
       
       = fields_for @order do |o|
         
+        = o.label :description, "Kuvaus" 
+        = o.text_field :description
+            
         = o.label :client, "Asiakas"
         = o.collection_select :client_id, @clients, :id, :name, :prompt => "Valitse asiakas"
         

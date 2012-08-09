@@ -1,13 +1,24 @@
 # encoding: utf-8
+require 'will_paginate/array'
+
 class RecipesController < ApplicationController
+  before_filter :is_product
   before_filter :signed_in_user
   before_filter :firm_admin
   before_filter :admin_user, only: []
 
   def index
-    list = []
-    @bakery.recipes.each { |e| list.push e.id }
-    @recipes = @bakery.recipes.paginate(:page => params[:page], :per_page => 10).order('name')
+    if @is_product
+      list = []
+      @bakery.recipes.each do |r|
+        if r.product
+          list.push r
+        end
+      end
+      @recipes = list.paginate(:page => params[:page], :per_page => 10)
+    else
+      @recipes = @bakery.recipes.paginate(:page => params[:page], :per_page => 10).order('name')
+    end
   end
   
   def show
@@ -23,6 +34,7 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(params[:recipe])
     @recipe.bakery = @bakery
+    
     
     if @recipe.save
       
@@ -169,6 +181,15 @@ class RecipesController < ApplicationController
         if res and not res.has_circular? @recipe.name
           @added_recipes.push [res, recipe[1]]   
         end
+      end
+    end
+    
+    def is_product
+      current_uri = request.env['PATH_INFO']
+      if current_uri.include? "products"
+        @is_product = true
+      else
+        @is_product = false
       end
     end
 end

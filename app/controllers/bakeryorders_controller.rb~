@@ -21,6 +21,12 @@ class BakeryordersController < ApplicationController
   end
 
   def create
+    @products = []
+    @bakery.recipes.each do |r|
+      if r.product
+        @products.push r
+      end
+    end
     @order = Order.new(params[:order])
     @bakeryorder = Bakeryorder.new(params[:bakeryorder])
     @bakeryorder.bakery = @bakery
@@ -30,9 +36,22 @@ class BakeryordersController < ApplicationController
   end
 
   def edit
+    @products = []
+    @bakery.recipes.each do |r|
+      if r.product
+        @products.push r
+      end
+    end
   end
   
   def update
+    @products = []
+    @bakery.recipes.each do |r|
+      if r.product
+        @products.push r
+      end
+    end
+    
     if params[:new_recipes]
       add_recipes
     end
@@ -41,7 +60,7 @@ class BakeryordersController < ApplicationController
       if @order.update_attributes(params[:order])
         save_bakeryorder
       else
-        flash.now[:warning] = "Tilauksen kaikkien tietojen tallentaminen ei onnistunut."
+        flash.now[:error] = "Tilauksen kaikkien tietojen tallentaminen ei onnistunut."
         render 'edit'
       end   
     else

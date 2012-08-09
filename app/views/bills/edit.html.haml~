@@ -34,7 +34,7 @@
             %span.add-on %
           
           = f.label :total_amount, "Laskun loppusumma" 
-          = text_field :total_amount, value: @bill.get_total_amount, disabled: true
+          = f.text_field :total_amount, value: @bill.get_total_amount, disabled: true
             
       .span5
         .span2

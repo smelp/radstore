@@ -1,0 +1,41 @@
+= provide(:title, 'Tuotteet')
+
+%h1 Tuotteet
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+
+.span6.offset3
+  = will_paginate
+
+.container
+  .span6.offset3.bordered
+    %table.table.table-striped
+      %thead
+        %th Nimi
+        %th Laskennallinen hinta
+        %th Myyntihinta
+        %th Muokkaa
+      %tbody
+        - @recipes.each do |recipe|
+          %tr
+            %td= link_to recipe.name, product_path(recipe)
+            %td 
+              = recipe.get_price
+              €
+            %td 
+              = recipe.get_taxed_price
+              €
+            %td
+              = link_to edit_product_path(recipe) do
+                %i.icon-edit
+.container
+  .span6.offset3
+    = link_to "/products/new?bakery_id=" + current_user.primary_firm.resource.id.to_s, :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
+      %i.icon-plus
+      Lisää tuote
+    
+  .span6.offset3
+    = will_paginate
+

@@ -31,28 +31,6 @@
                 %td= (subrecipe.tax * amount).round(2)
                 %td= (subrecipe.get_taxed_price * amount).round(2)
       
-      %table.table.table-condensed.table-bordered  
-        - if @recipe.materials.count > 0
-          %caption.align-left Raaka-aineet
-          %thead
-            %th Nimi
-            %th Määrä (g)
-            %th Kilohinta (€)
-            %th Veroton hinta yht.(€)
-            %th Alv yht. €
-            %th Verol. hinta yht.(€)
-            
-          %tbody
-            - @recipe.materials.each do |material|
-              %tr
-                - amount = @hasmaterials.find_by_material_id(material.id).amount 
-                %td= link_to material.name, material
-                %td= amount
-                %td= (material.price).round(2)
-                %td= (material.price * (amount/1000)).round(2)
-                %td= ((material.price * (amount/1000) * @tax)).round(2)
-                %td= (material.price * (amount/1000) + (material.price * (amount/1000) * @tax)).round(2)
-      
       %table.table.table-condensed.table-bordered 
         %caption.align-left Yhteensä
         %thead.gray
@@ -76,7 +54,7 @@
             %td #{@recipe.tax} €
             %td #{@recipe.get_taxed_price} €
             
-      = link_to :controller => "recipes", :action => "edit", :id => @recipe.id do
+      = link_to edit_product_path(@recipe) do
         %i.icon-edit
         Muokkaa
         

@@ -19,7 +19,7 @@
         = f.text_field :coverage
         
         = hidden_field_tag :bakery_id, @bakery.id
-      
+                
         %fieldset.well  
           %legend Reseptit
           = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})

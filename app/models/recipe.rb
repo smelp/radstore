@@ -23,7 +23,7 @@ class Recipe < ActiveRecord::Base
   
   belongs_to :bakery
   
-  attr_accessible :name, :bakery, :coverage
+  attr_accessible :name, :bakery, :coverage, :product
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }, :uniqueness => { :message => "Reseptin nimi on jo käytössä" }
   validates_numericality_of :coverage, { :greater_than_or_equal_to => 0, :message => "Katteen täytyy olla positiivinen numero!" }
   

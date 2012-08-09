@@ -1,11 +1,6 @@
-- if @is_product
-  = provide(:title, 'Tuotteet')
+= provide(:title, 'Reseptit')
 
-  %h1 Tuotteet
-- else
-  = provide(:title, 'Reseptit')
-
-  %h1 Reseptit
+%h1 Reseptit
 
 .container
   .span6.offset3
@@ -36,14 +31,9 @@
                 %i.icon-edit
 .container
   .span6.offset3
-    - if @is_product
-      = link_to "/products/new?bakery_id=" + current_user.primary_firm.resource.id.to_s, :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
-        %i.icon-plus
-        Lisää tuote
-    - else  
-      = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
-        %i.icon-plus
-        Lisää resepti
+    = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
+      %i.icon-plus
+      Lisää resepti
 
   .span6.offset3
     = will_paginate

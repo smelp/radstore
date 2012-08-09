@@ -18,9 +18,21 @@ class BakeryordersController < ApplicationController
   def new
     @order = Order.new
     @bakeryorder = Bakeryorder.new
+    @products = []
+    @bakery.recipes.each do |r|
+      if r.product
+        @products.push r
+      end
+    end
   end
 
   def create
+    @products = []
+    @bakery.recipes.each do |r|
+      if r.product
+        @products.push r
+      end
+    end
     @order = Order.new(params[:order])
     @bakeryorder = Bakeryorder.new(params[:bakeryorder])
     @bakeryorder.bakery = @bakery
@@ -30,9 +42,22 @@ class BakeryordersController < ApplicationController
   end
 
   def edit
+    @products = []
+    @bakery.recipes.each do |r|
+      if r.product
+        @products.push r
+      end
+    end
   end
   
   def update
+    @products = []
+    @bakery.recipes.each do |r|
+      if r.product
+        @products.push r
+      end
+    end
+    
     if params[:new_recipes]
       add_recipes
     end

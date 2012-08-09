@@ -1,6 +1,6 @@
-- provide(:title, 'Muokkaa resepti')
+- provide(:title, 'Muokkaa tuote')
 
-%h1 Muokkaa reseptiä
+%h1 Muokkaa tuotetta
 
 .container
   .span10.offset1
@@ -21,8 +21,7 @@
         = f.label :coverage, "Kate-%"
         = f.text_field :coverage
       
-        = f.label :product, "On tuote"
-        = f.check_box ("product")
+        = hidden_field :recipe, :product, { value: true }
         
         %fieldset.well  
           %legend Reseptit
@@ -32,15 +31,6 @@
             = h.number_field :amount, min: 0
           
           = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
-        
-        %fieldset.well
-          %legend Raaka-aineet
-          = select("post", "material_id", @bakery.materials.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
-          = fields_for :material do |h|
-            = h.label :amount, "Määrä (g)"
-            = h.number_field :amount, min: 0
-          
-          = button_to_function "Lisää", "add_material(event)", :class => "btn btn-mini"
       
       .span4.well
         %table.table.recipes
@@ -56,21 +46,6 @@
                   , #{ subrecipe.amount.round(0) } kpl
                 %td
                   %a.nav-link{href: "#", onclick: "remove_table_element(#{subrecipe.subrecipe_id})"}
-                    %i.icon-remove
-                    
-        %table.table.materials
-          %thead
-            %th Sisältää raaka-aineet:
-          %tbody
-            - @recipe.hasmaterials.each do |material|
-              %tr{:id=> "#{material.material_id}"}
-                %td
-                  - mat = Material.find(material.material_id)
-                  = hidden_field_tag "old_materials[#{material.material_id}, #{material.amount}]", material.amount
-                  = link_to mat.name, mat
-                  , #{material.amount} g
-                %td
-                  %a.nav-link{href: "#", onclick: "remove_table_element(#{material.material_id})"}
                     %i.icon-remove
                 
       .span4.well
@@ -89,24 +64,10 @@
                 %a.nav-link{href: "#", onclick: "remove_table_element(#{recipe[0].id})"}
                   %i.icon-remove
 
-        %table.table.well
-          %thead.green
-            %th Lisättävät raaka-aineet:
-            %th
-          %tbody#recipe_materials
-          - @added_materials.each do |material|
-            %tr{id: "#{material[0].id}"}
-              %td
-                = link_to material[0].name, material[0]
-                , #{material[1]} g
-                = hidden_field_tag "new_materials[#{material[0].id}, #{material[1]}]", material[1]
-              %td
-                %a.nav-link{href: "#", onclick: "remove_table_element(#{material[0].id})"}
-                  %i.icon-remove
       .span8        
         = f.submit "Tallenna", class: "btn btn-large btn-primary"
       
     .span10
-      = link_to "Kaikki reseptit", :controller => "recipes", :action => "index", :bakery_id => @bakery.id
+      = link_to "Kaikki tuotteet", products_path(:bakery_id => @bakery.id)
       |
       = link_to "Poista resepti", @recipe, method: :delete, confirm: "Haluatko varmasti poistaa reseptin?"

@@ -31,7 +31,7 @@
         .span3
           %fieldset.well  
             %legend Lisää tuotteita
-            = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse tuote'})
+            = select("post", "subrecipe_id", @products.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse tuote'})
             = fields_for :subrecipe do |h|
               = h.label :amount, "Määrä (kpl)"
               = h.number_field :amount, min: 0

@@ -67,7 +67,7 @@
                   %td= res.get_coveraged_price * subrecipe.amount
                   %td= subrecipe.price
                   = fields_for "changed_recipes" do |s|
-                    %td= s.text_field "#{subrecipe.recipe_id}", min: 0
+                    %td= s.text_field "#{subrecipe.recipe_id}", min: 0, class: "input-small"
                   %td
                     %a.nav-link{href: "#", onclick: "remove_table_element(#{subrecipe.recipe_id})"}
                       %i.icon-remove    
