@@ -66,11 +66,16 @@
             %tr
               %td Swift/BIC
               %td
-                    
+              
+    - if @bill.info != ""
+      .row
+        %h4 Lisätietoja:
+        %p.gray=  @bill.info
+                     
     .row.bordered    
       %table.table.table-bordered.table-condensed
         %thead.gray
-          %th Tuotteet
+          %th Tuote
           %th Määrä (kpl)
           %th Veroton hinta (€)
           %th Alv €

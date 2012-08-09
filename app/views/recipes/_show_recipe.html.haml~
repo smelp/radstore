@@ -15,8 +15,8 @@
           %thead
             %th Nimi
             %th Määrä (kpl)
-            %th Katteellinen á hinta
-            %th Katteellinen hinta yht. (€)
+            %th Katettu á hinta
+            %th Katettu hinta yht. (€)
             %th Alv yht. €
             %th Myyntihinta yht.(€)
             
