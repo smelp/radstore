@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120807165220) do
+ActiveRecord::Schema.define(:version => 20120809195848) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
@@ -53,6 +53,14 @@ ActiveRecord::Schema.define(:version => 20120807165220) do
     t.decimal  "delay_interest"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+  end
+
+  create_table "clientrecipes", :force => true do |t|
+    t.integer  "recipe_id"
+    t.integer  "client_id"
+    t.decimal  "price",      :default => 0.0
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
   end
 
   create_table "clients", :force => true do |t|

@@ -26,7 +26,7 @@
               %td= bill.dated_at.to_date
               %td= bill.due_date
               %td= link_to bill.client.name, bill.client
-              %td= bill.get_total_amount
+              %td  #{bill.get_total_amount} €
               %td
                 = link_to :controller => "bills", :action => "edit", :id => bill.id do
                   %i.icon-edit

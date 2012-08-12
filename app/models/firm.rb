@@ -41,5 +41,9 @@ class Firm < ActiveRecord::Base
       1
     end
   end
+  
+  def get_product_list
+    self.resource.get_product_list
+  end
 
 end

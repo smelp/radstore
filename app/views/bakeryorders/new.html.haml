@@ -25,6 +25,9 @@
       = f.label :state, "Tila"
       = f.select :state, @states, :prompt => "Valitse tila"
         
+      = label :use_client_prices, "Käytä asiakashintoja: ", class: "checkbox inline"
+      = check_box_tag :use_client_prices, 'yes', true
+      
       %fieldset.well  
         %legend Tuotteet
         = select("post", "subrecipe_id", @products.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse tuote'})

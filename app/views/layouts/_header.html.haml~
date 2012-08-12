@@ -1,7 +1,7 @@
 %header.navbar.navbar-fixed-top
   .navbar-inner
     %div.container
-      = link_to "devlfin", root_path, id: "logo"    
+      = link_to "help-k", root_path, id: "logo"    
       %nav
         %ul.nav.pull-right
           %li.divider-vertical

@@ -1,55 +1,81 @@
 - provide(:title, @client.name)
 
 .container
-  .span6.offset3
+  .span12
     = render "shared/nav"
     
 .container
-  .span6.offset3
+  .span12
     .row.bordered
-
-      %h2.bordered-bottom= @client.name
-      
-      %table.table.table-striped
-        %tbody
-          %tr
-            %td 
-              %b Osoite:
-            %td= @client.address
-          %tr
-            %td 
-              %b Kaupunki:
-            %td= @client.city
-          %tr
-            %td 
-              %b Puhelinnumero:
-            %td= @client.phone
-      
-      %h4 Tilaukset
-      
-      %table.table
-        %thead
-          %th Nro
-          %th Kuvaus
-          %th Tilauspäivä
-          %th Toimitustapa
-          %th Tila
-          %th Muokkaa
-        %tbody
-          - @client.orders.each do |order|
-            %tr  
-              %td= link_to order.suborder.id, order.suborder
-              - if order
-                %td= order.description
-                %td= order.suborder.created_at.to_date
-                %td= order.suborder.delivery_type
-                %td= order.suborder.state
-                %td
-                  = link_to :controller => "bakeryorders", :action => "edit", :id => order.suborder.id do
-                    %i.icon-edit
+      .span4
+        %h2.bordered-bottom Asiakas
         
-                   
-      = link_to :controller => "clients", :action => "edit", :id => @client.id do
-        %i.icon-edit
-        Muokkaa
+        %table.table.table-striped
+          %tbody
+            %tr
+              %td 
+                %b Nimi:
+              %td= @client.name
+            %tr
+              %td 
+                %b Osoite:
+              %td= @client.address
+            %tr
+              %td 
+                %b Kaupunki:
+              %td= @client.city
+            %tr
+              %td 
+                %b Puhelinnumero:
+              %td= @client.phone
+       
+      .span7.well 
+        %h4 Tilaukset:
+        
+        %table.table.bordered
+          %thead
+            %th Nro
+            %th Kuvaus
+            %th Tilauspäivä
+            %th Toimitustapa
+            %th Tila
+            %th Muokkaa
+          %tbody
+            - @client.orders.each do |order|
+              %tr  
+                %td= link_to order.suborder.id, order.suborder
+                - if order
+                  %td= order.description
+                  %td= order.suborder.created_at.to_date
+                  %td= order.suborder.delivery_type
+                  %td= order.suborder.state
+                  %td
+                    = link_to :controller => "bakeryorders", :action => "edit", :id => order.suborder.id do
+                      %i.icon-edit
+          
+      .span4
+        %p
+        
+      .span7.well
+        %h4 Erikoishinnat:
+        
+        %table.table.bordered
+          %thead
+            %th Tuote
+            %th Norm. hinta
+            %th Asiakkaan hinta
+            %th Muokkaa
+          %tbody
+            - @client.clientrecipes.each do |recipe|
+              %tr
+                - r = Recipe.find_by_id recipe.recipe_id
+                %td= link_to r.name, r
+                %td= recipe.price
+                %td
+                  = link_to :controller => "clients", :action => "edit", :id => @client.id do
+                    %i.icon-edit
+      .span12                
+        = link_to :controller => "clients", :action => "edit", :id => @client.id do
+          %i.icon-edit
+          Muokkaa
       
