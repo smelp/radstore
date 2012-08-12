@@ -24,12 +24,16 @@ class Bakery < ActiveRecord::Base
   def get_orders
     list = []
     self.bakeryorders.each do |o|
-      if o.bill
+      if o.order.bill
         #nop
       else
         list.push o.order
       end
     end
     list
+  end
+  
+  def get_product_list
+    self.recipes.all(:product => true)
   end
 end

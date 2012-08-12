@@ -33,5 +33,13 @@ class Firm < ActiveRecord::Base
   def get_orders
     self.resource.get_orders
   end
+  
+  def get_new_bill_number
+    if self.bills.any?
+      self.bills.last.bill_number + 1
+    else
+      1
+    end
+  end
 
 end

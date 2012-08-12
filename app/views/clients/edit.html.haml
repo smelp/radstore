@@ -3,22 +3,64 @@
 %h1 Muokkaa asiakasta
 
 .row
-  .span6.offset3.well
-    = form_for @client do |f|
-      = render 'shared/client_error_messages'
-      %p
-        = f.label :name, "Nimi" 
-        = f.text_field :name 
-        = f.label :address, "Osoite"
-        = f.text_field :address
-        = f.label :name, "Kaupunki" 
-        = f.text_field :city
-        = f.label :phone, "Puhelinnumero" 
-        = f.text_field :phone 
-        
-      = f.submit "Tallenna", class: "btn btn-large btn-primary"
+  .span12.well
+    .span12
+      = form_for @client do |f|
+        = render 'shared/client_error_messages'
+        .span5
+          .span4
+            = f.label :name, "Nimi" 
+            = f.text_field :name 
+            = f.label :address, "Osoite"
+            = f.text_field :address
+            = f.label :name, "Kaupunki" 
+            = f.text_field :city
+            = f.label :phone, "Puhelinnumero" 
+            = f.text_field :phone 
+              
+          .span4
+            %fieldset.well  
+              %legend Lisää erikoishintaisia tuotteita
+              = select("post", "clientrecipe_id", @products.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse tuote'})
+              
+              = button_to_function "Lisää", "add_clientrecipe(event)", :class => "btn btn-mini"
+          
+
+          .span4
+            %table.well.table.table#recipe_clientrecipes
+              %thead.green
+                %th Lisättävät tuotteet:
+                %th
+             
+              %tbody
+                  
+        .span6
+          %table.table.recipes
+            Tuotteiden erikoishinnat:
+            %thead
+              %th Nimi
+              %th Normaali hinta (€)
+              %th Erikoishinta (€)
+              %th Uusi hinta (€)
+              %th Poista
+            %tbody
+              - @clientrecipes.each do |recipe|
+                %tr{:id => "#{recipe.recipe_id}"}
+                  %td
+                    - res = Recipe.find(recipe.recipe_id)
+                    = hidden_field_tag "old_product_prices[#{recipe.recipe_id}]", recipe.price
+                    = link_to res.name, res
+                  %td= res.get_coveraged_price
+                  %td= recipe.price
+                  = fields_for "changed_products" do |s|
+                    %td= s.text_field "#{recipe.recipe_id}", min: 0, class: "input-small"
+                  %td
+                    %a.nav-link{href: "#", onclick: "remove_table_element(#{recipe.recipe_id})"}
+                      %i.icon-remove                 
+        .span12
+          = f.submit "Tallenna", class: "btn btn-large btn-primary"
     
-    %p
+    .span12
       = link_to request.env["HTTP_REFERER"] do
         %i.icon-arrow-left
         Takaisin

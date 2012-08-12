@@ -37,11 +37,12 @@ class BakeryordersController < ApplicationController
     @bakeryorder = Bakeryorder.new(params[:bakeryorder])
     @bakeryorder.bakery = @bakery
     @bakeryorder.order = @order
-    
+        
     create_bakeryorder
   end
 
   def edit
+    @client_prices = @order.client.clientrecipes
     @products = []
     @bakery.recipes.each do |r|
       if r.product
@@ -51,6 +52,7 @@ class BakeryordersController < ApplicationController
   end
   
   def update
+    @client_prices = @order.client.clientrecipes
     @products = []
     @bakery.recipes.each do |r|
       if r.product
@@ -142,7 +144,20 @@ class BakeryordersController < ApplicationController
           params[:new_recipes].each do |recipe|
             temp_recipe = Recipe.find(recipe[0])
             total_amount += (recipe[1].to_f * temp_recipe.get_coveraged_price)
-            Bakeryorderrecipe.create(:recipe_id => recipe[0], :bakeryorder_id => @bakeryorder.id, :amount => recipe[1], :price => temp_recipe.get_coveraged_price * recipe[1].to_f)      
+            if @order.client
+              clientrecipe = Clientrecipe.find_by_client_id_and_recipe_id(@order.client.id, recipe[0])
+              if clientrecipe && params[:use_client_prices] == "yes"
+                price = clientrecipe.price
+              else
+                price = temp_recipe.get_coveraged_price * recipe[1].to_f
+              end
+            else
+              Bakeryorder.destroy @bakeryorder.id
+              flash.now[:error] = "Tilauksen luominen ei onnistunut."
+              render 'new'
+              return
+            end
+            Bakeryorderrecipe.create(:recipe_id => recipe[0], :bakeryorder_id => @bakeryorder.id, :amount => recipe[1], :price => price)      
           end
         end
         

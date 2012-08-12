@@ -29,8 +29,8 @@
           = f.text_field :payment_condition, class: "input-medium", placeholder: "esim. 14pv netto"
         
           .input-append
-            = f.label :delay_interest, "Viivästyskorko" 
-            = text_field_tag :delay_interest, params[:delay_interest], :id => "appendedInput", :class => "input-small"
+            = f.label "bill[delay_interest]", "Viivästyskorko" 
+            = text_field_tag "bill[delay_interest]", params[:bill][:delay_interest], :id => "appendedInput", :class => "input-small"
             %span.add-on %
             
       .span5
@@ -53,7 +53,7 @@
                 
           = button_to_function "Lisää", "add_order(event)", :class => "btn btn-mini"
           
-        .span3.offset1
+        .span4.offset1
           %table.well.table.table#bill_orders
             %thead.green
               %th Lisättävät tilaukset:

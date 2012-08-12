@@ -21,6 +21,9 @@ class Recipe < ActiveRecord::Base
   has_many :inverse_hasrecipes, :class_name => "Hasrecipe", :foreign_key => "subrecipe_id"
   has_many :parent_recipes, :through => :inverse_hasrecipes, :source => :recipe
   
+  has_many :clientrecipes
+  has_many :clients, :through => :clientrecipes
+  
   belongs_to :bakery
   
   attr_accessible :name, :bakery, :coverage, :product

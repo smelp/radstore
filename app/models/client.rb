@@ -5,6 +5,9 @@ class Client < ActiveRecord::Base
   has_many :bills
   has_many :orders
     
+  has_many :clientrecipes
+  has_many :recipes, :through => :clientrecipes
+  
   attr_accessible :name, :address, :phone, :city
   
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen pituus 2-50 merkkiä" }, :uniqueness => { :message => "Asiakas on jo olemassa" } 

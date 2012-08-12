@@ -45,13 +45,14 @@
        
             %tbody
             
-        .span7
+        .span10.bordered
           %table.table.recipes
             Sisältää tuotteet:
             %thead
               %th Nimi
               %th Kpl
               %th Lasken. hinta (€)
+              %th Asiakashinta (€)
               %th Hinta nyt (€)
               %th Uusi hinta (€)
               %th Poista
@@ -65,6 +66,11 @@
                     = link_to res.name, res
                   %td= subrecipe.amount
                   %td= res.get_coveraged_price * subrecipe.amount
+                  - price_line = @client_prices.find_by_recipe_id res.id
+                  - if price_line
+                    %td= price_line.price
+                  - else
+                    %td
                   %td= subrecipe.price
                   = fields_for "changed_recipes" do |s|
                     %td= s.text_field "#{subrecipe.recipe_id}", min: 0, class: "input-small"

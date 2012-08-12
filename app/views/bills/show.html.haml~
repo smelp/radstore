@@ -51,6 +51,7 @@
             %tr
               %td Viivästyskorko
               %td= @bill.delay_interest
+              \%
             %tr
               %td Viitenumero
               %td= @bill.reference_number
