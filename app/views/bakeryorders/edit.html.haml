@@ -63,7 +63,7 @@
                     - res = Recipe.find(subrecipe.recipe_id)
                     = hidden_field_tag "old_recipes_amounts[#{subrecipe.recipe_id}]", subrecipe.amount
                     = hidden_field_tag "old_recipes_prices[#{subrecipe.recipe_id}]", subrecipe.price
-                    = link_to res.name, res
+                    = link_to res.name, product_path(res)
                   %td= subrecipe.amount
                   %td= res.get_coveraged_price * subrecipe.amount
                   - price_line = @client_prices.find_by_recipe_id res.id

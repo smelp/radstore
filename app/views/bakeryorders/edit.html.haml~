@@ -45,7 +45,7 @@
        
             %tbody
             
-        .span10
+        .span10.bordered
           %table.table.recipes
             Sisältää tuotteet:
             %thead

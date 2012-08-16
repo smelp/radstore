@@ -1,4 +1,4 @@
-- provide(:title, "Tilaus #{@bill.id}")  
+- provide(:title, "Lasku #{@bill.bill_number}")  
   
 .container
   .span10.offset1
@@ -50,8 +50,9 @@
               %td= @bill.due_date
             %tr
               %td Viivästyskorko
-              %td= @bill.delay_interest
-              \%
+              %td
+                = @bill.delay_interest              
+                \%
             %tr
               %td Viitenumero
               %td= @bill.reference_number
@@ -70,8 +71,8 @@
               
     - if @bill.info != ""
       .row
-        %h4 Lisätietoja:
-        %p.gray=  @bill.info
+        %h4.gray Lisätietoja:
+        %p=  @bill.info
                      
     .row.bordered    
       %table.table.table-bordered.table-condensed
@@ -88,12 +89,13 @@
             %td= link_to order.description, order.suborder
           - order.suborder.recipes.each do |recipe|
             %tr
-              %td= link_to recipe.name, recipe
+              %td= link_to recipe.name, product_path(recipe)
               - line = order.suborder.bakeryorderrecipes.find_by_recipe_id(recipe.id)
+              - total = line.price * line.amount
               %td= line.amount
-              %td= line.price
-              %td= (Recipe.get_tax * line.price).round(2)
-              %td= (line.price + Recipe.get_tax * line.price).round(2)
+              %td= total
+              %td= (Bill.get_tax * total).round(2)
+              %td= (total + Bill.get_tax * total).round(2)
         
       .span4.offset6        
         %table.table.table-borderless
@@ -103,11 +105,11 @@
               %td.align-right #{@bill.get_total_amount} €
             %tr
               %td Alv yhteensä  
-              %td.align-right #{(@bill.get_total_amount * Recipe.get_tax).round(2)} €
+              %td.align-right #{(@bill.get_total_amount * Bill.get_tax).round(2)} €
             %tr.gray
               %td
                 %b Yhteensä
-                %td.align-right #{(@bill.get_total_amount + @bill.get_total_amount * Recipe.get_tax).round(2)} €
+                %td.align-right #{(@bill.get_total_amount + @bill.get_total_amount * Bill.get_tax).round(2)} €
 
                 
     = link_to :controller => "bills", :action => "edit", :id => @bill.id do

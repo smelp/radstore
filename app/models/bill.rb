@@ -33,4 +33,8 @@ attr_accessible :client_id, :firm_id, :reference_number, :due_date, :dated_at, :
     amount = self.get_total_amount 
     (amount + amount * @@tax).round(2)
   end
+  
+  def self.get_tax
+    @@tax
+  end
 end

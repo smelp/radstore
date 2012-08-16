@@ -28,7 +28,7 @@ class Bakeryorder < ActiveRecord::Base
   def get_total_amount
     amount = 0
     self.bakeryorderrecipes.each do |b|
-      amount += b.price
+      amount += b.price * b.amount
     end
     amount
   end

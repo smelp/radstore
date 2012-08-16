@@ -55,7 +55,7 @@
         %tbody
           - @bakeryorder.recipes.each do |recipe|
             %tr
-              %td.span4= link_to recipe.name, recipe
+              %td.span4= link_to recipe.name, product_path(recipe)
               %td= @bakeryorder.bakeryorderrecipes.find_by_recipe_id(recipe.id).amount
               %td= @bakeryorder.bakeryorderrecipes.find_by_recipe_id(recipe.id).price
               

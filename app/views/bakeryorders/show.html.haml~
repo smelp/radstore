@@ -40,8 +40,8 @@
               %td.span4= @bakeryorder.created_at.to_date
             %tr 
               %td Kokonaishinta:
-              %td.span4.green= @bakeryorder.get_total_amount
-              €
+              %td.span4.green #{@bakeryorder.get_total_amount} €
+              
               
       %table.table.table-striped
         %caption.align-left 
