@@ -42,7 +42,7 @@ class FirmsController < ApplicationController
   def create
     @firm = Firm.new(params[:firm])
     @firm.attributes = params[:firm]
-    @firm.resource = Bakery.new(params[:resource])
+    @firm.resource = Bakery.create(params[:resource])
     
     if params[:users]
       params[:users].each do |user_id|

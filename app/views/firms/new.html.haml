@@ -3,15 +3,22 @@
 .row
   .span6.offset3
     = form_for @firm do |f|
+      = render 'shared/firm_error_messages'
       %p
         = f.label :name, "Nimi"
         = f.text_field :name 
-      %p
+      
         = f.label :corporate_id, "Y-tunnus" 
         = f.text_field :corporate_id
-      %p
+      
         = f.label :location, "Sijainti"
-        = f.text_field :location 
+        = f.text_field :location
+       
+        = f.label :address, "Osoite"
+        = f.text_field :address 
+         
+        = f.label :account_number, "Tilinumero"
+        = f.text_field :account_number
          
       = fields_for :resource do |b|
         = b.label :description, "Kuvaus"
