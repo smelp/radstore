@@ -38,8 +38,6 @@ gem 'jquery-rails'
 # Deploy with Capistrano
 # gem 'capistrano'
 
-# To use debugger
-gem 'ruby-debug19'
 
 group :production do
   gem 'pg', '0.12.2'
@@ -49,6 +47,8 @@ group :development, :test do
   gem 'sqlite3'
   gem 'rspec-rails', '2.10.0'
   gem 'annotate', :git => 'git://github.com/jeremyolliver/annotate_models.git', :branch => 'rake_compatibility'
+  # To use debugger
+  gem 'ruby-debug19'
 end
 
 group :test do
