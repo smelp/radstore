@@ -40,7 +40,7 @@
               %td.span4= @bakeryorder.created_at.to_date
             %tr 
               %td Kokonaishinta:
-              %td.span4.green #{@bakeryorder.get_total_amount} €
+              %td.span4.green #{@bakeryorder.get_total_amount.round(2)} €
               
               
       %table.table.table-striped
@@ -50,14 +50,21 @@
         %thead.blue
           %th.span4 Tuote
           %th Määrä (kpl)
-          %th Hinta yht. (€)
+          %th Asiakashinta (€)
+          %th Hinta (€)
           
         %tbody
           - @bakeryorder.recipes.each do |recipe|
             %tr
               %td.span4= link_to recipe.name, product_path(recipe)
-              %td= @bakeryorder.bakeryorderrecipes.find_by_recipe_id(recipe.id).amount
-              %td= @bakeryorder.bakeryorderrecipes.find_by_recipe_id(recipe.id).price
+              - amount = @bakeryorder.bakeryorderrecipes.find_by_recipe_id(recipe.id).amount
+              %td= amount
+              - price_line = @client_prices.find_by_recipe_id recipe.id
+              - if price_line
+                %td= (price_line.price * amount).round(2)
+              - else
+                %td
+              %td= @bakeryorder.bakeryorderrecipes.find_by_recipe_id(recipe.id).price.round(2)
               
       = link_to :controller => "bakeryorders", :action => "edit", :id => @bakeryorder.id do
         %i.icon-edit

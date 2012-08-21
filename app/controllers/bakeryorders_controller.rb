@@ -12,6 +12,7 @@ class BakeryordersController < ApplicationController
   end
   
   def show
+    @client_prices = @order.client.clientrecipes
     @bakeryorder = Bakeryorder.find(params[:id])
   end
 

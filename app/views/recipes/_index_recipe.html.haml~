@@ -15,16 +15,13 @@
       %thead
         %th Nimi
         %th Laskennallinen hinta
-        %th Myyntihinta
+        %th Muokkaa
       %tbody
         - @recipes.each do |recipe|
           %tr
             %td= link_to recipe.name, recipe
             %td 
               = recipe.get_price
-              €
-            %td 
-              = recipe.get_taxed_price
               €
             %td
               = link_to :controller => "recipes", :action => "edit", :id => recipe.id do

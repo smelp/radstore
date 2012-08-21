@@ -15,8 +15,7 @@
       %thead
         %th Nimi
         %th Laskennallinen hinta
-        %th Myyntihinta
-        %th Muokkaa
+       
       %tbody
         - @recipes.each do |recipe|
           %tr
@@ -24,12 +23,12 @@
             %td 
               = recipe.get_price
               €
-            %td 
-              = recipe.get_taxed_price
-              €
             %td
               = link_to :controller => "recipes", :action => "edit", :id => recipe.id do
                 %i.icon-edit
+            %td
+              = link_to recipe, method: :delete, confirm: "Haluatko varmasti poistaa reseptin?" do
+                %i.icon-remove
 .container
   .span6.offset3
     = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do

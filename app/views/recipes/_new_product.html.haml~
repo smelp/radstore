@@ -20,7 +20,7 @@
         
         = hidden_field_tag :bakery_id, @bakery.id
       
-        = hidden_field :recipe, :product, { value:true }
+        = hidden_field :recipe, :product, { value: true }
         
         %fieldset.well  
           %legend Tuotteet

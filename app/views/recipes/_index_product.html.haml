@@ -16,7 +16,7 @@
         %th Nimi
         %th Laskennallinen hinta
         %th Myyntihinta
-        %th Muokkaa
+        
       %tbody
         - @recipes.each do |recipe|
           %tr
@@ -30,6 +30,9 @@
             %td
               = link_to edit_product_path(recipe) do
                 %i.icon-edit
+            %td
+              = link_to product_path(recipe), method: :delete, confirm: "Haluatko varmasti poistaa tuotteen?" do
+                %i.icon-remove
 .container
   .span6.offset3
     = link_to new_product_path(:bakery_id => current_user.primary_firm.resource.id) do

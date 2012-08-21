@@ -15,10 +15,8 @@
           %thead
             %th Nimi
             %th Määrä (kpl)
-            %th Katettu á hinta
-            %th Katettu hinta yht. (€)
-            %th Alv yht. €
-            %th Myyntihinta yht.(€)
+            %th á hinta (€)
+            %th Hinta yht. (€)
             
           %tbody
             - @recipe.subrecipes.each do |subrecipe|
@@ -28,16 +26,14 @@
                 %td= amount
                 %td= subrecipe.get_coveraged_price
                 %td= (subrecipe.get_coveraged_price * amount).round(2)
-                %td= (subrecipe.tax * amount).round(2)
-                %td= (subrecipe.get_taxed_price * amount).round(2)
-      
+                
       %table.table.table-condensed.table-bordered 
         %caption.align-left Yhteensä
         %thead.gray
           %th Määrä
           %th Lasken. hinta
           %th Kate
-          %th Katettu hinta
+          %th Katteellinen hinta
           %th
             Alv 
             = Recipe.get_tax * 100
@@ -54,7 +50,7 @@
             %td #{@recipe.tax} €
             %td #{@recipe.get_taxed_price} €
             
-      = link_to :controller => "recipes", :action => "edit", :id => @recipe.id do
+      = link_to edit_product_path(@recipe) do
         %i.icon-edit
         Muokkaa
         

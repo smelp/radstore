@@ -12,15 +12,18 @@
   .span8.offset2.bordered
     %table.table
       %thead
+        %th
         %th Nimi
-        %th.span2 Puhelinnumero
-        %th.span3 Osoite
+        %th Puhelinnumero
+        %th Osoite
         %th Kaupunki
+        %th Muokkaa
         
       %tbody
         - @clients.each do |client|
           %tr
-            %td= link_to client.name, client
+            %td= link_to "Näytä", client
+            %td= client.name
             %td= client.phone
             %td= client.address
             %td= client.city

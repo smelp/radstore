@@ -40,10 +40,6 @@ class BillsController < ApplicationController
     @clients = @firm.clients
     @orders = @firm.get_orders
     @banks = Bill.get_banks
-    
-    flash.now[:error] = params#"Laskun tallennus ei onnistunut!"
-    render 'edit'
-    return
             
     if params[:new_orders]
       add_orders

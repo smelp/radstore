@@ -18,14 +18,8 @@
         = f.label :get_price, "Hinta (€)"
         = f.text_field :get_price, disabled: true
       
-        = f.label :coverage, "Kate-%"
-        = f.text_field :coverage
-      
-        = f.label :product, "On tuote"
-        = f.check_box ("product")
-        
         %fieldset.well  
-          %legend Reseptit
+          %legend Alireseptit
           = select("post", "subrecipe_id", @safe_recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
           = fields_for :subrecipe do |h|
             = h.label :amount, "Määrä (kpl)"
@@ -76,7 +70,7 @@
       .span4.well
         %table.table.well
           %thead.green
-            %th Lisättävät reseptit:
+            %th Lisättävät alireseptit:
             %th
           %tbody#recipe_subrecipes
           - @added_recipes.each do |recipe|

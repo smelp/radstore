@@ -65,13 +65,13 @@
                     = hidden_field_tag "old_recipes_prices[#{subrecipe.recipe_id}]", subrecipe.price
                     = link_to res.name, product_path(res)
                   %td= subrecipe.amount
-                  %td= res.get_coveraged_price * subrecipe.amount
+                  %td= (res.get_coveraged_price * subrecipe.amount).round(2)
                   - price_line = @client_prices.find_by_recipe_id res.id
                   - if price_line
-                    %td= price_line.price
+                    %td= (price_line.price * subrecipe.amount).round(2)
                   - else
                     %td
-                  %td= subrecipe.price
+                  %td= subrecipe.price.round(2)
                   = fields_for "changed_recipes" do |s|
                     %td= s.text_field "#{subrecipe.recipe_id}", min: 0, class: "input-small"
                   %td

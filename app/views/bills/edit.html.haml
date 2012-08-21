@@ -32,8 +32,10 @@
             = text_field_tag "bill[delay_interest]", @bill.delay_interest, :id => "appendedInput", :class => "input-small"
             %span.add-on %
           
-          = f.label :total_amount, "Laskun loppusumma" 
-          = f.text_field :total_amount, value: @bill.get_total_amount_with_taxes, disabled: true
+          .input-append
+            = f.label "bill[total_amount]", "Laskun loppusumma" 
+            = text_field_tag "bill[total_amount]", @bill.get_total_amount_with_taxes, id: "appended_input", class: "input-small", disabled: true
+            %span.add-on €
             
       .span5
         .span2
@@ -91,3 +93,8 @@
         %br
         .span4  
           = f.submit "Tallenna", class: "btn btn-large btn-primary"
+    
+    .span10 
+      = link_to "Kaikki laskut", bills_path(:firm_id => current_user.primary_firm.id)
+      |
+      = link_to "Poista", @bill, method: :delete, confirm: "Haluatko varmasti poistaa laskun?"

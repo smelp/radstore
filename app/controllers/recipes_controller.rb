@@ -9,15 +9,11 @@ class RecipesController < ApplicationController
 
   def index
     if @is_product
-      list = []
-      @bakery.recipes.each do |r|
-        if r.product
-          list.push r
-        end
-      end
-      @recipes = list.paginate(:page => params[:page], :per_page => 10)
+      products = @bakery.recipes.where(:product => true)
+      @recipes = products.paginate(:page => params[:page], :per_page => 10).order('name')
     else
-      @recipes = @bakery.recipes.paginate(:page => params[:page], :per_page => 10).order('name')
+      recipes = @bakery.recipes.where(:product => false)
+      @recipes = recipes.paginate(:page => params[:page], :per_page => 10).order('name')
     end
   end
   
@@ -35,7 +31,6 @@ class RecipesController < ApplicationController
     @recipe = Recipe.new(params[:recipe])
     @recipe.bakery = @bakery
     
-    
     if @recipe.save
       
       if params[:new_recipes]
@@ -50,10 +45,20 @@ class RecipesController < ApplicationController
         end
       end
       
-      flash[:success] = "Uusi resepti luotu!"
-      redirect_to @recipe
+      if @recipe.product
+        flash[:success] = "Uusi tuote luotu!"
+        redirect_to product_path(@recipe)
+      else
+        flash[:success] = "Uusi resepti luotu!"
+        redirect_to @recipe
+      end
     else
-      render 'new'
+      if @recipe.product
+        @is_product = true
+        render 'recipes/new'
+      else
+        render 'new'
+      end
     end
   end
   
@@ -77,18 +82,31 @@ class RecipesController < ApplicationController
     if @recipe.update_attributes(params[:recipe])
       save_recipe
     else
-      flash.now[:error] = "Reseptin tallennus ei onnistunut."
-      render 'edit'
-    end
-    
+      if @recipe.product
+        @is_product = true
+        flash.now[:error] = "Tuotteen tallennus ei onnistunut."
+        render 'recipes/edit'
+      else
+        flash.now[:error] = "Reseptin tallennus ei onnistunut."
+        render 'edit'
+      end
+    end 
   end
   
   def destroy
     Hasrecipe.destroy_all(:recipe_id => @recipe.id)
     Hasrecipe.destroy_all(:subrecipe_id => @recipe.id)
+    Bakeryorderrecipe.destroy_all(:recipe_id => @recipe.id)
+    Clientrecipe.destroy_all(:recipe_id => @recipe.id)
+    
     @recipe.destroy
-    flash[:success] = "Resepti poistettu."
-    redirect_to @bakery
+    if @recipe.product
+      flash[:success] = "Tuote poistettu."
+      redirect_to products_path(:bakery_id => current_user.primary_firm.resource.id)
+    else
+      flash[:success] = "Resepti poistettu."
+      redirect_to recipes_path(:bakery_id => current_user.primary_firm.resource.id)
+    end
   end
   
   private
@@ -140,7 +158,14 @@ class RecipesController < ApplicationController
       
       if params[:new_recipes]
         params[:new_recipes].each do |recipe|
-          Hasrecipe.create(:subrecipe_id => recipe[0], :recipe_id => @recipe.id, :amount => recipe[1])     
+          res = Recipe.find(recipe[0])
+          if Hasrecipe.find_by_recipe_id_and_subrecipe_id(@recipe.id, res.id)
+            flash.now[:error] = "Et voi lisätä tuotteeseen/reseptiin uudelleen reseptejä, jotka kuuluvat jo siihen."
+            render 'edit'
+            return
+          else
+            Hasrecipe.create(:subrecipe_id => recipe[0], :recipe_id => @recipe.id, :amount => recipe[1])                      
+          end
         end
       end
       
@@ -153,15 +178,31 @@ class RecipesController < ApplicationController
       
       if params[:new_materials]
         params[:new_materials].each do |material|
-          Hasmaterial.create(:material_id => material[0], :recipe_id => @recipe.id, :amount => material[1])     
+          mat = Material.find material[0]
+          if Hasmaterial.find_by_recipe_id_and_material_id(@recipe.id, mat.id)
+            flash.now[:error] = "Et voi lisätä reseptiin uudelleen raaka-aineita, jotka kuuluvat jo siihen."
+            render 'edit'
+            return
+          else
+            Hasmaterial.create(:material_id => material[0], :recipe_id => @recipe.id, :amount => material[1])     
+          end
         end
       end
       
       if @recipe.save
-        flash[:success] = "Resepti tallennettu"
-        redirect_to @recipe
+        if @recipe.product
+          flash[:success] = "Tuote tallennettu"
+          redirect_to product_path(@recipe)
+        else
+          flash[:success] = "Resepti tallennettu"
+          redirect_to @recipe
+        end
       else
-        flash.now[:error] = "Reseptin tallennus ei onnistunut."
+        if @recipe.product
+          flash.now[:error] = "Tuotteen tallennus ei onnistunut."
+        else
+          flash.now[:error] = "Reseptin tallennus ei onnistunut."
+        end
         render 'edit'
       end
     end
@@ -190,6 +231,6 @@ class RecipesController < ApplicationController
         @is_product = true
       else
         @is_product = false
-      end
+      end        
     end
 end

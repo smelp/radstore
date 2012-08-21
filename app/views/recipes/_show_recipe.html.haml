@@ -15,10 +15,7 @@
           %thead
             %th Nimi
             %th Määrä (kpl)
-            %th Katteellinen á hinta
-            %th Katteellinen hinta yht. (€)
-            %th Alv yht. €
-            %th Myyntihinta yht.(€)
+            %th Laskennallinen hinta (€)
             
           %tbody
             - @recipe.subrecipes.each do |subrecipe|
@@ -26,11 +23,8 @@
                 - amount = @recipe.hasrecipes.find_by_subrecipe_id(subrecipe.id).amount 
                 %td= link_to subrecipe.name, subrecipe
                 %td= amount
-                %td= subrecipe.get_coveraged_price
-                %td= (subrecipe.get_coveraged_price * amount).round(2)
-                %td= (subrecipe.tax * amount).round(2)
-                %td= (subrecipe.get_taxed_price * amount).round(2)
-      
+                %td= (subrecipe.get_price * amount).round(2)
+                
       %table.table.table-condensed.table-bordered  
         - if @recipe.materials.count > 0
           %caption.align-left Raaka-aineet
@@ -39,8 +33,6 @@
             %th Määrä (g)
             %th Kilohinta (€)
             %th Veroton hinta yht.(€)
-            %th Alv yht. €
-            %th Verol. hinta yht.(€)
             
           %tbody
             - @recipe.materials.each do |material|
@@ -50,31 +42,19 @@
                 %td= amount
                 %td= (material.price).round(2)
                 %td= (material.price * (amount/1000)).round(2)
-                %td= ((material.price * (amount/1000) * @tax)).round(2)
-                %td= (material.price * (amount/1000) + (material.price * (amount/1000) * @tax)).round(2)
-      
+                
       %table.table.table-condensed.table-bordered 
         %caption.align-left Yhteensä
         %thead.gray
-          %th Määrä
-          %th Lasken. hinta
-          %th Kate
-          %th Katteellinen hinta
-          %th
-            Alv 
-            = Recipe.get_tax * 100
-            \%
-          %th Myyntihinta
+          %th.span2 Määrä
+          %th.span2 Laskennallinen hinta
+          
         %tbody
           %tr
             %td
               = @hasmaterials.sum(:amount) + @subrecipe_sum_amount.to_f
               g
             %td #{@recipe.get_price} €
-            %td #{(@recipe.coverage).round(2)}%
-            %td #{@recipe.get_coveraged_price} €
-            %td #{@recipe.tax} €
-            %td #{@recipe.get_taxed_price} €
             
       = link_to :controller => "recipes", :action => "edit", :id => @recipe.id do
         %i.icon-edit

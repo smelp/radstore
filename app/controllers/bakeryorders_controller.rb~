@@ -147,7 +147,6 @@ class BakeryordersController < ApplicationController
             if @order.client
               clientrecipe = Clientrecipe.find_by_client_id_and_recipe_id(@order.client.id, recipe[0])
               if clientrecipe && params[:use_client_prices] == "yes"
-                price = temp_recipe.get_coveraged_price * recipe[1].to_f
                 price = clientrecipe.price
               else
                 price = temp_recipe.get_coveraged_price * recipe[1].to_f

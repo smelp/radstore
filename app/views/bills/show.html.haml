@@ -91,9 +91,9 @@
             %tr
               %td= link_to recipe.name, product_path(recipe)
               - line = order.suborder.bakeryorderrecipes.find_by_recipe_id(recipe.id)
-              - total = line.price * line.amount
+              - total = line.price
               %td= line.amount
-              %td= total
+              %td= total.round(2)
               %td= (Bill.get_tax * total).round(2)
               %td= (total + Bill.get_tax * total).round(2)
         

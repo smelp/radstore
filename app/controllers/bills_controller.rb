@@ -63,7 +63,7 @@ class BillsController < ApplicationController
   def destroy
     @bill.destroy
     flash[:success] = "Lasku poistettu."
-    redirect_to bills_path
+    redirect_to bills_path(:firm_id => current_user.primary_firm.id)
   end
   
   private

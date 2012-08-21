@@ -12,16 +12,18 @@
   .span8.offset2.bordered
     %table.table
       %thead
+        %th
         %th Nro
         %th Kuvaus
         %th Tilauspäivä
         %th Toimitustapa
         %th Tila
-        %th Muokkaa
+        
       %tbody
         - @bakeryorders.each do |bakeryorder|
           %tr  
-            %td= link_to bakeryorder.id, bakeryorder
+            %td= link_to "Näytä", bakeryorder
+            %td= bakeryorder.id
             - if bakeryorder
               %td= bakeryorder.order.description
               %td= bakeryorder.created_at.to_date
@@ -30,6 +32,9 @@
               %td
                 = link_to :controller => "bakeryorders", :action => "edit", :id => bakeryorder.id do
                   %i.icon-edit
+              %td
+                = link_to bakeryorder, method: :delete, confirm: "Haluatko varmasti poistaa tilauksen?" do
+                  %i.icon-remove
 
 = will_paginate
 

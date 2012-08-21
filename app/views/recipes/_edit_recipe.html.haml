@@ -15,14 +15,11 @@
         = f.label :name, "Nimi"
         = f.text_field :name 
         
-        = f.label :get_price, "Hinta (€)"
+        = f.label :get_price, "Laskennallinen hinta (€)"
         = f.text_field :get_price, disabled: true
       
-        = f.label :coverage, "Kate-%"
-        = f.text_field :coverage
-        
         %fieldset.well  
-          %legend Reseptit
+          %legend Alireseptit
           = select("post", "subrecipe_id", @safe_recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
           = fields_for :subrecipe do |h|
             = h.label :amount, "Määrä (kpl)"
@@ -73,7 +70,7 @@
       .span4.well
         %table.table.well
           %thead.green
-            %th Lisättävät reseptit:
+            %th Lisättävät alireseptit:
             %th
           %tbody#recipe_subrecipes
           - @added_recipes.each do |recipe|

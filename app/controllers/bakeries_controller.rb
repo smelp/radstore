@@ -7,19 +7,25 @@ class BakeriesController < ApplicationController
   def show
     @bakery = Bakery.find(params[:id])
     @firm = Firm.find(@bakery.firm.id)
+    recipes = @bakery.recipes.where(:product => false)
+    products = @bakery.recipes.where(:product => true)
     
     if params[:search_recipe]
       q = params[:search_recipe]
-      @recipes = @bakery.recipes.paginate(:page => params[:recipe_page], :per_page => 20, :conditions => ['name like ?', "%#{q.downcase}%"]).order('name')
+      recipes = @bakery.recipes.paginate(:page => params[:recipe_page], :per_page => 20, :conditions => ['name like ? and product = ?', "%#{q.downcase}%", false]).order('name')
+      @materials = @bakery.materials.paginate(:page => params[:page], :per_page => 20).order('name')
+    elsif params[:search_product]
+      q = params[:search_product]
+      products = @bakery.recipes.paginate(:page => params[:recipe_page], :per_page => 20, :conditions => ['name like ? and product = ?', "%#{q.downcase}%", true]).order('name')
       @materials = @bakery.materials.paginate(:page => params[:page], :per_page => 20).order('name')
     elsif params[:search_material]
       q = params[:search_material]
-      @recipes = @bakery.recipes.paginate(:page => params[:page], :per_page => 20).order('name')
       @materials = @bakery.materials.paginate(:page => params[:material_page], :per_page => 20, :conditions => ['name like ?', "%#{q.downcase}%"]).order('name')
     else
-      @recipes = @bakery.recipes.paginate(:page => params[:recipe_page], :per_page => 20).order('name')
       @materials = @bakery.materials.paginate(:page => params[:material_page], :per_page => 20).order('name')
     end
+    @products = products.paginate(:page => params[:recipe_page], :per_page => 20).order('name')
+    @recipes = recipes.paginate(:page => params[:recipe_page], :per_page => 20).order('name')
     @users = @firm.users.paginate(:page => params[:page], :per_page => 5).order('name')
   end
   

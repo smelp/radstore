@@ -93,7 +93,7 @@
               - line = order.suborder.bakeryorderrecipes.find_by_recipe_id(recipe.id)
               - total = line.price * line.amount
               %td= line.amount
-              %td= total
+              %td= total.round(2)
               %td= (Bill.get_tax * total).round(2)
               %td= (total + Bill.get_tax * total).round(2)
         
@@ -102,7 +102,7 @@
           %tbody
             %tr
               %td Veroton hinta yhteensä
-              %td.align-right #{@bill.get_total_amount} €
+              %td.align-right #{(@bill.get_total_amount).round(2)} €
             %tr
               %td Alv yhteensä  
               %td.align-right #{(@bill.get_total_amount * Bill.get_tax).round(2)} €
