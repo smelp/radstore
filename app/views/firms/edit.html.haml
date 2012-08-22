@@ -13,7 +13,7 @@
         = f.label :location, "Sijainti"
         = f.text_field :location 
       
-      = fields_for @bakery do |b|
+      = fields_for :resource do |b|
         %p
           = b.label :description, "Kuvaus"
           = b.text_field :description

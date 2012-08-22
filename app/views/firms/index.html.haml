@@ -10,13 +10,13 @@
         = mail_to @email_us
     - else
       .span7.offset1
-        = will_paginate @firms
+        = will_paginate @firms, :param_name => 'page', :previous_label => "< Edellinen", :next_label => "Seuraava >"
       .span7.offset1.well.blue
         - @firms.each do |firm|
           = render firm
   .span7.offset1
     .span7.offset1
-      = will_paginate @firms
+      = will_paginate @firms, :param_name => 'page', :previous_label => "< Edellinen", :next_label => "Seuraava >"
       
 .container
   .span7.offset1

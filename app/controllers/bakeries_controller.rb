@@ -57,7 +57,7 @@ class BakeriesController < ApplicationController
         @bakery = Bakery.find(params[:id])
         if @bakery and @bakery.firm 
           @firm = @bakery.firm
-          admins = @firm.users #later change to include only admins
+          admins = User.get_admins + @firm.users #later change to include only admins
         else
           flash[:error] = "Ei lupaa tehdä muutoksia." 
           admins = []

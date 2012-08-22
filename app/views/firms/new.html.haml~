@@ -4,7 +4,8 @@
   .span6.offset3
     = form_for @firm do |f|
       = render 'shared/firm_error_messages'
-      
+      = render 'shared/bakery_error_messages'
+      %p
         = f.label :name, "Nimi"
         = f.text_field :name 
       
@@ -20,6 +21,9 @@
         = f.label :account_number, "Tilinumero"
         = f.text_field :account_number
          
+        = f.label :resource_type, "Toimiala"
+        = f.select :resource_type, @resource_types
+        
       = fields_for :resource do |b|
         = b.label :description, "Kuvaus"
         = b.text_field :description

@@ -6,16 +6,23 @@ class FirmsController < ApplicationController
 
   def show
     @firm = Firm.find(params[:id])
-    @email_us = "jjaukka@cs.helsinki.fi"
-    if current_user.admin?  
+    @email_us = "janne.laukkanen83@gmail.com"
+    if current_user.admin?
       if @firm.resource.class == Bakery
-        @bakery = Bakery.find(params[:id])
+        @bakery = @resource = Bakery.find(params[:id])
+      else
+        flash.now[:error] = "Yrityksen tietojen näyttäminen ei onnistu."
+        render 'index'
+        return
       end
     else
       if @firm.resource.class == Bakery
-        @bakery = Bakery.find(params[:id])
+        @resource = @bakery = Bakery.find(params[:id])
         @recipes = @bakery.recipes
         @materials = @bakery.materials
+      else
+        flash.now[:error] = "Yrityksen tietojen näyttäminen ei onnistu."
+        render 'index'
       end
     end
   end
@@ -36,13 +43,17 @@ class FirmsController < ApplicationController
   
   def new
     @firm = Firm.new
-    @bakery = Bakery.new
+    @resource_types = Firm.get_resource_types
   end
   
   def create
     @firm = Firm.new(params[:firm])
+    @resource_types = Firm.get_resource_types
     @firm.attributes = params[:firm]
-    @firm.resource = Bakery.create(params[:resource])
+    if params[:firm][:resource_type] == "Leipomo"
+      @firm.resource = Bakery.create(params[:resource])
+      @bakery = @firm.resource
+    end
     
     if params[:users]
       params[:users].each do |user_id|
@@ -62,14 +73,26 @@ class FirmsController < ApplicationController
   
   def edit
     @firm = Firm.find(params[:id])
-    @bakery = Bakery.find(params[:id])
+    if @firm.resource.class == Bakery
+      @resource = Bakery.find(params[:id])
+    else
+      flash.now[:error] = "Yrityksen muokkaus ei onnistu."
+      render 'index'
+    end
   end
   
   def update
     @firm = Firm.find(params[:id])
-    bakery = Bakery.find(params[:id])
+    if @firm.resource.class == Bakery
+      resource = Bakery.find(params[:id])
+    else
+      flash.now[:error] = "Yrityksen muokkaus ei onnistu."
+      render 'index'
+      return
+    end
     @firm.attributes = params[:firm]
-    @firm.resource = bakery
+    @firm.resource = resource
+    @firm.resource.description = params[:resource][:description]
     
     if params[:users]
       params[:users].each do |user_id|

@@ -4,9 +4,10 @@
 .container.bordered
   .span7.offset1
     .span7.offset1
-      = will_paginate
+      = will_paginate @users, :param_name => 'page', :previous_label => "< Edellinen", :next_label => "Seuraava >"
     .well.span7.offset1
       %ul.users
         - @users.each do |user|
           %li= render user
-      = will_paginate
+    .span7.offset1  
+      = will_paginate @users, :param_name => 'page', :previous_label => "Edellinen", :next_label => "Seuraava"

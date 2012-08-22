@@ -1,0 +1,7 @@
+- if @resource.errors.any?
+  #error_explanation
+    .alert.alert-error
+      Lomake sisältää #{@resource.errors.count} virhettä
+    %ul
+      - @resource.errors.each_with_index do |msg|
+        %li* #{msg[1]}

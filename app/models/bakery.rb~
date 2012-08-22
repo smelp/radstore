@@ -34,6 +34,6 @@ class Bakery < ActiveRecord::Base
   end
   
   def get_product_list
-    self.recipes.all(:product => true)
+    self.recipes.find(:all, :conditions => { :product => true })
   end
 end

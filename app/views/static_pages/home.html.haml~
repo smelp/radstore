@@ -6,7 +6,7 @@
     - if @firms.empty?
       .well.span7.offset1.alert-error
         %p Tiliisi ei vielä ole liitetty yrityksiä. Jos haluat liittää yrityksen, ota yhteyttä: 
-        = @email_us
+        = mail_to @email_us
     - else
       .span7.offset1
         = will_paginate @firms
@@ -15,7 +15,7 @@
           = render firm
   .span7.offset1
     .span7.offset1
-      = will_paginate @firms
+      = will_paginate @firms, :param_name => 'page', :previous_label => "< Edellinen", :next_label => "Seuraava >"
 
 .container
   .span7.offset1

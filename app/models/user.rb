@@ -30,6 +30,11 @@ class User < ActiveRecord::Base
     before_save { |user| user.email = email.downcase }
     before_save :create_remember_token
     
+    
+    def self.get_admins
+      self.where(admin: true)
+    end
+    
     private
 
       def create_remember_token

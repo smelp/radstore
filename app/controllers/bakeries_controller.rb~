@@ -16,7 +16,7 @@ class BakeriesController < ApplicationController
       @materials = @bakery.materials.paginate(:page => params[:page], :per_page => 20).order('name')
     elsif params[:search_product]
       q = params[:search_product]
-      products = @bakery.recipes.where(:name => q.downcase, :product => true)
+      products = @bakery.recipes.paginate(:page => params[:recipe_page], :per_page => 20, :conditions => ['name like ? and product = ?', "%#{q.downcase}%", true]).order('name')
       @materials = @bakery.materials.paginate(:page => params[:page], :per_page => 20).order('name')
     elsif params[:search_material]
       q = params[:search_material]

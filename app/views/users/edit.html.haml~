@@ -25,6 +25,7 @@
         = f.password_field :password_confirmation
           
       %p  
+        = f.label :primary_firm, "Pääyritys"
         = f.select(:primary_firm_id, @user.firms.collect {|firm| [ firm.name, firm.id ] }, {:prompt => 'Valitse yritys'})
         
       = f.submit "Tallenna muutokset", class: "btn btn-large btn-primary"

@@ -2,7 +2,7 @@
 
 .span12.bordered-top
   %h2= @firm.name
-   .row
+  .row
     .span5
       - if is_admin?
         .row.well
@@ -27,7 +27,7 @@
                 = text_field_tag :search_recipe, "", :class => "input search-query input-large span1", :placeholder => "Etsi reseptejä"
                 = submit_tag "Hae", :class => "btn btn-small"
 
-          = will_paginate @recipes, :param_name => 'recipe_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_recipe => @search_params
+          = will_paginate @recipes, :param_name => 'recipe_page', :previous_label => "< Edellinen", :next_label => "Seuraava >", :search_recipe => @search_params
           %table.table.table-condensed.table-striped.table-bordered
             %thead
               %th Nimi

@@ -1,7 +1,5 @@
-- provide(:title, 'About us')
+- provide(:title, 'Tietoa')
 %div{class: 'center hero-unit'}
-  %h1 About
   
-  %h2 This is the home page for the
+  %h2.center Tähän tuee tietoa ohjelmistosta
   
-  =link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary" 

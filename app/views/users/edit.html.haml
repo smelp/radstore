@@ -14,17 +14,17 @@
       %p
         = f.label :name, "Nimi" 
         = f.text_field :name 
-      %p
+      
         = f.label :email, "Sähköposti"
         = f.text_field :email 
-      %p
+     
         = f.label :password, "Salasana"
         = f.password_field :password 
-      %p
+    
         = f.label :password_confirmation, "Varmista Salasana" 
         = f.password_field :password_confirmation
           
-      %p  
+       
         = f.label :primary_firm, "Pääyritys"
         = f.select(:primary_firm_id, @user.firms.collect {|firm| [ firm.name, firm.id ] }, {:prompt => 'Valitse yritys'})
         

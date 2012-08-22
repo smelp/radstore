@@ -27,7 +27,7 @@
                 = text_field_tag :search_recipe, "", :class => "input search-query input-large span1", :placeholder => "Etsi reseptejä"
                 = submit_tag "Hae", :class => "btn btn-small"
 
-          = will_paginate @recipes, :param_name => 'recipe_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_recipe => @search_params
+          = will_paginate @recipes, :param_name => 'recipe_page', :previous_label => "< Edellinen", :next_label => "Seuraava >", :search_recipe => @search_params
           %table.table.table-condensed.table-striped.table-bordered
             %thead
               %th Nimi
@@ -113,7 +113,7 @@
                   = link_to recipe, method: :delete, confirm: "Haluatko varmasti poistaa tuotteen?" do
                     %i.icon-remove
                   
-        = link_to new_product_path(:bakery_id => current_user.primary_firm.resource.id) do
+        = link_to new_product_path(:bakery_id => @bakery.id) do
           %i.icon-plus
           Lisää tuote
       
