@@ -1,7 +1,6 @@
 -provide(:title, 'Ota yhteyttä')
 %div{class: 'center hero-unit'}
-  %h1 Ota yhteyttä
   
-  %h2.center Lähetä sähköpostia osoitteeseen:
+  %h2.center Ota yhteyttä, lähetä sähköpostia osoitteeseen:
   %h4 janne.laukkanen83@gmail.com
   

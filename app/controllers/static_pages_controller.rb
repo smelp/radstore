@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
   before_filter :signed_in_user, only: [:home]
   
   def home
-    @email_us = "janne.laukkanen83@gmail.com"
+    @email_us = "janne.laukkanen@pkhelppi.com"
     if current_user.admin?
       @firms = Firm.paginate(:page => params[:page], :per_page => 10)
     else

@@ -92,7 +92,7 @@ class FirmsController < ApplicationController
     end
     @firm.attributes = params[:firm]
     @firm.resource = resource
-    @firm.resource.update_attributes(params[:resource])
+    @firm.resource.description = params[:resource][:description]
     
     if params[:users]
       params[:users].each do |user_id|

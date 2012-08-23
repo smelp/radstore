@@ -6,17 +6,19 @@
       %p
         = f.label :name, "Nimi"
         = f.text_field :name 
-      %p
+     
         = f.label :corporate_id, "Y-tunnus"
         = f.text_field :corporate_id
-      %p
+      
         = f.label :location, "Sijainti"
         = f.text_field :location 
       
+        = f.label :account_number, "Tilinumero"
+        = f.text_field :account_number
+        
       = fields_for :resource do |b|
-        %p
-          = b.label :description, "Kuvaus"
-          = b.text_field :description
+        = b.label :description, "Kuvaus"
+        = b.text_field :description
     
       %h4 Lisää käyttäjät:
       %p#firm_users

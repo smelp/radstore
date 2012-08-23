@@ -28,7 +28,7 @@ class FirmsController < ApplicationController
   end
   
   def index
-    @email_us = "janne.laukkanen83@gmail.com"
+    @email_us = "janne.laukkanen@pkhelppi.com"
     if current_user.admin?
       @firms = Firm.paginate(:page => params[:page], :per_page => 10)
     else

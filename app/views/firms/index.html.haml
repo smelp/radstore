@@ -9,9 +9,9 @@
         %p Tiliisi ei vielä ole liitetty yrityksiä. Jos haluat liittää yrityksen, ota yhteyttä:
         = mail_to @email_us
     - else
-      .span7.offset1
+      .span6.offset1
         = will_paginate @firms, :param_name => 'page', :previous_label => "< Edellinen", :next_label => "Seuraava >"
-      .span7.offset1.well.blue
+      .span6.offset1
         - @firms.each do |firm|
           = render firm
   .span7.offset1
