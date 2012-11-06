@@ -24,17 +24,23 @@
         
         %fieldset.well  
           %legend Tuotteet
-          = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse tuote'})
+          = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
           = fields_for :subrecipe do |h|
             = h.label :amount, "Määrä (kpl)"
             = h.number_field :amount, min: 0
           
           = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
         
+          = fields_for :subrecipe do |h|
+            = h.label :amount, "Määrä (g)"
+            = h.number_field :amount, min: 0
+          
+          = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
+          
       .span4.well
         %table.well.table.table#recipe_subrecipes
           %thead.green
-            %th Lisättävät tuotteet:
+            %th Lisättävät reseptit:
             %th
         %tbody
         
