@@ -104,6 +104,11 @@
               = submit_tag "Hae", :class => "btn btn-small"
 
         = will_paginate @products, :param_name => 'product_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_product => @search_params
+        
+        = link_to new_product_path(:bakery_id => @bakery.id) do
+          %i.icon-plus
+          Lisää tuote
+        
         %table.table.table-condensed.table-striped.table-bordered
           %thead
             %th Nimi

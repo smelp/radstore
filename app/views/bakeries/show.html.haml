@@ -136,6 +136,11 @@
       .row.well
         %h2 Käyttäjät
         = will_paginate @users, :previous_label => "Edellinen", :next_label => "Seuraava"
+        
+        = link_to :controller => "firms", :action => "edit" do
+          %i.icon-plus
+          Lisää käyttäjä
+          
         %table.table.table-condensed.table-striped.table-bordered
           %thead
             %th Nimi
