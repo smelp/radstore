@@ -3,40 +3,50 @@
 %h1 Muokkaa reseptiä
 
 .container
-  .span10.offset1
+  .span12
     = render "shared/nav"
 
 .row
-  .span10.offset1.well
+  .span12.outline
     = form_for @recipe do |f|
       = render 'shared/recipe_error_messages'
       
-      %fieldset.span4.well
-        = f.label :name, "Nimi"
-        = f.text_field :name 
-        
-        = f.label :get_price, "Laskennallinen hinta (€)"
-        = f.text_field :get_price, disabled: true
+      .span3
+        %fieldset.span3
+          = f.label :name, "Nimi"
+          = f.text_field :name 
+          
+          = f.label :get_price, "Laskennallinen hinta (€)"
+          = f.text_field :get_price, disabled: true
       
-        %fieldset.well  
-          %legend Alireseptit
+        %fieldset.span3  
+          %label Alireseptit
           = select("post", "subrecipe_id", @safe_recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
           = fields_for :subrecipe do |h|
             = h.label :amount, "Määrä (kpl)"
-            = h.number_field :amount, min: 0
+            = h.number_field :amount, min: 0, class: "span2"
           
           = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
         
-        %fieldset.well
-          %legend Raaka-aineet
+          = fields_for :subrecipe do |h|
+            = h.label :amount_grams, "Määrä (g)"
+            = h.number_field :amount_grams, min: 0, class: "span2"
+          
+          = button_to_function "Lisää", "add_subrecipe_grams(event)", :class => "btn btn-mini"
+          
+          = f.submit "Tallenna", class: "btn btn-primary"
+          
+      .span4    
+        %fieldset.span3
+          %label Raaka-aineet
           = select("post", "material_id", @bakery.materials.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
           = fields_for :material do |h|
             = h.label :amount, "Määrä (g)"
-            = h.number_field :amount, min: 0
+            = h.number_field :amount, min: 0, class: "span2"
           
           = button_to_function "Lisää", "add_material(event)", :class => "btn btn-mini"
-      
-      .span4.well
+        
+      .span4
         %table.table.recipes
           %thead
             %th Sisältää reseptit:
@@ -66,8 +76,7 @@
                 %td
                   %a.nav-link{href: "#", onclick: "remove_table_element(#{material.material_id})"}
                     %i.icon-remove
-                
-      .span4.well
+        
         %table.table.well
           %thead.green
             %th Lisättävät alireseptit:
@@ -96,11 +105,9 @@
                 = hidden_field_tag "new_materials[#{material[0].id}, #{material[1]}]", material[1]
               %td
                 %a.nav-link{href: "#", onclick: "remove_table_element(#{material[0].id})"}
-                  %i.icon-remove
-      .span8        
-        = f.submit "Tallenna", class: "btn btn-large btn-primary"
+                  %i.icon-remove 
       
-    .span10
-      = link_to "Kaikki reseptit", :controller => "recipes", :action => "index", :bakery_id => @bakery.id
-      |
-      = link_to "Poista resepti", @recipe, method: :delete, confirm: "Haluatko varmasti poistaa reseptin?"
+  .span10
+    = link_to "Kaikki reseptit", :controller => "recipes", :action => "index", :bakery_id => @bakery.id
+    |
+    = link_to "Poista resepti", @recipe, method: :delete, confirm: "Haluatko varmasti poistaa reseptin?"

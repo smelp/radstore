@@ -11,17 +11,25 @@
 
 .container
   .span6.offset3.bordered
+    = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
+      %i.icon-plus
+      Lisää resepti
     %table.table.table-striped
       %thead
         %th Nimi
         %th Laskennallinen hinta
+        %th Kilohinta
        
       %tbody
         - @recipes.each do |recipe|
           %tr
+            - price = recipe.get_price
             %td= link_to recipe.name, recipe
             %td 
-              = recipe.get_price
+              = price
+              €
+            %td
+              = (1000/recipe.get_weight * price).round(2)
               €
             %td
               = link_to :controller => "recipes", :action => "edit", :id => recipe.id do

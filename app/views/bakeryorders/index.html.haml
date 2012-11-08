@@ -10,6 +10,9 @@
 
 .container
   .span8.offset2.bordered
+    = link_to :controller => "bakeryorders", :action => "new", :bakery_id => @bakery.id do
+      %i.icon-plus
+      Lisää tilaus
     %table.table
       %thead
         %th

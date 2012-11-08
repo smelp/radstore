@@ -31,7 +31,7 @@
               = link_to edit_product_path(recipe) do
                 %i.icon-edit
             %td
-              = link_to recipe, method: :delete, confirm: "Haluatko varmasti poistaa tuotteen?" do
+              = link_to product_path(recipe), method: :delete, confirm: "Haluatko varmasti poistaa tuotteen?" do
                 %i.icon-remove
 .container
   .span6.offset3

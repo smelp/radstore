@@ -1,49 +1,53 @@
 - provide(:title, 'Luo tuote')
   
-%h1 Luo tuote
+%h2.pull-left Luo tuote
 
 .container
-  .span10.offset1
+  .span12
     = render "shared/nav"
     
 .row
-  .span10.offset1.well
+  .span12.outline
     = form_for @recipe do |f|
       = render 'shared/recipe_error_messages'
       
-      %fieldset.span4
-        = f.label :name, "Nimi" 
-        = f.text_field :name 
+      .span3
+        %fieldset.span3
+          = f.label :name, "Nimi" 
+          = f.text_field :name 
+          
+          = f.label :coverage, "Kate-%"
+          = f.text_field :coverage
+          
+          = hidden_field_tag :bakery_id, @bakery.id
         
-        = f.label :coverage, "Kate-%"
-        = f.text_field :coverage
-        
-        = hidden_field_tag :bakery_id, @bakery.id
+          = hidden_field :recipe, :product, { value: true }
       
-        = hidden_field :recipe, :product, { value: true }
-        
-        %fieldset.well  
-          %legend Tuotteet
+          %label Tuotteet
           = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
+          
+          = f.submit "Luo tuote", class: "btn btn-primary"
+          
+      .span4    
+        %fieldset.span4
+          
           = fields_for :subrecipe do |h|
             = h.label :amount, "Määrä (kpl)"
-            = h.number_field :amount, min: 0
+            = h.text_field :amount, min: 0, class: "span3"
           
           = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
-        
+          
           = fields_for :subrecipe do |h|
-            = h.label :amount, "Määrä (g)"
-            = h.number_field :amount, min: 0
+            = h.label :amount_grams, "Määrä (g)"
+            = h.text_field :amount_grams, min: 0, class: "span3"
           
-          = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
+          = button_to_function "Lisää", "add_subrecipe_grams(event)", :class => "btn btn-mini"
           
-      .span4.well
-        %table.well.table.table#recipe_subrecipes
+      .span4
+        %table.table.table#recipe_subrecipes
           %thead.green
             %th Lisättävät reseptit:
             %th
         %tbody
         
-      .span8  
-        = f.submit "Luo tuote", class: "btn btn-large btn-primary"
     

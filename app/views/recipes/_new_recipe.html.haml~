@@ -1,55 +1,62 @@
 - provide(:title, 'Luo resepti')
   
-%h1 Luo resepti
+%h2.pull-left Luo resepti
 
 .container
-  .span10.offset1
+  .span12
     = render "shared/nav"
     
 .row
-  .span10.offset1.well
+  .span12.outline
     = form_for @recipe do |f|
       = render 'shared/recipe_error_messages'
       
-      %fieldset.span4
-        = f.label :name, "Nimi" 
-        = f.text_field :name 
-        
-        = hidden_field_tag :bakery_id, @bakery.id
-                
-        %fieldset.well  
-          %legend Alireseptit
-          = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
+      .span4
+        %fieldset.span3
+          = f.label :name, "Nimi" 
+          = f.text_field :name 
+          
+          = hidden_field_tag :bakery_id, @bakery.id
+                  
+          %label Alireseptit
+          - values = @bakery.recipes.collect {|r| [ r.name, r.id ] }
+          - values = values.sort_by { |obj| obj.name }
+          = select("post", "subrecipe_id", values, {:prompt => 'Valitse resepti'})
           = fields_for :subrecipe do |h|
             = h.label :amount, "Määrä (kpl)"
-            = h.number_field :amount, min: 0
+            = h.text_field :amount, min: 0, class: "span2"
           
           = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
           
-        %fieldset.well  
-          %legend Raaka-aineet
+          = fields_for :subrecipe do |h|
+            = h.label :amount_grams, "Määrä (g)"
+            = h.text_field :amount_grams, min: 0, class: "span2"
+          
+          = button_to_function "Lisää", "add_subrecipe_grams(event)", :class => "btn btn-mini"
+      
+          = f.submit "Luo resepti", class: "btn btn-primary"
+               
+      .span3    
+        %fieldset  
+          %label Raaka-aineet
           = select("post", "material_id", @bakery.materials.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
           = fields_for :material do |h|
             = h.label :amount, "Määrä (g)"
-            = h.number_field :amount, min: 0
+            = h.text_field :amount, min: 0, class: "span2"
      
           = button_to_function "Lisää", "add_material(event)", :class => "btn btn-mini"
         
-      .span4.well
-        %table.well.table.table#recipe_subrecipes
+      .span4
+        %table.table.table#recipe_subrecipes
           %thead.green
-            %th Lisättävät reseptit:
+            %th Lisättävät alireseptit:
             %th
         %tbody
         
-        %table.well.table.table#recipe_materials
+        %table.table.table#recipe_materials
           %thead.green
             %th Lisättävät raaka-aineet:
             %th
         %tbody
       
-       
-        
-      .span8  
-        = f.submit "Luo resepti", class: "btn btn-large btn-primary"
     

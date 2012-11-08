@@ -18,7 +18,7 @@
         %th Tilauspäivä
         %th Toimitustapa
         %th Tila
-        %th Muokkaa
+        
       %tbody
         - @bakeryorders.each do |bakeryorder|
           %tr  
@@ -32,6 +32,9 @@
               %td
                 = link_to :controller => "bakeryorders", :action => "edit", :id => bakeryorder.id do
                   %i.icon-edit
+              %td
+                = link_to bakeryorder, method: :delete, confirm: "Haluatko varmasti poistaa tilauksen?" do
+                  %i.icon-remove
 
 = will_paginate
 

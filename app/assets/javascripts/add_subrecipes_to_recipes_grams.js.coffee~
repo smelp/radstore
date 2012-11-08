@@ -1,6 +1,6 @@
-window.add_subrecipe = (e) ->
+window.add_subrecipe_grams = (e) ->
   choice = $('#post_subrecipe_id').get(0)
-  amount = $('#subrecipe_amount').get(0).value
+  amount = $('#subrecipe_amount_grams').get(0).value
   val = choice.value
   div = document.createElement('div')
   div.setAttribute("id", val + "_hidden")
@@ -17,7 +17,7 @@ window.add_subrecipe = (e) ->
   
   for option in choice
     if option.value == val && option.innerHTML != "Valitse resepti" && amount != ""
-      td_elem.innerHTML = option.innerHTML + ", " + amount + " kpl</br>"  
+      td_elem.innerHTML = option.innerHTML + ", " + amount + " g</br>"  
       a_elem.href = "#"
       a_elem.setAttribute("class","nav-link")
       a_elem.setAttribute("onclick","remove_table_element(#{val})")
@@ -25,8 +25,8 @@ window.add_subrecipe = (e) ->
       recipe = val
       elem.type = "hidden"
       elem.name = "new_recipes[" + recipe + "]"
-      elem.value = amount
-      elem.setAttribute("class","units")
+      elem.value = amount + "-grams"
+      elem.setAttribute("class","grams")
       
       $('#recipe_subrecipes').append tr_elem
       $('#recipe_subrecipes').append div

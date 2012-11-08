@@ -15,15 +15,23 @@
           %thead
             %th Nimi
             %th Määrä (kpl)
+            %th Määrä (g)
+            %th Kilohinta (€)
             %th Laskennallinen hinta (€)
             
           %tbody
+            - sum = 0
             - @recipe.subrecipes.each do |subrecipe|
               %tr
-                - amount = @recipe.hasrecipes.find_by_subrecipe_id(subrecipe.id).amount 
-                %td= link_to subrecipe.name, subrecipe
-                %td= amount
-                %td= (subrecipe.get_price * amount).round(2)
+                - hasrecipe_line = @recipe.hasrecipes.find_by_subrecipe_id(subrecipe.id) 
+                - amount = hasrecipe_line.amount
+                - type = hasrecipe_line.amount_type
+                %td.span3= link_to subrecipe.name, subrecipe
+                %td.span2= amount.round(2)
+                - sum += amount * subrecipe.get_weight 
+                %td= amount * subrecipe.get_weight 
+                %td= (1000/subrecipe.get_weight * subrecipe.get_price).round(2)
+                %td.span3= (subrecipe.get_price * amount).round(2)
                 
       %table.table.table-condensed.table-bordered  
         - if @recipe.materials.count > 0
@@ -38,24 +46,29 @@
             - @recipe.materials.each do |material|
               %tr
                 - amount = @hasmaterials.find_by_material_id(material.id).amount 
-                %td= link_to material.name, material
-                %td= amount
-                %td= (material.price).round(2)
+                %td.span3= link_to material.name, material
+                %td.span2= amount
+                - sum += amount
+                %td.span3= (material.price).round(2)
                 %td= (material.price * (amount/1000)).round(2)
                 
       %table.table.table-condensed.table-bordered 
         %caption.align-left Yhteensä
         %thead.gray
-          %th.span2 Määrä
-          %th.span2 Laskennallinen hinta
+          %th Määrä
+          %th Kilohinta
+          %th Laskennallinen hinta
           
         %tbody
           %tr
-            %td
-              = @hasmaterials.sum(:amount) + @subrecipe_sum_amount.to_f
+            %td.span5
+              = sum
               g
-            %td #{@recipe.get_price} €
-            
+            %td.span8 
+              = (1000/@recipe.get_weight * @recipe.get_price).round(2)
+              €
+            %td.span5 #{@recipe.get_price} €
+              
       = link_to :controller => "recipes", :action => "edit", :id => @recipe.id do
         %i.icon-edit
         Muokkaa

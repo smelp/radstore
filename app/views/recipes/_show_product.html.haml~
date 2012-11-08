@@ -15,17 +15,24 @@
           %thead
             %th Nimi
             %th Määrä (kpl)
+            %th Määrä (g)
             %th á hinta (€)
             %th Hinta yht. (€)
             
           %tbody
             - @recipe.subrecipes.each do |subrecipe|
               %tr
-                - amount = @recipe.hasrecipes.find_by_subrecipe_id(subrecipe.id).amount 
+                - hasrecipe_line = @recipe.hasrecipes.find_by_subrecipe_id(subrecipe.id) 
+                - amount = hasrecipe_line.amount
+                - type = hasrecipe_line.amount_type
                 %td= link_to subrecipe.name, subrecipe
                 %td= amount
-                %td= subrecipe.get_coveraged_price
-                %td= (subrecipe.get_coveraged_price * amount).round(2)
+                - recipe_weight = subrecipe.hasmaterials.sum(:amount) + subrecipe.subrecipes_sum
+                %td= amount * recipe_weight 
+                %td= subrecipe.get_price
+                
+                %td= (subrecipe.get_price * amount).round(2)
+                  
                 
       %table.table.table-condensed.table-bordered 
         %caption.align-left Yhteensä

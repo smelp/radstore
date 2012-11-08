@@ -70,6 +70,10 @@ class Recipe < ActiveRecord::Base
     price.round(2)
   end
   
+  def get_weight
+    self.hasmaterials.sum(:amount) + self.subrecipes_sum
+  end
+  
   def subrecipes_sum
     amount_sum = 0.0
     self.subrecipes.each do |subrecipe|

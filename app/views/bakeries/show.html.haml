@@ -28,6 +28,11 @@
                 = submit_tag "Hae", :class => "btn btn-small"
 
           = will_paginate @recipes, :param_name => 'recipe_page', :previous_label => "< Edellinen", :next_label => "Seuraava >", :search_recipe => @search_params
+          
+          = link_to :controller => "recipes", :action => "new", :bakery_id => @bakery.id do
+            %i.icon-plus
+            Lisää resepti
+          
           %table.table.table-condensed.table-striped.table-bordered
             %thead
               %th Nimi
@@ -61,6 +66,11 @@
         
         
         = will_paginate @materials, :param_name => 'material_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_material => @search_params
+       
+        = link_to :controller => "materials", :action => "new", :bakery_id => @bakery.id do
+          %i.icon-plus
+          Lisää raaka-aine
+        
         %table.table.table-condensed.table-striped.table-bordered
           %thead
             %th Nimi
@@ -94,6 +104,11 @@
               = submit_tag "Hae", :class => "btn btn-small"
 
         = will_paginate @products, :param_name => 'product_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_product => @search_params
+        
+        = link_to new_product_path(:bakery_id => @bakery.id) do
+          %i.icon-plus
+          Lisää tuote
+        
         %table.table.table-condensed.table-striped.table-bordered
           %thead
             %th Nimi

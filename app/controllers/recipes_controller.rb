@@ -35,7 +35,14 @@ class RecipesController < ApplicationController
       
       if params[:new_recipes]
         params[:new_recipes].each do |recipe|
-          Hasrecipe.create(:subrecipe_id => recipe[0], :recipe_id => @recipe.id, :amount => recipe[1])      
+          tmp = recipe[1].split(/-/)
+          amount = tmp[0]
+          type = tmp[1]
+          subrecipe = Recipe.find_by_id(recipe[0])
+          if subrecipe != nil && type == "grams"
+            amount = amount.to_f / (subrecipe.hasmaterials.sum(:amount) + subrecipe.subrecipes_sum)
+          end
+          Hasrecipe.create(:subrecipe_id => recipe[0], :recipe_id => @recipe.id, :amount => amount, :amount_type => type)      
         end
       end
       
@@ -158,13 +165,21 @@ class RecipesController < ApplicationController
       
       if params[:new_recipes]
         params[:new_recipes].each do |recipe|
+          
+          tmp = recipe[1].split(/-/)
+          amount = tmp[0]
+          type = tmp[1]
+          subrecipe = Recipe.find_by_id(recipe[0])
           res = Recipe.find(recipe[0])
           if Hasrecipe.find_by_recipe_id_and_subrecipe_id(@recipe.id, res.id)
             flash.now[:error] = "Et voi lisätä tuotteeseen/reseptiin uudelleen reseptejä, jotka kuuluvat jo siihen."
             render 'edit'
             return
           else
-            Hasrecipe.create(:subrecipe_id => recipe[0], :recipe_id => @recipe.id, :amount => recipe[1])                      
+            if subrecipe != nil && type == "grams"
+              amount = amount.to_f / (subrecipe.hasmaterials.sum(:amount) + subrecipe.subrecipes_sum)
+            end
+            Hasrecipe.create(:subrecipe_id => recipe[0], :recipe_id => @recipe.id, :amount => amount, :amount_type => type)                      
           end
         end
       end

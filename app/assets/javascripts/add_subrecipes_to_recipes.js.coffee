@@ -6,7 +6,6 @@ window.add_subrecipe = (e) ->
   div.setAttribute("id", val + "_hidden")
   elem = document.createElement('input')
   
-  
   tr_elem = document.createElement('tr')
   tr_elem.id = val
   td_elem = document.createElement('td')
@@ -26,8 +25,8 @@ window.add_subrecipe = (e) ->
       recipe = val
       elem.type = "hidden"
       elem.name = "new_recipes[" + recipe + "]"
-      elem.value = amount
-      
+      elem.value = amount + "-units"
+           
       $('#recipe_subrecipes').append tr_elem
       $('#recipe_subrecipes').append div
       $(div).append elem

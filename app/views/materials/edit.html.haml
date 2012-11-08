@@ -1,23 +1,26 @@
 - provide(:title, 'Muokkaa raaka-aine')
 
-%h1 Muokkaa raaka-ainetta
+.span6.offset3
+  %h2 Muokkaa raaka-ainetta
 
 .container
   .span6.offset3
     = render "shared/nav"
 
-.row
-  .span6.offset3.well
-    = form_for @material do |f|
-      = render 'shared/material_error_messages'
-      %p
-        = f.label :name, "Nimi" 
-        = f.text_field :name 
-        = f.label :price, "Kilohinta (€)"
-        = f.text_field :price
+  .span6.offset3.outline
+    .row
+      .span4.offset1
+        = form_for @material do |f|
+          = render 'shared/material_error_messages'
+          %p
+            = f.label :name, "Nimi" 
+            = f.text_field :name 
+            = f.label :price, "Kilohinta (€)"
+            = f.text_field :price
+            
+          = f.submit "Tallenna", class: "btn btn-large btn-primary"
         
-      = f.submit "Tallenna", class: "btn btn-large btn-primary"
-    
+  .span6.offset3
     %p
       = link_to request.env["HTTP_REFERER"] do
         %i.icon-arrow-left

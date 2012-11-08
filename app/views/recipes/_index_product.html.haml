@@ -11,6 +11,10 @@
 
 .container
   .span6.offset3.bordered
+    = link_to new_product_path(:bakery_id => current_user.primary_firm.resource.id) do
+      %i.icon-plus
+      Lisää tuote
+    
     %table.table.table-striped
       %thead
         %th Nimi
