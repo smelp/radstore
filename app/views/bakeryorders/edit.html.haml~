@@ -71,7 +71,7 @@
                     %td= (price_line.price * subrecipe.amount).round(2)
                   - else
                     %td
-                  %td= subrecipe.price
+                  %td= subrecipe.price.round(2)
                   = fields_for "changed_recipes" do |s|
                     %td= s.text_field "#{subrecipe.recipe_id}", min: 0, class: "input-small"
                   %td

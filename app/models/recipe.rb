@@ -78,7 +78,8 @@ class Recipe < ActiveRecord::Base
     amount_sum = 0.0
     self.subrecipes.each do |subrecipe|
       amount = self.hasrecipes.find_by_subrecipe_id(subrecipe.id).amount 
-      amount_sum += (amount * subrecipe.materials.sum(:amount).to_f)
+      amount_sum += amount * subrecipe.get_weight 
+      #(amount * subrecipe.materials.sum(:amount).to_f)
     end
     amount_sum
   end

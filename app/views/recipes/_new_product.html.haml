@@ -24,7 +24,11 @@
           = hidden_field :recipe, :product, { value: true }
       
           %label Tuotteet
-          = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
+          - values = @bakery.recipes.collect {|r| [ r.name, r.id ] }
+          - values = values.sort_by { |obj| obj[0].capitalize }
+          = select("post", "subrecipe_id", values, {:prompt => 'Valitse resepti'})
+          
+          = #select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
           
           = f.submit "Luo tuote", class: "btn btn-primary"
           

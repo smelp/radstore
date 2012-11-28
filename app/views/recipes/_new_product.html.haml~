@@ -24,22 +24,26 @@
           = hidden_field :recipe, :product, { value: true }
       
           %label Tuotteet
-          = select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
+          - values = @bakery.recipes.collect {|r| [ r.name, r.id ] }
+          - values = values.sort_by { |obj| obj[0].capitalize }
+          = select("post", "subrecipe_id", values, {:prompt => 'Valitse resepti'})
+          
+          = #select("post", "subrecipe_id", @bakery.recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
           
           = f.submit "Luo tuote", class: "btn btn-primary"
           
-      .span4    
-        %fieldset.span4
+      .span3
+        %fieldset.span3
           
           = fields_for :subrecipe do |h|
             = h.label :amount, "Määrä (kpl)"
-            = h.text_field :amount, min: 0, class: "span3"
+            = h.text_field :amount, min: 0, class: "span2"
           
           = button_to_function "Lisää", "add_subrecipe(event)", :class => "btn btn-mini"
           
           = fields_for :subrecipe do |h|
             = h.label :amount_grams, "Määrä (g)"
-            = h.text_field :amount_grams, min: 0, class: "span3"
+            = h.text_field :amount_grams, min: 0, class: "span2"
           
           = button_to_function "Lisää", "add_subrecipe_grams(event)", :class => "btn btn-mini"
           

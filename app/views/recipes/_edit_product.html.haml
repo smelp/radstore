@@ -30,7 +30,9 @@
       .span4
         %fieldset.span3
           %label Reseptit
-          = select("post", "subrecipe_id", @safe_recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
+          - values = @safe_recipes.collect {|r| [ r.name, r.id ] }
+          - values = values.sort_by { |obj| obj[0].capitalize }
+          = select("post", "subrecipe_id", values, {:prompt => 'Valitse resepti'})
           = fields_for :subrecipe do |h|
             = h.label :amount, "Määrä (kpl)"
             = h.text_field :amount, min: 0, class: "span2"

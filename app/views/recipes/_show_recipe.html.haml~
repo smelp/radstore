@@ -10,6 +10,7 @@
       %h2.bordered-bottom= @recipe.name
       
       %table.table.table-condensed.table-bordered
+        - sum = 0
         - if @recipe.subrecipes.count > 0 
           %caption.align-left Reseptit
           %thead
@@ -20,7 +21,6 @@
             %th Laskennallinen hinta (€)
             
           %tbody
-            - sum = 0
             - @recipe.subrecipes.each do |subrecipe|
               %tr
                 - hasrecipe_line = @recipe.hasrecipes.find_by_subrecipe_id(subrecipe.id) 
@@ -47,7 +47,7 @@
               %tr
                 - amount = @hasmaterials.find_by_material_id(material.id).amount 
                 %td.span3= link_to material.name, material
-                %td.span2= amount
+                %td.span2= amount.round(2)
                 - sum += amount
                 %td.span3= (material.price).round(2)
                 %td= (material.price * (amount/1000)).round(2)
@@ -61,11 +61,12 @@
           
         %tbody
           %tr
-            %td.span3
+            - recipe_weight = @recipe.get_weight
+            %td.span5
               = sum
               g
             %td.span8 
-              = (1000/@recipe.get_weight * @recipe.get_price).round(2)
+              = (@recipe.get_price / (sum/1000) ).round(2)
               €
             %td.span5 #{@recipe.get_price} €
               

@@ -21,7 +21,11 @@
       
         %fieldset.span3  
           %label Alireseptit
-          = select("post", "subrecipe_id", @safe_recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
+          - values = @safe_recipes.collect {|r| [ r.name, r.id ] }
+          - values = values.sort_by { |obj| obj[0].capitalize }
+          = select("post", "subrecipe_id", values, {:prompt => 'Valitse resepti'})
+          = #select("post", "subrecipe_id", @safe_recipes.collect {|r| [ r.name, r.id ] }, {:prompt => 'Valitse resepti'})
+          
           = fields_for :subrecipe do |h|
             = h.label :amount, "Määrä (kpl)"
             = h.number_field :amount, min: 0, class: "span2"
@@ -39,7 +43,11 @@
       .span4    
         %fieldset.span3
           %label Raaka-aineet
-          = select("post", "material_id", @bakery.materials.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
+          - materials = @bakery.materials.collect {|r| [ r.name, r.id ] }
+          - materials = materials.sort_by { |obj| obj[0].capitalize }
+          = select("post", "material_id", materials, {:prompt => 'Valitse raaka-aine'})
+          = #select("post", "material_id", @bakery.materials.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
+          
           = fields_for :material do |h|
             = h.label :amount, "Määrä (g)"
             = h.number_field :amount, min: 0, class: "span2"

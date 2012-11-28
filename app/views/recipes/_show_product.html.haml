@@ -27,7 +27,7 @@
                 - amount = hasrecipe_line.amount
                 - type = hasrecipe_line.amount_type
                 %td= link_to subrecipe.name, subrecipe
-                %td= amount
+                %td= amount.round(2)
                 - recipe_weight = subrecipe.hasmaterials.sum(:amount) + subrecipe.subrecipes_sum
                 %td= amount * recipe_weight 
                 - sum += amount * recipe_weight

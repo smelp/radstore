@@ -26,10 +26,11 @@
             - price = recipe.get_price
             %td= link_to recipe.name, recipe
             %td 
-              = price
-              €
+              = recipe.subrecipes_sum #price
+              g €
             %td
-              = (1000/recipe.get_weight * price).round(2)
+              = (price/(recipe.get_weight/1000)).round(2)
+              €
             %td
               = link_to :controller => "recipes", :action => "edit", :id => recipe.id do
                 %i.icon-edit

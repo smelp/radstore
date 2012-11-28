@@ -20,7 +20,7 @@
                   
           %label Alireseptit
           - values = @bakery.recipes.collect {|r| [ r.name, r.id ] }
-          - values = values.sort_by { |obj| obj.name }
+          - values = values.sort_by { |obj| obj[0].capitalize }
           = select("post", "subrecipe_id", values, {:prompt => 'Valitse resepti'})
           = fields_for :subrecipe do |h|
             = h.label :amount, "Määrä (kpl)"
@@ -39,7 +39,13 @@
       .span3    
         %fieldset  
           %label Raaka-aineet
-          = select("post", "material_id", @bakery.materials.collect {|m| [ m.name, m.id ] }, {:prompt => 'Valitse raaka-aine'})
+          - values = @bakery.materials.collect {|m| [ m.name, m.id ] }
+          - s = @bakery.materials.collect {|m| [ m.name ] }
+          - values = values.sort_by { |obj| obj[0].capitalize }
+          = select("post", "material_id", values, {:prompt => 'Valitse raaka-aine'})
+          
+          = text_field_tag 'test', '', :data-provide => 'typeahead', :data-source => s
+          
           = fields_for :material do |h|
             = h.label :amount, "Määrä (g)"
             = h.text_field :amount, min: 0, class: "span2"
