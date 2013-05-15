@@ -19,6 +19,7 @@ UserTutorial::Application.routes.draw do
   
   resources :firms
   resources :bakeries
+  resources :huslabs
 
   resources :recipes
   resources :materials

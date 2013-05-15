@@ -1,0 +1,52 @@
+- provide(:title, @firm.name)
+
+.span12.bordered-top
+  %h2= @firm.name
+  .row
+    .span5
+      - if is_admin?
+        .row.well
+          %aside.span4
+            %section
+              %h1
+                %p Nimi: #{@firm.name}
+                %p Y-tunnus: #{@firm.corporate_id}
+                %p Sijainti: #{@firm.location}
+                %p Toimiala: #{@firm.resource_type}
+                %p Kuvaus:   #{@huslab.description}
+              = link_to "Muokkaa tietoja",    edit_firm_path
+              |
+              = link_to "Kaikki yritykset",    firms_path
+      - else
+        .row.well.blue
+         
+    .span5.offset1    
+      .row.well
+        %h2 Käyttäjät
+        = will_paginate @users, :previous_label => "Edellinen", :next_label => "Seuraava"
+        
+        = link_to :controller => "firms", :action => "edit" do
+          %i.icon-plus
+          Lisää käyttäjä
+          
+        %table.table.table-condensed.table-striped.table-bordered
+          %thead
+            %th Nimi
+            %th Email
+          
+          %tbody
+            - @firm.users.each do |user|
+              %tr
+                %td.span4= link_to user.name, user
+                %td.span3= user.email
+                %td.span1
+                  = link_to edit_user_path(user) do
+                    %i.icon-edit
+                %td
+                  = link_to user, method: :delete, confirm: "Haluatko varmasti poistaa käyttäjän?" do
+                    %i.icon-remove
+                
+        = link_to :controller => "firms", :action => "edit" do
+          %i.icon-plus
+          Lisää käyttäjä
+      

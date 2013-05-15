@@ -5,8 +5,8 @@ class BakeriesController < ApplicationController
   before_filter :admin_user,     only: [:new, :create, :destroy]
   
   def show
-    @bakery = Bakery.find(params[:id])
-    @firm = Firm.find(@bakery.firm.id)
+    @bakery = Firm.find(params[:id]).resource
+    @firm = Firm.find(params[:id])
     recipes = @bakery.recipes.where(:product => false)
     products = @bakery.recipes.where(:product => true)
     
@@ -54,7 +54,7 @@ class BakeriesController < ApplicationController
     def firm_admin
       @tax = 0.13
       if params[:id]
-        @bakery = Bakery.find(params[:id])
+        @bakery = Firm.find(params[:id]).resource
         if @bakery and @bakery.firm 
           @firm = @bakery.firm
           admins = User.get_admins + @firm.users #later change to include only admins

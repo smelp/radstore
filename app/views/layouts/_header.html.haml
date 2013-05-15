@@ -8,15 +8,23 @@
           %li
             - if current_user && current_user.primary_firm
               - if current_user.primary_firm.resource_type == "Bakery"
-                = link_to :controller => "bakeries", :action => "show", :id => current_user.primary_firm.resource.id do
+                = link_to :controller => "bakeries", :action => "show", :id => current_user.primary_firm.id do
+                  %i.icon-home.icon-white
+                  Koti
+              - elsif current_user.primary_firm.resource_type == "Huslab"
+                = link_to :controller => "huslabs", :action => "show", :id => current_user.primary_firm.id do
                   %i.icon-home.icon-white
                   Koti
             - else 
               - if current_user && current_user.firms && current_user.firms.first
-                = link_to :controller => "bakeries", :action => "show", :id => current_user.firms.first.id do
-                  %i.icon-home.icon-white
-                  Koti
-              
+                - if current_user.firms.first.resource_type == "Bakery"
+                  = link_to :controller => "bakeries", :action => "show", :id => current_user.firms.first.id do
+                    %i.icon-home.icon-white
+                    Koti
+                - elsif current_user.firms.first.resource_type == "Huslab"
+                  = link_to :controller => "huslabs", :action => "show", :id => current_user.firms.first.id do
+                    %i.icon-home.icon-white
+                    Koti
           - if signed_in?
             - if is_admin?
               %li
@@ -45,3 +53,5 @@
         %ul.nav.pull-right
           - if current_user && current_user.primary_firm && current_user.primary_firm.resource_type == "Bakery"
             = render "layouts/bakery"
+          - elsif current_user && current_user.primary_firm && current_user.primary_firm.resource_type == "Huslab"
+            = render "layouts/huslab"

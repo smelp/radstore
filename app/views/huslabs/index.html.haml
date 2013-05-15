@@ -1,0 +1,12 @@
+= provide(:title, 'Huslabrat')
+
+%h1 Huslabra
+
+.container.bordered
+
+  = will_paginate
+  - @huslabs.each do |firm|
+    = render firm
+
+  = will_paginate
+

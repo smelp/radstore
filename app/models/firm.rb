@@ -18,7 +18,7 @@ class Firm < ActiveRecord::Base
   has_many :bills
   belongs_to :resource, :polymorphic => true, :autosave => true
   
-  resource_list = ["Bakery"]
+  resource_list = ["Bakery", "Huslab"]
   attr_accessible :name, :corporate_id, :location, :resource, :address, :account_number, :resource_type
   validates :name, presence: { :message => "Nimi pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen pituus 2-50 merkkiä" }, :uniqueness => { :message => "Yrityksen nimi on jo käytössä." }
   VALID_CORPORATE_ID_REGEX = /\d{7}-\d{1}/i
@@ -27,7 +27,9 @@ class Firm < ActiveRecord::Base
   validates :location, :length => { :maximum => 50, :message => "Sijainnin maksimipituus on 50 merkkiä" }
   validates :address, :length => { :maximum => 50, :message => "Osoitteen maksimipituus on 50 merkkiä" }
   validates :resource_type, presence: { :message => "Toimialan tyyppi pakollinen" }
-  validates :resource_id, presence: { :message => "Toimialan id pakollinen" }, :uniqueness => { :message => "Toimialan yritys on jo liitetty toiseen yritykseen." }
+  validates :resource_id, presence: { :message => "Toimialan id pakollinen" }
+  validates_uniqueness_of :resource_id, :scope => :resource_type, :message => "Toimialan yritys on jo liitetty toiseen yritykseen."
+
   validates_inclusion_of :resource_type, :in => resource_list, :allow_nil => false, :message => "Toimialan täytyy olla joku seuraavista: #{resource_list}"
 
   def get_orders
@@ -47,6 +49,6 @@ class Firm < ActiveRecord::Base
   end
   
   def self.get_resource_types
-    ["Leipomo"]
+    ["Leipomo", "Huslab"]
   end
 end

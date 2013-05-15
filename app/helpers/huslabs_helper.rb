@@ -1,0 +1,2 @@
+module HuslabsHelper
+end

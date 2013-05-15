@@ -1,36 +1,38 @@
 - provide(:title, @firm.name)
 
-%div
-  %h2.bordered-bottom= @firm.name
-  - if is_admin?
-    .row.well
-      %aside.span4
-        %section
-          %h1
-            %p Nimi: #{@firm.name}
-            %p Y-tunnus: #{@firm.corporate_id}
-            %p Sijainti: #{@firm.location}
-            %p Toimiala: #{@firm.resource_type}
-            %p Kuvaus:   #{@bakery.description}
-          = link_to "Muokkaa tietoja",    edit_firm_path
-          |
-          = link_to "Kaikki yritykset",    firms_path
-          
 .row.well
-  %h2 Käyttäjät
-  %table.table.table-condensed.table-striped.table-bordered
-    %thead
-      %th Nimi
-      %th Email
-    
-    %tbody
-      - @firm.users.each do |user|
-        %tr
-          %td.span4= link_to user.name, user
-          %td.span3= user.email
+  .span11
+    %h2.bordered-bottom= @firm.name
+    %aside.span4
+      %section
+        %h2 Perustiedot
+        %p Nimi: #{@firm.name}
+        %p Y-tunnus: #{@firm.corporate_id}
+        %p Sijainti: #{@firm.location}
+        %p Toimiala: #{@firm.resource_type}
+        %p Tilinumero: #{@firm.account_number}
+        %p Kuvaus:   #{@resource.description}
+        = link_to "Muokkaa tietoja",    edit_firm_path
+        |
+        = link_to "Kaikki yritykset",    firms_path
+    %hr.span10
+
+    %aside.span10
+      %section
+        %h2 Käyttäjät
+        %table.table.table-condensed.table-striped.table-bordered
+          %thead
+            %th Nimi
+            %th Email
           
-          
-  = link_to :controller => "firms", :action => "edit" do
-    %i.icon-plus
-    Lisää käyttäjä
+          %tbody
+            - @firm.users.each do |user|
+              %tr
+                %td.span4= link_to user.name, user
+                %td.span3= user.email
+        
+  .span12        
+    = link_to :controller => "firms", :action => "edit" do
+      %i.icon-plus
+      Lisää käyttäjä
   

@@ -1,7 +1,8 @@
 .span8.bordered
   .span5
     - #smart way to make links to any kind of firms..
-    %h3= link_to firm.name, firm.resource.class.find(firm.resource_id)
+    - #%h3= link_to firm.name, firm.resource.class.find(firm.resource_id)
+    %h3= link_to firm.name, firm
     %p Toimiala: #{firm.resource_type}
 
   .span2

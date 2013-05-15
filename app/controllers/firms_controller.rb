@@ -9,7 +9,9 @@ class FirmsController < ApplicationController
     @email_us = "janne.laukkanen83@gmail.com"
     if current_user.admin?
       if @firm.resource.class == Bakery
-        @bakery = @resource = Bakery.find(params[:id])
+        @bakery = @resource = Firm.find(params[:id]).resource
+      elsif @firm.resource.class == Huslab
+        @huslab = @resource = Firm.find(params[:id]).resource
       else
         flash.now[:error] = "Yrityksen tietojen näyttäminen ei onnistu."
         render 'index'
@@ -17,9 +19,11 @@ class FirmsController < ApplicationController
       end
     else
       if @firm.resource.class == Bakery
-        @resource = @bakery = Bakery.find(params[:id])
+        @resource = @bakery = Firm.find(params[:id]).resource
         @recipes = @bakery.recipes
         @materials = @bakery.materials
+      elsif @firm.resource.class == Huslab
+        @resource = @huslab = Firm.find(params[:id]).resource
       else
         flash.now[:error] = "Yrityksen tietojen näyttäminen ei onnistu."
         render 'index'
@@ -53,6 +57,10 @@ class FirmsController < ApplicationController
     if params[:firm][:resource_type] == "Leipomo"
       @firm.resource = Bakery.create(params[:resource])
       @bakery = @firm.resource
+    elsif
+      params[:firm][:resource_type] == "Huslab"
+      @firm.resource = Huslab.create(params[:resource])
+      @huslab = @firm.resource
     end
     
     if params[:users]
@@ -74,7 +82,9 @@ class FirmsController < ApplicationController
   def edit
     @firm = Firm.find(params[:id])
     if @firm.resource.class == Bakery
-      @resource = Bakery.find(params[:id])
+      @resource = Firm.find(params[:id]).resource
+    elsif @firm.resource.class == Huslab
+      @resource = Firm.find(params[:id]).resource
     else
       flash.now[:error] = "Yrityksen muokkaus ei onnistu."
       render 'index'
@@ -84,7 +94,9 @@ class FirmsController < ApplicationController
   def update
     @firm = Firm.find(params[:id])
     if @firm.resource.class == Bakery
-      resource = Bakery.find(params[:id])
+      resource = Firm.find(params[:id]),resource
+    elsif @firm.resource.class == Huslab
+      resource = Firm.find(params[:id]).resource
     else
       flash.now[:error] = "Yrityksen muokkaus ei onnistu."
       render 'index'
