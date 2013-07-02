@@ -20,6 +20,8 @@ class HuslabsController < ApplicationController
   def show
     @huslab = Firm.find(params[:id]).resource
     @firm = Firm.find(params[:id])
+
+    @substances = @huslab.substances.paginate(:page => params[:substance_page], :per_page => 20)
     # recipes = @huslab.recipes.where(:product => false)
     # products = @huslab.recipes.where(:product => true)
     

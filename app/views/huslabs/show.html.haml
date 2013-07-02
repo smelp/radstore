@@ -19,7 +19,40 @@
               = link_to "Kaikki yritykset",    firms_path
       - else
         .row.well.blue
-         
+          .row
+          .span2
+            %h2 Raaka-aineet
+          .span
+            = form_tag({ :controller => "substances", :action => "show" }, :class => "form-search form-inline") do
+              = text_field_tag :search_substance, "", :class => "input search-query input-medium", :placeholder => "Etsi raaka-aineita"
+              = submit_tag "Hae", :class => "btn btn-small"
+
+
+        = will_paginate @substances, :param_name => 'substance_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_substance => @search_params
+
+        = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
+          %i.icon-plus
+          Lisää raaka-aine
+
+        %table.table.table-condensed.table-striped.table-bordered
+          %thead
+            %th Nimi
+
+          %tbody
+            - @substances.each do |substance|
+              %tr
+                %td.span4= link_to substance.genericName, substance
+                %td.span1
+                  = link_to :controller => "substances", :action => "edit", :id => substance.id do
+                    %i.icon-edit
+                %td
+                  = link_to substance, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen?" do
+                    %i.icon-remove
+
+        = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
+          %i.icon-plus
+          Lisää raaka-aine
+
     .span5.offset1    
       .row.well
         %h2 Käyttäjät

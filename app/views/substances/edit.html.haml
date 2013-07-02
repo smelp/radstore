@@ -1,0 +1,30 @@
+- provide(:title, 'Muokkaa raaka-aine')
+
+.span6.offset3
+  %h2 Muokkaa raaka-ainetta
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+
+  .span6.offset3.outline
+    .row
+      .span4.offset1
+        = form_for @substance do |f|
+          //= render 'shared/material_error_messages'
+          %p
+            = f.label :genericName, "Nimi"
+            = f.text_field :genericName
+
+            
+          = f.submit "Tallenna", class: "btn btn-large btn-primary"
+        
+  .span6.offset3
+    %p
+      = link_to request.env["HTTP_REFERER"] do
+        %i.icon-arrow-left
+        Takaisin
+      |
+      = link_to "Kaikki raaka-aineet", :controller => "substances", :action => "index", :huslab_id => @huslab.id
+      |
+      = link_to "Poista", @substance, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen?"

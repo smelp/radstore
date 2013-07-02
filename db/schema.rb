@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130515145646) do
+ActiveRecord::Schema.define(:version => 20130702173943) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
@@ -145,6 +145,17 @@ ActiveRecord::Schema.define(:version => 20130515145646) do
     t.decimal  "price",      :default => 0.0
     t.decimal  "coverage",   :default => 0.0
     t.boolean  "product",    :default => false
+  end
+
+  create_table "substances", :force => true do |t|
+    t.string   "genericName"
+    t.string   "eluateName"
+    t.integer  "type"
+    t.string   "manufacturer"
+    t.string   "supplier"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "huslab_id"
   end
 
   create_table "users", :force => true do |t|

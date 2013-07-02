@@ -1,0 +1,20 @@
+- provide(:title, @substance.genericName)
+
+.container
+  .span8.offset2
+    = render "shared/nav"
+
+.container
+  .span8.offset2
+    .row.bordered
+
+      %h2.bordered-bottom= @substance.genericName
+
+              
+      = link_to :controller => "substances", :action => "edit", :id => @substance.id do
+        %i.icon-edit
+        Muokkaa
+      
+      %a.nav-link{href: "#", onclick: "window.print()"}
+        %i.icon-print.margin-left10
+        Tulosta

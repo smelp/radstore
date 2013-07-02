@@ -1,0 +1,19 @@
+- provide(:title, 'Luo raaka-aine')
+%h1 Luo raaka-aine
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+    
+.row
+  .span6.offset3.well
+    = form_for @substance do |f|
+      //= render 'shared/material_error_messages'
+      %p
+        = f.label :genericName, "Nimi"
+        = f.text_field :genericName
+
+          
+      = hidden_field_tag :huslab_id, @huslab.id
+      
+      = f.submit "Luo raaka-aine", class: "btn btn-large btn-primary"

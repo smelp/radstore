@@ -1,0 +1,39 @@
+= provide(:title, 'Substances')
+
+%h1 Substances
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+
+= will_paginate
+
+.container
+  .span6.offset3.bordered
+    = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
+      %i.icon-plus
+      Lisää raaka-aine
+      
+    %table.table
+      %thead
+        %th Nimi
+        
+      %tbody
+        - @substances.each do |substance|
+          %tr
+            %td= link_to substance.genericName, substance
+            %td
+              = link_to :controller => "substances", :action => "edit", :id => substance.id do
+                %i.icon-edit
+            %td
+              = link_to material, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen?" do
+                %i.icon-remove
+
+= will_paginate
+
+.container
+  .span6.offset3
+    = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
+      %i.icon-plus
+      Lisää raaka-aine
+

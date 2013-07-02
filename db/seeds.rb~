@@ -7,4 +7,3 @@
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
 
 Firm.create({:name => 'Huslab', :corporate_id => '1234567-8', :account_number => '12345678', :resource_type =>'Huslab'})
-User.create({:name =>'Riku', :email=>'riku@hus.fi'})

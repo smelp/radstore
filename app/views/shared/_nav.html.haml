@@ -6,5 +6,7 @@
     = link_to "Oma sivu", :controller => "bakeries", :action => "show", :id => @material.bakery.id
   - elsif @firm
     = link_to "Oma sivu", :controller => "bakeries", :action => "show", :id => @firm.resource.id
+  - elsif @substance and @substance.huslab
+    = link_to "Oma sivu", :controller => "huslabs", :action => "show", :id => @substance.huslab.id
   - else
-    = link_to "Oma sivu", :controller => "bakeries", :action => "show", :id => @bakery.id
+    = link_to "Oma sivu", :controller => "huslabs", :action => "show", :id => @huslab.id

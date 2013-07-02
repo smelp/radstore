@@ -13,7 +13,7 @@
 class Huslab < ActiveRecord::Base
   has_one :firm, :as => :resource
   # has_many :recipes
-  # has_many :materials
+  has_many :substances
   # has_many :bakeryorders
   
   attr_accessible :description, :firm
