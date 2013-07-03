@@ -26,7 +26,7 @@
               = link_to :controller => "substances", :action => "edit", :id => substance.id do
                 %i.icon-edit
             %td
-              = link_to material, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen?" do
+              = link_to substance, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen?" do
                 %i.icon-remove
 
 = will_paginate

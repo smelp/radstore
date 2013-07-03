@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130702173943) do
+ActiveRecord::Schema.define(:version => 20130703122127) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
@@ -38,6 +38,16 @@ ActiveRecord::Schema.define(:version => 20130702173943) do
     t.datetime "updated_at",    :null => false
     t.integer  "bakery_id"
   end
+
+  create_table "batches", :force => true do |t|
+    t.string   "batchNumber"
+    t.integer  "amount"
+    t.integer  "substance_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "batches", ["substance_id"], :name => "index_batches_on_substance_id"
 
   create_table "bills", :force => true do |t|
     t.integer  "client_id"
@@ -71,6 +81,15 @@ ActiveRecord::Schema.define(:version => 20130702173943) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "firm_id"
+  end
+
+  create_table "events", :force => true do |t|
+    t.integer  "target_id"
+    t.integer  "event_type"
+    t.datetime "timestamp"
+    t.string   "signature",  :limit => 10
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "firms", :force => true do |t|

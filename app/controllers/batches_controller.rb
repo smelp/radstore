@@ -1,31 +1,30 @@
 # encoding: utf-8
-class SubstancesController < ApplicationController
+class BatchesController < ApplicationController
   before_filter :signed_in_user
   before_filter :firm_admin, only: [:index, :new, :create, :edit, :update, :destroy]
   before_filter :admin_user, only: []
 
   def index
     list = []
-    @huslab.substances.each { |e| list.push e.id }
-    @substances = @huslab.substances.paginate(:page => params[:page])
+    @substance.batches { |e| list.push e.id }
+    @batches = @substance.batches.paginate(:page => params[:page])
   end
 
   def show
-    @substance = Substance.find(params[:id])
-    @batches = @substance.batches
+    @batch = Batch.find(params[:id])
   end
 
   def new
-    @substance = Substance.new
+    @batch = Batch.new
   end
 
   def create
-    @substance = Substance.new(params[:substance])
-    @substance.huslab = @huslab
+    @batch = Batch.new(params[:batch])
+    @batch.substance = @substance
 
-    if @substance.save
+    if @batch.save
       flash[:success] = "Uusi raaka-aine luotu!"
-      redirect_to @huslab
+      redirect_to @substance
     else
       render 'new'
     end
@@ -43,23 +42,23 @@ class SubstancesController < ApplicationController
   def firm_admin
 
     if params[:id]
-      @substance = Substance.find(params[:id])
-      @huslab = @substance.huslab
-    elsif params[:huslab_id]
-      @huslab = Huslab.find_by_id(params[:huslab_id])
-      if !@huslab
+      @batch = Batch.find(params[:id])
+      @substance = @batch.substance
+    elsif params[:substance_id]
+      @substance = Substance.find_by_id(params[:substance_id])
+      if !@substance
         @substance = nil
-        @huslab = nil
+        @batch = nil
       end
     end
 
-    if @substance and @substance.huslab
+    if @batch and @batch.substance.huslab
       admins = @substance.huslab.firm.users #later change to include only admins
-    elsif @huslab
-      admins = @huslab.firm.users #later change to include only admins
+    elsif @substance
+      admins = @substance.huslab.firm.users #later change to include only admins
     else
       admins = []
-      flash[:error] = "Ei lupaa tehdä muutoksia."
+      flash[:error] = 'Ei lupaa tehdä muutoksia.'
     end
     redirect_to(root_path) unless admins.include? current_user
   end
@@ -69,3 +68,4 @@ class SubstancesController < ApplicationController
   end
 
 end
+

@@ -10,7 +10,25 @@
 
       %h2.bordered-bottom= @substance.genericName
 
-              
+      %table.table
+        %thead
+          %th Eränumero
+
+          %tbody
+            - @batches.each do |batch|
+              %tr
+                %td= link_to batch.batchNumber, batch
+                %td
+                  = link_to :controller => "batches", :action => "edit", :id => batch.id do
+                    %i.icon-edit
+                %td
+                  = link_to batch, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
+                    %i.icon-remove
+
+      = link_to :controller => "batches", :action => "new", :substance_id => @substance.id do
+        %i.icon-plus
+        Lisää raaka-aine
+
       = link_to :controller => "substances", :action => "edit", :id => @substance.id do
         %i.icon-edit
         Muokkaa

@@ -6,5 +6,9 @@
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
 
-Firm.create({:name => 'Huslab', :corporate_id => '1234567-8', :account_number => '12345678', :resource_type =>'Huslab'})
-User.create({:name =>'Riku', :email=>'riku@hus.fi'})
+
+User.create(:name =>'Riku', :email =>'riku@hus.fi', :password =>'123456',:password_confirmation =>'123456',:admin => 't')
+
+User.create(:name =>'Matti', :email =>'matti@hus.fi', :password =>'123456',:password_confirmation =>'123456')
+
+Firm.create(:name => 'HUSHUS', :corporate_id => '1234567-8', :account_number => '11111-11111', :location =>'Helsinki', :address => 'Mopomopo 12', :resource_id => 1,:resource_type => 'Huslab')

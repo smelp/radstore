@@ -24,6 +24,7 @@ UserTutorial::Application.routes.draw do
   resources :recipes
   resources :materials
   resources :substances
+  resources :batches
 
   resources :bakeryorders
   resources :bills

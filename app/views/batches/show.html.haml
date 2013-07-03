@@ -1,0 +1,20 @@
+- provide(:title, @batch.batchNumber)
+
+.container
+  .span8.offset2
+    = render "shared/nav"
+
+.container
+  .span8.offset2
+    .row.bordered
+
+      %h2.bordered-bottom= @batch.batchNumber
+
+              
+      = link_to :controller => "batches", :action => "edit", :id => @batch.id do
+        %i.icon-edit
+        Muokkaa
+      
+      %a.nav-link{href: "#", onclick: "window.print()"}
+        %i.icon-print.margin-left10
+        Tulosta

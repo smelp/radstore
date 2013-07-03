@@ -9,8 +9,9 @@
 class Substance < ActiveRecord::Base
 
   belongs_to :huslab
+  has_many :batches
 
-  attr_accessible :genericName, :eluateName, :huslab
+  attr_accessible :genericName, :eluateName, :huslab, :batches
 
 
 end

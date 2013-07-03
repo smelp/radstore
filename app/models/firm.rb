@@ -19,7 +19,7 @@ class Firm < ActiveRecord::Base
   belongs_to :resource, :polymorphic => true, :autosave => true
   
   resource_list = ["Bakery", "Huslab"]
-  attr_accessible :name, :corporate_id, :location, :resource, :address, :account_number, :resource_type
+  attr_accessible :name, :corporate_id, :location, :resource, :address, :account_number, :resource_type, :resource_id #viimonen lisätty jotta voi seedata POISTA!!
   validates :name, presence: { :message => "Nimi pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen pituus 2-50 merkkiä" }, :uniqueness => { :message => "Yrityksen nimi on jo käytössä." }
   VALID_CORPORATE_ID_REGEX = /\d{7}-\d{1}/i
   validates :corporate_id, presence: { :message => "Y-tunnus vaaditaan" }, :length => { :minimum => 9, :maximum => 10, :message => "Y-tunnuksen täytyy olla 9 merkkiä pitkä" }, :format => { :with => VALID_CORPORATE_ID_REGEX, :message => "Y-tunnuksen täytyy olla muotoa: 1234567-8" }, :uniqueness => { :case_sensitive => false, :message => "Y-tunnus on jo käytössä." }

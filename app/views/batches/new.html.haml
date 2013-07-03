@@ -1,0 +1,19 @@
+- provide(:title, 'Luo erä')
+%h1 Luo erä
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+    
+.row
+  .span6.offset3.well
+    = form_for @batch do |f|
+      //= render 'shared/material_error_messages'
+      %p
+        = f.label :batchNumber, "Eränumero"
+        = f.text_field :batchNumber
+
+          
+      = hidden_field_tag :substance_id, @substance.id
+      
+      = f.submit "Luo erä", class: "btn btn-large btn-primary"

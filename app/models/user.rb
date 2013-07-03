@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 	
 	belongs_to :primary_firm, :class_name => "Firm", :foreign_key => "primary_firm_id"
 	
-	attr_accessible :name, :email, :password, :password_confirmation, :primary_firm, :primary_firm_id
+	attr_accessible :name, :email, :password, :password_confirmation, :primary_firm, :primary_firm_id, :admin #viimonen lisätty jotta voi seedata POISTA!!
 	has_secure_password
 	
 	validates :name, :presence => { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }

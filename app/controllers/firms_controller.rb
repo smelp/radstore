@@ -24,6 +24,7 @@ class FirmsController < ApplicationController
         @materials = @bakery.materials
       elsif @firm.resource.class == Huslab
         @resource = @huslab = Firm.find(params[:id]).resource
+        @substances = @huslab.substances
       else
         flash.now[:error] = "Yrityksen tietojen näyttäminen ei onnistu."
         render 'index'
