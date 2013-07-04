@@ -12,6 +12,8 @@
       %p
         = f.label :genericName, "Nimi"
         = f.text_field :genericName
+        = f.label :substanceType, "Tyyppi"
+        = f.text_field :substanceType
 
           
       = hidden_field_tag :huslab_id, @huslab.id

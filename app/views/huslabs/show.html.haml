@@ -37,11 +37,13 @@
         %table.table.table-condensed.table-striped.table-bordered
           %thead
             %th Nimi
+            %th Määrä
 
           %tbody
             - @substances.each do |substance|
               %tr
                 %td.span4= link_to substance.genericName, substance
+                %td.span3= substance.batchCount
                 %td.span1
                   = link_to :controller => "substances", :action => "edit", :id => substance.id do
                     %i.icon-edit
@@ -52,6 +54,43 @@
         = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
           %i.icon-plus
           Lisää raaka-aine
+
+
+    .span5.offset1
+      .row.well.green
+        .row
+          .span2
+            %h2 Eluaatit
+            .span
+              = form_tag({ :controller => "eluates", :action => "show" }, :class => "form-search form-inline") do
+                = text_field_tag :search_material, "", :class => "input search-query input-medium", :placeholder => "Etsi raaka-aineita"
+                = submit_tag "Hae", :class => "btn btn-small"
+
+
+          = will_paginate @eluates, :param_name => 'eluate_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_eluate => @search_params
+
+          = link_to :controller => "eluates", :action => "new", :huslab_id => @huslab.id do
+            %i.icon-plus
+            Lisää raaka-aine
+
+          %table.table.table-condensed.table-striped.table-bordered
+            %thead
+              %th Nimi
+
+            %tbody
+              - @eluates.each do |eluate|
+                %tr
+                  %td.span4= link_to eluate.name, eluate
+                  %td.span1
+                    = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
+                      %i.icon-edit
+                  %td
+                    = link_to eluate, method: :delete, confirm: "Haluatko varmasti poistaa eluaatin?" do
+                      %i.icon-remove
+
+          = link_to :controller => "eluates", :action => "new", :huslab_id => @huslab.id do
+            %i.icon-plus
+            Lisää eluaatti
 
     .span5.offset1    
       .row.well

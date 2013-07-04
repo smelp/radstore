@@ -19,7 +19,20 @@ class BatchesController < ApplicationController
   end
 
   def create
-    @batch = Batch.new(params[:batch])
+    if @substance.substanceType == 1
+
+      @batch = Generator.new(params[:batch])
+
+    elsif @substance.substanceType == 2
+
+      @batch = Kit.new(params[:batch])
+
+    else
+
+      @batch = Other.new(params[:batch])
+
+    end
+
     @batch.substance = @substance
 
     if @batch.save

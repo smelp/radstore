@@ -1,0 +1,60 @@
+- provide(:title, 'Luo eluaatti')
+%h1 Luo eluaatti
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+    
+.row
+  .span12.outline
+    = form_for @eluate do |f|
+
+      .span4
+        %fieldset.span3
+
+          = f.label :name, "Nimi"
+          = f.text_field :name
+
+          = hidden_field_tag :huslab_id, @huslab.id
+
+
+          %label Muut
+          - values = @others.collect {|m| [ m.infoForSelectBox, m.id ] }
+
+          = select("post", "other_id", values, {:prompt => 'Valitse raaka-aine'})
+
+          = fields_for :other do |h|
+            = h.label :amount, "Syötä määrä"
+            = h.text_field :amount, min: 0, class: "span2"
+
+          = button_to_function "Lisää", "add_other(event)", :class => "btn btn-mini"
+
+          = f.submit "Luo resepti", class: "btn btn-primary"
+
+      .span3
+        %fieldset
+          %label Generaattorit
+          - values = @generators.collect {|m| [ m.infoForSelectBox, m.id ] }
+
+          = select("post", "generator_id", values, {:prompt => 'Valitse raaka-aine'})
+
+          = fields_for :generator do |h|
+            = h.label :amount, "Syötä määrä"
+            = h.text_field :amount, min: 0, class: "span2"
+
+          = button_to_function "Lisää", "add_generator(event)", :class => "btn btn-mini"
+
+      .span4
+
+        %table.table.table#eluate_generators
+          %thead.green
+            %th Lisättävät generaattorit:
+            %th
+        %tbody
+
+        %table.table.table#eluate_others
+          %thead.green
+            %th Lisättävät apuaineet:
+            %th
+        %tbody
+

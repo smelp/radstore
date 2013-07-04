@@ -3,7 +3,7 @@ class CreateSubstances < ActiveRecord::Migration
     create_table :substances do |t|
       t.string :genericName
       t.string :eluateName
-      t.integer :type
+      t.integer :substanceType
       t.string :manufacturer
       t.string :supplier
 

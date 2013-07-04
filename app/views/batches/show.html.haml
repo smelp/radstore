@@ -9,6 +9,7 @@
     .row.bordered
 
       %h2.bordered-bottom= @batch.batchNumber
+      %h2.bordered-bottom= @batch.amount
 
               
       = link_to :controller => "batches", :action => "edit", :id => @batch.id do

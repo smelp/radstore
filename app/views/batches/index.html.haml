@@ -17,11 +17,15 @@
     %table.table
       %thead
         %th Eränumero
+        %th Määrä
+        %th Tyyppi
         
       %tbody
         - @batches.each do |batch|
           %tr
             %td= link_to batch.batchNumber, batch
+            %td= batch.amount
+            %td= batch.type
             %td
               = link_to :controller => "batches", :action => "edit", :id => batch.id do
                 %i.icon-edit

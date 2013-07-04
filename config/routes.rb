@@ -24,8 +24,12 @@ UserTutorial::Application.routes.draw do
   resources :recipes
   resources :materials
   resources :substances
-  resources :batches
+  resources :eluates
+  resources :generators, :controller => :batches
+  resources :others, :controller => :batches
+  resources :kits, :controller => :batches
 
+  resources :batches
   resources :bakeryorders
   resources :bills
 

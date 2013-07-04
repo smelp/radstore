@@ -12,6 +12,8 @@
       %p
         = f.label :batchNumber, "Eränumero"
         = f.text_field :batchNumber
+        = f.label :amount, "Määrä"
+        = f.text_field :amount
 
           
       = hidden_field_tag :substance_id, @substance.id

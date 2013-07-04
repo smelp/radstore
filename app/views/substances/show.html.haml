@@ -13,11 +13,13 @@
       %table.table
         %thead
           %th Eränumero
+          %th Määrä
 
           %tbody
             - @batches.each do |batch|
               %tr
                 %td= link_to batch.batchNumber, batch
+                %td= batch.amount
                 %td
                   = link_to :controller => "batches", :action => "edit", :id => batch.id do
                     %i.icon-edit
@@ -27,7 +29,7 @@
 
       = link_to :controller => "batches", :action => "new", :substance_id => @substance.id do
         %i.icon-plus
-        Lisää raaka-aine
+        Lisää erä
 
       = link_to :controller => "substances", :action => "edit", :id => @substance.id do
         %i.icon-edit

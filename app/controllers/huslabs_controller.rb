@@ -22,7 +22,7 @@ class HuslabsController < ApplicationController
     @firm = Firm.find(params[:id])
 
     @substances = @huslab.substances.paginate(:page => params[:substance_page], :per_page => 20)
-    # recipes = @huslab.recipes.where(:product => false)
+    @eluates = @huslab.eluates.paginate(:page => params[:eluate_page], :per_page => 20)
     # products = @huslab.recipes.where(:product => true)
     
     # if params[:search_recipe]

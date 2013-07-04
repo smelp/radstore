@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130703122127) do
+ActiveRecord::Schema.define(:version => 20130704093723) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
@@ -83,6 +83,17 @@ ActiveRecord::Schema.define(:version => 20130703122127) do
     t.integer  "firm_id"
   end
 
+  create_table "eluates", :force => true do |t|
+    t.string   "name"
+    t.integer  "generators_id"
+    t.integer  "others_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "huslab_id"
+  end
+
+  add_index "eluates", ["others_id"], :name => "index_eluates_on_others_id"
+
   create_table "events", :force => true do |t|
     t.integer  "target_id"
     t.integer  "event_type"
@@ -112,6 +123,22 @@ ActiveRecord::Schema.define(:version => 20130703122127) do
   add_index "firms_users", ["firm_id", "user_id"], :name => "index_firms_users_on_firm_id_and_user_id", :unique => true
   add_index "firms_users", ["user_id"], :name => "index_firms_users_on_user_id"
 
+  create_table "hasgenerators", :force => true do |t|
+    t.integer  "ownerType"
+    t.integer  "productID"
+    t.integer  "generatorID"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "haskits", :force => true do |t|
+    t.integer  "ownerType"
+    t.integer  "productID"
+    t.integer  "kitID"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "hasmaterials", :force => true do |t|
     t.integer  "material_id"
     t.integer  "recipe_id"
@@ -122,6 +149,14 @@ ActiveRecord::Schema.define(:version => 20130703122127) do
 
   add_index "hasmaterials", ["material_id", "recipe_id"], :name => "index_hasmaterials_on_material_id_and_recipe_id", :unique => true
   add_index "hasmaterials", ["recipe_id"], :name => "index_hasmaterials_on_recipe_id"
+
+  create_table "hasothers", :force => true do |t|
+    t.integer  "ownerType"
+    t.integer  "productID"
+    t.integer  "otherID"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "hasrecipes", :force => true do |t|
     t.integer  "recipe_id"
@@ -169,11 +204,11 @@ ActiveRecord::Schema.define(:version => 20130703122127) do
   create_table "substances", :force => true do |t|
     t.string   "genericName"
     t.string   "eluateName"
-    t.integer  "type"
+    t.integer  "substanceType"
     t.string   "manufacturer"
     t.string   "supplier"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "huslab_id"
   end
 
