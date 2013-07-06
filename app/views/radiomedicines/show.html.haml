@@ -25,6 +25,21 @@
                   = link_to generator, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
                     %i.icon-remove
 
+      %table.table
+        %thead
+          %th Eränumero
+
+          %tbody
+            - @eluates.each do |eluate|
+              %tr
+                %td= link_to eluate.name, eluate
+                %td
+                  = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
+                    %i.icon-edit
+                %td
+                  = link_to eluate, method: :delete, confirm: "Haluatko varmasti poistaa eluaatin?" do
+                    %i.icon-remove
+
       = link_to :controller => "batches", :action => "new", :radiomedicine_id => @radiomedicine.id do
         %i.icon-plus
         Lisää raaka-aine

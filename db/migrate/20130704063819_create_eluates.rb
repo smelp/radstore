@@ -5,6 +5,6 @@ class CreateEluates < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :eluates, :others_id
+
   end
 end

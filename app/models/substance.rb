@@ -11,7 +11,7 @@ class Substance < ActiveRecord::Base
   belongs_to :huslab
   has_many :batches
 
-  attr_accessible :genericName, :eluateName, :huslab, :batches, :substanceType
+  attr_accessible :genericName, :eluateName, :huslab, :batches, :substanceType, :huslab_id
 
 
   def batchCount

@@ -6,6 +6,6 @@ class CreateHaseluates < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :haseluates, :eluate_id
+    add_index :haseluates, :eluate_id, :unique => true
   end
 end

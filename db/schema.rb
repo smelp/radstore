@@ -85,14 +85,10 @@ ActiveRecord::Schema.define(:version => 20130706121338) do
 
   create_table "eluates", :force => true do |t|
     t.string   "name"
-    t.integer  "generators_id"
-    t.integer  "others_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "huslab_id"
   end
-
-  add_index "eluates", ["others_id"], :name => "index_eluates_on_others_id"
 
   create_table "events", :force => true do |t|
     t.integer  "target_id"
@@ -130,7 +126,7 @@ ActiveRecord::Schema.define(:version => 20130706121338) do
     t.datetime "updated_at",       :null => false
   end
 
-  add_index "haseluates", ["eluate_id"], :name => "index_haseluates_on_eluate_id"
+  add_index "haseluates", ["eluate_id"], :name => "index_haseluates_on_eluate_id", :unique => true
 
   create_table "hasgenerators", :force => true do |t|
     t.integer  "ownerType"
@@ -202,9 +198,6 @@ ActiveRecord::Schema.define(:version => 20130706121338) do
 
   create_table "radiomedicines", :force => true do |t|
     t.string   "name"
-    t.integer  "eluate_id"
-    t.integer  "others_id"
-    t.integer  "kits_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "huslab_id"
