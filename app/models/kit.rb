@@ -1,5 +1,5 @@
 class Kit < Batch
 
-  has_many :has_kits
+  has_many :haskits
 
 end

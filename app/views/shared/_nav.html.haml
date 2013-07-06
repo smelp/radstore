@@ -12,5 +12,7 @@
     = link_to "Oma sivu", :controller => "huslabs", :action => "show", :id => @batch.substance.huslab.id
   - elsif @eluate and @eluate.huslab
     = link_to "Oma sivu", :controller => "huslabs", :action => "show", :id => @eluate.huslab.id
+  - elsif @radiomedicine and @radiomedicine.huslab
+    = link_to "Oma sivu", :controller => "huslabs", :action => "show", :id => @radiomedicine.huslab.id
   - else
     = link_to "Oma sivu", :controller => "huslabs", :action => "show", :id => @huslab.id

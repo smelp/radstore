@@ -25,6 +25,7 @@ UserTutorial::Application.routes.draw do
   resources :materials
   resources :substances
   resources :eluates
+  resources :radiomedicines
   resources :generators, :controller => :batches
   resources :others, :controller => :batches
   resources :kits, :controller => :batches

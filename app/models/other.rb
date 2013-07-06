@@ -1,5 +1,5 @@
 class Other < Batch
 
-  has_many :has_others
+  has_many :hasothers
 
 end

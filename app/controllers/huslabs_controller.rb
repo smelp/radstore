@@ -23,6 +23,7 @@ class HuslabsController < ApplicationController
 
     @substances = @huslab.substances.paginate(:page => params[:substance_page], :per_page => 20)
     @eluates = @huslab.eluates.paginate(:page => params[:eluate_page], :per_page => 20)
+    @radiomedicines = @huslab.radiomedicines.paginate(:page => params[:substance_page], :per_page => 20)
     # products = @huslab.recipes.where(:product => true)
     
     # if params[:search_recipe]

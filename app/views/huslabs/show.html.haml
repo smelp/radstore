@@ -92,6 +92,42 @@
             %i.icon-plus
             Lisää eluaatti
 
+    .span5.offset1
+      .row.well.green
+        .row
+          .span2
+            %h2 Radiolääkkeet
+            .span
+              = form_tag({ :controller => "radiomedicines", :action => "show" }, :class => "form-search form-inline") do
+                = text_field_tag :search_material, "", :class => "input search-query input-medium", :placeholder => "Etsi raaka-aineita"
+                = submit_tag "Hae", :class => "btn btn-small"
+
+
+          = will_paginate @radiomedicines, :param_name => 'radiomedicine_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_radiomedicine => @search_params
+
+          = link_to :controller => "radiomedicines", :action => "new", :huslab_id => @huslab.id do
+            %i.icon-plus
+            Lisää radiolääke
+
+          %table.table.table-condensed.table-striped.table-bordered
+            %thead
+              %th Nimi
+
+            %tbody
+              - @radiomedicines.each do |radiomedicine|
+                %tr
+                  %td.span4= link_to radiomedicine.name, radiomedicine
+                  %td.span1
+                    = link_to :controller => "radiomedicines", :action => "edit", :id => radiomedicine.id do
+                      %i.icon-edit
+                  %td
+                    = link_to radiomedicine, method: :delete, confirm: "Haluatko varmasti poistaa radiolääkkeen?" do
+                      %i.icon-remove
+
+          = link_to :controller => "radiomedicines", :action => "new", :huslab_id => @huslab.id do
+            %i.icon-plus
+            Lisää radiolääke
+
     .span5.offset1    
       .row.well
         %h2 Käyttäjät

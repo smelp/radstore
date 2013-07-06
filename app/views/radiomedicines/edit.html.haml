@@ -1,0 +1,29 @@
+- provide(:title, 'Muokkaa radiolääkettä')
+
+.span6.offset3
+  %h2 Muokkaa radiolääkettä
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+
+  .span6.offset3.outline
+    .row
+      .span4.offset1
+        = form_for @radiomedicine do |f|
+          //= render 'shared/material_error_messages'
+          %p
+            = f.label :name, "Nimi"
+            = f.text_field :name
+            
+          = f.submit "Tallenna", class: "btn btn-large btn-primary"
+        
+  .span6.offset3
+    %p
+      = link_to request.env["HTTP_REFERER"] do
+        %i.icon-arrow-left
+        Takaisin
+      |
+      = link_to "Kaikki raaka-aineet", :controller => "radiomedicines", :action => "index", :huslab_id => @huslab.id
+      |
+      = link_to "Poista", @radiomedicine, method: :delete, confirm: "Haluatko varmasti poistaa radiolääkkeen?"

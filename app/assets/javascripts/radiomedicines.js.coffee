@@ -8,6 +8,16 @@ window.add_other = (e) ->
   amount = $('#other_amount').get(0).value
   createAddition(choice, amount, "others")
 
+window.add_kit = (e) ->
+  choice = $('#post_kit_id').get(0)
+  amount = $('#other_amount').get(0).value
+  createAddition(choice, amount, "kits")
+
+window.add_eluate = (e) ->
+  choice = $('#post_eluate_id').get(0)
+  amount = 1
+  createAddition(choice, amount, "eluates")
+
 createAddition = (choice, amount, typeString) ->
   val = choice.value
   div = document.createElement('div')

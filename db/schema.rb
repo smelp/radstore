@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130704093723) do
+ActiveRecord::Schema.define(:version => 20130706121338) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
@@ -123,6 +123,15 @@ ActiveRecord::Schema.define(:version => 20130704093723) do
   add_index "firms_users", ["firm_id", "user_id"], :name => "index_firms_users_on_firm_id_and_user_id", :unique => true
   add_index "firms_users", ["user_id"], :name => "index_firms_users_on_user_id"
 
+  create_table "haseluates", :force => true do |t|
+    t.integer  "radiomedicine_id"
+    t.integer  "eluate_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "haseluates", ["eluate_id"], :name => "index_haseluates_on_eluate_id"
+
   create_table "hasgenerators", :force => true do |t|
     t.integer  "ownerType"
     t.integer  "productID"
@@ -190,6 +199,18 @@ ActiveRecord::Schema.define(:version => 20130704093723) do
     t.datetime "updated_at",    :null => false
     t.string   "description"
   end
+
+  create_table "radiomedicines", :force => true do |t|
+    t.string   "name"
+    t.integer  "eluate_id"
+    t.integer  "others_id"
+    t.integer  "kits_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "huslab_id"
+  end
+
+  add_index "radiomedicines", ["name"], :name => "index_radiomedicines_on_name"
 
   create_table "recipes", :force => true do |t|
     t.string   "name"

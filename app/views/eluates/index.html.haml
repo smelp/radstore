@@ -13,12 +13,12 @@
     = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
       %i.icon-plus
       Lisää raaka-aine
-      
+
     %table.table
       %thead
         %th Nimi
         %th Tyyppi
-        
+
       %tbody
         - @substances.each do |substance|
           %tr
