@@ -93,10 +93,11 @@ ActiveRecord::Schema.define(:version => 20130706121338) do
   create_table "events", :force => true do |t|
     t.integer  "target_id"
     t.integer  "event_type"
-    t.datetime "timestamp"
-    t.string   "signature",  :limit => 10
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "user_timestamp"
+    t.string   "signature",      :limit => 10
+    t.string   "info"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
   end
 
   create_table "firms", :force => true do |t|

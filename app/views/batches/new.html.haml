@@ -14,7 +14,11 @@
         = f.text_field :batchNumber
         = f.label :amount, "Määrä"
         = f.text_field :amount
-
+        = fields_for @event do |e|
+          = e.label :signature, 'Kirjaaja'
+          = e.text_field :signature
+          = e.label :user_timestamp, 'Aika'
+          = e.text_field :user_timestamp, :placeholder=> 'Syötä aika muodossa DD/MM/YYYY hh:mm'
           
       = hidden_field_tag :substance_id, @substance.id
       

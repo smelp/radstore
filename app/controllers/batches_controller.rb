@@ -16,31 +16,36 @@ class BatchesController < ApplicationController
 
   def new
     @batch = Batch.new
+    @event = Event.new
   end
 
   def create
-    if @substance.substanceType == 1
+    determineBatchType
+    @temp = Batch.find_by_batchNumber_and_substance_id(@batch.batchNumber, @substance.id)
 
-      @batch = Generator.new(params[:batch])
+    if !@temp
 
-    elsif @substance.substanceType == 2
+      @batch.substance = @substance
 
-      @batch = Kit.new(params[:batch])
+      if @batch.save
+        flash[:success] = "Uusi erä luotu!"
+        Event.create(:target_id => @batch.id, :event_type => "newBatch", :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature], :info => @batch.amount.to_s+" arrived")
+        redirect_to @substance
+      else
+        render 'new'
+      end
 
     else
-
-      @batch = Other.new(params[:batch])
-
+      @temp.amount += @batch.amount
+      if @temp.save
+        flash[:success] = "Lähetys lisätty erään!"
+        Event.create(:target_id => @temp.id, :event_type => "addToBatch", :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature],:info => @batch.amount.to_s+" arrived")
+        redirect_to @substance
+      else
+        render 'new'
+      end
     end
 
-    @batch.substance = @substance
-
-    if @batch.save
-      flash[:success] = "Uusi raaka-aine luotu!"
-      redirect_to @substance
-    else
-      render 'new'
-    end
   end
 
   private
@@ -78,6 +83,24 @@ class BatchesController < ApplicationController
 
   def admin_user
     redirect_to(root_path) unless current_user.admin?
+  end
+
+  def determineBatchType
+
+    if @substance.substanceType == 1
+
+      @batch = Generator.new(params[:batch])
+
+    elsif @substance.substanceType == 2
+
+      @batch = Kit.new(params[:batch])
+
+    else
+
+      @batch = Other.new(params[:batch])
+
+    end
+
   end
 
 end

@@ -20,6 +20,7 @@ class EluatesController < ApplicationController
     @eluate = Eluate.new
     @generators = Batch.joins(:substance).where('substances.substanceType' => 1)
     @others = Batch.joins(:substance).where('substances.substanceType' => 2)
+    @event = Event.new
   end
 
   def create
@@ -46,6 +47,7 @@ class EluatesController < ApplicationController
         end
       end
       flash[:success] = "Uusi eluaatti luotu!"
+      Event.create(:target_id => @batch.id, :event_type => 20, :signature => params[:event][:signature])
       redirect_to @eluate
     else
         render 'new'
