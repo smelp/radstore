@@ -10,6 +10,8 @@ class Radiomedicine < ActiveRecord::Base
   has_many :kits, :through => :haskits
   has_many :haseluates
   has_many :eluates, :through => :haseluates
+  has_many :hasstoragelocations, :foreign_key => 'item_id'
+  has_many :storagelocations,  :through => :hasstoragelocations
 
 
   attr_accessible :name, :others, :generators, :kits, :huslab, :eluates

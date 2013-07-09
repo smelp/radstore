@@ -15,7 +15,7 @@ class Huslab < ActiveRecord::Base
   has_many :eluates
   has_many :substances
   has_many :radiomedicines
-  # has_many :bakeryorders
+  has_many :storagelocations
   
   attr_accessible :description, :firm
   

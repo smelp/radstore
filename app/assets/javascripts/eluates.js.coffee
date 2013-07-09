@@ -8,6 +8,11 @@ window.add_other = (e) ->
   amount = $('#other_amount').get(0).value
   createAddition(choice, amount, "others")
 
+window.add_storagelocation = (e) ->
+  choice = $('#post_storagelocation_id').get(0)
+  amount = $('#storagelocation_amount').get(0).value
+  createAddition(choice, amount, "storagelocations")
+
 createAddition = (choice, amount, typeString) ->
   val = choice.value
   div = document.createElement('div')

@@ -1,0 +1,41 @@
+= provide(:title, 'Varastopaikat')
+
+%h1 Substances
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+
+= will_paginate
+
+.container
+  .span6.offset3.bordered
+    = link_to :controller => "storagelocations", :action => "new", :huslab_id => @huslab.id do
+      %i.icon-plus
+      Lisää varastopaikka
+      
+    %table.table
+      %thead
+        %th Nimi
+        %th Lisätiedot
+        
+      %tbody
+        - @storagelocations.each do |storagelocation|
+          %tr
+            %td= link_to storagelocation.name, storagelocation
+            %td= storagelocation.info
+            %td
+              = link_to :controller => "storagelocations", :action => "edit", :id => storagelocation.id do
+                %i.icon-edit
+            %td
+              = link_to storagelocation, method: :delete, confirm: "Haluatko varmasti poistaa varastopaikan?" do
+                %i.icon-remove
+
+= will_paginate
+
+.container
+  .span6.offset3
+    = link_to :controller => "storagelocations", :action => "new", :huslab_id => @huslab.id do
+      %i.icon-plus
+      Lisää varastopaikka
+

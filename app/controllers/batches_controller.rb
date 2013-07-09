@@ -1,5 +1,6 @@
 # encoding: utf-8
 class BatchesController < ApplicationController
+
   before_filter :signed_in_user
   before_filter :firm_admin, only: [:index, :new, :create, :edit, :update, :destroy]
   before_filter :admin_user, only: []
@@ -17,29 +18,28 @@ class BatchesController < ApplicationController
   def new
     @batch = Batch.new
     @event = Event.new
+    @storagelocations = Storagelocation.all
   end
 
   def create
     determineBatchType
-    @temp = Batch.find_by_batchNumber_and_substance_id(@batch.batchNumber, @substance.id)
+    @batch.substance = @substance
+    @batchFound = Batch.find_by_batchNumber_and_substance_id(@batch.batchNumber, @substance.id)
 
-    if !@temp
+    if !@batchFound
 
-      @batch.substance = @substance
-
-      if @batch.save
+      if @batch.save and handleStorageLocations @batch.id, @substance.substanceType
         flash[:success] = "Uusi erä luotu!"
-        Event.create(:target_id => @batch.id, :event_type => "newBatch", :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature], :info => @batch.amount.to_s+" arrived")
+        Event.create(:target_id => @batch.id, :event_type => Event::NEW_BATCH, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature], :info => @batch.amount.to_s+" arrived")
         redirect_to @substance
       else
         render 'new'
       end
 
     else
-      @temp.amount += @batch.amount
-      if @temp.save
+      if handleStorageLocations @batchFound.id, @substance.substanceType
         flash[:success] = "Lähetys lisätty erään!"
-        Event.create(:target_id => @temp.id, :event_type => "addToBatch", :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature],:info => @batch.amount.to_s+" arrived")
+        Event.create(:target_id => @batchFound.id, :event_type => Event::ADD_TO_BATCH, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature],:info => @batch.amount.to_s+" arrived")
         redirect_to @substance
       else
         render 'new'
@@ -103,5 +103,18 @@ class BatchesController < ApplicationController
 
   end
 
+  def handleStorageLocations( batchID, substanceType )
+    params[:new_storagelocations].each do |storage|
+      existingStorage = Hasstoragelocation.find_by_storagelocation_id_and_item_id_and_item_type(storage[0],batchID, substanceType)
+
+      if !existingStorage
+        Hasstoragelocation.create(:storagelocation_id => storage[0],:item_type => substanceType, :item_id => batchID, :amount => storage[1])
+        true
+      else
+        existingStorage.amount += storage[1].to_f
+        existingStorage.save
+      end
+    end
+  end
 end
 

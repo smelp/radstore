@@ -31,7 +31,7 @@ class EluatesController < ApplicationController
 
       if params[:new_generators]
         params[:new_generators].each do |generator|
-          batchToModify = Batch.find_by_id(generator[0])
+          batchToModify = Hasstoragelocation.find_by_item_id(generator[0])
           batchToModify.amount = batchToModify.amount - generator[1].to_f
           batchToModify.save
           Hasgenerator.create(:ownerType => 1,:productID => @eluate.id, :generatorID => generator[0].to_f)

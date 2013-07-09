@@ -13,7 +13,7 @@
         = f.label :genericName, "Nimi"
         = f.text_field :genericName
         = f.label :substanceType, "Tyyppi"
-        = f.text_field :substanceType
+        = f.select :substanceType, ['Generaattori', 'Kitti', 'Muu']
 
           
       = hidden_field_tag :huslab_id, @huslab.id

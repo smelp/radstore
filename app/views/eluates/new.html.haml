@@ -44,7 +44,26 @@
 
           = button_to_function "Lisää", "add_generator(event)", :class => "btn btn-mini"
 
+      .span3
+        %fieldset
+          %label Varastopaikat
+          - values = @storagelocations.collect {|m| [ m.name, m.id ] }
+
+          = select("post", "storagelocation_id", values, {:prompt => 'Valitse varastopaikka'})
+
+          = fields_for :storagelocation do |h|
+            = h.label :amount, "Syötä määrä"
+            = h.text_field :amount, min: 0, class: "span2"
+
+          = button_to_function "Lisää", "add_storagelocation(event)", :class => "btn btn-mini"
+
       .span4
+
+        %table.table.table#product_storagelocations
+          %thead.green
+            %th Varastopaikat:
+            %th
+        %tbody
 
         %table.table.table#product_generators
           %thead.green

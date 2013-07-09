@@ -1,10 +1,13 @@
 %li
-  = link_to "Tuotteet", products_path(:huslab_id => current_user.primary_firm.resource.id)
+  = link_to :controller => "eluates", :action => "index", :huslab_id => current_user.primary_firm.resource.id do
+    Eluaatit
 %li
-  - #TODO: change all below like above
+  = link_to :controller => "radiomedicines", :action => "index", :huslab_id => current_user.primary_firm.resource.id do
+    Radiolääkkeet
+%li
+  = link_to :controller => "storagelocations", :action => "index", :huslab_id => current_user.primary_firm.resource.id do
+    Varastopaikat
+%li
   = link_to :controller => "substances", :action => "index", :huslab_id => current_user.primary_firm.resource.id do
     Raaka-aineet
-%li
-  = link_to :controller => "materials", :action => "index", :huslab_id => current_user.primary_firm.resource.id do
-    Valmisteet
 %li.divider-vertical

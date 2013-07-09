@@ -29,7 +29,7 @@ UserTutorial::Application.routes.draw do
   resources :generators, :controller => :batches
   resources :others, :controller => :batches
   resources :kits, :controller => :batches
-
+  resources :storagelocations
   resources :batches
   resources :bakeryorders
   resources :bills

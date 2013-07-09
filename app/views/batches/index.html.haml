@@ -25,12 +25,12 @@
           %tr
             %td= link_to batch.batchNumber, batch
             %td= batch.amount
-            %td= batch.type
+            %td= batch.substance.id
             %td
               = link_to :controller => "batches", :action => "edit", :id => batch.id do
                 %i.icon-edit
             %td
-              = link_to material, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
+              = link_to batch, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
                 %i.icon-remove
 
 = will_paginate

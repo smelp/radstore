@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130706121338) do
+ActiveRecord::Schema.define(:version => 20130709104039) do
 
   create_table "bakeries", :force => true do |t|
     t.string   "description"
@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(:version => 20130706121338) do
 
   create_table "batches", :force => true do |t|
     t.string   "batchNumber"
-    t.integer  "amount"
     t.integer  "substance_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
@@ -92,7 +91,7 @@ ActiveRecord::Schema.define(:version => 20130706121338) do
 
   create_table "events", :force => true do |t|
     t.integer  "target_id"
-    t.integer  "event_type"
+    t.string   "event_type"
     t.datetime "user_timestamp"
     t.string   "signature",      :limit => 10
     t.string   "info"
@@ -173,6 +172,15 @@ ActiveRecord::Schema.define(:version => 20130706121338) do
     t.string   "amount_type",  :default => "units"
   end
 
+  create_table "hasstoragelocations", :force => true do |t|
+    t.integer  "storagelocation_id"
+    t.integer  "item_id"
+    t.integer  "item_type"
+    t.integer  "amount"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
   create_table "huslabs", :force => true do |t|
     t.string   "description"
     t.datetime "created_at",  :null => false
@@ -214,6 +222,14 @@ ActiveRecord::Schema.define(:version => 20130706121338) do
     t.decimal  "price",      :default => 0.0
     t.decimal  "coverage",   :default => 0.0
     t.boolean  "product",    :default => false
+  end
+
+  create_table "storagelocations", :force => true do |t|
+    t.string   "name"
+    t.string   "info"
+    t.integer  "huslab_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "substances", :force => true do |t|

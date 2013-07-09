@@ -13,6 +13,13 @@ class Substance < ActiveRecord::Base
 
   attr_accessible :genericName, :eluateName, :huslab, :batches, :substanceType, :huslab_id
 
+  BATCH = 50
+  ELUATE = 60
+  RADIOMEDICINE = 70
+
+  GENERATOR = 51
+  KIT = 52
+  OTHER = 53
 
   def batchCount
     count = 0
@@ -23,15 +30,15 @@ class Substance < ActiveRecord::Base
   end
 
   def getAllGenerators
-    generators = Substance.find_all_by_type(1)
+    generators = Substance.find_all_by_type(TypeEnums::GENERATOR)
   end
 
   def getAllOthers
-    others = Substance.find_all_by_type(2)
+    others = Substance.find_all_by_type(TypeEnums::OTHER)
   end
 
   def getAllKits
-    kits = Substance.find_all_by_type(3)
+    kits = Substance.find_all_by_type(TypeEnums::KIT)
   end
 
 end
