@@ -21,7 +21,12 @@
               %tr
                 %td= link_to batch.batchNumber, batch
                 %td= batch.amount
-                %td= batch.qualityControlStatus
+                -if batch.qualityControl
+                  %td= batch.qualityStatus
+                -else
+                  %td
+                    = link_to :controller => "batches", :action => "qualityCheck", :id => batch.id do
+                      Kirjaa laadunvarmistus
                 %td
                   = link_to :controller => "batches", :action => "edit", :id => batch.id do
                     %i.icon-edit

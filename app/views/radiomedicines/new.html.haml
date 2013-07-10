@@ -14,6 +14,9 @@
 
           = f.label :name, "Nimi"
           = f.text_field :name
+          = f.label :storagelocation_id, 'Varastopaikkka'
+          = f.select :storagelocation_id, @storagelocations.collect {|m| [ m.name, m.id ] }
+
           = fields_for @event do |e|
             = e.label :signature, 'Kirjaaja'
             = e.text_field :signature
@@ -73,23 +76,8 @@
 
           = button_to_function "Lisää", "add_eluate(event)", :class => "btn btn-mini"
 
-      .span3
-        %fieldset
-          %label Varastopaikat
-          - values = @storagelocations.collect {|m| [ m.name, m.id ] }
-
-          = select("post", "storagelocation_id", values, {:prompt => 'Valitse varastopaikka'})
-          = hidden_field_tag('storagelocation_amount', 1)
-
-          = button_to_function "Lisää", "add_storagelocation(event)", :class => "btn btn-mini"
 
       .span4
-
-        %table.table.table#product_storagelocations
-          %thead.green
-            %th Varastopaikat:
-            %th
-        %tbody
 
         %table.table.table#product_others
           %thead.green

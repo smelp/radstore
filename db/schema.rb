@@ -85,8 +85,9 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
 
   create_table "eluates", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "storagelocation_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "huslab_id"
   end
 
@@ -208,8 +209,9 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
 
   create_table "radiomedicines", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "storagelocation_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "huslab_id"
   end
 

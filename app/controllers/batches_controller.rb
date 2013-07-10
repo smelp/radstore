@@ -21,6 +21,13 @@ class BatchesController < ApplicationController
     @storagelocations = Storagelocation.all
   end
 
+  def qualityCheck
+    @batch = Batch.find_by_id(params[:id])
+    @batch.qualityControl = Event::QUALITY_CHECK_OK
+    @batch.save
+    redirect_to :controller => 'substances', :action => 'show', :id => 1
+  end
+
   def create
     determineBatchType
     @batch.substance = @substance

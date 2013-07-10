@@ -7,11 +7,10 @@ class Eluate < ActiveRecord::Base
   has_many :others, :through => :hasothers
   has_many :hasgenerators, :foreign_key => "productID"
   has_many :generators, :through => :hasgenerators
-  has_many :hasstoragelocations, :foreign_key => 'item_id'
-  has_many :storagelocations,  :through => :hasstoragelocations
+  has_one  :storagelocation
 
 
-  attr_accessible :name, :others, :generators, :huslab
+  attr_accessible :name, :others, :generators, :huslab, :storagelocation_id
 
   def infoForSelectBox
     self.name

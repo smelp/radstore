@@ -14,11 +14,12 @@ class Batch < ActiveRecord::Base
     Hasstoragelocation.where(:item_id => self.id, :item_type => self.substance.substanceType).sum(:amount)
   end
 
-  def qualityControlStatus
-    if !self.qualityControl
-      "<p>Hello</p>".html_safe
+  def qualityStatus
+    if self.qualityControl == Event::QUALITY_CHECK_OK
+      'OK'
+    elsif self.qualityControl == Event::QUALITY_CHECK_NOK
+      'Ei OK'
     end
-
 
   end
 

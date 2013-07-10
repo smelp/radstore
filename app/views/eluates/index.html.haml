@@ -1,6 +1,6 @@
-= provide(:title, 'Substances')
+= provide(:title, 'Eluaatit')
 
-%h1 Substances
+%h1 Eluaatit
 
 .container
   .span6.offset3
@@ -10,32 +10,30 @@
 
 .container
   .span6.offset3.bordered
-    = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
+    = link_to :controller => "eluates", :action => "new", :huslab_id => @huslab.id do
       %i.icon-plus
-      Lisää raaka-aine
+      Lisää eluaatti
 
     %table.table
       %thead
         %th Nimi
-        %th Tyyppi
 
       %tbody
-        - @substances.each do |substance|
+        - @eluates.each do |eluate|
           %tr
-            %td= link_to substance.genericName, substance
-            %td= substance.type
+            %td= link_to eluate.genericName, eluate
             %td
-              = link_to :controller => "substances", :action => "edit", :id => substance.id do
+              = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
                 %i.icon-edit
             %td
-              = link_to substance, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen?" do
+              = link_to eluate, method: :delete, confirm: "Haluatko varmasti poistaa eluuatin?" do
                 %i.icon-remove
 
 = will_paginate
 
 .container
   .span6.offset3
-    = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
+    = link_to :controller => "eluates", :action => "new", :huslab_id => @huslab.id do
       %i.icon-plus
       Lisää raaka-aine
 

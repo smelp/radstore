@@ -32,7 +32,7 @@ class EluatesController < ApplicationController
 
       if params[:new_generators]
         params[:new_generators].each do |generator|
-          batchToModify = Hasstoragelocation.find_by_item_id(generator[0])
+          batchToModify = Hasstoragelocation.find_by_item_id_and_item_type(generator[0], Substance::GENERATOR)
           batchToModify.amount = batchToModify.amount - generator[1].to_f
           batchToModify.save
           Hasgenerator.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :generatorID => generator[0].to_f)
@@ -41,15 +41,11 @@ class EluatesController < ApplicationController
 
       if params[:new_others]
         params[:new_others].each do |other|
-          batchToModify = Hasstoragelocation.find_by_item_id(other[0])
+          batchToModify = Hasstoragelocation.find_by_item_id_and_item_type(other[0], Substance::OTHER)
           batchToModify.amount -= other[1].to_f
           batchToModify.save
           Hasother.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :otherID => other[0].to_f)
         end
-      end
-
-      params[:new_storagelocations].each do |storage|
-        Hasstoragelocation.create(:storagelocation_id => storage[0],:item_type => Substance::ELUATE, :item_id => @eluate.id, :amount => 1)
       end
 
       flash[:success] = "Uusi eluaatti luotu!"
