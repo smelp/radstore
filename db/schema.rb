@@ -42,8 +42,9 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
   create_table "batches", :force => true do |t|
     t.string   "batchNumber"
     t.integer  "substance_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "qualityControl"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   add_index "batches", ["substance_id"], :name => "index_batches_on_substance_id"

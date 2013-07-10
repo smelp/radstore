@@ -18,9 +18,10 @@ class EluatesController < ApplicationController
 
   def new
     @eluate = Eluate.new
-    @generators = Batch.joins(:substance).where('substances.substanceType' => 1)
-    @others = Batch.joins(:substance).where('substances.substanceType' => 2)
+    @generators = Batch.joins(:substance).where('substances.substanceType' => Substance::GENERATOR)
+    @others = Batch.joins(:substance).where('substances.substanceType' => Substance::OTHER)
     @event = Event.new
+    @storagelocations = Storagelocation.all
   end
 
   def create
@@ -34,20 +35,25 @@ class EluatesController < ApplicationController
           batchToModify = Hasstoragelocation.find_by_item_id(generator[0])
           batchToModify.amount = batchToModify.amount - generator[1].to_f
           batchToModify.save
-          Hasgenerator.create(:ownerType => 1,:productID => @eluate.id, :generatorID => generator[0].to_f)
+          Hasgenerator.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :generatorID => generator[0].to_f)
         end
       end
 
       if params[:new_others]
         params[:new_others].each do |other|
-          batchToModify = Batch.find_by_id(other[0])
+          batchToModify = Hasstoragelocation.find_by_item_id(other[0])
           batchToModify.amount -= other[1].to_f
           batchToModify.save
-          Hasother.create(:ownerType => 1,:productID => @eluate.id, :otherID => other[0].to_f)
+          Hasother.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :otherID => other[0].to_f)
         end
       end
+
+      params[:new_storagelocations].each do |storage|
+        Hasstoragelocation.create(:storagelocation_id => storage[0],:item_type => Substance::ELUATE, :item_id => @eluate.id, :amount => 1)
+      end
+
       flash[:success] = "Uusi eluaatti luotu!"
-      Event.create(:target_id => @batch.id, :event_type => 20, :signature => params[:event][:signature])
+      createEvent Event::NEW_ELUATE
       redirect_to @eluate
     else
         render 'new'
@@ -91,6 +97,16 @@ class EluatesController < ApplicationController
 
   def admin_user
     redirect_to(root_path) unless current_user.admin?
+  end
+
+  def createEvent( event )
+    if event == Event::NEW_ELUATE
+      Event.create(:target_id => @eluate.id, :event_type => event, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature])
+    elsif event == Event::MODIFY_ELUATE
+      Event.create(:target_id => @eluate.id, :event_type => event, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature])
+    else
+
+    end
   end
 
 end

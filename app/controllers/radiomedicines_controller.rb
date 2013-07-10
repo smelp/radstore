@@ -20,10 +20,12 @@ class RadiomedicinesController < ApplicationController
 
   def new
     @radiomedicine = Radiomedicine.new
-    @generators = Batch.joins(:substance).where('substances.substanceType' => 1)
-    @others = Batch.joins(:substance).where('substances.substanceType' => 2)
-    @kits = Batch.joins(:substance).where('substances.substanceType' => 3)
-    @eluates = Eluate.all
+    @generators = Batch.joins(:substance).where('substances.substanceType' => Substance::GENERATOR)
+    @others = Batch.joins(:substance).where('substances.substanceType' => Substance::OTHER)
+    @kits = Batch.joins(:substance).where('substances.substanceType' => Substance::KIT)
+    @event = Event.new
+    @eluates = Eluate.find_unused
+    @storagelocations = Storagelocation.all
   end
 
   def create
@@ -32,21 +34,21 @@ class RadiomedicinesController < ApplicationController
 
     if @radiomedicine.save
 
-      if params[:new_others]
-        params[:new_others].each do |other|
-          batchToModify = Batch.find_by_id(other[0])
-          batchToModify.amount -= other[1].to_f
+      if params[:new_generators]
+        params[:new_generators].each do |generator|
+          batchToModify = Hasstoragelocation.find_by_item_id(generator[0])
+          batchToModify.amount = batchToModify.amount - generator[1].to_f
           batchToModify.save
-          Hasother.create(:ownerType => 2,:productID => @radiomedicine.id, :otherID => other[0].to_f)
+          Hasgenerator.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :generatorID => generator[0].to_f)
         end
       end
 
-      if params[:new_generators]
-        params[:new_generators].each do |generator|
-          batchToModify = Batch.find_by_id(generator[0])
-          batchToModify.amount = batchToModify.amount - generator[1].to_f
+      if params[:new_others]
+        params[:new_others].each do |other|
+          batchToModify = Hasstoragelocation.find_by_item_id(other[0])
+          batchToModify.amount -= other[1].to_f
           batchToModify.save
-          Hasgenerator.create(:ownerType => 2,:productID => @radiomedicine.id, :generatorID => generator[0].to_f)
+          Hasother.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :otherID => other[0].to_f)
         end
       end
 
@@ -54,10 +56,10 @@ class RadiomedicinesController < ApplicationController
 
       if params[:new_kits]
         params[:new_kits].each do |kit|
-          batchToModify = Batch.find_by_id(kit[0])
+          batchToModify = Hasstoragelocation.find_by_item_id(kit[0])
           batchToModify.amount -= kit[1].to_f
           batchToModify.save
-          Haskit.create(:ownerType => 2,:productID => @radiomedicine.id, :kitID => kit[0].to_f)
+          Haskit.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :kitID => kit[0].to_f)
         end
       end
 
@@ -67,6 +69,11 @@ class RadiomedicinesController < ApplicationController
         end
       end
 
+      params[:new_storagelocations].each do |storage|
+        Hasstoragelocation.create(:storagelocation_id => storage[0],:item_type => Substance::RADIOMEDICINE, :item_id => @radiomedicine.id, :amount => 1)
+      end
+
+      createEvent Event::NEW_RADIOMEDICINE
       flash[:success] = "Uusi radiolääke luotu!"
       redirect_to @radiomedicine
     else
@@ -111,6 +118,16 @@ class RadiomedicinesController < ApplicationController
 
   def admin_user
     redirect_to(root_path) unless current_user.admin?
+  end
+
+  def createEvent( event )
+    if event == Event::NEW_RADIOMEDICINE
+      Event.create(:target_id => @radiomedicine.id, :event_type => event, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature])
+    elsif event == Event::MODIFY_ELUATE
+      Event.create(:target_id => @radiomedicine.id, :event_type => event, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature])
+    else
+
+    end
   end
 
 end

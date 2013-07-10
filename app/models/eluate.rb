@@ -14,9 +14,11 @@ class Eluate < ActiveRecord::Base
   attr_accessible :name, :others, :generators, :huslab
 
   def infoForSelectBox
-
     self.name
+  end
 
+  def self.find_unused
+    Eluate.find_by_sql('SELECT * FROM eluates WHERE NOT EXISTS (SELECT * FROM haseluates WHERE haseluates.eluate_id = eluates.id)')
   end
 
 end

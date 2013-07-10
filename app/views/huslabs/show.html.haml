@@ -4,35 +4,14 @@
   %h2= @firm.name
   .row
     .span5
-      - if is_admin?
-        .row.well
-          %aside.span4
-            %section
-              %h1
-                %p Nimi: #{@firm.name}
-                %p Y-tunnus: #{@firm.corporate_id}
-                %p Sijainti: #{@firm.location}
-                %p Toimiala: #{@firm.resource_type}
-                %p Kuvaus:   #{@huslab.description}
-              = link_to "Muokkaa tietoja",    edit_firm_path
-              |
-              = link_to "Kaikki yritykset",    firms_path
-      - else
-        .row.well.blue
-          .row
-          .span2
-            %h2 Raaka-aineet
-          .span
-            = form_tag({ :controller => "substances", :action => "show" }, :class => "form-search form-inline") do
-              = text_field_tag :search_substance, "", :class => "input search-query input-medium", :placeholder => "Etsi raaka-aineita"
-              = submit_tag "Hae", :class => "btn btn-small"
+      .row.well.blue
+        .row
+        .span2
+          %h2 Raaka-aineet
 
-
-        = will_paginate @substances, :param_name => 'substance_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_substance => @search_params
-
-        = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
-          %i.icon-plus
-          Lisää raaka-aine
+          = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
+            %i.icon-plus
+            Lisää raaka-aine
 
         %table.table.table-condensed.table-striped.table-bordered
           %thead
@@ -51,110 +30,53 @@
                   = link_to substance, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen?" do
                     %i.icon-remove
 
-        = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
-          %i.icon-plus
-          Lisää raaka-aine
-
-
     .span5.offset1
       .row.well.green
         .row
-          .span2
-            %h2 Eluaatit
-            .span
-              = form_tag({ :controller => "eluates", :action => "show" }, :class => "form-search form-inline") do
-                = text_field_tag :search_material, "", :class => "input search-query input-medium", :placeholder => "Etsi raaka-aineita"
-                = submit_tag "Hae", :class => "btn btn-small"
-
-
-          = will_paginate @eluates, :param_name => 'eluate_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_eluate => @search_params
+        .span2
+          %h2 Eluaatit
 
           = link_to :controller => "eluates", :action => "new", :huslab_id => @huslab.id do
             %i.icon-plus
             Lisää raaka-aine
 
-          %table.table.table-condensed.table-striped.table-bordered
-            %thead
-              %th Nimi
-
-            %tbody
-              - @eluates.each do |eluate|
-                %tr
-                  %td.span4= link_to eluate.name, eluate
-                  %td.span1
-                    = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
-                      %i.icon-edit
-                  %td
-                    = link_to eluate, method: :delete, confirm: "Haluatko varmasti poistaa eluaatin?" do
-                      %i.icon-remove
-
-          = link_to :controller => "eluates", :action => "new", :huslab_id => @huslab.id do
-            %i.icon-plus
-            Lisää eluaatti
-
-    .span5.offset1
-      .row.well.green
-        .row
-          .span2
-            %h2 Radiolääkkeet
-            .span
-              = form_tag({ :controller => "radiomedicines", :action => "show" }, :class => "form-search form-inline") do
-                = text_field_tag :search_material, "", :class => "input search-query input-medium", :placeholder => "Etsi raaka-aineita"
-                = submit_tag "Hae", :class => "btn btn-small"
-
-
-          = will_paginate @radiomedicines, :param_name => 'radiomedicine_page', :previous_label => "Edellinen", :next_label => "Seuraava", :search_radiomedicine => @search_params
-
-          = link_to :controller => "radiomedicines", :action => "new", :huslab_id => @huslab.id do
-            %i.icon-plus
-            Lisää radiolääke
-
-          %table.table.table-condensed.table-striped.table-bordered
-            %thead
-              %th Nimi
-
-            %tbody
-              - @radiomedicines.each do |radiomedicine|
-                %tr
-                  %td.span4= link_to radiomedicine.name, radiomedicine
-                  %td.span1
-                    = link_to :controller => "radiomedicines", :action => "edit", :id => radiomedicine.id do
-                      %i.icon-edit
-                  %td
-                    = link_to radiomedicine, method: :delete, confirm: "Haluatko varmasti poistaa radiolääkkeen?" do
-                      %i.icon-remove
-
-          = link_to :controller => "radiomedicines", :action => "new", :huslab_id => @huslab.id do
-            %i.icon-plus
-            Lisää radiolääke
-
-    .span5.offset1    
-      .row.well
-        %h2 Käyttäjät
-        = will_paginate @users, :previous_label => "Edellinen", :next_label => "Seuraava"
-        
-        = link_to :controller => "firms", :action => "edit" do
-          %i.icon-plus
-          Lisää käyttäjä
-          
         %table.table.table-condensed.table-striped.table-bordered
           %thead
             %th Nimi
-            %th Email
-          
+
           %tbody
-            - @firm.users.each do |user|
+            - @eluates.each do |eluate|
               %tr
-                %td.span4= link_to user.name, user
-                %td.span3= user.email
+                %td.span4= link_to eluate.name, eluate
                 %td.span1
-                  = link_to edit_user_path(user) do
+                  = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
                     %i.icon-edit
                 %td
-                  = link_to user, method: :delete, confirm: "Haluatko varmasti poistaa käyttäjän?" do
+                  = link_to eluate, method: :delete, confirm: "Haluatko varmasti poistaa eluaatin?" do
                     %i.icon-remove
-                
-        = link_to :controller => "firms", :action => "edit" do
-          %i.icon-plus
-          Lisää käyttäjä
+
+    .span5.offset1
+      .row.well.blue
+        .row
+        .span2
+          %h2 Radiolääkkeet
+
+          = link_to :controller => "radiomedicines", :action => "new", :huslab_id => @huslab.id do
+            %i.icon-plus
+            Lisää radiolääke
+
+        %table.table.table-condensed.table-striped.table-bordered
+          %thead
+            %th Nimi
+
+          %tbody
+            - @radiomedicines.each do |radiomedicine|
+              %tr
+                %td.span4= link_to radiomedicine.name, radiomedicine
+                %td.span1
+                  = link_to :controller => "radiomedicines", :action => "edit", :id => radiomedicine.id do
+                    %i.icon-edit
+                %td
+                  = link_to radiomedicine, method: :delete, confirm: "Haluatko varmasti poistaa radiolääkkeen?" do
+                    %i.icon-remove
       

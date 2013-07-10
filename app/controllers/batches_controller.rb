@@ -30,7 +30,7 @@ class BatchesController < ApplicationController
 
       if @batch.save and handleStorageLocations @batch.id, @substance.substanceType
         flash[:success] = "Uusi erä luotu!"
-        Event.create(:target_id => @batch.id, :event_type => Event::NEW_BATCH, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature], :info => @batch.amount.to_s+" arrived")
+        createEvent Event::NEW_BATCH
         redirect_to @substance
       else
         render 'new'
@@ -39,7 +39,7 @@ class BatchesController < ApplicationController
     else
       if handleStorageLocations @batchFound.id, @substance.substanceType
         flash[:success] = "Lähetys lisätty erään!"
-        Event.create(:target_id => @batchFound.id, :event_type => Event::ADD_TO_BATCH, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature],:info => @batch.amount.to_s+" arrived")
+        createEvent Event::ADD_TO_BATCH
         redirect_to @substance
       else
         render 'new'
@@ -116,5 +116,16 @@ class BatchesController < ApplicationController
       end
     end
   end
+
+  def createEvent( event )
+    if event == Event::NEW_BATCH
+      Event.create(:target_id => @batch.id, :event_type => Event::NEW_BATCH, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature], :info => @batch.amount.to_s+" arrived")
+    elsif event == Event::ADD_TO_BATCH
+      Event.create(:target_id => @batchFound.id, :event_type => Event::ADD_TO_BATCH, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature],:info => @batch.amount.to_s+" arrived")
+    else
+
+    end
+  end
+
 end
 

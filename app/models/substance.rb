@@ -29,16 +29,4 @@ class Substance < ActiveRecord::Base
     count
   end
 
-  def getAllGenerators
-    generators = Substance.find_all_by_type(TypeEnums::GENERATOR)
-  end
-
-  def getAllOthers
-    others = Substance.find_all_by_type(TypeEnums::OTHER)
-  end
-
-  def getAllKits
-    kits = Substance.find_all_by_type(TypeEnums::KIT)
-  end
-
 end

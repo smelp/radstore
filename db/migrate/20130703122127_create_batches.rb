@@ -3,6 +3,7 @@ class CreateBatches < ActiveRecord::Migration
     create_table :batches do |t|
       t.string :batchNumber
       t.references :substance
+      t.integer :qualityControl
 
       t.timestamps
     end
