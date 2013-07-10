@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
   create_table "eluates", :force => true do |t|
     t.string   "name"
     t.integer  "storagelocation_id"
+    t.integer  "radiomedicine_id"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "huslab_id"

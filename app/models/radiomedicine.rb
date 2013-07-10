@@ -8,12 +8,14 @@ class Radiomedicine < ActiveRecord::Base
   has_many :generators, :through => :hasgenerators
   has_many :haskits, :foreign_key => 'productID'
   has_many :kits, :through => :haskits
-  has_many :haseluates
-  has_many :eluates, :through => :haseluates
   has_one  :storagelocation
 
-  attr_accessible :name, :others, :generators, :kits, :huslab, :eluates, :storagelocation_id
+  attr_accessible :name, :others, :generators, :kits, :huslab, :storagelocation_id
 
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 1, :maximum => 50, :message => "Nimen täytyy olla 1-50 merkkiä pitkä" }
+
+  def eluates
+    Eluate.find_all_by_radiomedicine_id(self.id)
+  end
 
 end

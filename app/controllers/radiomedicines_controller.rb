@@ -65,7 +65,9 @@ class RadiomedicinesController < ApplicationController
 
       if params[:new_eluates]
         params[:new_eluates].each do |eluate|
-          Haseluate.create(:radiomedicine_id => @radiomedicine.id, :eluate_id => eluate[0].to_f)
+          @eluateToUpdate = Eluate.find_by_id(eluate[0])
+          @eluateToUpdate.radiomedicine = @radiomedicine
+          @eluateToUpdate.save
         end
       end
 
