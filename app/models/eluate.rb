@@ -10,8 +10,9 @@ class Eluate < ActiveRecord::Base
   has_many :hasstoragelocations, :foreign_key => 'item_id'
   has_many :storagelocations,  :through => :hasstoragelocations
 
-
   attr_accessible :name, :others, :generators, :huslab
+
+  validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }, :uniqueness => { :message => "Eluaatin nimi on jo käytössä" }
 
   def infoForSelectBox
     self.name

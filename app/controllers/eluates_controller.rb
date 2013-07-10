@@ -56,10 +56,8 @@ class EluatesController < ApplicationController
       createEvent Event::NEW_ELUATE
       redirect_to @eluate
     else
-        render 'new'
+      redirect_to :action => "new"
     end
-
-
   end
 
   private

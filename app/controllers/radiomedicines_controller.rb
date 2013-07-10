@@ -77,10 +77,8 @@ class RadiomedicinesController < ApplicationController
       flash[:success] = "Uusi radiolääke luotu!"
       redirect_to @radiomedicine
     else
-      render 'new'
+      redirect_to :action => "new"
     end
-
-
   end
 
   private
@@ -88,7 +86,7 @@ class RadiomedicinesController < ApplicationController
   def signed_in_user
     unless signed_in?
       store_location
-      redirect_to signin_path, notice: "Kirjaudu sisään kiitos."
+      redirect_to signin_path, notice: "Kirjaudu sisään."
     end
   end
 
