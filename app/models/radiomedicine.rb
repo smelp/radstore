@@ -15,6 +15,6 @@ class Radiomedicine < ActiveRecord::Base
 
   attr_accessible :name, :others, :generators, :kits, :huslab, :eluates
 
-  validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 1, :maximum => 50, :message => "Nimen täytyy olla 1-50 merkkiä pitkä" }, :uniqueness => { :message => "Radioaineen nimi on jo käytössä" }
+  validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 1, :maximum => 50, :message => "Nimen täytyy olla 1-50 merkkiä pitkä" }
 
 end
