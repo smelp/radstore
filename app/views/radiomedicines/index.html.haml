@@ -1,6 +1,6 @@
 = provide(:title, 'Radiolääkkeet')
 
-%h1 Substances
+%h1 Radiolääkkeet
 
 .container
   .span6.offset3
@@ -17,12 +17,13 @@
     %table.table
       %thead
         %th Nimi
-        %th Tyyppi
+        %th Luotu
 
       %tbody
         - @radiomedicines.each do |radiomedicine|
           %tr
             %td= link_to radiomedicine.name, radiomedicine
+            %td.span2= radiomedicine.created.strftime("%d.%m.%Y %H:%M")
             %td
               = link_to :controller => "radiomedicines", :action => "edit", :id => radiomedicine.id do
                 %i.icon-edit
@@ -31,10 +32,4 @@
                 %i.icon-remove
 
 = will_paginate
-
-.container
-  .span6.offset3
-    = link_to :controller => "radiomedicines", :action => "new", :huslab_id => @huslab.id do
-      %i.icon-plus
-      Lisää radiolääke
 

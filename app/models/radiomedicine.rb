@@ -18,4 +18,9 @@ class Radiomedicine < ActiveRecord::Base
     Eluate.find_all_by_radiomedicine_id(self.id)
   end
 
+  def created
+    @event = Event.find_by_target_id_and_event_type(self.id, Event::NEW_RADIOMEDICINE)
+    @event.user_timestamp
+  end
+
 end

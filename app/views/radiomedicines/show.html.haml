@@ -10,6 +10,7 @@
 
       %h2.bordered-bottom= @radiomedicine.name
 
+      %h4 Generaattorit
       %table.table
         %thead
           %th Eränumero
@@ -25,9 +26,42 @@
                   = link_to generator, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
                     %i.icon-remove
 
+      %h4 Kitit
       %table.table
         %thead
           %th Eränumero
+
+          %tbody
+            - @kits.each do |kit|
+              %tr
+                %td= link_to kit.batchNumber, kit
+                %td
+                  = link_to :controller => "batches", :action => "edit", :id => kit.id do
+                    %i.icon-edit
+                %td
+                  = link_to kit, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
+                    %i.icon-remove
+
+      %h4 Muut
+      %table.table
+        %thead
+          %th Eränumero
+
+          %tbody
+            - @others.each do |other|
+              %tr
+                %td= link_to other.batchNumber, other
+                %td
+                  = link_to :controller => "batches", :action => "edit", :id => other.id do
+                    %i.icon-edit
+                %td
+                  = link_to other, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
+                    %i.icon-remove
+
+      %h4 Eluaatit
+      %table.table
+        %thead
+          %th Nimi
 
           %tbody
             - @eluates.each do |eluate|
@@ -39,10 +73,6 @@
                 %td
                   = link_to eluate, method: :delete, confirm: "Haluatko varmasti poistaa eluaatin?" do
                     %i.icon-remove
-
-      = link_to :controller => "batches", :action => "new", :radiomedicine_id => @radiomedicine.id do
-        %i.icon-plus
-        Lisää raaka-aine
 
       = link_to :controller => "radiomedicines", :action => "edit", :id => @radiomedicine.id do
         %i.icon-edit

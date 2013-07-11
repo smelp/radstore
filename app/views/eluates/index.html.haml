@@ -17,11 +17,13 @@
     %table.table
       %thead
         %th Nimi
+        %th Luotu
 
       %tbody
         - @eluates.each do |eluate|
           %tr
-            %td= link_to eluate.genericName, eluate
+            %td= link_to eluate.name, eluate
+            %td.span2= eluate.created.strftime("%d.%m.%Y %H:%M")
             %td
               = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
                 %i.icon-edit
@@ -30,10 +32,4 @@
                 %i.icon-remove
 
 = will_paginate
-
-.container
-  .span6.offset3
-    = link_to :controller => "eluates", :action => "new", :huslab_id => @huslab.id do
-      %i.icon-plus
-      Lisää raaka-aine
 

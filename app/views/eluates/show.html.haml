@@ -10,10 +10,10 @@
 
       %h2.bordered-bottom= @eluate.name
 
+      %h4 Generaattorit
       %table.table
         %thead
           %th Eränumero
-          %th Tyyppi
 
           %tbody
             - @generators.each do |generator|
@@ -26,14 +26,26 @@
                   = link_to generator, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
                     %i.icon-remove
 
-      = link_to :controller => "batches", :action => "new", :eluate_id => @eluate.id do
-        %i.icon-plus
-        Lisää raaka-aine
+      %h4 Muut
+      %table.table
+        %thead
+          %th Eränumero
+
+          %tbody
+            - @others.each do |other|
+              %tr
+                %td= link_to other.batchNumber, other
+                %td
+                  = link_to :controller => "batches", :action => "edit", :id => other.id do
+                    %i.icon-edit
+                %td
+                  = link_to other, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
+                    %i.icon-remove
 
       = link_to :controller => "eluates", :action => "edit", :id => @eluate.id do
         %i.icon-edit
         Muokkaa
-      
+
       %a.nav-link{href: "#", onclick: "window.print()"}
         %i.icon-print.margin-left10
         Tulosta

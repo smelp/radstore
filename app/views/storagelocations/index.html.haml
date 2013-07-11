@@ -1,6 +1,6 @@
 = provide(:title, 'Varastopaikat')
 
-%h1 Substances
+%h1 Varastopaikat
 
 .container
   .span6.offset3
@@ -32,10 +32,4 @@
                 %i.icon-remove
 
 = will_paginate
-
-.container
-  .span6.offset3
-    = link_to :controller => "storagelocations", :action => "new", :huslab_id => @huslab.id do
-      %i.icon-plus
-      Lisää varastopaikka
 

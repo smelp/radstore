@@ -15,6 +15,7 @@ class StaticPagesController < ApplicationController
         WHERE user_id='#{current_user.id}')"
       @firms = Firm.paginate_by_sql(sql, :page => params[:page], :per_page => 10)
     end
+    redirect_to :controller => 'huslabs', :action => 'show', :id => 1
   end
 
   def help

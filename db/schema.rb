@@ -122,15 +122,6 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
   add_index "firms_users", ["firm_id", "user_id"], :name => "index_firms_users_on_firm_id_and_user_id", :unique => true
   add_index "firms_users", ["user_id"], :name => "index_firms_users_on_user_id"
 
-  create_table "haseluates", :force => true do |t|
-    t.integer  "radiomedicine_id"
-    t.integer  "eluate_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-  end
-
-  add_index "haseluates", ["eluate_id"], :name => "index_haseluates_on_eluate_id", :unique => true
-
   create_table "hasgenerators", :force => true do |t|
     t.integer  "ownerType"
     t.integer  "productID"

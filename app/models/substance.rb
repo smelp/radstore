@@ -29,4 +29,14 @@ class Substance < ActiveRecord::Base
     count
   end
 
+  def myType
+    if self.substanceType == Substance::GENERATOR
+      'Generaattori'
+    elsif self.substanceType == Substance::KIT
+      'Kitti'
+    else
+      'Muu'
+    end
+  end
+
 end

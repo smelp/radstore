@@ -20,7 +20,10 @@ class Batch < ActiveRecord::Base
     elsif self.qualityControl == Event::QUALITY_CHECK_NOK
       'Ei OK'
     end
+  end
 
+  def batchType
+    self.substance.myType
   end
 
 end

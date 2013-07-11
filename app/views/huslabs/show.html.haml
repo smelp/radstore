@@ -38,16 +38,18 @@
 
           = link_to :controller => "eluates", :action => "new", :huslab_id => @huslab.id do
             %i.icon-plus
-            Lisää raaka-aine
+            Lisää eluaatti
 
         %table.table.table-condensed.table-striped.table-bordered
           %thead
             %th Nimi
+            %th Luotu
 
           %tbody
             - @eluates.each do |eluate|
               %tr
-                %td.span4= link_to eluate.name, eluate
+                %td= link_to eluate.name, eluate
+                %td.span2= eluate.created.strftime("%d.%m.%Y %H:%M")
                 %td.span1
                   = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
                     %i.icon-edit
@@ -68,11 +70,13 @@
         %table.table.table-condensed.table-striped.table-bordered
           %thead
             %th Nimi
+            %th Luotu
 
           %tbody
             - @radiomedicines.each do |radiomedicine|
               %tr
-                %td.span4= link_to radiomedicine.name, radiomedicine
+                %td= link_to radiomedicine.name, radiomedicine
+                %td.span2= radiomedicine.created.strftime("%d.%m.%Y %H:%M")
                 %td.span1
                   = link_to :controller => "radiomedicines", :action => "edit", :id => radiomedicine.id do
                     %i.icon-edit
