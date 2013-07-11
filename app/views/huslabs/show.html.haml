@@ -44,12 +44,14 @@
           %thead
             %th Nimi
             %th Luotu
+            %th Varastopaikka
 
           %tbody
             - @eluates.each do |eluate|
               %tr
                 %td= link_to eluate.name, eluate
-                %td.span2= eluate.created.strftime("%d.%m.%Y %H:%M")
+                %td.span2= eluate.created.strftime("%H:%M")
+                %td.span2= eluate.storagelocation.name
                 %td.span1
                   = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
                     %i.icon-edit
@@ -71,12 +73,14 @@
           %thead
             %th Nimi
             %th Luotu
+            %th Varastopaikka
 
           %tbody
             - @radiomedicines.each do |radiomedicine|
               %tr
                 %td= link_to radiomedicine.name, radiomedicine
-                %td.span2= radiomedicine.created.strftime("%d.%m.%Y %H:%M")
+                %td.span2= radiomedicine.created.strftime("%H:%M")
+                %td.span2= radiomedicine.storagelocation.name
                 %td.span1
                   = link_to :controller => "radiomedicines", :action => "edit", :id => radiomedicine.id do
                     %i.icon-edit

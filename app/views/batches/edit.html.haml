@@ -15,8 +15,10 @@
           %p
             = f.label :batchNumber, "Eränumero"
             = f.text_field :batchNumber
-            = f.label :amount, "Määrä"
-            = f.text_field :amount
+            = f.label :substance_id, 'Tyyppi'
+            = f.select :substance_id, ['Generaattori','Kitti','Muu'], :selected => @batch.batchType
+            = f.label :qualityControl, "Laadunvalvonta"
+            = f.select :qualityControl, ['OK','Ei OK', 'Ei suoritettu'], :selected => @batch.qualityStatus
 
             
           = f.submit "Tallenna", class: "btn btn-large btn-primary"

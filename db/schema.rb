@@ -168,8 +168,7 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
 
   create_table "hasstoragelocations", :force => true do |t|
     t.integer  "storagelocation_id"
-    t.integer  "item_id"
-    t.integer  "item_type"
+    t.integer  "batch_id"
     t.integer  "amount"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false

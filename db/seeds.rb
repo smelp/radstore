@@ -26,10 +26,10 @@ Generator.create(:batchNumber => 1234, :substance_id => 1)
 Kit.create(:batchNumber => 1235, :substance_id => 2)
 Other.create(:batchNumber => 1236, :substance_id => 3)
 
-Hasstoragelocation.create(:item_id => 1, :item_type => 51, :storagelocation_id => 1, :amount => 6)
-Hasstoragelocation.create(:item_id => 2, :item_type => 52, :storagelocation_id => 1, :amount => 3)
-Hasstoragelocation.create(:item_id => 2, :item_type => 52, :storagelocation_id => 2, :amount => 3)
-Hasstoragelocation.create(:item_id => 3, :item_type => 53, :storagelocation_id => 1, :amount => 6)
+Hasstoragelocation.create(:batch_id => 1, :storagelocation_id => 1, :amount => 6)
+Hasstoragelocation.create(:batch_id => 2, :storagelocation_id => 1, :amount => 3)
+Hasstoragelocation.create(:batch_id => 2, :storagelocation_id => 2, :amount => 3)
+Hasstoragelocation.create(:batch_id => 3, :storagelocation_id => 1, :amount => 6)
 
 connection = ActiveRecord::Base.connection();
 connection.execute("INSERT INTO firms_users VALUES (1,2)")

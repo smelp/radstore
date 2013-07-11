@@ -13,6 +13,8 @@ class BatchesController < ApplicationController
 
   def show
     @batch = Batch.find(params[:id])
+    @substance = @batch.substance
+    @storagelocations = Hasstoragelocation.where(:batch_id => @batch.id)
   end
 
   def new
@@ -35,7 +37,7 @@ class BatchesController < ApplicationController
 
     if !@batchFound
 
-      if @batch.save and handleStorageLocations @batch.id, @substance.substanceType
+      if @batch.save and handleStorageLocations @batch.id
         flash[:success] = "Uusi erä luotu!"
         createEvent Event::NEW_BATCH
         redirect_to @substance
@@ -44,7 +46,7 @@ class BatchesController < ApplicationController
       end
 
     else
-      if handleStorageLocations @batchFound.id, @substance.substanceType
+      if handleStorageLocations @batchFound.id
         flash[:success] = "Lähetys lisätty erään!"
         createEvent Event::ADD_TO_BATCH
         redirect_to @substance
@@ -52,6 +54,13 @@ class BatchesController < ApplicationController
         render 'new'
       end
     end
+
+  end
+
+  def edit
+  end
+
+  def update
 
   end
 
@@ -110,12 +119,12 @@ class BatchesController < ApplicationController
 
   end
 
-  def handleStorageLocations( batchID, substanceType )
+  def handleStorageLocations( batchID )
     params[:new_storagelocations].each do |storage|
-      existingStorage = Hasstoragelocation.find_by_storagelocation_id_and_item_id_and_item_type(storage[0],batchID, substanceType)
+      existingStorage = Hasstoragelocation.find_by_storagelocation_id_and_batch_id(storage[0], batchID)
 
       if !existingStorage
-        Hasstoragelocation.create(:storagelocation_id => storage[0],:item_type => substanceType, :item_id => batchID, :amount => storage[1])
+        Hasstoragelocation.create(:storagelocation_id => storage[0], :batch_id => batchID, :amount => storage[1])
         true
       else
         existingStorage.amount += storage[1].to_f

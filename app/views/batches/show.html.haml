@@ -5,17 +5,28 @@
     = render "shared/nav"
 
 .container
-  .span8.offset2
-    .row.bordered
+  .span6.offset3.bordered
+    = link_to :controller => "batches", :action => "new", :substance_id => @substance.id do
+      %i.icon-plus
+      Lisää erä
 
-      %h2.bordered-bottom= @batch.batchNumber
-      %h2.bordered-bottom= @batch.amount
+    %table.table
+      %thead
+        %th Eränumero
+        %th Tyyppi
+        %th Varastopaikka
+        %th Määrä
 
-              
-      = link_to :controller => "batches", :action => "edit", :id => @batch.id do
-        %i.icon-edit
-        Muokkaa
-      
-      %a.nav-link{href: "#", onclick: "window.print()"}
-        %i.icon-print.margin-left10
-        Tulosta
+      %tbody
+        %tr
+          %td= link_to @batch.batchNumber, @batch
+          %td= @batch.batchType
+          - @storagelocations.each do |storage|
+            %td= storage.storageName
+            %td= storage.amount
+          %td
+            = link_to :controller => "batches", :action => "edit", :id => @batch.id do
+              %i.icon-edit
+          %td
+            = link_to @batch, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
+              %i.icon-remove

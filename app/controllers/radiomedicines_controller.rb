@@ -36,7 +36,7 @@ class RadiomedicinesController < ApplicationController
 
       if params[:new_generators]
         params[:new_generators].each do |generator|
-          batchToModify = Hasstoragelocation.find_by_item_id_and_item_type(generator[0], Substance::GENERATOR)
+          batchToModify = Hasstoragelocation.find_by_batch_id(generator[0])
           batchToModify.amount = batchToModify.amount - generator[1].to_f
           batchToModify.save
           Hasgenerator.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :generatorID => generator[0].to_f)
@@ -45,7 +45,7 @@ class RadiomedicinesController < ApplicationController
 
       if params[:new_others]
         params[:new_others].each do |other|
-          batchToModify = Hasstoragelocation.find_by_item_id_and_item_type(other[0], Substance::OTHER)
+          batchToModify = Hasstoragelocation.find_by_batch_id(other[0])
           batchToModify.amount -= other[1].to_f
           batchToModify.save
           Hasother.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :otherID => other[0].to_f)
@@ -56,7 +56,7 @@ class RadiomedicinesController < ApplicationController
 
       if params[:new_kits]
         params[:new_kits].each do |kit|
-          batchToModify = Hasstoragelocation.find_by_item_id_and_item_type(kit[0], Substance::KIT)
+          batchToModify = Hasstoragelocation.find_by_batch_id(kit[0])
           batchToModify.amount -= kit[1].to_f
           batchToModify.save
           Haskit.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :kitID => kit[0].to_f)
