@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
 
   create_table "batches", :force => true do |t|
     t.string   "batchNumber"
+    t.date     "expDate"
     t.integer  "substance_id"
     t.integer  "qualityControl"
     t.datetime "created_at",     :null => false

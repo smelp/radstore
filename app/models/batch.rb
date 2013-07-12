@@ -4,7 +4,7 @@ class Batch < ActiveRecord::Base
   has_many :hasstoragelocations
   has_many :storagelocations,  :through => :hasstoragelocations
 
-  attr_accessible :batchNumber, :substance_id, :qualityControl, :storagelocations
+  attr_accessible :batchNumber, :substance_id, :qualityControl, :storagelocations, :expDate
 
   def infoForSelectBox
     self.substance.genericName + ' Eränumero: ' + self.batchNumber.to_s() + ' Määrä: ' + self.amount.to_s()
@@ -22,6 +22,10 @@ class Batch < ActiveRecord::Base
     else
       'Ei suoritettu'
     end
+  end
+
+  def getEvents
+    Event.where('target_id='+self.id+' AND event_type < 7')
   end
 
   def batchType

@@ -4,13 +4,11 @@ class Radiomedicine < ActiveRecord::Base
   belongs_to :huslab
   has_many :hasothers, :foreign_key => 'productID'
   has_many :others, :through => :hasothers
-  has_many :hasgenerators, :foreign_key => 'productID'
-  has_many :generators, :through => :hasgenerators
   has_many :haskits, :foreign_key => 'productID'
   has_many :kits, :through => :haskits
   has_one  :storagelocation
 
-  attr_accessible :name, :others, :generators, :kits, :huslab, :storagelocation_id, :storagelocation
+  attr_accessible :name, :others, :kits, :huslab, :storagelocation_id, :storagelocation
 
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 1, :maximum => 50, :message => "Nimen täytyy olla 1-50 merkkiä pitkä" }
 

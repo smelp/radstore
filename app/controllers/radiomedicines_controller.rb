@@ -20,7 +20,6 @@ class RadiomedicinesController < ApplicationController
 
   def new
     @radiomedicine = Radiomedicine.new
-    @generators = Batch.joins(:substance).where('substances.substanceType' => Substance::GENERATOR)
     @others = Batch.joins(:substance).where('substances.substanceType' => Substance::OTHER)
     @kits = Batch.joins(:substance).where('substances.substanceType' => Substance::KIT)
     @event = Event.new
@@ -33,15 +32,6 @@ class RadiomedicinesController < ApplicationController
     @radiomedicine.huslab = @huslab
 
     if @radiomedicine.save
-
-      if params[:new_generators]
-        params[:new_generators].each do |generator|
-          batchToModify = Hasstoragelocation.find_by_batch_id(generator[0])
-          batchToModify.amount = batchToModify.amount - generator[1].to_f
-          batchToModify.save
-          Hasgenerator.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :generatorID => generator[0].to_f)
-        end
-      end
 
       if params[:new_others]
         params[:new_others].each do |other|

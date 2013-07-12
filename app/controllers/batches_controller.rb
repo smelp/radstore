@@ -133,13 +133,9 @@ class BatchesController < ApplicationController
     end
   end
 
-  def createEvent( event )
-    if event == Event::NEW_BATCH
-      Event.create(:target_id => @batch.id, :event_type => Event::NEW_BATCH, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature], :info => @batch.amount.to_s+" arrived")
-    elsif event == Event::ADD_TO_BATCH
-      Event.create(:target_id => @batchFound.id, :event_type => Event::ADD_TO_BATCH, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature],:info => @batch.amount.to_s+" arrived")
-    else
-
+  def createEvent( eventType )
+    params[:event].each do |event|
+      Event.create(:target_id => @batch.id, :event_type => eventType, :user_timestamp => event[2], :signature => event[0], :info => event[1]+' ;'+@batch.amount.to_s+" arrived")
     end
   end
 

@@ -13,15 +13,19 @@
         %fieldset.span3
           = f.label :batchNumber, "Eränumero"
           = f.text_field :batchNumber
+          = f.label :expDate, 'Viimeinen käyttöpäivä'
+          = f.text_field :expDate
           = fields_for @event do |e|
             = e.label :signature, 'Kirjaaja'
             = e.text_field :signature
-            = e.label :user_timestamp, 'Aika'
-            = e.text_field :user_timestamp, :placeholder=> 'Syötä aika muodossa DD/MM/YYYY hh:mm'
+            = e.label :info, 'Kommentti'
+            = e.text_field :info
+            = e.label :user_timestamp, 'Vastaanottopäivä'
+            = e.text_field :user_timestamp
           
           = hidden_field_tag :substance_id, @substance.id
       
-          = f.submit "Luo erä", class: "btn btn-large btn-primary"
+        = f.submit "Luo erä", class: "btn btn-large btn-primary"
       .span3
         %fieldset
           %label Varastopaikat
@@ -39,7 +43,7 @@
 
         %table.table.table#product_storagelocations
           %thead.green
-            %th Varastopaikat:
+            %th Varastopaikat ja määrät:
             %th
         %tbody
 

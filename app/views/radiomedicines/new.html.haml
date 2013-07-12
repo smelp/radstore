@@ -41,19 +41,6 @@
 
       .span3
         %fieldset
-          %label Generaattorit
-          - values = @generators.collect {|m| [ m.infoForSelectBox, m.id ] }
-
-          = select("post", "generator_id", values, {:prompt => 'Valitse generaattori'})
-
-          = fields_for :generator do |h|
-            = h.label :amount, "Syötä määrä"
-            = h.text_field :amount, min: 0, class: "span2"
-
-          = button_to_function "Lisää", "add_generator(event)", :class => "btn btn-mini"
-
-      .span3
-        %fieldset
           %label Kitit
           - values = @kits.collect {|m| [ m.infoForSelectBox, m.id ] }
 
@@ -82,12 +69,6 @@
         %table.table.table#product_others
           %thead.green
             %th Lisättävät apuaineet:
-            %th
-        %tbody
-
-        %table.table.table#product_generators
-          %thead.green
-            %th Lisättävät generaattorit:
             %th
         %tbody
 
