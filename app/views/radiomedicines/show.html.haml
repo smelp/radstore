@@ -10,22 +10,6 @@
 
       %h2.bordered-bottom= @radiomedicine.name
 
-      %h4 Generaattorit
-      %table.table
-        %thead
-          %th Eränumero
-
-          %tbody
-            - @generators.each do |generator|
-              %tr
-                %td= link_to generator.batchNumber, generator
-                %td
-                  = link_to :controller => "batches", :action => "edit", :id => generator.id do
-                    %i.icon-edit
-                %td
-                  = link_to generator, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
-                    %i.icon-remove
-
       %h4 Kitit
       %table.table
         %thead
@@ -64,15 +48,14 @@
           %th Nimi
 
           %tbody
-            - @eluates.each do |eluate|
-              %tr
-                %td= link_to eluate.name, eluate
-                %td
-                  = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
-                    %i.icon-edit
-                %td
-                  = link_to eluate, method: :delete, confirm: "Haluatko varmasti poistaa eluaatin?" do
-                    %i.icon-remove
+            %tr
+              %td= link_to @eluate.name, @eluate
+              %td
+                = link_to :controller => "eluates", :action => "edit", :id => @eluate.id do
+                  %i.icon-edit
+              %td
+                = link_to @eluate, method: :delete, confirm: "Haluatko varmasti poistaa eluaatin?" do
+                  %i.icon-remove
 
       = link_to :controller => "radiomedicines", :action => "edit", :id => @radiomedicine.id do
         %i.icon-edit

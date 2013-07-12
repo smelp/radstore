@@ -8,9 +8,8 @@ class Eluate < ActiveRecord::Base
   has_many :hasgenerators, :foreign_key => "productID"
   has_many :generators, :through => :hasgenerators
   belongs_to  :storagelocation
-  belongs_to  :radiomedicine
 
-  attr_accessible :name, :others, :generators, :huslab, :storagelocation_id, :storagelocation, :radiomedicine
+  attr_accessible :name, :others, :generators, :huslab, :storagelocation_id, :storagelocation
 
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }
   
@@ -19,7 +18,7 @@ class Eluate < ActiveRecord::Base
   end
 
   def self.find_unused
-    Eluate.find_by_sql('SELECT * FROM eluates WHERE radiomedicine_id IS NULL')
+    Eluate.find_by_sql('SELECT * FROM eluates WHERE NOT EXISTS (SELECT * FROM radiomedicines WHERE radiomedicines.eluate_id = eluates.id)')
   end
 
   def created

@@ -7,14 +7,11 @@ class Radiomedicine < ActiveRecord::Base
   has_many :haskits, :foreign_key => 'productID'
   has_many :kits, :through => :haskits
   has_one  :storagelocation
+  belongs_to  :eluate
 
-  attr_accessible :name, :others, :kits, :huslab, :storagelocation_id, :storagelocation
+  attr_accessible :name, :others, :kits, :huslab, :storagelocation_id, :storagelocation, :eluate, :eluate_id
 
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 1, :maximum => 50, :message => "Nimen täytyy olla 1-50 merkkiä pitkä" }
-
-  def eluates
-    Eluate.find_all_by_radiomedicine_id(self.id)
-  end
 
   def created
     @event = Event.find_by_target_id_and_event_type(self.id, Event::NEW_RADIOMEDICINE)

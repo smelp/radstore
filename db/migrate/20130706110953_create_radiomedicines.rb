@@ -3,6 +3,7 @@ class CreateRadiomedicines < ActiveRecord::Migration
     create_table :radiomedicines do |t|
       t.string :name
       t.integer :storagelocation_id
+      t.references :eluate
 
       t.timestamps
     end

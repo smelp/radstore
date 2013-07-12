@@ -12,10 +12,9 @@ class RadiomedicinesController < ApplicationController
 
   def show
     @radiomedicine = Radiomedicine.find(params[:id])
-    @generators = @radiomedicine.generators
     @others = @radiomedicine.others
     @kits = @radiomedicine.kits
-    @eluates = @radiomedicine.eluates
+    @eluate = @radiomedicine.eluate
   end
 
   def new
@@ -50,14 +49,6 @@ class RadiomedicinesController < ApplicationController
           batchToModify.amount -= kit[1].to_f
           batchToModify.save
           Haskit.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :kitID => kit[0].to_f)
-        end
-      end
-
-      if params[:new_eluates]
-        params[:new_eluates].each do |eluate|
-          @eluateToUpdate = Eluate.find_by_id(eluate[0])
-          @eluateToUpdate.radiomedicine = @radiomedicine
-          @eluateToUpdate.save
         end
       end
 

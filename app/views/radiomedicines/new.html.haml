@@ -16,6 +16,8 @@
           = f.text_field :name
           = f.label :storagelocation_id, 'Varastopaikkka'
           = f.select :storagelocation_id, @storagelocations.collect {|m| [ m.name, m.id ] }
+          = f.label :eluate_id, 'Eluaatti'
+          = f.select :eluate_id, @eluates.collect {|m| [ m.name, m.id ] }
 
           = fields_for @event do |e|
             = e.label :signature, 'Kirjaaja'
@@ -51,18 +53,6 @@
             = h.text_field :amount, min: 0, class: "span2"
 
           = button_to_function "Lisää", "add_kit(event)", :class => "btn btn-mini"
-
-      .span3
-        %fieldset
-          %label Eluaatit
-          - values = @eluates.collect {|m| [ m.infoForSelectBox, m.id ] }
-
-          = select("post", "eluate_id", values, {:prompt => 'Valitse eluaatti'})
-
-          //= fields_for :eluate do |h|
-
-          = button_to_function "Lisää", "add_eluate(event)", :class => "btn btn-mini"
-
 
       .span4
 
