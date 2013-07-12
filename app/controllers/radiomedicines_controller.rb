@@ -19,10 +19,10 @@ class RadiomedicinesController < ApplicationController
 
   def new
     @radiomedicine = Radiomedicine.new
-    @others = Batch.joins(:substance).where('substances.substanceType' => Substance::OTHER)
-    @kits = Batch.joins(:substance).where('substances.substanceType' => Substance::KIT)
+    @others = Hasstoragelocation.find_all_by_batchType(Substance::OTHER)
+    @kits = Hasstoragelocation.find_all_by_batchType(Substance::KIT)
     @event = Event.new
-    @eluates = Eluate.find_unused
+    @eluates = Eluate.all
     @storagelocations = Storagelocation.all
   end
 
@@ -36,8 +36,8 @@ class RadiomedicinesController < ApplicationController
         params[:new_others].each do |other|
           batchToModify = Hasstoragelocation.find_by_batch_id(other[0])
           batchToModify.amount -= other[1].to_f
+          Hasother.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :otherID => other[0].to_f, :amount => other[1])
           batchToModify.save
-          Hasother.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :otherID => other[0].to_f)
         end
       end
 
@@ -47,8 +47,8 @@ class RadiomedicinesController < ApplicationController
         params[:new_kits].each do |kit|
           batchToModify = Hasstoragelocation.find_by_batch_id(kit[0])
           batchToModify.amount -= kit[1].to_f
+          Haskit.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :kitID => kit[0].to_f, :amount => kit[1])
           batchToModify.save
-          Haskit.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :kitID => kit[0].to_f)
         end
       end
 

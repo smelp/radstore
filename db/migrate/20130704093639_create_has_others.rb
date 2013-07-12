@@ -4,6 +4,9 @@ class CreateHasOthers < ActiveRecord::Migration
       t.integer :ownerType
       t.integer :productID
       t.integer :otherID
+      t.integer :volume
+      t.integer :amount
+      t.integer :fromStorage
 
       t.timestamps
     end

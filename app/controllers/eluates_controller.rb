@@ -18,8 +18,8 @@ class EluatesController < ApplicationController
 
   def new
     @eluate = Eluate.new
-    @generators = Batch.joins(:substance).where('substances.substanceType' => Substance::GENERATOR)
-    @others = Batch.joins(:substance).where('substances.substanceType' => Substance::OTHER)
+    @generators = Hasstoragelocation.find_all_by_batchType(Substance::GENERATOR)
+    @others = Hasstoragelocation.find_all_by_batchType(Substance::OTHER)
     @event = Event.new
     @storagelocations = Storagelocation.all
   end
@@ -35,7 +35,7 @@ class EluatesController < ApplicationController
           batchToModify = Hasstoragelocation.find_by_batch_id(generator[0])
           batchToModify.amount = batchToModify.amount - generator[1].to_f
           batchToModify.save
-          Hasgenerator.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :generatorID => generator[0].to_f)
+          Hasgenerator.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :generatorID => generator[0].to_f, :amount => generator[1], :fromStorage => batchToModify.id)
         end
       end
 
@@ -44,7 +44,7 @@ class EluatesController < ApplicationController
           batchToModify = Hasstoragelocation.find_by_batch_id(other[0])
           batchToModify.amount -= other[1].to_f
           batchToModify.save
-          Hasother.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :otherID => other[0].to_f)
+          Hasother.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :otherID => other[0].to_f, :amount => other[1], :fromStorage => batchToModify.id)
         end
       end
 
@@ -61,6 +61,32 @@ class EluatesController < ApplicationController
   end
 
   def update
+  end
+
+  def destroy
+    othersToReturn = Hasother.find_all_by_ownerType_and_productID(Substance::ELUATE, @eluate.id)
+    generatorsToReturn = Hasgenerator.find_all_by_ownerType_and_productID(Substance::ELUATE, @eluate.id)
+
+    othersToReturn.each do |other|
+      tempRow = Hasstoragelocation.find_by_id(other.fromStorage)
+      tempRow.amount += other.amount
+      tempRow.save
+    end
+
+    generatorsToReturn.each do |generator|
+      tempRow = Hasstoragelocation.find_by_id(generator.fromStorage)
+      tempRow.amount += generator.amount
+      tempRow.save
+    end
+
+    Hasgenerator.destroy_all(:ownerType => Substance::ELUATE, :productID => @eluate.id)
+    Hasother.destroy_all(:ownerType => Substance::ELUATE, :productID => @eluate.id)
+    @eluate.destroy
+
+    Event
+
+    flash[:success] = "Eluaatti poistettu."
+    redirect_to @huslab
   end
 
   private
@@ -101,12 +127,10 @@ class EluatesController < ApplicationController
   end
 
   def createEvent( event )
-    if event == Event::NEW_ELUATE
-      Event.create(:target_id => @eluate.id, :event_type => event, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature])
-    elsif event == Event::MODIFY_ELUATE
-      Event.create(:target_id => @eluate.id, :event_type => event, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature])
-    else
+    if event == Event::ELUATE_MODIFIED
 
+    else
+      Event.create(:target_id => @eluate.id, :event_type => event, :user_timestamp => params[:event][:user_timestamp], :signature => params[:event][:signature])
     end
   end
 

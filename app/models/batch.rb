@@ -4,7 +4,7 @@ class Batch < ActiveRecord::Base
   has_many :hasstoragelocations
   has_many :storagelocations,  :through => :hasstoragelocations
 
-  attr_accessible :batchNumber, :substance_id, :qualityControl, :storagelocations, :expDate
+  attr_accessible :batchNumber, :substance_id, :qualityControl, :storagelocations, :expDate, :hasstoragelocations
 
   def infoForSelectBox
     self.substance.genericName + ' Eränumero: ' + self.batchNumber.to_s() + ' Määrä: ' + self.amount.to_s()

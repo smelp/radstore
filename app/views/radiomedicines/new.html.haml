@@ -29,7 +29,7 @@
 
 
           %label Muut
-          - values = @others.collect {|m| [ m.infoForSelectBox, m.id ] }
+          - values = @others.collect {|m| [ m.infoForSelectBox, m.batch_id ] }
 
           = select("post", "other_id", values, {:prompt => 'Valitse muu'})
 
@@ -44,7 +44,7 @@
       .span3
         %fieldset
           %label Kitit
-          - values = @kits.collect {|m| [ m.infoForSelectBox, m.id ] }
+          - values = @kits.collect {|m| [ m.infoForSelectBox, m.batch_id ] }
 
           = select("post", "kit_id", values, {:prompt => 'Valitse kitti'})
 
@@ -65,12 +65,6 @@
         %table.table.table#product_kits
           %thead.green
             %th Lisättävät kitit:
-            %th
-        %tbody
-
-        %table.table.table#product_eluates
-          %thead.green
-            %th Lisättävät eluaattit:
             %th
         %tbody
 

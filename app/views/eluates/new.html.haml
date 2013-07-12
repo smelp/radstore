@@ -27,7 +27,7 @@
 
 
           %label Muut
-          - values = @others.collect {|m| [ m.infoForSelectBox, m.id ] }
+          - values = @others.collect {|m| [ m.infoForSelectBox, m.batch_id ] }
 
           = select("post", "other_id", values, {:prompt => 'Valitse raaka-aine'})
 
@@ -42,7 +42,7 @@
       .span3
         %fieldset
           %label Generaattorit
-          - values = @generators.collect {|m| [ m.infoForSelectBox, m.id ] }
+          - values = @generators.collect {|m| [ m.infoForSelectBox, m.batch_id ] }
 
           = select("post", "generator_id", values, {:prompt => 'Valitse raaka-aine'})
 

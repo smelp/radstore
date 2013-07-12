@@ -4,6 +4,9 @@ class CreateHasKits < ActiveRecord::Migration
       t.integer :ownerType
       t.integer :productID
       t.integer :kitID
+      t.integer :volume
+      t.integer :amount
+      t.integer :fromStorage
 
       t.timestamps
     end

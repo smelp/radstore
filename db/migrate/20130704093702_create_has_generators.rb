@@ -4,6 +4,9 @@ class CreateHasGenerators < ActiveRecord::Migration
       t.integer :ownerType
       t.integer :productID
       t.integer :generatorID
+      t.integer :volume
+      t.integer :amount
+      t.integer :fromStorage
 
       t.timestamps
     end

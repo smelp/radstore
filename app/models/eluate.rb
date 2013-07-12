@@ -17,10 +17,6 @@ class Eluate < ActiveRecord::Base
     self.name
   end
 
-  def self.find_unused
-    Eluate.find_by_sql('SELECT * FROM eluates WHERE NOT EXISTS (SELECT * FROM radiomedicines WHERE radiomedicines.eluate_id = eluates.id)')
-  end
-
   def created
     @event = Event.find_by_target_id_and_event_type(self.id, Event::NEW_ELUATE)
     @event.user_timestamp

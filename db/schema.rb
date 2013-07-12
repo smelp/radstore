@@ -126,6 +126,9 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.integer  "ownerType"
     t.integer  "productID"
     t.integer  "generatorID"
+    t.integer  "volume"
+    t.integer  "amount"
+    t.integer  "fromStorage"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -134,8 +137,11 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.integer  "ownerType"
     t.integer  "productID"
     t.integer  "kitID"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "volume"
+    t.integer  "amount"
+    t.integer  "fromStorage"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "hasmaterials", :force => true do |t|
@@ -153,8 +159,11 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.integer  "ownerType"
     t.integer  "productID"
     t.integer  "otherID"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "volume"
+    t.integer  "amount"
+    t.integer  "fromStorage"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "hasrecipes", :force => true do |t|
@@ -170,6 +179,7 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.integer  "storagelocation_id"
     t.integer  "batch_id"
     t.integer  "amount"
+    t.integer  "batchType"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
   end
