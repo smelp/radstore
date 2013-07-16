@@ -26,9 +26,9 @@
                 -if batch.qualityControl
                   %td= batch.qualityStatus
                 -else
-                  %td
-                    = link_to :controller => "batches", :action => "qualityCheck", :id => batch.id do
-                      Kirjaa laadunvarmistus
+                  %td{:id => 'qualityCheckContainer'}
+                    = link_to 'Tee laadunvarmistus','', :onclick => 'revealQualityCheckForm(event,'+batch.id.to_s+')'
+
                 %td
                   = link_to :controller => "batches", :action => "edit", :id => batch.id do
                     %i.icon-edit

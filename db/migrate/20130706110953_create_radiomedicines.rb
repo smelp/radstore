@@ -4,6 +4,8 @@ class CreateRadiomedicines < ActiveRecord::Migration
       t.string :name
       t.integer :storagelocation_id
       t.references :eluate
+      t.decimal :radioactivity
+      t.decimal :volume
 
       t.timestamps
     end

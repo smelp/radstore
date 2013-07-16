@@ -9,7 +9,7 @@ class Radiomedicine < ActiveRecord::Base
   has_one  :storagelocation
   belongs_to  :eluate
 
-  attr_accessible :name, :others, :kits, :huslab, :storagelocation_id, :storagelocation, :eluate, :eluate_id
+  attr_accessible :name, :others, :kits, :huslab, :storagelocation_id, :storagelocation, :eluate, :eluate_id, :radioactivity, :volume
 
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 1, :maximum => 50, :message => "Nimen täytyy olla 1-50 merkkiä pitkä" }
 

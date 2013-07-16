@@ -44,6 +44,7 @@
           %thead
             %th Nimi
             %th Luotu
+            %th Aktiivisuus
             %th Varastopaikka
 
           %tbody
@@ -51,6 +52,7 @@
               %tr
                 %td= link_to eluate.name, eluate
                 %td.span2= eluate.created.strftime("%H:%M")
+                %td.span1{:id => 'activitet'}= eluate.radioactivity
                 %td.span2= eluate.storagelocation.name
                 %td.span1
                   = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
@@ -73,6 +75,7 @@
           %thead
             %th Nimi
             %th Luotu
+            %th Aktiivisuus
             %th Varastopaikka
 
           %tbody
@@ -80,6 +83,7 @@
               %tr
                 %td= link_to radiomedicine.name, radiomedicine
                 %td.span2= radiomedicine.created.strftime("%H:%M")
+                %td= radiomedicine.radioactivity
                 %td.span2= radiomedicine.storagelocation.name
                 %td.span1
                   = link_to :controller => "radiomedicines", :action => "edit", :id => radiomedicine.id do

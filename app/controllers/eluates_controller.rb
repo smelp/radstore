@@ -83,7 +83,7 @@ class EluatesController < ApplicationController
     Hasother.destroy_all(:ownerType => Substance::ELUATE, :productID => @eluate.id)
     @eluate.destroy
 
-    Event
+    createEvent Event::ELUATE_REMOVED
 
     flash[:success] = "Eluaatti poistettu."
     redirect_to @huslab

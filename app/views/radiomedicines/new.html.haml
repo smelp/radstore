@@ -18,6 +18,10 @@
           = f.select :storagelocation_id, @storagelocations.collect {|m| [ m.name, m.id ] }
           = f.label :eluate_id, 'Eluaatti'
           = f.select :eluate_id, @eluates.collect {|m| [ m.name, m.id ] }
+          = f.label :radioactivity, 'Aktiivisuus'
+          = f.text_field :radioactivity
+          = f.label :volume, 'Tilavuus'
+          = f.text_field :volume
 
           = fields_for @event do |e|
             = e.label :signature, 'Kirjaaja'

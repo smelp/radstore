@@ -25,8 +25,16 @@ class BatchesController < ApplicationController
 
   def qualityCheck
     @batch = Batch.find_by_id(params[:id])
-    @batch.qualityControl = Event::QUALITY_CHECK_OK
+
+    if params[:result] == 'OK'
+      @batch.qualityControl = Event::QUALITY_CHECK_OK
+    else
+      @batch.qualityControl = Event::QUALITY_CHECK_NOK
+    end
+
     @batch.save
+
+    Event.create(:target_id => @batch.id, :event_type =>@batch.qualityControl, :signature => params[:signature])
     redirect_to :controller => 'substances', :action => 'show', :id => 1
   end
 

@@ -3,6 +3,8 @@ class CreateEluates < ActiveRecord::Migration
     create_table :eluates do |t|
       t.string :name
       t.references :storagelocation
+      t.decimal :radioactivity
+      t.decimal :volume
 
       t.timestamps
     end
