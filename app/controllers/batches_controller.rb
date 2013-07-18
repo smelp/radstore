@@ -14,7 +14,7 @@ class BatchesController < ApplicationController
   def show
     @batch = Batch.find(params[:id])
     @substance = @batch.substance
-    @storagelocations = @batch.hasstoragelocations#Hasstoragelocation.where(:batch_id => @batch.id)
+    @storagelocations = @batch.hasstoragelocations
   end
 
   def new

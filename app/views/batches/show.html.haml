@@ -20,7 +20,7 @@
       %tbody
         %tr
           %td= link_to @batch.batchNumber, @batch
-          %td= @batch.batchType
+          %td= @batch.substance.substanceType
           - @storagelocations.each do |storage|
             %td= storage.storageName
             %td= storage.amount

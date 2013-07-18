@@ -23,7 +23,7 @@
         - @substances.each do |substance|
           %tr
             %td= link_to substance.genericName, substance
-            %td= substance.myType
+            %td= substance.substanceType
             %td
               = link_to :controller => "substances", :action => "edit", :id => substance.id do
                 %i.icon-edit

@@ -13,10 +13,16 @@
         = form_for @substance do |f|
           //= render 'shared/material_error_messages'
           %p
-            = f.label :genericName, "Nimi"
+            = f.label :genericName, "Geneerinen nimi"
             = f.text_field :genericName
+            = f.label :eluateName, 'Eluaattinimi'
+            = f.text_field :eluateName
+            = f.label :manufacturer, "Valmistaja"
+            = f.text_field :manufacturer
+            = f.label :supplier, "Toimittaja"
+            = f.text_field :supplier
             = f.label :substanceType, "Tyyppi"
-            = f.text_field :substanceType
+            = f.select :substanceType, ['Generaattori','Kitti','Muu'], :selected => @substance.substanceType
 
             
           = f.submit "Tallenna", class: "btn btn-large btn-primary"

@@ -22,7 +22,7 @@
               %tr
                 %td= link_to batch.batchNumber, batch
                 %td= batch.amount
-                %td= batch.batchType
+                %td= batch.substance.substanceType
                 -if batch.qualityControl
                   %td= batch.qualityStatus
                 -else
