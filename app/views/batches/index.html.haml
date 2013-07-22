@@ -25,7 +25,7 @@
           %tr
             %td= link_to batch.batchNumber, batch
             %td= batch.amount
-            %td= batch.batchType
+            %td= batch..substance.substanceType
             %td
               = link_to :controller => "batches", :action => "edit", :id => batch.id do
                 %i.icon-edit

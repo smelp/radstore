@@ -32,6 +32,24 @@ class SubstancesController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if params[:substance][:substanceType] == Substance::KIT
+
+
+    end
+    if @substance.update_attributes(params[:substance])
+      @substance.save
+      flash[:success] = 'Aineen '+@substance.genericName+' tiedot päivitetty'
+      redirect_to @substance
+
+    else
+      flash[:error] = 'Aineen '+@substance.genericName+' tietoja ei voity päivittää'
+    end
+  end
+
   private
 
   def signed_in_user

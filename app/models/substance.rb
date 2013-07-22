@@ -11,15 +11,15 @@ class Substance < ActiveRecord::Base
   belongs_to :huslab
   has_many :batches
 
-  attr_accessible :genericName, :eluateName, :huslab, :batches, :substanceType, :huslab_id
+  attr_accessible :genericName, :eluateName, :huslab, :batches, :substanceType, :huslab_id, :supplier, :manufacturer
 
-  BATCH = 50
-  ELUATE = 60
-  RADIOMEDICINE = 70
+  BATCH = 'Erä'
+  ELUATE = 'Eluaatti'
+  RADIOMEDICINE = 'Radiolääke'
 
-  GENERATOR = 51
-  KIT = 52
-  OTHER = 53
+  GENERATOR = 'Generaattori'
+  KIT = 'Kitti'
+  OTHER = 'Muu'
 
   def batchCount
     count = 0
@@ -29,14 +29,5 @@ class Substance < ActiveRecord::Base
     count
   end
 
-  def myType
-    if self.substanceType == Substance::GENERATOR
-      'Generaattori'
-    elsif self.substanceType == Substance::KIT
-      'Kitti'
-    else
-      'Muu'
-    end
-  end
 
 end

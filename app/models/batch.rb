@@ -29,8 +29,4 @@ class Batch < ActiveRecord::Base
     Event.where('target_id='+self.id+' AND event_type < 7')
   end
 
-  def batchType
-    self.substance.myType
-  end
-
 end
