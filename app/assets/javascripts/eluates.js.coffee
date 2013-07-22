@@ -12,7 +12,7 @@ window.add_other = (e) ->
 
 window.add_kit = (e) ->
   choice = $('#post_kit_id').get(0)
-  amount = $('#other_amount').get(0).value
+  amount = $('#kit_amount').get(0).value
   createAddition(choice, amount, "kits")
   $('#kit_amount').get(0).value = ''
 
@@ -38,7 +38,7 @@ createAddition = (choice, amount, typeString) ->
   i_elem.setAttribute("class", "icon-remove")
 
   for option in choice
-    if option.value == val && option.innerHTML.contains('Valitse') != 1 && amount != ""
+    if option.value == val && option.innerHTML.indexOf('Valitse') != 1 && amount != ""
       td_elem.innerHTML = option.innerHTML + ", " + amount + "</br>"
       a_elem.href = "#"
       a_elem.setAttribute("class","nav-link")
@@ -59,3 +59,9 @@ createAddition = (choice, amount, typeString) ->
 
   console.log div
   console.log amount
+
+callEluateCal = () ->
+  $('#datetimepicker-eluate').datetimepicker
+    language: 'fi'
+    
+setTimeout(callEluateCal, 200)

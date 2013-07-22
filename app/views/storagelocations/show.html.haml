@@ -1,21 +1,53 @@
 - provide(:title, @storagelocation.name)
 
 .container
-  .span8.offset2
+  .span12
     = render "shared/nav"
 
 .container
-  .span8.offset2
+  .span12
     .row.bordered
+      %h3
+        = @storagelocation.name
+        \:
+      %table.table.table-bordered#myTable
+        %thead
+          %tr
+            %th Tyyppi
+            %th Nimi
+            %th Erä
+            %th Määrä
+            %th Vanhenemis pvm
+        %tbody
+          - @storagelocation.batches.each do |batch|
+            %tr
+              - if batch.batchType == 'Generaattori'
+                %td.alert.alert-success= batch.batchType
+              - elsif batch.batchType == 'Kitti'
+                %td.alert.alert-info= batch.batchType
+              - else
+                %td.gray= batch.batchType  
+              %td
+                = link_to batch.substance.genericName, batch.substance
+              %td
+                = link_to batch.batchNumber, batch
+              -if batch.amount < 10
+                %td.alert.alert-error
+                  = batch.amount
+                  %span.pull-right !!!
+              - else
+                %td= batch.amount
+              - if batch.expDate < Date.today
+                %td.alert.alert-error
+                  = batch.expDate
+                  %span.pull-right !!!
+              - else
+                %td= batch.expDate
 
-      %h2.bordered-bottom= @storagelocation.name
-      %h2.bordered-bottom= @storagelocation.info
+  = link_to :controller => "storagelocations", :action => "edit", :id => @storagelocation.id do
+    %i.icon-edit
+    Muokkaa
 
-              
-      = link_to :controller => "storagelocations", :action => "edit", :id => @storagelocation.id do
-        %i.icon-edit
-        Muokkaa
-      
-      %a.nav-link{href: "#", onclick: "window.print()"}
-        %i.icon-print.margin-left10
-        Tulosta
+  %a.nav-link{href: "#", onclick: "window.print()"}
+    %i.icon-print.margin-left10
+    Tulosta

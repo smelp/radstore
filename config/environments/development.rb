@@ -34,4 +34,8 @@ UserTutorial::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # !!! THESE ARE TO FIX ISSUE 5145, FOR NOW
+  # config.assets.debug = false
+  config.serve_static_assets = false
 end

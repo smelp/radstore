@@ -1,8 +1,9 @@
 # encoding: utf-8
 class Batch < ActiveRecord::Base
+
   belongs_to :substance
   has_many :hasstoragelocations
-  has_many :storagelocations,  :through => :hasstoragelocations
+  has_many :storagelocations, :through => :hasstoragelocations
 
   attr_accessible :batchNumber, :substance_id, :qualityControl, :storagelocations, :expDate, :hasstoragelocations
 

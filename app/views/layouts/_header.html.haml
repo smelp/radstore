@@ -1,58 +1,79 @@
-%header.navbar.navbar-fixed-top
+%header.navbar.navbar-fixed-top.navbar-inverse
   .navbar-inner
-    %div.container
-      = link_to "pk-helppi", root_path, id: "logo"
-      %nav
-        %ul.nav.pull-right
-          %li.divider-vertical
-          %li
-            - if current_user && current_user.primary_firm
-              - if current_user.primary_firm.resource_type == "Bakery"
-                = link_to :controller => "bakeries", :action => "show", :id => current_user.primary_firm.id do
-                  %i.icon-home.icon-white
-                  Koti
-              - elsif current_user.primary_firm.resource_type == "Huslab"
-                = link_to :controller => "huslabs", :action => "show", :id => current_user.primary_firm.id do
-                  %i.icon-home.icon-white
-                  Koti
-            - else 
-              - if current_user && current_user.firms && current_user.firms.first
-                - if current_user.firms.first.resource_type == "Bakery"
-                  = link_to :controller => "bakeries", :action => "show", :id => current_user.firms.first.id do
+    %div
+      .pull-left
+        - if false
+          %small.center#current-firm
+            Yritys:
+            - if current_user.primary_firm
+              = link_to current_user.primary_firm.name, current_user.primary_firm
+            - else
+              = link_to current_user.firms.first.name, current_user.firms.first
+      .pull-right
+        - if signed_in? 
+          %small.center#logged-in-user
+            Kirjautunut:
+            = link_to current_user.name, current_user
+          %small.center#cur-time
+            |
+            = Time.now.strftime("%d.%m.%Y %H:%M")
+      %div.container
+        = link_to image_tag("logo.png"), root_path, { id: "logo" }
+        %nav
+          %ul.nav.pull-right
+            %li.divider-vertical
+            %li
+              - if current_user && current_user.primary_firm
+                - if current_user.primary_firm.resource_type == "Bakery"
+                  = link_to :controller => "bakeries", :action => "show", :id => current_user.primary_firm.id do
                     %i.icon-home.icon-white
-                    Koti
-                - elsif current_user.firms.first.resource_type == "Huslab"
-                  = link_to :controller => "huslabs", :action => "show", :id => current_user.firms.first.id do
+                - elsif current_user.primary_firm.resource_type == "Huslab"
+                  = link_to :controller => "huslabs", :action => "show", :id => current_user.primary_firm.id do
                     %i.icon-home.icon-white
-                    Koti
-          - if signed_in?
-            - if is_admin?
+              - else 
+                - if current_user && current_user.firms && current_user.firms.first
+                  - if current_user.firms.first.resource_type == "Bakery"
+                    = link_to :controller => "bakeries", :action => "show", :id => current_user.firms.first.id do
+                      %i.icon-home.icon-white
+                  - elsif current_user.firms.first.resource_type == "Huslab"
+                    = link_to :controller => "huslabs", :action => "show", :id => current_user.firms.first.id do
+                      %i.icon-home.icon-white
+            - if signed_in?
+              %li#fat-menu.dropdown 
+                %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} 
+                  %i.icon-cog.icon-white
+                  <b class="caret"></b> 
+                
+                %ul.dropdown-menu{role:"menu"}
+                  - if is_admin?
+                    %li
+                      = link_to controller: :users, action: :index do
+                        %i.icon-user.icon
+                        Käyttäjät
+                  %li
+                    = link_to controller: :firms, action: :index do
+                      %i.icon-list.icon
+                      Yritykset
+                  %li
+                    = link_to controller: :users, action: :show , id: current_user.id do
+                      %i.icon-user.icon
+                      Profiili
+                  %li
+                    = link_to edit_user_path(current_user) do
+                      %i.icon-wrench.icon
+                      Asetukset
+                  %li.divider
+                  %li
+                    = link_to signout_path, method: "delete" do
+                      %i.icon-off.icon
+                      Kirjaudu ulos
+            - else
               %li
-                = link_to controller: :users, action: :index do
-                  %i.icon-user.icon-white
-                  Käyttäjät             
-            %li
-              = link_to :controller => "firms", :action => "index" do
-                %i.icon-list.icon-white
-                Yritykset
-            %li#fat-menu.dropdown 
-              %a{class: "dropdown-toggle", href: "#", data: {toggle: "dropdown"}} 
-                %i.icon-cog.icon-white
-                <b class="caret"></b> 
-              
-              %ul.dropdown-menu
-                = link_to "Profiili", current_user
-                = link_to "Asetukset", edit_user_path(current_user)
-                %li.divider
-                %li= link_to "Kirjaudu ulos", signout_path, method: "delete"
-          - else
-            %li
-              = link_to controller: :sessions, action: :new do
-                %i.icon-chevron-right.icon-white
-                Kirjaudu
-          %small.center= Time.now.strftime("%d.%m.%Y %H:%M")
-        %ul.nav.pull-right
-          - if current_user && current_user.primary_firm && current_user.primary_firm.resource_type == "Bakery"
-            = render "layouts/bakery"
-          - elsif current_user && current_user.primary_firm && current_user.primary_firm.resource_type == "Huslab"
-            = render "layouts/huslab"
+                = link_to controller: :sessions, action: :new do
+                  %i.icon-chevron-right.icon-white
+                  Kirjaudu
+          %ul.nav.pull-right
+            - if current_user && current_user.primary_firm && current_user.primary_firm.resource_type == "Bakery"
+              = render "layouts/bakery"
+            - elsif current_user && current_user.primary_firm && current_user.primary_firm.resource_type == "Huslab"
+              = render "layouts/huslab"

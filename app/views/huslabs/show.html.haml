@@ -1,94 +1,86 @@
 - provide(:title, @firm.name)
 
-.span12.bordered-top
-  %h2= @firm.name
-  .row
-    .span5
-      .row.well.blue
-        .row
-        .span2
-          %h2 Raaka-aineet
+.span12.bordered-top#main-container
+  .span5
+    .row.well.gray
+      %h3 Raaka-aineet
 
-          = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
-            %i.icon-plus
-            Lisää raaka-aine
+      = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
+        %i.icon-plus
+        Lisää raaka-aine
 
-        %table.table.table-condensed.table-striped.table-bordered
-          %thead
-            %th Nimi
-            %th Määrä
+      %table.table.table-condensed.table-striped.table-bordered
+        %thead
+          %th Nimi
+          %th Määrä
 
-          %tbody
-            - @substances.each do |substance|
-              %tr
-                %td.span4= link_to substance.genericName, substance
-                %td.span3= substance.batchCount
-                %td.span1
-                  = link_to :controller => "substances", :action => "edit", :id => substance.id do
-                    %i.icon-edit
-                %td
-                  = link_to substance, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen?" do
-                    %i.icon-remove
+        %tbody
+          - @substances.each do |substance|
+            %tr
+              %td.span4= link_to substance.genericName, substance
+              %td.span3= substance.batchCount
+              %td.span1
+                = link_to :controller => "substances", :action => "edit", :id => substance.id do
+                  %i.icon-edit
+              %td
+                = link_to substance, method: :delete, confirm: "Haluatko varmasti poistaa raaka-aineen?" do
+                  %i.icon-remove
 
-    .span5.offset1
-      .row.well.green
-        .row
-        .span2
-          %h2 Eluaatit
+  .span5.offset1
+    .row.well.gray
+      %h3 Eluaatit
 
-          = link_to :controller => "eluates", :action => "new", :huslab_id => @huslab.id do
-            %i.icon-plus
-            Lisää eluaatti
+      = link_to :controller => "eluates", :action => "new", :huslab_id => @huslab.id do
+        %i.icon-plus
+        Lisää eluaatti
 
-        %table.table.table-condensed.table-striped.table-bordered
-          %thead
-            %th Nimi
-            %th Luotu
-            %th Aktiivisuus
-            %th Varastopaikka
+      %table.table.table-condensed.table-striped.table-bordered
+        %thead
+          %th Nimi
+          %th Luotu
+          %th Aktiivisuus
+          %th Varastopaikka
 
-          %tbody
-            - @eluates.each do |eluate|
-              %tr
-                %td= link_to eluate.name, eluate
-                %td.span2= eluate.created.strftime("%H:%M")
-                %td.span1{:id => 'activitet'}= eluate.radioactivity
-                %td.span2= eluate.storagelocation.name
-                %td.span1
-                  = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
-                    %i.icon-edit
-                %td
-                  = link_to eluate, method: :delete, confirm: "Haluatko varmasti poistaa eluaatin?" do
-                    %i.icon-remove
+        %tbody
+          - @eluates.each do |eluate|
+            %tr
+              %td= link_to eluate.name, eluate
+              %td.span2= eluate.created.strftime("%H:%M")
+              %td.span1{:id => 'activitet'}= eluate.radioactivity
+              %td.span2= eluate.storagelocation.name
+              %td.span1
+                = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
+                  %i.icon-edit
+              %td
+                = link_to eluate, method: :delete, confirm: "Haluatko varmasti poistaa eluaatin?" do
+                  %i.icon-remove
 
-    .span5.offset1
-      .row.well.blue
-        .row
-        .span2
-          %h2 Radiolääkkeet
+  .span5.offset1
+    .row.well.gray
+      %h3 Radiolääkkeet
 
-          = link_to :controller => "radiomedicines", :action => "new", :huslab_id => @huslab.id do
-            %i.icon-plus
-            Lisää radiolääke
+      = link_to :controller => "radiomedicines", :action => "new", :huslab_id => @huslab.id do
+        %i.icon-plus
+        Lisää radiolääke
 
-        %table.table.table-condensed.table-striped.table-bordered
-          %thead
-            %th Nimi
-            %th Luotu
-            %th Aktiivisuus
-            %th Varastopaikka
+      %table.table.table-condensed.table-striped.table-bordered
+        %thead
+          %th Nimi
+          %th Luotu
+          %th Aktiivisuus
+          %th Varastopaikka
 
-          %tbody
-            - @radiomedicines.each do |radiomedicine|
-              %tr
-                %td= link_to radiomedicine.name, radiomedicine
-                %td.span2= radiomedicine.created.strftime("%H:%M")
-                %td= radiomedicine.radioactivity
-                %td.span2= radiomedicine.storagelocation.name
-                %td.span1
-                  = link_to :controller => "radiomedicines", :action => "edit", :id => radiomedicine.id do
-                    %i.icon-edit
-                %td
-                  = link_to radiomedicine, method: :delete, confirm: "Haluatko varmasti poistaa radiolääkkeen?" do
-                    %i.icon-remove
+        %tbody
+          - @radiomedicines.each do |radiomedicine|
+            %tr
+              %td= link_to radiomedicine.name, radiomedicine
+              %td.span2= radiomedicine.created.strftime("%H:%M")
+              %td= radiomedicine.radioactivity
+              %td.span2= radiomedicine.storagelocation.name
+              %td.span1
+                = link_to :controller => "radiomedicines", :action => "edit", :id => radiomedicine.id do
+                  %i.icon-edit
+              %td
+                = link_to radiomedicine, method: :delete, confirm: "Haluatko varmasti poistaa radiolääkkeen?" do
+                  %i.icon-remove
       
