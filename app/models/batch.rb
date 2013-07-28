@@ -7,6 +7,8 @@ class Batch < ActiveRecord::Base
 
   attr_accessible :batchNumber, :substance_id, :qualityControl, :storagelocations, :expDate, :hasstoragelocations
 
+  # validates_numericality_of :batchNumber, { :greater_than_or_equal_to => 1 }
+  
   def infoForSelectBox
     self.substance.genericName + ' Eränumero: ' + self.batchNumber.to_s() + ' Määrä: ' + self.amount.to_s()
   end

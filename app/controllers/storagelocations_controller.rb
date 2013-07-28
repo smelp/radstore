@@ -28,7 +28,26 @@ class StoragelocationsController < ApplicationController
     else
       render 'new'
     end
+  end
 
+  def edit
+  end
+
+  def update
+    if @storagelocation.update_attributes(params[:storagelocation])
+      @storagelocation.save
+      flash[:success] = "Varaston '" + @storagelocation.name + "' tiedot päivitetty"
+      redirect_to @storagelocation
+    else
+      flash[:error] = "Varaston '" + @storagelocation.name + "' tietoja ei voity päivittää"
+    end
+  end
+
+  def destroy
+    Hasstoragelocation.destroy_all(:storagelocation_id => @storagelocation.id)
+    @storagelocation.destroy
+    flash[:success] = "Varasto '" + @storagelocation.name + "' poistettu."
+    redirect_to @huslab
   end
 
   private

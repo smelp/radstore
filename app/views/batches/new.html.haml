@@ -10,7 +10,7 @@
 .row
   .span12.outline
     = form_for @batch do |f|
-      //= render 'shared/material_error_messages'
+      / = render 'shared/batch_error_messages'
       .span4
         %fieldset.span3
           = f.label :batchNumber, 'Eränumero'
@@ -23,6 +23,8 @@
 
         .span3
           = fields_for @event do |e|
+            / = render 'shared/event_error_messages'
+
             = e.label :signature, 'Kirjaaja'
             = e.text_field :signature
             = e.label :info, 'Kommentti'

@@ -60,10 +60,23 @@ namespace :db do
   desc "Create admin to database"
   task create_admin: :environment do
     admin = User.create!(name: "admin",
-                         email: "foo@gmail.com",
+                         email: "admin@admin.com",
                          password: "thisisnotinuse",
                          password_confirmation: "thisisnotinuse")
     admin.toggle!(:admin)
-  end  
+    
+    user = User.create!(name: "janne",
+                         email: "janne@pkhelppi.com",
+                         password: "thisisnotinuse",
+                         password_confirmation: "thisisnotinuse")
+    
+    firm = Firm.new(name: "Huslab 1",
+                         corporate_id: "2234567-8",
+                         location: "Helsinki",
+                         account_number: "123456-12334")
+    firm.resource = Huslab.create(description: "Sample description")
+    firm.save!
+
+  end
   
 end

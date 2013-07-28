@@ -21,24 +21,24 @@
         %tbody
           - @storagelocation.batches.each do |batch|
             %tr
-              - if batch.batchType == 'Generaattori'
-                %td.alert.alert-success= batch.batchType
-              - elsif batch.batchType == 'Kitti'
-                %td.alert.alert-info= batch.batchType
+              - if batch.substance.substanceType == 'Generaattori'
+                %td.alert.alert-success= batch.substance.substanceType
+              - elsif batch.substance.substanceType == 'Kitti'
+                %td.alert.alert-info= batch.substance.substanceType
               - else
-                %td.gray= batch.batchType  
+                %td.gray= batch.substance.substanceType 
               %td
                 = link_to batch.substance.genericName, batch.substance
               %td
                 = link_to batch.batchNumber, batch
               -if batch.amount < 10
-                %td.alert.alert-error
+                %td.alert.alert-error{title:'Varastossa alle 10 tuotetta!'}
                   = batch.amount
                   %span.pull-right !!!
               - else
                 %td= batch.amount
               - if batch.expDate < Date.today
-                %td.alert.alert-error
+                %td.alert.alert-error{title:'Erän päiväys mennyt umpeen!'}
                   = batch.expDate
                   %span.pull-right !!!
               - else
