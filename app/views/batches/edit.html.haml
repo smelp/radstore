@@ -1,7 +1,7 @@
 - provide(:title, 'Muokkaa erää')
 
 .span6.offset3
-  %h2 Muokkaa erää
+  %h2= 'Muokkaa aineen '+@batch.substance.genericName+' erää '+@batch.batchNumber
 
 .container
   .span6.offset3
@@ -15,8 +15,6 @@
           %p
             = f.label :batchNumber, "Eränumero"
             = f.text_field :batchNumber
-            = f.label :substance_id, 'Tyyppi'
-            = f.select :substance_id, ['Generaattori','Kitti','Muu'], :selected => @batch.substance.substanceType
             = f.label :qualityControl, "Laadunvalvonta"
             = f.select :qualityControl, ['OK','Ei OK', 'Ei suoritettu'], :selected => @batch.qualityStatus
 

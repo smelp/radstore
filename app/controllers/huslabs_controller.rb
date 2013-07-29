@@ -4,6 +4,9 @@ class HuslabsController < ApplicationController
   before_filter :firm_admin
   before_filter :admin_user,     only: [:new, :create, :destroy]
 
+  LN_2 = 0.69314718056
+  E = 2.71828182845904523536028747135266249775724709369995
+
   def index
     if current_user.admin?
       @huslabs = Firm.paginate(page: params[:page], per_page:10)
@@ -23,9 +26,13 @@ class HuslabsController < ApplicationController
 
     @substances = @huslab.substances.paginate(:page => params[:substance_page], :per_page => 20)
     @eluates = @huslab.eluates.paginate(:page => params[:eluate_page], :per_page => 20)
+    @eluates.each do |eluate|
+      timeElapsed = ((eluate.created - Time.now) / 3600).round
+      eluate.radioactivity = calculateActivity eluate.radioactivity, eluate.volume, 5, 6
+    end
     @radiomedicines = @huslab.radiomedicines.paginate(:page => params[:substance_page], :per_page => 20)
     # products = @huslab.recipes.where(:product => true)
-    
+
     # if params[:search_recipe]
     #   q = params[:search_recipe]
     #   recipes = @bakery.recipes.paginate(:page => params[:recipe_page], :per_page => 20, :conditions => ['name like ? and product = ?', "%#{q.downcase}%", false]).order('name')
@@ -75,5 +82,11 @@ class HuslabsController < ApplicationController
       else
         redirect_to(root_path)
       end
+    end
+
+    def calculateActivity (activity, volume,elapsedTime,half_life)
+
+      result = (activity/volume)*(E**(-elapsedTime*LN_2/half_life))
+      puts activity.to_s+' '+volume.to_s+' '+elapsedTime.to_s+' '+half_life.to_s+' '+result.to_s
     end
 end

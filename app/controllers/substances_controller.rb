@@ -22,7 +22,6 @@ class SubstancesController < ApplicationController
   def create
     @substance = Substance.new(params[:substance])
     @substance.huslab = @huslab
-    @substance.substanceType = determineSubstanceType
 
     if @substance.save
       flash[:success] = "Uusi raaka-aine luotu!"
@@ -41,10 +40,8 @@ class SubstancesController < ApplicationController
 
     end
     if @substance.update_attributes(params[:substance])
-      @substance.save
       flash[:success] = 'Aineen '+@substance.genericName+' tiedot päivitetty'
       redirect_to @substance
-
     else
       flash[:error] = 'Aineen '+@substance.genericName+' tietoja ei voity päivittää'
     end
@@ -85,17 +82,6 @@ class SubstancesController < ApplicationController
 
   def admin_user
     redirect_to(root_path) unless current_user.admin?
-  end
-
-  def determineSubstanceType
-    if params[:substance][:substanceType] == 'Generaattori'
-      Substance::GENERATOR
-    elsif params[:substance][:substanceType] == 'Kitti'
-      Substance::KIT
-    else
-      Substance::OTHER
-    end
-
   end
 
 end

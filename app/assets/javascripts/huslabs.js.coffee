@@ -2,12 +2,6 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-window.calculateActivity = (activity, volume,elapsedTime,half_life) ->
-  ln_2 = 0.69314718056
-  e = 2.71828182845904523536028747135266249775724709369995
-  result = (activity/volume)*(Math.pow(e,(-elapsedTime*ln_2)/half_life))
-  console.log result
-
 window.revealQualityCheckForm = (event,id) ->
     event.preventDefault()
     form = document.createElement('form')

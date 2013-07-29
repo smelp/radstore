@@ -66,10 +66,17 @@ class BatchesController < ApplicationController
   end
 
   def edit
+    @event = Event.new
   end
 
   def update
+    if @batch.update_attributes(params[:batch])
+      flash[:success] = 'Erän '+@batch.batchNumber+' tiedot päivitetty'
+      redirect_to @substance
 
+    else
+      flash[:error] = 'Erän '+@batch.genericName+' tietoja ei voity päivittää'
+    end
   end
 
   private
