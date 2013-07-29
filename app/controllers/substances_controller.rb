@@ -89,8 +89,6 @@ class SubstancesController < ApplicationController
       redirect_to(root_path) unless current_user.admin?
     end
 
-<<<<<<< HEAD
-=======
     def determineSubstanceType(type)
       if type == 'Generaattori'
         Substance::GENERATOR
@@ -102,5 +100,4 @@ class SubstancesController < ApplicationController
       
     end
 
->>>>>>> fixed many bugs, added destroy for batches and destroy and edit for storagelocations
 end
