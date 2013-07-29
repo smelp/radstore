@@ -12,29 +12,30 @@
 
       %table.table
         %thead
-          %th Eränumero
-          %th Määrä
-          %th Tyyppi
-          %th Laadunvarmistus
+          %tr
+            %th Eränumero
+            %th Määrä
+            %th Tyyppi
+            %th Laadunvarmistus
 
-          %tbody
-            - @batches.each do |batch|
-              %tr
-                %td= link_to batch.batchNumber, batch
-                %td= batch.amount
-                %td= batch.substance.substanceType
-                -if batch.qualityControl
-                  %td= batch.qualityStatus
-                -else
-                  %td{:id => 'qualityCheckContainer'}
-                    = link_to 'Tee laadunvarmistus','', :onclick => 'revealQualityCheckForm(event,'+batch.id.to_s+')'
+        %tbody
+          - @batches.each do |batch|
+            %tr
+              %td= link_to batch.batchNumber, batch
+              %td= batch.amount
+              %td= batch.substance.substanceType
+              -if batch.qualityControl
+                %td= batch.qualityStatus
+              -else
+                %td{:id => 'qualityCheckContainer'}
+                  = link_to 'Tee laadunvarmistus','', :onclick => 'revealQualityCheckForm(event,'+batch.id.to_s+')'
 
-                %td
-                  = link_to :controller => "batches", :action => "edit", :id => batch.id do
-                    %i.icon-edit
-                %td
-                  = link_to batch, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
-                    %i.icon-remove
+              %td
+                = link_to :controller => "batches", :action => "edit", :id => batch.id do
+                  %i.icon-edit
+              %td
+                = link_to batch, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
+                  %i.icon-remove
 
       = link_to :controller => "batches", :action => "new", :substance_id => @substance.id do
         %i.icon-plus

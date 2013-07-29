@@ -2,7 +2,7 @@
 %h1 Kirjaa radiolääke
 
 .container
-  .span6.offset3
+  .span12
     = render "shared/nav"
 
 .row
@@ -14,7 +14,7 @@
 
           = f.label :name, "Nimi"
           = f.text_field :name
-          = f.label :storagelocation_id, 'Varastopaikkka'
+          = f.label :storagelocation_id, 'Varastopaikka'
           = f.select :storagelocation_id, @storagelocations.collect {|m| [ m.name, m.id ] }
           = f.label :eluate_id, 'Eluaatti'
           = f.select :eluate_id, @eluates.collect {|m| [ m.name, m.id ] }
@@ -27,21 +27,14 @@
             = e.label :signature, 'Kirjaaja'
             = e.text_field :signature
             = e.label :user_timestamp, 'Aika'
-            = e.text_field :user_timestamp, :placeholder=> 'Syötä aika muodossa DD/MM/YYYY hh:mm'
+            .input-append.date#datetimepicker-radiomedicine
+              = text_field_tag 'event[user_timestamp]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm', :placeholder => 'PP/KK/VVVV tt:mm'}
+              %span.add-on
+                %i.icon-calendar{'data-time-icon' => 'icon-time', 'data-date-icon' => 'icon-calendar'}
+
+            = #e.text_field :user_timestamp, :placeholder=> 'PP/KK/VVVV tt:mm'
 
           = hidden_field_tag :huslab_id, @huslab.id
-
-
-          %label Muut
-          - values = @others.collect {|m| [ m.infoForSelectBox, m.batch_id ] }
-
-          = select("post", "other_id", values, {:prompt => 'Valitse muu'})
-
-          = fields_for :other do |h|
-            = h.label :amount, "Syötä määrä"
-            = h.text_field :amount, min: 0, class: "span2"
-
-          = button_to_function "Lisää", "add_other(event)", :class => "btn btn-mini"
 
           = f.submit "Kirjaa radiolääke", class: "btn btn-primary"
 
@@ -53,22 +46,34 @@
           = select("post", "kit_id", values, {:prompt => 'Valitse kitti'})
 
           = fields_for :kit do |h|
-            = h.label :amount, "Syötä määrä"
+            = h.label :amount, "Määrä"
             = h.text_field :amount, min: 0, class: "span2"
 
-          = button_to_function "Lisää", "add_kit(event)", :class => "btn btn-mini"
+          = button_to_function "Lisää", "add_kit(event)", { :class => "btn btn-small", :id => "add-substance-kit" }
+
+          %hr
+
+          %label Apuaineet
+          - values = @others.collect {|m| [ m.infoForSelectBox, m.batch_id ] }
+
+          = select("post", "other_id", values, {:prompt => 'Valitse muu'})
+
+          = fields_for :other do |h|
+            = h.label :amount, "Määrä"
+            = h.text_field :amount, min: 0, class: "span2"
+
+          = button_to_function "Lisää", "add_other(event)", { :class => "btn btn-small", :id => "add-substance-other" }
 
       .span4
 
-        %table.table.table#product_others
-          %thead.green
-            %th Lisättävät apuaineet:
-            %th
-        %tbody
-
         %table.table.table#product_kits
-          %thead.green
+          %thead.gray
             %th Lisättävät kitit:
             %th
         %tbody
 
+        %table.table.table#product_others
+          %thead.gray
+            %th Lisättävät apuaineet:
+            %th
+        %tbody

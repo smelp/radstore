@@ -5,6 +5,13 @@ GIT
   specs:
     annotate (2.4.0)
 
+GIT
+  remote: git://github.com/rweng/jquery-datatables-rails.git
+  revision: 494f752b8eb8350f33841c822a67d014c869219f
+  specs:
+    jquery-datatables-rails (1.11.2)
+      jquery-rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -38,6 +45,7 @@ GEM
     archive-tar-minitar (0.5.2)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
+    bootstrap-datetimepicker-rails (0.0.11)
     bootstrap-sass (2.3.2.0)
       sass (~> 3.2)
     bootstrap-will_paginate (0.0.9)
@@ -205,6 +213,7 @@ PLATFORMS
 DEPENDENCIES
   annotate!
   bcrypt-ruby (= 3.0.1)
+  bootstrap-datetimepicker-rails
   bootstrap-sass (~> 2.3.2.0)
   bootstrap-will_paginate (~> 0.0.9)
   capybara (= 1.1.2)
@@ -214,6 +223,7 @@ DEPENDENCIES
   factory_girl_rails (= 1.4.0)
   faker (= 1.0.1)
   haml
+  jquery-datatables-rails!
   jquery-rails
   json
   pg (= 0.12.2)

@@ -13,7 +13,8 @@ FactoryGirl.define do
   factory :firm do
     sequence(:name)  { |n| "Firm #{n}" }
     sequence(:corporate_id) { |n| "1234567-#{n}"}   
-    sequence(:location)  { |n| "Location #{n}" } 
+    sequence(:location)  { |n| "Location #{n}" }
+    sequence(:account_number) { |n| "123123-123#{n}"}
     sequence(:resource)  { |n| Bakery.create(description: "test#{n}") }
   end
   

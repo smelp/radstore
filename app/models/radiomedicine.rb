@@ -2,11 +2,12 @@
 class Radiomedicine < ActiveRecord::Base
 
   belongs_to :huslab
+
   has_many :hasothers, :foreign_key => 'productID'
   has_many :others, :through => :hasothers
   has_many :haskits, :foreign_key => 'productID'
   has_many :kits, :through => :haskits
-  has_one  :storagelocation
+  belongs_to  :storagelocation #was has_one before
   belongs_to  :eluate
 
   attr_accessible :name, :others, :kits, :huslab, :storagelocation_id, :storagelocation, :eluate, :eluate_id, :radioactivity, :volume

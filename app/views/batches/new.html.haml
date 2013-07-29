@@ -1,8 +1,10 @@
 - provide(:title, 'Luo erä')
 %h1 Luo erä
 
+- #javascript_tag "$('#datetimepicker1').datetimepicker({language: 'fi'});"
+
 .container
-  .span6.offset3
+  .span12
     = render "shared/nav"
     
 .row
@@ -11,21 +13,29 @@
       //= render 'shared/material_error_messages'
       .span4
         %fieldset.span3
-          = f.label :batchNumber, "Eränumero"
+          = f.label :batchNumber, 'Eränumero'
           = f.text_field :batchNumber
           = f.label :expDate, 'Viimeinen käyttöpäivä'
-          = f.text_field :expDate
+          .input-append.date#datetimepicker1
+            = text_field_tag 'batch[expDate]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm'}
+            %span.add-on
+              %i.icon-calendar{'data-time-icon' => 'icon-time', 'data-date-icon' => 'icon-calendar'}
+
+        .span3
           = fields_for @event do |e|
             = e.label :signature, 'Kirjaaja'
             = e.text_field :signature
             = e.label :info, 'Kommentti'
             = e.text_field :info
             = e.label :user_timestamp, 'Vastaanottopäivä'
-            = e.text_field :user_timestamp
-          
+            .input-append.date#datetimepicker2
+              = text_field_tag 'event[user_timestamp]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm'}
+              %span.add-on
+                %i.icon-calendar{'data-time-icon' => 'icon-time', 'data-date-icon' => 'icon-calendar'}
+           
           = hidden_field_tag :substance_id, @substance.id
       
-        = f.submit "Luo erä", class: "btn btn-large btn-primary"
+          = f.submit "Luo erä", class: "btn btn-large btn-primary"
       .span3
         %fieldset
           %label Varastopaikat
@@ -37,12 +47,11 @@
             = h.label :amount, "Syötä määrä"
             = h.text_field :amount, min: 0, class: "span2"
 
-          = button_to_function "Lisää", "add_storagelocation(event)", :class => "btn btn-mini"
+          = button_to_function "Lisää", "add_storagelocation(event)", :class => "btn btn-small", :id => "add-storagelocation"
 
       .span4
-
         %table.table.table#product_storagelocations
-          %thead.green
+          %thead.gray
             %th Varastopaikat ja määrät:
             %th
         %tbody

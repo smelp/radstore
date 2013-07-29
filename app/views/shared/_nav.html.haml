@@ -3,16 +3,26 @@
   Takaisin
   |
   - if @material and @material.bakery
-    = link_to "Oma sivu", :controller => "bakeries", :action => "show", :id => @material.bakery.id
+    = link_to :controller => "bakeries", :action => "show", :id => @material.bakery.id do
+      %i.icon-home{title:"Koti"}
   - elsif @firm
-    = link_to "Oma sivu", :controller => "firms", :action => "show", :id => @firm.resource.id
+    = link_to :controller => "firms", :action => "show", :id => @firm.resource.id do
+      %i.icon-home{title:"Koti"}
   - elsif @substance and @substance.huslab
-    = link_to "Oma sivu", :controller => "huslabs", :action => "show", :id => @substance.huslab.id
+    = link_to :controller => "huslabs", :action => "show", :id => @substance.huslab.id do
+      %i.icon-home{title:"Koti"}
   - elsif @batch and @batch.substance.huslab
-    = link_to "Oma sivu", :controller => "huslabs", :action => "show", :id => @batch.substance.huslab.id
+    = link_to :controller => "huslabs", :action => "show", :id => @batch.substance.huslab.id do
+      %i.icon-home{title:"Koti"}
   - elsif @eluate and @eluate.huslab
-    = link_to "Oma sivu", :controller => "huslabs", :action => "show", :id => @eluate.huslab.id
+    = link_to :controller => "huslabs", :action => "show", :id => @eluate.huslab.id do
+      %i.icon-home{title:"Koti"}
   - elsif @radiomedicine and @radiomedicine.huslab
-    = link_to "Oma sivu", :controller => "huslabs", :action => "show", :id => @radiomedicine.huslab.id
+    = link_to :controller => "huslabs", :action => "show", :id => @radiomedicine.huslab.id do
+      %i.icon-home{title:"Koti"}
+  - elsif @storagelocation and @storagelocation.huslab
+    = link_to :controller => "huslabs", :action => "show", :id => @storagelocation.huslab.id do
+      %i.icon-home{title:"Koti"}
   - else
-    = link_to "Oma sivu", :controller => "huslabs", :action => "show", :id => @huslab.id
+    = link_to :controller => "huslabs", :action => "show", :id => @huslab.id do
+      %i.icon-home{title:"Koti"}

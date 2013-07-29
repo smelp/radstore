@@ -9,6 +9,10 @@ class StoragelocationsController < ApplicationController
     @huslab.storagelocations.each { |e| list.push e.id }
     @storagelocations = @huslab.storagelocations.paginate(:page => params[:page]).order('name')
   end
+  
+  def show
+    @storagelocation = Storagelocation.find(params[:id])
+  end
 
   def new
     @storagelocation = Storagelocation.new
@@ -27,43 +31,41 @@ class StoragelocationsController < ApplicationController
 
   end
 
-
-
   private
 
-  def signed_in_user
-    unless signed_in?
-      store_location
-      redirect_to signin_path, notice: "Kirjaudu sisään kiitos."
-    end
-  end
-
-  def firm_admin
-
-    if params[:id]
-      @storagelocation = Storagelocation.find(params[:id])
-      @huslab = @storagelocation.huslab
-    elsif params[:huslab_id]
-      @huslab = Huslab.find_by_id(params[:huslab_id])
-      if !@huslab
-        @storagelocation = nil
-        @huslab = nil
+    def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_path, notice: "Kirjaudu sisään kiitos."
       end
     end
 
-    if @storagelocation and @storagelocation.huslab
-      admins = @storagelocation.huslab.firm.users #later change to include only admins
-    elsif @huslab
-      admins = @huslab.firm.users #later change to include only admins
-    else
-      admins = []
-      flash[:error] = "Ei lupaa tehdä muutoksia."
-    end
-    redirect_to(root_path) unless admins.include? current_user
-  end
+    def firm_admin
 
-  def admin_user
-    redirect_to(root_path) unless current_user.admin?
-  end
+      if params[:id]
+        @storagelocation = Storagelocation.find(params[:id])
+        @huslab = @storagelocation.huslab
+      elsif params[:huslab_id]
+        @huslab = Huslab.find_by_id(params[:huslab_id])
+        if !@huslab
+          @storagelocation = nil
+          @huslab = nil
+        end
+      end
+
+      if @storagelocation and @storagelocation.huslab
+        admins = @storagelocation.huslab.firm.users #later change to include only admins
+      elsif @huslab
+        admins = @huslab.firm.users #later change to include only admins
+      else
+        admins = []
+        flash[:error] = "Ei lupaa tehdä muutoksia."
+      end
+      redirect_to(root_path) unless admins.include? current_user
+    end
+
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
+    end
 
 end
