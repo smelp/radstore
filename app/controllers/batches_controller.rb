@@ -20,6 +20,7 @@ class BatchesController < ApplicationController
   def new
     @batch = Batch.new
     @event = Event.new
+    @substances = Substance.all
     @storagelocations = Storagelocation.all
   end
 
@@ -39,8 +40,8 @@ class BatchesController < ApplicationController
   end
 
   def create
+    @substance = Substance.find_by_id(params[:batch][:substance_id])
     determineBatchType
-    @batch.substance = @substance
     @batchFound = Batch.find_by_batchNumber_and_substance_id(@batch.batchNumber, @substance.id)
 
     if !@batchFound
@@ -49,7 +50,7 @@ class BatchesController < ApplicationController
         createEvent Event::NEW_BATCH
         redirect_to @substance
       else
-        flash.now[:error] = "Lähetys ei onnistunut"
+        flash.now[:error] = "Erän luonti ei onnistunut"
         @event = Event.new
         @storagelocations = Storagelocation.all
         render 'new'
@@ -60,7 +61,7 @@ class BatchesController < ApplicationController
         createEvent Event::ADD_TO_BATCH
         redirect_to @substance
       else
-        flash.now[:error] = "Lähetys ei onnistunut"
+        flash.now[:error] = "Lähetyksen lisäys ei onnistunut"
         @event = Event.new
         @storagelocations = Storagelocation.all
         render 'new'
@@ -103,19 +104,19 @@ class BatchesController < ApplicationController
 
       if params[:id]
         @batch = Batch.find(params[:id])
-        @substance = @batch.substance
-      elsif params[:substance_id]
-        @substance = Substance.find_by_id(params[:substance_id])
-        if !@substance
-          @substance = nil
+        @huslab = @batch.substance.huslab
+      elsif params[:huslab_id]
+        @huslab = Huslab.find_by_id(params[:huslab_id])
+        if !@huslab
+          @huslab = nil
           @batch = nil
         end
       end
 
       if @batch and @batch.substance.huslab
-        admins = @substance.huslab.firm.users #later change to include only admins
-      elsif @substance
-        admins = @substance.huslab.firm.users #later change to include only admins
+        admins = @batch.substance.huslab.firm.users #later change to include only admins
+      elsif @huslab
+        admins = @huslab.firm.users #later change to include only admins
       else
         admins = []
         flash[:error] = 'Ei lupaa tehdä muutoksia.'
@@ -129,11 +130,11 @@ class BatchesController < ApplicationController
 
     def determineBatchType
 
-      if @substance.substanceType == 1
+      if @substance.substanceType == Substance::GENERATOR
 
         @batch = Generator.new(params[:batch])
 
-      elsif @substance.substanceType == 2
+      elsif @substance.substanceType == Substance::KIT
 
         @batch = Kit.new(params[:batch])
 

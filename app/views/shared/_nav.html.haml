@@ -11,9 +11,6 @@
   - elsif @substance and @substance.huslab
     = link_to :controller => "huslabs", :action => "show", :id => @substance.huslab.id do
       %i.icon-home{title:"Koti"}
-  - elsif @batch and @batch.substance.huslab
-    = link_to :controller => "huslabs", :action => "show", :id => @batch.substance.huslab.id do
-      %i.icon-home{title:"Koti"}
   - elsif @eluate and @eluate.huslab
     = link_to :controller => "huslabs", :action => "show", :id => @eluate.huslab.id do
       %i.icon-home{title:"Koti"}

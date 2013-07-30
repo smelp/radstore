@@ -22,9 +22,9 @@ s1 = Substance.create(:genericName => 'Ryynit', :huslab_id=>1, :substanceType =>
 s2 = Substance.create(:genericName => 'Makkarat', :huslab_id=>1, :substanceType => 'Kitti')
 s3 = Substance.create(:genericName => 'Muut', :huslab_id=>1, :substanceType => 'Muu')
 
-Generator.create(:batchNumber => 1234, :substance_id => 1)
-Kit.create(:batchNumber => 1235, :substance_id => 2)
-Other.create(:batchNumber => 1236, :substance_id => 3)
+Generator.create(:batchNumber => 1234, :substance_id => 1, :expDate => '2013-07-31')
+Kit.create(:batchNumber => 1235, :substance_id => 2, :expDate => '2013-07-31')
+Other.create(:batchNumber => 1236, :substance_id => 3, :expDate => '2013-07-31')
 
 Hasstoragelocation.create(:batch_id => 1, :storagelocation_id => 1, :amount => 6, :batchType => 'Generaattori')
 Hasstoragelocation.create(:batch_id => 2, :storagelocation_id => 1, :amount => 3, :batchType => 'Kitti')

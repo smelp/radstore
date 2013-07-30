@@ -14,6 +14,5 @@ jQuery ->
 			null,
 			null,
 			null
-		]
-	  , fnDrawCallback: ( oSettings ) ->
+		], fnDrawCallback: ( oSettings ) ->
 	    console.log("h")

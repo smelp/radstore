@@ -13,6 +13,8 @@
       / = render 'shared/batch_error_messages'
       .span4
         %fieldset.span3
+          = f.label :substance_id, 'Aine'
+          = f.select :substance_id, @substances.collect {|m| [ m.genericName, m.id ] }
           = f.label :batchNumber, 'Eränumero'
           = f.text_field :batchNumber
           = f.label :expDate, 'Viimeinen käyttöpäivä'
@@ -34,9 +36,9 @@
               = text_field_tag 'event[user_timestamp]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm'}
               %span.add-on
                 %i.icon-calendar{'data-time-icon' => 'icon-time', 'data-date-icon' => 'icon-calendar'}
-           
-          = hidden_field_tag :substance_id, @substance.id
-      
+
+          = hidden_field_tag :huslab_id, @huslab.id
+
           = f.submit "Luo erä", class: "btn btn-large btn-primary"
       .span3
         %fieldset
