@@ -22,7 +22,7 @@ class SubstancesController < ApplicationController
   def create
     @substance = Substance.new(params[:substance])
     @substance.huslab = @huslab
-
+    @substance.substanceType = determineSubstanceType(params[:substance][:substanceType])
     if @substance.save
       flash[:success] = "Uusi raaka-aine luotu!"
       redirect_to @huslab
@@ -37,7 +37,6 @@ class SubstancesController < ApplicationController
   def update
     if params[:substance][:substanceType] == Substance::KIT
 
-
     end
     if @substance.update_attributes(params[:substance])
       flash[:success] = 'Aineen '+@substance.genericName+' tiedot päivitetty'
@@ -47,41 +46,58 @@ class SubstancesController < ApplicationController
     end
   end
 
-  private
-
-  def signed_in_user
-    unless signed_in?
-      store_location
-      redirect_to signin_path, notice: "Kirjaudu sisään kiitos."
-    end
+  def destroy
+    @substance.destroy
+    flash[:success] = "Raaka-aine poistettu."
+    redirect_to @huslab
   end
 
-  def firm_admin
+  private
 
-    if params[:id]
-      @substance = Substance.find(params[:id])
-      @huslab = @substance.huslab
-    elsif params[:huslab_id]
-      @huslab = Huslab.find_by_id(params[:huslab_id])
-      if !@huslab
-        @substance = nil
-        @huslab = nil
+    def signed_in_user
+      unless signed_in?
+        store_location
+        redirect_to signin_path, notice: "Kirjaudu sisään kiitos."
       end
     end
 
-    if @substance and @substance.huslab
-      admins = @substance.huslab.firm.users #later change to include only admins
-    elsif @huslab
-      admins = @huslab.firm.users #later change to include only admins
-    else
-      admins = []
-      flash[:error] = "Ei lupaa tehdä muutoksia."
-    end
-    redirect_to(root_path) unless admins.include? current_user
-  end
+    def firm_admin
 
-  def admin_user
-    redirect_to(root_path) unless current_user.admin?
-  end
+      if params[:id]
+        @substance = Substance.find(params[:id])
+        @huslab = @substance.huslab
+      elsif params[:huslab_id]
+        @huslab = Huslab.find_by_id(params[:huslab_id])
+        if !@huslab
+          @substance = nil
+          @huslab = nil
+        end
+      end
+
+      if @substance and @substance.huslab
+        admins = @substance.huslab.firm.users #later change to include only admins
+      elsif @huslab
+        admins = @huslab.firm.users #later change to include only admins
+      else
+        admins = []
+        flash[:error] = "Ei lupaa tehdä muutoksia."
+      end
+      redirect_to(root_path) unless admins.include? current_user
+    end
+
+    def admin_user
+      redirect_to(root_path) unless current_user.admin?
+    end
+
+    def determineSubstanceType(type)
+      if type == 'Generaattori'
+        Substance::GENERATOR
+      elsif type == 'Kitti'
+        Substance::KIT
+      else
+        Substance::OTHER
+      end
+      
+    end
 
 end

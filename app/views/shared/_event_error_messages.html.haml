@@ -1,0 +1,7 @@
+- if @event.errors.any?
+  #error_explanation
+    .alert.alert-error
+      Lomake sisältää #{@event.errors.count} virhettä
+    %ul
+      - @event.errors.each_with_index do |msg|
+        %li* #{msg[1]}

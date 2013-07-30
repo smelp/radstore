@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.integer  "storagelocation_id"
     t.integer  "batch_id"
     t.integer  "amount"
-    t.integer  "batchType"
+    t.string   "batchType"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
   end
@@ -244,7 +244,7 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
   create_table "substances", :force => true do |t|
     t.string   "genericName"
     t.string   "eluateName"
-    t.integer  "substanceType"
+    t.string   "substanceType"
     t.string   "manufacturer"
     t.string   "supplier"
     t.datetime "created_at",    :null => false

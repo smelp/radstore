@@ -1,6 +1,12 @@
+# encoding: utf-8
 class Event < ActiveRecord::Base
 
   attr_accessible :target_id, :event_type, :signature, :user_timestamp, :info
+
+  validates :target_id, presence: { :message => "Erä on pakollinen" }
+  validates :event_type, presence: { :message => "Tyyppi on pakollinen" }
+  validates :signature, presence: { :message => "Kirjaaja on pakollinen" }
+  validates :user_timestamp, presence: { :message => "Vastaanottopäivä on pakollinen" }
 
   NEW_BATCH = 1
   ADD_TO_BATCH = 2
