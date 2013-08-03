@@ -21,5 +21,5 @@
     = link_to :controller => "huslabs", :action => "show", :id => @storagelocation.huslab.id do
       %i.icon-home{title:"Koti"}
   - else
-    = link_to :controller => "huslabs", :action => "show", :id => @huslab.id do
+    = link_to :controller => "huslabs", :action => "show", :id => current_user.primary_firm.resource.id do
       %i.icon-home{title:"Koti"}

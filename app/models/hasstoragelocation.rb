@@ -4,7 +4,7 @@ class Hasstoragelocation < ActiveRecord::Base
   belongs_to :batch
   belongs_to :storagelocation
 
-  attr_accessible :storagelocation_id, :batch_id, :amount, :batchType
+  attr_accessible :storagelocation_id, :batch_id, :amount, :batchType, :storagelocation
 
   validates :amount, presence: { :message => "Määrä on pakollinen" }
   validates_numericality_of :amount, { :greater_than_or_equal_to => 0, :message => "Määrän täytyy olla positiivinen numero!" }

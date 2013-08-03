@@ -11,7 +11,9 @@ class StoragelocationsController < ApplicationController
   end
   
   def show
-    @storagelocation = Storagelocation.find(params[:id])
+    @generators = Substance.find_all_by_substanceType(Substance::GENERATOR)
+    @kits = Substance.find_all_by_substanceType(Substance::KIT)
+    @others = Substance.find_all_by_substanceType(Substance::OTHER)
   end
 
   def new

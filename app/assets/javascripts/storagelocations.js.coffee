@@ -4,15 +4,34 @@
 
 
 #// For fixed width containers
-jQuery ->
-	oTable = $('#myTable').dataTable
-	  sDom: "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-	  sPaginationType: "bootstrap",
-	  aaSorting: [[ 0, "asc" ], [1, "asc"]],
-		aoColumns: [
-			null,
-			null,
-			null,
-			null
-		], fnDrawCallback: ( oSettings ) ->
-	    console.log("h")
+$(document).ready ->
+  oTable = $(".myTable").dataTable(
+    fnDrawCallback: (oSettings) ->
+      return  if oSettings.aiDisplay.length is 0
+      nTrs = $(".myTable tbody tr")
+      iColspan = nTrs[0].getElementsByTagName("td").length
+      sLastGroup = ""
+      i = 0
+
+      while i < nTrs.length
+        iDisplayIndex = oSettings._iDisplayStart + i
+        sGroup = oSettings.aoData[oSettings.aiDisplay[iDisplayIndex]]._aData[0]
+        unless sGroup is sLastGroup
+          nGroup = document.createElement("tr")
+          nCell = document.createElement("td")
+          nCell.colSpan = iColspan
+          nCell.className = "group"
+          nCell.innerHTML = sGroup
+          nGroup.appendChild nCell
+          nTrs[i].parentNode.insertBefore nGroup, nTrs[i]
+          sLastGroup = sGroup
+        i++
+
+    aoColumnDefs: [
+      bVisible: false
+      aTargets: [0]
+    ]
+    aaSortingFixed: [[0, "asc"]]
+    aaSorting: [[1, "asc"]]
+    sDom: "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
+  )
