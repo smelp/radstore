@@ -22,6 +22,10 @@ $(document).ready ->
           nCell.colSpan = iColspan
           nCell.className = "group"
           nCell.innerHTML = sGroup
+          nCell.style.fontWeight = 'bold'
+          nCell.style.backgroundColor = '#CCFFCC'
+          nCell.style.borderBottom = 'solid'
+          nCell.style.borderBottomWidth = '1px'
           nGroup.appendChild nCell
           nTrs[i].parentNode.insertBefore nGroup, nTrs[i]
           sLastGroup = sGroup

@@ -11,9 +11,8 @@ class StoragelocationsController < ApplicationController
   end
   
   def show
-    @generators = Substance.find_all_by_substanceType(Substance::GENERATOR)
-    @kits = Substance.find_all_by_substanceType(Substance::KIT)
-    @others = Substance.find_all_by_substanceType(Substance::OTHER)
+    @generators = Substance.all
+
   end
 
   def new
