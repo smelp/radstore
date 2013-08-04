@@ -5,7 +5,7 @@
 
 #// For fixed width containers
 $(document).ready ->
-  oTable = $(".myTable").dataTable(
+  $(".myTable").dataTable(
     fnDrawCallback: (oSettings) ->
       return  if oSettings.aiDisplay.length is 0
       nTrs = $(".myTable tbody tr")
