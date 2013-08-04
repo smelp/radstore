@@ -26,10 +26,7 @@ class HuslabsController < ApplicationController
 
     @substances = @huslab.substances.paginate(:page => params[:substance_page], :per_page => 20)
     @eluates = @huslab.eluates.paginate(:page => params[:eluate_page], :per_page => 20)
-    @eluates.each do |eluate|
-      timeElapsed = ((eluate.created - Time.now) / 3600).round
-      eluate.radioactivity = calculateActivity eluate.radioactivity, eluate.volume, 5, 6
-    end
+
     @radiomedicines = @huslab.radiomedicines.paginate(:page => params[:substance_page], :per_page => 20)
     # products = @huslab.recipes.where(:product => true)
 

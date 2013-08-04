@@ -9,7 +9,7 @@ class Eluate < ActiveRecord::Base
   has_many :generators, :through => :hasgenerators
   belongs_to  :storagelocation
 
-  attr_accessible :name, :others, :generators, :huslab, :storagelocation_id, :storagelocation, :radioactivity, :volume
+  attr_accessible :name, :others, :generators, :huslab, :storagelocation_id, :storagelocation, :volume, :radioactivity
 
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }
   

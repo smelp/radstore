@@ -40,16 +40,10 @@
           %tbody
             - @eluates.each do |eluate|
               %tr
-                %td= link_to eluate.name, eluate
+                %td.span2= link_to eluate.name, eluate
                 %td.span2= eluate.created.strftime("%H:%M")
-                %td.span2{:id => 'activitet'}= eluate.radioactivity
+                %td.span2= eluate.radioactivity
                 %td.span2= eluate.storagelocation.name
-                %td.span2
-                  = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
-                    %i.icon-edit
-                %td
-                  = link_to eluate, method: :delete, confirm: "Haluatko varmasti poistaa eluaatin?" do
-                    %i.icon-remove
   .row
     .span5
       .row.well.blue
@@ -69,13 +63,8 @@
           %tbody
             - @radiomedicines.each do |radiomedicine|
               %tr
-                %td= link_to radiomedicine.name, radiomedicine
+                %td.span2= link_to radiomedicine.name, radiomedicine
                 %td.span2= radiomedicine.created.strftime("%H:%M")
-                %td= radiomedicine.radioactivity
+                %td.span2= radiomedicine.radioactivity
                 %td.span2= radiomedicine.storagelocation.name
-                %td.span1
-                  = link_to :controller => "radiomedicines", :action => "edit", :id => radiomedicine.id do
-                    %i.icon-edit
-                %td
-                  = link_to radiomedicine, method: :delete, confirm: "Haluatko varmasti poistaa radiolääkkeen?" do
-                    %i.icon-remove
+

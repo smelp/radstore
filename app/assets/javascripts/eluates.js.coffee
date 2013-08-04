@@ -60,8 +60,6 @@ createAddition = (choice, amount, typeString) ->
   console.log div
   console.log amount
 
-callEluateCal = () ->
+$(document).ready ->
   $('#datetimepicker-eluate').datetimepicker
     language: 'fi'
-    
-setTimeout(callEluateCal, 200)
