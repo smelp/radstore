@@ -12,8 +12,8 @@ class EluatesController < ApplicationController
 
   def show
     @eluate = Eluate.find(params[:id])
-    @generators = @eluate.generators
-    @others = @eluate.others
+    @batches = @eluate.generators
+    @batches += @eluate.others
   end
 
   def new

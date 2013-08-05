@@ -63,3 +63,15 @@ createAddition = (choice, amount, typeString) ->
 $(document).ready ->
   $('#datetimepicker-eluate').datetimepicker
     language: 'fi'
+  $('#tableForProducts').dataTable
+    sDom: "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+    sPaginationType: "bootstrap",
+    aaSorting: [[ 0, "asc" ], [1, "asc"]],
+    aoColumns: [
+        null,
+        null,
+        null,
+        null
+      ]
+    , fnDrawCallback: ( oSettings ) ->
+     console.log("h")

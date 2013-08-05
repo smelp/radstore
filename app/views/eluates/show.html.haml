@@ -8,39 +8,25 @@
   .span8.offset2
     .row.bordered
 
-      %h2.bordered-bottom= @eluate.name
+      %h2.bordered-bottom= 'Eluaatti '+@eluate.name
 
-      %h4 Generaattorit
-      %table.table
+      %table.table.table-bordered#tableForProducts
         %thead
+          %th Tyyppi
+          %th Aine
           %th Eränumero
 
           %tbody
-            - @generators.each do |generator|
+            - @batches.each do |b|
               %tr
-                %td= link_to generator.batchNumber, generator
-                %td
-                  = link_to :controller => "batches", :action => "edit", :id => generator.id do
-                    %i.icon-edit
-                %td
-                  = link_to generator, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
-                    %i.icon-remove
-
-      %h4 Muut
-      %table.table
-        %thead
-          %th Eränumero
-
-          %tbody
-            - @others.each do |other|
-              %tr
-                %td= link_to other.batchNumber, other
-                %td
-                  = link_to :controller => "batches", :action => "edit", :id => other.id do
-                    %i.icon-edit
-                %td
-                  = link_to other, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
-                    %i.icon-remove
+                - if b.substance.substanceType == 'Generaattori'
+                  %td.alert.alert-success= b.substance.substanceType
+                - elsif b.substance.substanceType == 'Kitti'
+                  %td.alert.alert-info= b.substance.substanceType
+                - else
+                  %td.gray= b.substance.substanceType
+                %td= link_to b.substance.genericName, b.substance
+                %td= link_to b.batchNumber, b
 
       = link_to :controller => "eluates", :action => "edit", :id => @eluate.id do
         %i.icon-edit

@@ -12,8 +12,8 @@ class RadiomedicinesController < ApplicationController
 
   def show
     @radiomedicine = Radiomedicine.find(params[:id])
-    @others = @radiomedicine.others
-    @kits = @radiomedicine.kits
+    @batches = @radiomedicine.others
+    @batches += @radiomedicine.kits
     @eluate = @radiomedicine.eluate
   end
 

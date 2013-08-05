@@ -5,10 +5,10 @@
 
 #// For fixed width containers
 $(document).ready ->
-  $(".myTable").dataTable(
+  $("#storageTable").dataTable(
     fnDrawCallback: (oSettings) ->
       return  if oSettings.aiDisplay.length is 0
-      nTrs = $(".myTable tbody tr")
+      nTrs = $("#storageTable tbody tr")
       iColspan = nTrs[0].getElementsByTagName("td").length
       sLastGroup = ""
       i = 0
@@ -35,6 +35,7 @@ $(document).ready ->
       bVisible: false
       aTargets: [0]
     ]
+    sPaginationType: "bootstrap"
     aaSortingFixed: [[0, "asc"]]
     aaSorting: [[1, "asc"]]
     sDom: "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>"
