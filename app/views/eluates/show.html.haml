@@ -10,6 +10,17 @@
 
       %h2.bordered-bottom= 'Eluaatti '+@eluate.name
 
+      %dl.dl-horizontal
+        %dt  Luotu
+        %dd= @eluate.created.strftime("%H:%M %d.%m.%Y")
+        %dt  Radioaktiivisuus
+        %dd= @eluate.radioactivity.to_s
+        %dt  Varastopaikka
+        %dd= @eluate.storagelocation.name
+        %dt  Kirjaaja
+        %dd= @eluate.creator
+
+      %h4 Käytetyt komponentit
       %table.table.table-bordered#tableForProducts
         %thead
           %th Tyyppi

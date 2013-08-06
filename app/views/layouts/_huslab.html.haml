@@ -2,14 +2,11 @@
   = link_to :controller => "batches", :action => "new", :huslab_id => current_user.primary_firm.resource.id do
     Kirjaa erä
 %li
-  = link_to :controller => "eluates", :action => "new", :huslab_id => current_user.primary_firm.resource.id do
-    Kirjaa eluaatti
-%li
-  = link_to :controller => "radiomedicines", :action => "new", :huslab_id => current_user.primary_firm.resource.id do
-    Kirjaa radiolääke
-%li
   = link_to :controller => "storagelocations", :action => "show", :id => 1 do
     Varastotilanne
 %li
+  = link_to :controller => "storagelocations", :action => "index", :id => 1 do
+    Varastopaikkojen hallinta
+%li
   = link_to :controller => "substances", :action => "index", :huslab_id => current_user.primary_firm.resource.id do
-    Raaka-aineet
+    Komponenttitietojen hallinta

@@ -10,6 +10,17 @@
 
       %h2.bordered-bottom= 'Radiolääke '+@radiomedicine.name
 
+      %dl.dl-horizontal
+        %dt  Luotu
+        %dd= @radiomedicine.created.strftime("%H:%M %d.%m.%Y")
+        %dt  Radioaktiivisuus
+        %dd= @radiomedicine.radioactivity.to_s
+        %dt  Varastopaikka
+        %dd= @radiomedicine.storagelocation.name
+        %dt  Kirjaaja
+        %dd= @radiomedicine.creator
+
+      %h4 Käytetyt komponentit
       %table.table.table-bordered#tableForProducts
         %thead
           %th Tyyppi

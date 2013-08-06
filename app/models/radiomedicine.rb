@@ -19,4 +19,9 @@ class Radiomedicine < ActiveRecord::Base
     @event.user_timestamp
   end
 
+  def creator
+    @event = Event.find_by_target_id_and_event_type(self.id, Event::NEW_RADIOMEDICINE)
+    @event.signature
+  end
+
 end
