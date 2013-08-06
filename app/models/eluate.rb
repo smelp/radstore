@@ -23,7 +23,7 @@ class Eluate < ActiveRecord::Base
   end
 
   def creator
-    @event = Event.find_by_target_id_and_event_type(self.id, Event::NEW_RADIOMEDICINE)
+    @event = Event.find_by_target_id_and_event_type(self.id, Event::NEW_ELUATE)
     @event.signature
   end
 
