@@ -19,8 +19,8 @@ class RadiomedicinesController < ApplicationController
 
   def new
     @radiomedicine = Radiomedicine.new
-    @others = Hasstoragelocation.find_all_by_batchType(Substance::OTHER)
-    @kits = Hasstoragelocation.find_all_by_batchType(Substance::KIT)
+    @others = Hasstoragelocation.joins(:batch).where("batches.qualityControl != 6 AND hasstoragelocations.batchType = 'Muu' ")
+    @kits = Hasstoragelocation.joins(:batch).where("batches.qualityControl != 6 AND hasstoragelocations.batchType = 'Kitti' ")
     @event = Event.new
     @eluates = Eluate.all
     @storagelocations = Storagelocation.all

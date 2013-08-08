@@ -2,14 +2,14 @@
 class Eluate < ActiveRecord::Base
 
   belongs_to :huslab
-
+  has_many :radiomedicines
   has_many :hasothers, :foreign_key => "productID"
   has_many :others, :through => :hasothers
   has_many :hasgenerators, :foreign_key => "productID"
   has_many :generators, :through => :hasgenerators
   belongs_to  :storagelocation
 
-  attr_accessible :name, :others, :generators, :huslab, :storagelocation_id, :storagelocation, :volume, :radioactivity
+  attr_accessible :name, :others, :generators, :huslab, :storagelocation_id, :storagelocation, :volume, :radioactivity, :radiomedicines
 
   validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }
   

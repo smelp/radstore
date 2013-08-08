@@ -18,9 +18,9 @@ User.create(:name =>'Matti', :email =>'matti@hus.fi', :password =>'123456',:pass
 Storagelocation.create(:name => 'Varastopaikka 1', :huslab_id => 1)
 Storagelocation.create(:name => 'Varastopaikka 2', :huslab_id => 1)
 
-s1 = Substance.create(:genericName => 'Ryynit', :huslab_id=>1, :substanceType => 'Generaattori')
-s2 = Substance.create(:genericName => 'Makkarat', :huslab_id=>1, :substanceType => 'Kitti')
-s3 = Substance.create(:genericName => 'Muut', :huslab_id=>1, :substanceType => 'Muu')
+s1 = Substance.create(:genericName => 'Ryynit', :huslab_id=>1, :substanceType => 'Generaattori', :half_life => '10', :alert_amount => 5, :alert_days => 3)
+s2 = Substance.create(:genericName => 'Makkarat', :huslab_id=>1, :substanceType => 'Kitti', :half_life => '10', :alert_amount => 5, :alert_days => 3)
+s3 = Substance.create(:genericName => 'Muut', :huslab_id=>1, :substanceType => 'Muu', :half_life => '10', :alert_amount => 5, :alert_days => 3)
 
 Generator.create(:batchNumber => 1234, :substance_id => 1, :expDate => '2013-07-31')
 Kit.create(:batchNumber => 1235, :substance_id => 2, :expDate => '2013-07-31')

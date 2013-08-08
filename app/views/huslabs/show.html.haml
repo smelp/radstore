@@ -1,70 +1,37 @@
 - provide(:title, @firm.name)
 
 .span12.bordered-top#main-container
+  %p.pull-right='Sivu päivitetty: '+Time.now.strftime("%d.%m.%Y %H:%M")
+
   .row
-    .span5
-      .row.well.gray
-        %h3 Raaka-aineet
-
-        = link_to :controller => "substances", :action => "new", :huslab_id => @huslab.id do
-          %i.icon-plus
-          Lisää raaka-aine
-
-        %table.table.table-condensed.table-striped.table-bordered
-          %thead
-            %th Nimi
-            %th Määrä
-
-          %tbody
-            - @substances.each do |substance|
-              %tr
-                %td.span4= link_to substance.genericName, substance
-                %td.span3= substance.batchCount
-
-
-    .span5.offset1
+    .span8.offset1
       .row.well.green
         %h3 Eluaatit
 
         = link_to :controller => "eluates", :action => "new", :huslab_id => @huslab.id do
           %i.icon-plus
           Kirjaa eluaatti
-
-        %table.table.table-condensed.table-striped.table-bordered
-          %thead
-            %th Nimi
-            %th Luotu
-            %th Aktiivisuus
-            %th Varastopaikka
-
-          %tbody
-            - @eluates.each do |eluate|
-              %tr
-                %td.span2= link_to eluate.name, eluate
-                %td.span2= eluate.created.strftime("%H:%M")
-                %td.span2= eluate.radioactivity
-                %td.span2= eluate.storagelocation.name
-  .row
-    .span5
-      .row.well.blue
-        %h3 Radiolääkkeet
-
         = link_to :controller => "radiomedicines", :action => "new", :huslab_id => @huslab.id do
           %i.icon-plus
           Kirjaa radiolääke
+        - @eluates.each do |eluate|
+          %table.table.table-striped.table-condensed.table-bordered
+            %thead
+              %th Nimi
+              %th Luotu
+              %th Aktiivisuus
+              %th Varastopaikka
 
-        %table.table.table-condensed.table-striped.table-bordered
-          %thead
-            %th Nimi
-            %th Luotu
-            %th Aktiivisuus
-            %th Varastopaikka
-
-          %tbody
-            - @radiomedicines.each do |radiomedicine|
-              %tr
-                %td.span2= link_to radiomedicine.name, radiomedicine
-                %td.span2= radiomedicine.created.strftime("%H:%M")
-                %td.span2= radiomedicine.radioactivity
-                %td.span2= radiomedicine.storagelocation.name
+              %tbody
+                %tr
+                  %td= link_to eluate.name, eluate
+                  %td= eluate.created.strftime("%H:%M")
+                  %td= eluate.radioactivity + ' Gbq'
+                  %td= eluate.storagelocation.name
+              - eluate.radiomedicines.each do |radiomedicine|
+                %tr
+                  %td#radiomed= link_to radiomedicine.name, radiomedicine
+                  %td= radiomedicine.created.strftime("%H:%M")
+                  %td= radiomedicine.radioactivity+ ' Gbq'
+                  %td= radiomedicine.storagelocation.name
 

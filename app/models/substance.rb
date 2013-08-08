@@ -11,7 +11,8 @@ class Substance < ActiveRecord::Base
   belongs_to :huslab
   has_many :batches
 
-  attr_accessible :genericName, :eluateName, :huslab, :batches, :substanceType, :huslab_id, :supplier, :manufacturer
+  attr_accessible :genericName, :eluateName, :huslab, :batches, :substanceType, :huslab_id,
+                  :supplier, :manufacturer, :half_life, :alert_amount, :alert_days
 
   BATCH = 'Erä'
   ELUATE = 'Eluaatti'

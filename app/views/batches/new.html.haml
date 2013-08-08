@@ -39,7 +39,6 @@
 
           = hidden_field_tag :huslab_id, @huslab.id
 
-          = f.submit "Luo erä", class: "btn btn-large btn-primary"
       .span3
         %fieldset
           %label Varastopaikat
@@ -53,10 +52,16 @@
 
           = button_to_function "Lisää", "add_storagelocation(event)", :class => "btn btn-small", :id => "add-storagelocation"
 
-      .span4
+      .span4.pull-right
         %table.table.table#product_storagelocations
           %thead.gray
             %th Varastopaikat ja määrät:
             %th
         %tbody
+
+        %dl.dl-horizontal
+          %dt Yhteensä
+          %dd#Total 0
+
+      = f.submit "Luo erä", class: "btn btn-large btn-primary pull-right", style: "margin-top: 50px; margin-right: 50px;"
 

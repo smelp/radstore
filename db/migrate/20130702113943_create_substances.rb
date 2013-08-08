@@ -6,6 +6,9 @@ class CreateSubstances < ActiveRecord::Migration
       t.string :substanceType
       t.string :manufacturer
       t.string :supplier
+      t.string :half_life
+      t.integer :alert_amount
+      t.integer :alert_days
 
       t.timestamps
     end

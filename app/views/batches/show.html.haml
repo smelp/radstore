@@ -13,6 +13,7 @@
     %table.table
       %thead
         %th Eränumero
+        %th Laadunvarmistus
         %th Tyyppi
         %th Varastopaikka
         %th Määrä
@@ -20,6 +21,11 @@
       %tbody
         %tr
           %td= link_to @batch.batchNumber, @batch
+          -if @batch.qualityControl
+            %td= @batch.qualityStatus
+          -else
+            %td{:id => 'qualityCheckContainer'}
+              = link_to 'Tee laadunvarmistus','', :onclick => 'revealQualityCheckForm(event,'+@batch.id.to_s+')'
           %td= @batch.substance.substanceType
           - @storagelocations.each do |storage|
             %td= storage.storageName

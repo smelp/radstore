@@ -14,9 +14,7 @@
           %small.center#logged-in-user
             Kirjautunut:
             = link_to current_user.name, current_user
-          %small.center#cur-time
-            |
-            = Time.now.strftime("%d.%m.%Y %H:%M")
+
       %div.container
         = link_to image_tag("logo.png"), root_path, { id: "logo" }
         %nav

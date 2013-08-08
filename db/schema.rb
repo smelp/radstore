@@ -43,9 +43,9 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.string   "batchNumber"
     t.date     "expDate"
     t.integer  "substance_id"
-    t.integer  "qualityControl"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.integer  "qualityControl", :default => 7
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   add_index "batches", ["substance_id"], :name => "index_batches_on_substance_id"
@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
   create_table "eluates", :force => true do |t|
     t.string   "name"
     t.integer  "storagelocation_id"
-    t.decimal  "radioactivity"
-    t.decimal  "volume"
+    t.string   "radioactivity"
+    t.string   "volume"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "huslab_id"
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
 
   create_table "events", :force => true do |t|
     t.integer  "target_id"
-    t.string   "event_type"
+    t.integer  "event_type"
     t.datetime "user_timestamp"
     t.string   "signature",      :limit => 10
     t.string   "info"
@@ -214,8 +214,8 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.string   "name"
     t.integer  "storagelocation_id"
     t.integer  "eluate_id"
-    t.decimal  "radioactivity"
-    t.decimal  "volume"
+    t.string   "radioactivity"
+    t.string   "volume"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "huslab_id"
@@ -247,6 +247,9 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.string   "substanceType"
     t.string   "manufacturer"
     t.string   "supplier"
+    t.string   "half_life"
+    t.integer  "alert_amount"
+    t.integer  "alert_days"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "huslab_id"

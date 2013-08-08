@@ -25,10 +25,16 @@
                   = generator.substanceType
                 %td
                   = generator.genericName
-                %td
-                  = link_to batch.batchNumber, batch
-                -if batch.amount < 10
-                  %td.alert.alert-error{title:'Varastossa alle 10 tuotetta!'}
+                -if batch.qualityStatus != 'OK'
+                  %td.alert.alert{title:'Erälle ei ole tehty laadunvarmistusta!'}
+                    = link_to batch.batchNumber, batch
+                    %span.pull-right !!!
+                - else
+                  %td
+                    = link_to batch.batchNumber, batch
+
+                -if batch.amount < batch.substance.alert_amount
+                  %td.alert.alert-error{title:'Varastossa alle '+batch.substance.alert_amount+' kappaletta!'}
                     = batch.amount
                     %span.pull-right !!!
                 - else
@@ -39,6 +45,10 @@
                     <br/>
                 - if batch.expDate < Date.today
                   %td.alert.alert-error{title:'Erän päiväys mennyt umpeen!'}
+                    = batch.expDate
+                    %span.pull-right !!!
+                - elsif batch.expDate - batch.substance.alert_days.days < Date.today
+                  %td.alert.alert{title:'Erän päiväys menossa umpeen!'}
                     = batch.expDate
                     %span.pull-right !!!
                 - else

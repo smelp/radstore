@@ -27,7 +27,6 @@ createAddition = (choice, amount, typeString) ->
   div.setAttribute("id", val + "_hidden")
   elem = document.createElement('input')
 
-
   tr_elem = document.createElement('tr')
   tr_elem.id = val
   td_elem = document.createElement('td')
@@ -56,11 +55,28 @@ createAddition = (choice, amount, typeString) ->
       $(tr_elem).append td_elem_remove
       $(td_elem_remove).append a_elem
       $(a_elem).append i_elem
+  sumTotal()
 
-  console.log div
-  console.log amount
+window.sumTotal = ()->
+  sum = 0
+  inputs = $('input[name^="new"]')
+  console.log inputs[0]
+  $.each inputs, (t,input) ->
+    sum += parseInt(input.value)
+
+  $('#Total')[0].innerText = sum
 
 $(document).ready ->
+  $('#eluate_radioactivity').change (e) ->
+    return  if isNaN(parseFloat(@value))
+    temp = parseFloat(@value.replace(/\,/g, '.')).toFixed(2)
+    @value = temp.replace(/\./g, ',')
+
+  $('#eluate_volume').change (e) ->
+    return  if isNaN(parseFloat(@value))
+    temp = parseFloat(@value.replace(/\,/g, '.')).toFixed(2)
+    @value = temp.replace(/\./g, ',')
+
   $('#datetimepicker-eluate').datetimepicker
     language: 'fi'
   $('#tableForProducts').dataTable

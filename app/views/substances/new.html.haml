@@ -20,6 +20,12 @@
         = f.text_field :supplier
         = f.label :substanceType, "Tyyppi"
         = f.select :substanceType, ['Generaattori', 'Kitti', 'Muu']
+        = f.label :half_life, 'Puoliintumisaika'
+        = f.text_field :half_life
+        = f.label :alert_amount, 'Varoituksen ala-raja, määrä'
+        = f.text_field :alert_amount
+        = f.label :alert_days, 'Varoituksen ala-raja, pvm'
+        = f.text_field :alert_days
 
           
       = hidden_field_tag :huslab_id, @huslab.id

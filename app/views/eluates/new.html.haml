@@ -4,74 +4,79 @@
 .container
   .span12
     = render "shared/nav"
-    
-.row
-  .span12.outline
-    = form_for @eluate do |f|
 
-      .span4
-        %fieldset.span3
+  .row
+    .span12.outline
+      = form_for @eluate do |f|
 
-          = f.label :name, "Nimi"
-          = f.text_field :name
-          = f.label :storagelocation_id, 'Varastopaikka'
-          = f.select :storagelocation_id, @storagelocations.collect {|m| [ m.name, m.id ] }
-          = f.label :radioactivity, 'Aktiivisuus'
-          = f.text_field :radioactivity
-          = f.label :volume, 'Tilavuus'
-          = f.text_field :volume
+        .span4
+          %fieldset.span3
 
-          = fields_for @event do |e|
-            = e.label :signature, 'Kirjaaja'
-            = e.text_field :signature
-            = e.label :user_timestamp, 'Aika'
-            .input-append.date#datetimepicker-eluate
-              = text_field_tag 'event[user_timestamp]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm', :placeholder => 'PP/KK/VVVV tt:mm'}
-              %span.add-on
-                %i.icon-calendar{'data-time-icon' => 'icon-time', 'data-date-icon' => 'icon-calendar'}
-            
-            = #e.text_field :user_timestamp, :placeholder => 'PP/KK/VVVV tt:mm'
+            = f.label :name, "Nimi"
+            = f.text_field :name
+            = f.label :storagelocation_id, 'Varastopaikka'
+            = f.select :storagelocation_id, @storagelocations.collect {|m| [ m.name, m.id ] }
+            = f.label :radioactivity, 'Aktiivisuus'
+            = f.text_field :radioactivity
+            = f.label :volume, 'Tilavuus'
+            = f.text_field :volume
 
-          = hidden_field_tag :huslab_id, @huslab.id
+            = fields_for @event do |e|
+              = e.label :signature, 'Kirjaaja'
+              = e.text_field :signature
+              = e.label :user_timestamp, 'Aika'
+              .input-append.date#datetimepicker-eluate
+                = text_field_tag 'event[user_timestamp]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm', :placeholder => 'PP/KK/VVVV tt:mm'}
+                %span.add-on
+                  %i.icon-calendar{'data-time-icon' => 'icon-time', 'data-date-icon' => 'icon-calendar'}
 
-          = f.submit "Kirjaa eluaatti", class: "btn btn-primary"
+              = #e.text_field :user_timestamp, :placeholder => 'PP/KK/VVVV tt:mm'
 
-      .span3
-        %fieldset
-          %label Generaattorit
-          - values = @generators.collect {|m| [ m.infoForSelectBox, m.batch_id ] }
+            = hidden_field_tag :huslab_id, @huslab.id
 
-          = select("post", "generator_id", values, {:prompt => 'Valitse raaka-aine'})
+        .span3
+          %fieldset
+            %label Generaattorit
+            - values = @generators.collect {|m| [ m.infoForSelectBox, m.batch_id ] }
 
-          = fields_for :generator do |h|
-            = h.label :amount, "Määrä"
-            = h.text_field :amount, min: 0, class: "span2"
+            = select("post", "generator_id", values, {:prompt => 'Valitse raaka-aine'})
 
-          = button_to_function "Lisää", "add_generator(event)", { :class => "btn btn-small", :id => "add-substance-generator" }
+            = fields_for :generator do |h|
+              = h.label :amount, "Määrä"
+              = h.text_field :amount, min: 0, class: "span2"
 
-          %hr
+            = button_to_function "Lisää", "add_generator(event)", { :class => "btn btn-small", :id => "add-substance-generator" }
 
-          %label Apuaineet
-          - values = @others.collect {|m| [ m.infoForSelectBox, m.batch_id ] }
+            %hr
 
-          = select("post", "other_id", values, {:prompt => 'Valitse raaka-aine'})
+            %label Apuaineet
+            - values = @others.collect {|m| [ m.infoForSelectBox, m.batch_id ] }
 
-          = fields_for :other do |h|
-            = h.label :amount, "Määrä"
-            = h.text_field :amount, min: 0, class: "span2"
+            = select("post", "other_id", values, {:prompt => 'Valitse raaka-aine'})
 
-          = button_to_function "Lisää", "add_other(event)", { :class => "btn btn-small", :id => "add-substance-other" }
+            = fields_for :other do |h|
+              = h.label :amount, "Määrä"
+              = h.text_field :amount, min: 0, class: "span2"
 
-      .span4
+            = button_to_function "Lisää", "add_other(event)", { :class => "btn btn-small", :id => "add-substance-other" }
 
-        %table.table.table#product_generators
-          %thead.gray
-            %th Lisättävät generaattorit:
-            %th
-        %tbody
 
-        %table.table.table#product_others
-          %thead.gray
-            %th Lisättävät apuaineet:
-            %th
-        %tbody
+        .span4.pull-right
+
+          %table.table.table#product_generators
+            %thead.gray
+              %th Lisättävät generaattorit:
+              %th
+          %tbody
+
+          %table.table.table#product_others
+            %thead.gray
+              %th Lisättävät apuaineet:
+              %th
+          %tbody
+
+          %dl.dl-horizontal
+            %dt Yhteensä
+            %dd#Total 0
+
+        = f.submit "Kirjaa eluaatti", class: "btn btn-primary pull-right", style: "margin-top: 50px; margin-right: 50px;"

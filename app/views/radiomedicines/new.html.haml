@@ -28,15 +28,15 @@
             = e.text_field :signature
             = e.label :user_timestamp, 'Aika'
             .input-append.date#datetimepicker-radiomedicine
-              = text_field_tag 'event[user_timestamp]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm', :placeholder => 'PP/KK/VVVV tt:mm'}
+              = text_field_tag 'event[user_timestamp]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm'}
               %span.add-on
                 %i.icon-calendar{'data-time-icon' => 'icon-time', 'data-date-icon' => 'icon-calendar'}
 
-            = #e.text_field :user_timestamp, :placeholder=> 'PP/KK/VVVV tt:mm'
+            = #e.text_field :user_timestamp
 
           = hidden_field_tag :huslab_id, @huslab.id
 
-          = f.submit "Kirjaa radiolääke", class: "btn btn-primary"
+
 
       .span3
         %fieldset
@@ -64,7 +64,7 @@
 
           = button_to_function "Lisää", "add_other(event)", { :class => "btn btn-small", :id => "add-substance-other" }
 
-      .span4
+      .span4.pull-right
 
         %table.table.table#product_kits
           %thead.gray
@@ -77,3 +77,8 @@
             %th Lisättävät apuaineet:
             %th
         %tbody
+
+        %dl.dl-horizontal
+          %dt Yhteensä
+          %dd#Total 0
+      = f.submit "Kirjaa radiolääke", class: "btn btn-primary pull-right", style: "margin-top: 50px; margin-right: 50px;"

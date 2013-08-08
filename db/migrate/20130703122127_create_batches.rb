@@ -4,7 +4,7 @@ class CreateBatches < ActiveRecord::Migration
       t.string :batchNumber
       t.date :expDate
       t.references :substance
-      t.integer :qualityControl
+      t.integer :qualityControl, :default => 7
 
       t.timestamps
     end
