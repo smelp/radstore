@@ -10,7 +10,7 @@ class Batch < ActiveRecord::Base
   # validates_numericality_of :batchNumber, { :greater_than_or_equal_to => 1 }
   
   def infoForSelectBox
-    self.substance.genericName + ' Eränumero: ' + self.batchNumber.to_s() + ' Määrä: ' + self.amount.to_s()
+    self.substance.generic_name + ' Eränumero: ' + self.batchNumber.to_s() + ' Määrä: ' + self.amount.to_s()
   end
 
   def amount
@@ -29,6 +29,10 @@ class Batch < ActiveRecord::Base
 
   def getEvents
     Event.where('target_id='+self.id+' AND event_type < 7')
+  end
+
+  def storageComment
+    Event.find_by_target_id_and_event_type(self.id, Event::STORAGE_COMMENT)
   end
 
 end

@@ -32,18 +32,12 @@ class EluatesController < ApplicationController
 
       if params[:new_generators]
         params[:new_generators].each do |generator|
-          batchToModify = Hasstoragelocation.find_by_batch_id(generator[0])
-          batchToModify.amount = batchToModify.amount - generator[1].to_f
-          batchToModify.save
           Hasgenerator.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :generatorID => generator[0].to_f, :amount => generator[1], :fromStorage => batchToModify.id)
         end
       end
 
       if params[:new_others]
         params[:new_others].each do |other|
-          batchToModify = Hasstoragelocation.find_by_batch_id(other[0])
-          batchToModify.amount -= other[1].to_f
-          batchToModify.save
           Hasother.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :otherID => other[0].to_f, :amount => other[1], :fromStorage => batchToModify.id)
         end
       end
@@ -64,20 +58,6 @@ class EluatesController < ApplicationController
   end
 
   def destroy
-    othersToReturn = Hasother.find_all_by_ownerType_and_productID(Substance::ELUATE, @eluate.id)
-    generatorsToReturn = Hasgenerator.find_all_by_ownerType_and_productID(Substance::ELUATE, @eluate.id)
-
-    othersToReturn.each do |other|
-      tempRow = Hasstoragelocation.find_by_id(other.fromStorage)
-      tempRow.amount += other.amount
-      tempRow.save
-    end
-
-    generatorsToReturn.each do |generator|
-      tempRow = Hasstoragelocation.find_by_id(generator.fromStorage)
-      tempRow.amount += generator.amount
-      tempRow.save
-    end
 
     Hasgenerator.destroy_all(:ownerType => Substance::ELUATE, :productID => @eluate.id)
     Hasother.destroy_all(:ownerType => Substance::ELUATE, :productID => @eluate.id)

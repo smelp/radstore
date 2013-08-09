@@ -17,11 +17,13 @@
         %th Tyyppi
         %th Varastopaikka
         %th Määrä
+        %th
+        %th
 
       %tbody
         %tr
           %td= link_to @batch.batchNumber, @batch
-          -if @batch.qualityControl
+          -if @batch.qualityStatus != 'Ei suoritettu'
             %td= @batch.qualityStatus
           -else
             %td{:id => 'qualityCheckContainer'}

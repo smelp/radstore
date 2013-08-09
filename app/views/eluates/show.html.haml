@@ -36,7 +36,7 @@
                   %td.alert.alert-info= b.substance.substanceType
                 - else
                   %td.gray= b.substance.substanceType
-                %td= link_to b.substance.genericName, b.substance
+                %td= link_to b.substance.generic_name, b.substance
                 %td= link_to b.batchNumber, b
 
       = link_to :controller => "eluates", :action => "edit", :id => @eluate.id do

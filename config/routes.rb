@@ -14,6 +14,7 @@ UserTutorial::Application.routes.draw do
   match '/batches/qualityCheck/:id', to:'batches#qualityCheck'
   match 'bakeries/:id', to: 'bakeries#show', as: 'bakery', via: [:get, :post]
   match '/batches/new/:huslab_id', to: 'batches#new'
+  match '/storagelocations/storeComment/:id', to: 'storagelocations#storeComment'
 
 
   resources :users

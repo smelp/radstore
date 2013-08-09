@@ -1,5 +1,5 @@
-- provide(:title, 'Luo raaka-aine')
-%h1 Luo raaka-aine
+- provide(:title, 'Lisää raaka-aine')
+%h1 Lisää raaka-aine
 
 .container
   .span6.offset3
@@ -10,22 +10,22 @@
     = form_for @substance do |f|
       //= render 'shared/material_error_messages'
       %p
-        = f.label :genericName, "Geneerinen nimi"
-        = f.text_field :genericName
-        = f.label :eluateName, 'Eluaattinimi'
-        = f.text_field :eluateName
+        = f.label :substanceType, "Tyyppi"
+        = f.select :substanceType, ['Generaattori', 'Kitti', 'Muu']
+        = f.label :generic_name, "Geneerinen nimi"
+        = f.text_field :generic_name
+        = f.label :product_name, 'Tuotenimi'
+        = f.text_field :product_name
         = f.label :manufacturer, "Valmistaja"
         = f.text_field :manufacturer
         = f.label :supplier, "Toimittaja"
         = f.text_field :supplier
-        = f.label :substanceType, "Tyyppi"
-        = f.select :substanceType, ['Generaattori', 'Kitti', 'Muu']
-        = f.label :half_life, 'Puoliintumisaika'
-        = f.text_field :half_life
         = f.label :alert_amount, 'Varoituksen ala-raja, määrä'
         = f.text_field :alert_amount
         = f.label :alert_days, 'Varoituksen ala-raja, pvm'
         = f.text_field :alert_days
+        = f.label :half_life, 'Puoliintumisaika'
+        = f.text_field :half_life
 
           
       = hidden_field_tag :huslab_id, @huslab.id

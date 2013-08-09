@@ -3,10 +3,8 @@ class Event < ActiveRecord::Base
 
   attr_accessible :target_id, :event_type, :signature, :user_timestamp, :info
 
-  validates :target_id, presence: { :message => "Erä on pakollinen" }
-  validates :event_type, presence: { :message => "Tyyppi on pakollinen" }
-  validates :signature, presence: { :message => "Kirjaaja on pakollinen" }
-  validates :user_timestamp, presence: { :message => "Vastaanottopäivä on pakollinen" }
+  validates :signature, presence: { :message => "Nimikirjaimet puuttuvat!" }
+  validates :user_timestamp, presence: { :message => "Kirjauspäivä on pakollinen" }
 
   NEW_BATCH = 1
   ADD_TO_BATCH = 2
@@ -23,5 +21,7 @@ class Event < ActiveRecord::Base
   NEW_RADIOMEDICINE = 21
   RADIOMEDICINE_MODIFIED = 23
   RADIOMEDICINE_REMOVED = 24
+
+  STORAGE_COMMENT = 30
 
 end

@@ -48,6 +48,7 @@ class BatchesController < ApplicationController
       if params[:new_storagelocations] and @batch.save and handleStorageLocations(@batch.id, @substance.substanceType)
         flash[:success] = "Uusi erä luotu!"
         createEvent Event::NEW_BATCH
+        createEvent Event::STORAGE_COMMENT
         redirect_to @substance
       else
         flash.now[:error] = "Erän luonti ei onnistunut"
@@ -80,7 +81,7 @@ class BatchesController < ApplicationController
       redirect_to @substance
 
     else
-      flash[:error] = 'Erän '+@batch.genericName+' tietoja ei voitu päivittää'
+      flash[:error] = 'Erän '+@batch.generic_name+' tietoja ei voitu päivittää'
     end
   end
 
@@ -165,8 +166,12 @@ class BatchesController < ApplicationController
     end
 
     def createEvent( eventType )
-      params[:event].each do |event|
-        Event.create(:target_id => @batch.id, :event_type => eventType, :user_timestamp => event[2], :signature => event[0], :info => event[1]+' ;'+@batch.amount.to_s+" arrived")
+      if eventType == Event::STORAGE_COMMENT
+        Event.create(:target_id => @batch.id, :event_type => eventType, :user_timestamp => Date.today, :signature => 'SYSTEM', :info => '')
+      else
+        params[:event].each do |event|
+          Event.create(:target_id => @batch.id, :event_type => eventType, :user_timestamp => event[2], :signature => event[0], :info => event[1]+' ;'+@batch.amount.to_s+" arrived")
+        end
       end
     end
 

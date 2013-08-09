@@ -13,6 +13,7 @@ window.revealQualityCheckForm = (event,id) ->
     form.method = 'post'
     input.name = 'signature'
     input.type = 'text'
+    input.placeholder = 'Nimikirjaimet'
     button.innerText = 'Kirjaa'
     button.type = 'submit'
     select.name = 'result'

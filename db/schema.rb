@@ -242,14 +242,15 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
   end
 
   create_table "substances", :force => true do |t|
-    t.string   "genericName"
-    t.string   "eluateName"
+    t.string   "generic_name"
+    t.string   "product_name"
     t.string   "substanceType"
     t.string   "manufacturer"
     t.string   "supplier"
     t.string   "half_life"
     t.integer  "alert_amount"
     t.integer  "alert_days"
+    t.decimal  "volume"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "huslab_id"

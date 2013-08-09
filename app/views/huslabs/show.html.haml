@@ -1,37 +1,37 @@
 - provide(:title, @firm.name)
-
 .span12.bordered-top#main-container
-  %p.pull-right='Sivu päivitetty: '+Time.now.strftime("%d.%m.%Y %H:%M")
-
   .row
-    .span8.offset1
+    .span8.offset2
       .row.well.green
-        %h3 Eluaatit
+        %h3 Valmisteet
 
         = link_to :controller => "eluates", :action => "new", :huslab_id => @huslab.id do
           %i.icon-plus
-          Kirjaa eluaatti
+          Luo eluaatti
         = link_to :controller => "radiomedicines", :action => "new", :huslab_id => @huslab.id do
           %i.icon-plus
-          Kirjaa radiolääke
+          Luo radioaktiivinen lääke
         - @eluates.each do |eluate|
-          %table.table.table-striped.table-condensed.table-bordered
-            %thead
-              %th Nimi
-              %th Luotu
-              %th Aktiivisuus
-              %th Varastopaikka
+          -if eluate.created.to_date == Date.today
+            %table.table.table-striped.table-condensed.table-bordered
+              %thead
+                %th Nimi
+                %th Luotu
+                %th Aktiivisuus
+                %th Varastopaikka
 
-              %tbody
-                %tr
-                  %td= link_to eluate.name, eluate
-                  %td= eluate.created.strftime("%H:%M")
-                  %td= eluate.radioactivity + ' Gbq'
-                  %td= eluate.storagelocation.name
-              - eluate.radiomedicines.each do |radiomedicine|
-                %tr
-                  %td#radiomed= link_to radiomedicine.name, radiomedicine
-                  %td= radiomedicine.created.strftime("%H:%M")
-                  %td= radiomedicine.radioactivity+ ' Gbq'
-                  %td= radiomedicine.storagelocation.name
+                %tbody
+                  %tr
+                    %td= link_to eluate.name, eluate
+                    %td= eluate.created.strftime("%H:%M")
+                    %td= eluate.radioactivity + ' Gbq'
+                    %td= eluate.storagelocation.name
+                - eluate.radiomedicines.each do |radiomedicine|
+                  -if radiomedicine.created.to_date == Date.today
+                    %tr
+                      %td#radiomed= link_to radiomedicine.name, radiomedicine
+                      %td= radiomedicine.created.strftime("%H:%M")
+                      %td= radiomedicine.radioactivity+ ' Gbq'
+                      %td= radiomedicine.storagelocation.name
 
+  %p.pull-right='Sivu päivitetty: '+Time.now.strftime("%d.%m.%Y %H:%M")

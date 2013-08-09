@@ -34,10 +34,7 @@ class RadiomedicinesController < ApplicationController
 
       if params[:new_others]
         params[:new_others].each do |other|
-          batchToModify = Hasstoragelocation.find_by_batch_id(other[0])
-          batchToModify.amount -= other[1].to_f
           Hasother.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :otherID => other[0].to_f, :amount => other[1])
-          batchToModify.save
         end
       end
 
@@ -58,6 +55,26 @@ class RadiomedicinesController < ApplicationController
     else
       redirect_to :action => "new"
     end
+  end
+
+  def destroy
+
+    kitsToReturn = Haskit.find_all_by_ownerType_and_productID(Substance::RADIOMEDICINE, @radiomedicine.id)
+
+    kitsToReturn.each do |kit|
+      tempRow = Hasstoragelocation.find_by_id(kit.fromStorage)
+      tempRow.amount += kit.amount
+      tempRow.save
+    end
+
+    Haskit.destroy_all(:ownerType => Substance::RADIOMEDICINE, :productID => @radiomedicine.id)
+    Hasother.destroy_all(:ownerType => Substance::RADIOMEDICINE, :productID => @radiomedicine.id)
+    @radiomedicine.destroy
+
+    createEvent Event::RADIOMEDICINE_REMOVED
+
+    flash[:success] = "Radioaktiivinen lääke poistettu."
+    redirect_to @huslab
   end
 
   private

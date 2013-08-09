@@ -39,10 +39,10 @@ class SubstancesController < ApplicationController
 
     end
     if @substance.update_attributes(params[:substance])
-      flash[:success] = 'Aineen '+@substance.genericName+' tiedot päivitetty'
+      flash[:success] = 'Aineen '+@substance.generic_name+' tiedot päivitetty'
       redirect_to @substance
     else
-      flash[:error] = 'Aineen '+@substance.genericName+' tietoja ei voity päivittää'
+      flash[:error] = 'Aineen '+@substance.generic_name+' tietoja ei voity päivittää'
     end
   end
 

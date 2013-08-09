@@ -14,9 +14,10 @@
             %th Tyyppi
             %th Aine
             %th Erä
-            %th Määrä yhteensä
+            %th Määrä
             %th Määrät varastopaikoittain
             %th Vanhenemis pvm
+            %th Kommentti
         %tbody
           - @generators.each do |generator|
             - generator.batches.each do |batch|
@@ -24,21 +25,20 @@
                 %td
                   = generator.substanceType
                 %td
-                  = generator.genericName
+                  = generator.generic_name
                 -if batch.qualityStatus != 'OK'
-                  %td.alert.alert{title:'Erälle ei ole tehty laadunvarmistusta!'}
+                  %td.span1.alert.alert{title:'Erälle ei ole tehty laadunvarmistusta!'}
                     = link_to batch.batchNumber, batch
-                    %span.pull-right !!!
                 - else
-                  %td
+                  %td.span1
                     = link_to batch.batchNumber, batch
 
                 -if batch.amount < batch.substance.alert_amount
-                  %td.alert.alert-error{title:'Varastossa alle '+batch.substance.alert_amount+' kappaletta!'}
+                  %td.span1.alert.alert-error{title:'Varastossa alle '+batch.substance.alert_amount.to_s+' kappaletta!'}
                     = batch.amount
                     %span.pull-right !!!
                 - else
-                  %td= batch.amount
+                  %td.span1= batch.amount
                 %td
                   - batch.hasstoragelocations.each do |storage|
                     = storage.storagelocation.name+': '+ storage.amount.to_s
@@ -47,12 +47,21 @@
                   %td.alert.alert-error{title:'Erän päiväys mennyt umpeen!'}
                     = batch.expDate
                     %span.pull-right !!!
-                - elsif batch.expDate - batch.substance.alert_days.days < Date.today
+                - elsif batch.substance.substanceType != 'Muu' && batch.expDate - batch.substance.alert_days.days < Date.today
                   %td.alert.alert{title:'Erän päiväys menossa umpeen!'}
                     = batch.expDate
                     %span.pull-right !!!
                 - else
                   %td= batch.expDate
+                %td
+                  = form_for :event, :url => {:action => "storeComment", :id => batch.storageComment.id} do |f|
+                    = f.text_field :info, :value => batch.storageComment.info
+                    = f.submit 'Kirjaa'
+
+
+
+
+
 
   %a.nav-link{href: "#", onclick: "window.print()"}
     %i.icon-print.margin-left10

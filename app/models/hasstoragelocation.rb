@@ -14,7 +14,7 @@ class Hasstoragelocation < ActiveRecord::Base
   end
 
   def infoForSelectBox
-    self.batch.batchNumber+' '+self.batch.substance.genericName+' '+self.storagelocation.name+' Käytettävissä: '+self.amount.to_s
+    self.batch.batchNumber+' '+self.batch.substance.generic_name+' '+self.storagelocation.name+' Käytettävissä: '+self.amount.to_s
   end
 
 end

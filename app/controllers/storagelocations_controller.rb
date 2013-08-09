@@ -12,7 +12,6 @@ class StoragelocationsController < ApplicationController
   
   def show
     @generators = Substance.all
-
   end
 
   def new
@@ -49,6 +48,11 @@ class StoragelocationsController < ApplicationController
     @storagelocation.destroy
     flash[:success] = "Varasto '" + @storagelocation.name + "' poistettu."
     redirect_to @huslab
+  end
+
+  def storeComment
+    Event.update(params[:id],params[:event])
+    redirect_to 'show'
   end
 
   private
