@@ -3,7 +3,7 @@ window.add_generator = (e) ->
   amount = $('#generator_amount').get(0).value
   i = 0
   while i < amount
-    createAddition(choice, i, "generators")
+    createAddition(choice, 1, "generators")
     i++
   $('#generator_amount').get(0).value = ''
 
@@ -12,7 +12,7 @@ window.add_other = (e) ->
   amount = $('#other_amount').get(0).value
   i = 0
   while i < amount
-    createAddition(choice, i, "others")
+    createAddition(choice, 1, "others")
     i++
   $('#other_amount').get(0).value = ''
 
@@ -21,7 +21,7 @@ window.add_kit = (e) ->
   amount = $('#kit_amount').get(0).value
   i = 0
   while i < amount
-    createAddition(choice, i, "kits")
+    createAddition(choice, 1, "kits")
     i++
   $('#kit_amount').get(0).value = ''
 
@@ -56,7 +56,7 @@ createAddition = (choice, amount, typeString) ->
       other = [val, amount]
       elem.type = "hidden"
       elem.name = "new_"+typeString+"[" + other + "]"
-      elem.value = 1
+      elem.value = amount
 
       $('#product_'+typeString).append tr_elem
       $('#product_'+typeString).append div

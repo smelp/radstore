@@ -8,7 +8,7 @@
   .span12
     .row.bordered
       %h2 Raportti
-      - if @events
+      - if @arrivalEvents
         = render 'arrivals'
       -if @radiomedEvents
         = render 'products'
