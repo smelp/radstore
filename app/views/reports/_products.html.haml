@@ -1,0 +1,17 @@
+%table.table.table-bordered#storageTable
+  %thead
+    %tr
+      %th Aine
+      %th Erä
+
+  %tbody
+    - @radiomedEvents.each do |event|
+      -event.getRadiomedicine.kits.each do |kit|
+        %tr
+          %td
+            = kit.substance.product_name
+          %td
+            = 1
+
+
+

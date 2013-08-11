@@ -19,7 +19,7 @@
           = f.text_field :batchNumber
           = f.label :expDate, 'Viimeinen käyttöpäivä'
           .input-append.date#datetimepicker1
-            = text_field_tag 'batch[expDate]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm'}
+            = text_field_tag 'batch[expDate]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy'}
             %span.add-on
               %i.icon-calendar{'data-time-icon' => 'icon-time', 'data-date-icon' => 'icon-calendar'}
 
@@ -33,7 +33,7 @@
             = e.text_field :info
             = e.label :user_timestamp, 'Vastaanottopäivä'
             .input-append.date#datetimepicker2
-              = text_field_tag 'event[user_timestamp]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm'}
+              = text_field_tag 'event[user_timestamp]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy'}
               %span.add-on
                 %i.icon-calendar{'data-time-icon' => 'icon-time', 'data-date-icon' => 'icon-calendar'}
 

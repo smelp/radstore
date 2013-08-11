@@ -13,7 +13,7 @@ class EluatesController < ApplicationController
   def show
     @eluate = Eluate.find(params[:id])
     @batches = @eluate.generators
-    @batches += @eluate.others
+    @batches += Batch.find_by_sql('SELECT "batches".* FROM "batches" INNER JOIN "hasothers" ON "batches"."id" = "hasothers"."otherID" WHERE "hasothers"."ownerType" = "Eluaatti" AND "hasothers"."productID" = '+@eluate.id.to_s)
   end
 
   def new
@@ -32,13 +32,13 @@ class EluatesController < ApplicationController
 
       if params[:new_generators]
         params[:new_generators].each do |generator|
-          Hasgenerator.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :generatorID => generator[0].to_f, :amount => generator[1], :fromStorage => batchToModify.id)
+          Hasgenerator.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :generatorID => generator[0].to_f, :amount => generator[1])
         end
       end
 
       if params[:new_others]
         params[:new_others].each do |other|
-          Hasother.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :otherID => other[0].to_f, :amount => other[1], :fromStorage => batchToModify.id)
+          Hasother.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :otherID => other[0].to_f, :amount => other[1])
         end
       end
 

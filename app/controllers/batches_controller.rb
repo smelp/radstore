@@ -47,7 +47,11 @@ class BatchesController < ApplicationController
     if !@batchFound
       if params[:new_storagelocations] and @batch.save and handleStorageLocations(@batch.id, @substance.substanceType)
         flash[:success] = "Uusi erä luotu!"
-        createEvent Event::NEW_BATCH
+        @event = Event.new(params[:event])
+        @event.target_id = @batch.id
+        @event.event_type = Event::NEW_BATCH
+        @event.info = 'Saapui '+@batch.amount.to_s+' kpl, Kommentti: '+@event.info
+        @event.save
         createEvent Event::STORAGE_COMMENT
         redirect_to @substance
       else
@@ -58,8 +62,13 @@ class BatchesController < ApplicationController
       end
     else
       if handleStorageLocations @batchFound.id, @substance.substanceType
-        flash[:success] = "Lähetys lisätty erään!"
+        @event = Event.new(params[:event])
+        @event.target_id = @batchFound.id
+        @event.event_type = Event::ADD_TO_BATCH
+        @event.info = 'Saapui '+sumUp.to_s+' kpl, Kommentti: '+@event.info
+        @event.save
         createEvent Event::ADD_TO_BATCH
+        flash[:success] = "Lähetys lisätty erään!"
         redirect_to @substance
       else
         flash.now[:error] = "Lähetyksen lisäys ei onnistunut"
@@ -165,13 +174,17 @@ class BatchesController < ApplicationController
       end
     end
 
+    def sumUp
+      sum = 0
+      params[:new_storagelocations].each do |storage|
+         sum += storage[1].to_f
+      end
+      sum
+    end
+
     def createEvent( eventType )
       if eventType == Event::STORAGE_COMMENT
         Event.create(:target_id => @batch.id, :event_type => eventType, :user_timestamp => Date.today, :signature => 'SYSTEM', :info => '')
-      else
-        params[:event].each do |event|
-          Event.create(:target_id => @batch.id, :event_type => eventType, :user_timestamp => event[2], :signature => event[0], :info => event[1]+' ;'+@batch.amount.to_s+" arrived")
-        end
       end
     end
 

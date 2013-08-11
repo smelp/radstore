@@ -4,8 +4,9 @@ class Batch < ActiveRecord::Base
   belongs_to :substance
   has_many :hasstoragelocations
   has_many :storagelocations, :through => :hasstoragelocations
+  has_many :events, :foreign_key => 'target_id'
 
-  attr_accessible :batchNumber, :substance_id, :qualityControl, :storagelocations, :expDate, :hasstoragelocations
+  attr_accessible :batchNumber, :substance_id, :qualityControl, :storagelocations, :expDate, :hasstoragelocations, :events
 
   # validates_numericality_of :batchNumber, { :greater_than_or_equal_to => 1 }
   
@@ -28,7 +29,7 @@ class Batch < ActiveRecord::Base
   end
 
   def getEvents
-    Event.where('target_id='+self.id+' AND event_type < 7')
+    Event.where('target_id='+self.id+' AND (event_type = 1 OR event_type = 2')
   end
 
   def storageComment

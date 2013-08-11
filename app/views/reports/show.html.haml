@@ -1,0 +1,24 @@
+- provide(:title, 'Raportti')
+
+.container
+  .span12
+    = render "shared/nav"
+
+.container
+  .span12
+    .row.bordered
+      %h2 Raportti
+      - if @events
+        = render 'arrivals'
+      -if @radiomedEvents
+        = render 'products'
+
+
+
+
+
+
+
+  %a.nav-link{href: "#", onclick: "window.print()"}
+    %i.icon-print.margin-left10
+    Tulosta

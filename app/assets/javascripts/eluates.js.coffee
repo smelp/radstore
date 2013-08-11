@@ -1,25 +1,35 @@
 window.add_generator = (e) ->
   choice = $('#post_generator_id').get(0)
   amount = $('#generator_amount').get(0).value
-  createAddition(choice, amount, "generators")
+  i = 0
+  while i < amount
+    createAddition(choice, i, "generators")
+    i++
   $('#generator_amount').get(0).value = ''
 
 window.add_other = (e) ->
   choice = $('#post_other_id').get(0)
   amount = $('#other_amount').get(0).value
-  createAddition(choice, amount, "others")
+  i = 0
+  while i < amount
+    createAddition(choice, i, "others")
+    i++
   $('#other_amount').get(0).value = ''
 
 window.add_kit = (e) ->
   choice = $('#post_kit_id').get(0)
   amount = $('#kit_amount').get(0).value
-  createAddition(choice, amount, "kits")
+  i = 0
+  while i < amount
+    createAddition(choice, i, "kits")
+    i++
   $('#kit_amount').get(0).value = ''
 
 window.add_storagelocation = (e) ->
   choice = $('#post_storagelocation_id').get(0)
   amount = $('#storagelocation_amount').get(0).value
   createAddition(choice, amount, "storagelocations")
+  sumTotal()
 
 createAddition = (choice, amount, typeString) ->
   val = choice.value
@@ -38,7 +48,7 @@ createAddition = (choice, amount, typeString) ->
 
   for option in choice
     if option.value == val && option.innerHTML.indexOf('Valitse') != 1 && amount != ""
-      td_elem.innerHTML = option.innerHTML + ", " + amount + "</br>"
+      td_elem.innerHTML = option.innerHTML + "</br>"
       a_elem.href = "#"
       a_elem.setAttribute("class","nav-link")
       a_elem.setAttribute("onclick","remove_table_element(#{val})")
@@ -46,7 +56,7 @@ createAddition = (choice, amount, typeString) ->
       other = [val, amount]
       elem.type = "hidden"
       elem.name = "new_"+typeString+"[" + other + "]"
-      elem.value = amount
+      elem.value = 1
 
       $('#product_'+typeString).append tr_elem
       $('#product_'+typeString).append div
@@ -55,7 +65,6 @@ createAddition = (choice, amount, typeString) ->
       $(tr_elem).append td_elem_remove
       $(td_elem_remove).append a_elem
       $(a_elem).append i_elem
-  sumTotal()
 
 window.sumTotal = ()->
   sum = 0
@@ -80,8 +89,7 @@ $(document).ready ->
   $('#datetimepicker-eluate').datetimepicker
     language: 'fi'
   $('#tableForProducts').dataTable
-    sDom: "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-    sPaginationType: "bootstrap",
+    sDom: "t",
     aaSorting: [[ 0, "asc" ], [1, "asc"]],
     aoColumns: [
         null,

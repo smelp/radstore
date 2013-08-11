@@ -9,4 +9,7 @@
     Varastopaikkojen hallinta
 %li
   = link_to :controller => "substances", :action => "index", :huslab_id => current_user.primary_firm.resource.id do
-    Raaka-aineiden tietojen hallinta
+    Raaka-aineiden tiedot
+%li
+  = link_to :controller => "reports", :action => "new", :huslab_id => current_user.primary_firm.resource.id do
+    Raportit

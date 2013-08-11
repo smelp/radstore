@@ -24,4 +24,32 @@ class Event < ActiveRecord::Base
 
   STORAGE_COMMENT = 30
 
+  def self.getArrivalsByDateRange (startTime, endTime)
+    Event.where("(event_type = 1 OR event_type = 2) AND user_timestamp BETWEEN '"+startTime.to_s+"' AND '"+endTime.to_s+"'")
+  end
+
+  def self.getRemovalsByDateRange (startTime, endTime)
+    Event.where("event_type = 4  AND user_timestamp BETWEEN '"+startTime.to_s+"' AND '"+endTime.to_s+"'")
+  end
+
+  def self.getEluatesByDateRange (startTime, endTime)
+    Event.where("event_type = 11  AND user_timestamp BETWEEN '"+startTime.to_s+"' AND '"+endTime.to_s+"'")
+  end
+
+  def self.getRadiomedicinesByDateRange (startTime, endTime)
+    Event.where("event_type = 21  AND user_timestamp BETWEEN '"+startTime.to_s+"' AND '"+endTime.to_s+"'")
+  end
+
+  def getBatch
+    Batch.find_by_id(self.target_id)
+  end
+
+  def getEluate
+     Eluate.find_by_id(self.target_id)
+  end
+
+  def getRadiomedicine
+     Radiomedicine.find_by_id(self.target_id)
+  end
+
 end

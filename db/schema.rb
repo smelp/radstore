@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
   add_index "firms_users", ["user_id"], :name => "index_firms_users_on_user_id"
 
   create_table "hasgenerators", :force => true do |t|
-    t.integer  "ownerType"
+    t.string   "ownerType"
     t.integer  "productID"
     t.integer  "generatorID"
     t.integer  "volume"
@@ -136,7 +136,7 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
   end
 
   create_table "haskits", :force => true do |t|
-    t.integer  "ownerType"
+    t.string   "ownerType"
     t.integer  "productID"
     t.integer  "kitID"
     t.integer  "volume"
@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
   add_index "hasmaterials", ["recipe_id"], :name => "index_hasmaterials_on_recipe_id"
 
   create_table "hasothers", :force => true do |t|
-    t.integer  "ownerType"
+    t.string   "ownerType"
     t.integer  "productID"
     t.integer  "otherID"
     t.integer  "volume"

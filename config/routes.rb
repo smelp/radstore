@@ -1,5 +1,11 @@
 UserTutorial::Application.routes.draw do
 
+  get "reports/new"
+
+  get "reports/create"
+
+  get "reports/show"
+
   root to: "static_pages#home"
 
   match '/help',    to: 'static_pages#help'
@@ -15,6 +21,7 @@ UserTutorial::Application.routes.draw do
   match 'bakeries/:id', to: 'bakeries#show', as: 'bakery', via: [:get, :post]
   match '/batches/new/:huslab_id', to: 'batches#new'
   match '/storagelocations/storeComment/:id', to: 'storagelocations#storeComment'
+  match '/reports/show', to: 'reports#show'
 
 
   resources :users
@@ -36,6 +43,7 @@ UserTutorial::Application.routes.draw do
   resources :batches
   resources :bakeryorders
   resources :bills
+  resources :reports
 
   resources :products, :controller => :recipes
   resources :sessions, only: [:new, :create, :destroy]

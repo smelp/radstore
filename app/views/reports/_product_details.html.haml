@@ -1,0 +1,17 @@
+%table.table.table-bordered#storageTable
+  %thead
+    %tr
+      %th Aine
+      %th Erä
+      %th Info
+  %tbody
+    - @arrivalEvents.each do |event|
+      %tr
+        %td
+          = event.getBatch.substance.substanceType
+        %td
+          = event.getBatch.batchNumber
+        %td
+          = event.user_timestamp.strftime("%d.%m.%y")+' '+ event.info+' '+event.getBatch.expDate.strftime("%d.%m.%y")
+
+

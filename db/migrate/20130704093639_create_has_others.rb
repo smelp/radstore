@@ -1,7 +1,7 @@
 class CreateHasOthers < ActiveRecord::Migration
   def change
     create_table :hasothers do |t|
-      t.integer :ownerType
+      t.string :ownerType
       t.integer :productID
       t.integer :otherID
       t.integer :volume
