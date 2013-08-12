@@ -12,7 +12,7 @@ class RadiomedicinesController < ApplicationController
 
   def show
     @radiomedicine = Radiomedicine.find(params[:id])
-    @batches = Batch.find_by_sql('SELECT "batches".* FROM "batches" INNER JOIN "hasothers" ON "batches"."id" = "hasothers"."otherID" WHERE "hasothers"."ownerType" = "Radiolääke" AND "hasothers"."productID" = '+@radiomedicine.id.to_s)
+    @batches = Batch.find_by_sql('SELECT "batches".* FROM "batches" INNER JOIN "hasothers" ON "batches"."id" = "hasothers"."otherID" WHERE "hasothers"."ownerType" = \'Radiolääke\' AND "hasothers"."productID" = '+@radiomedicine.id.to_s)
     @batches += @radiomedicine.kits
     @eluate = @radiomedicine.eluate
   end

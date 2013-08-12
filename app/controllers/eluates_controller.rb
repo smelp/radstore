@@ -13,7 +13,7 @@ class EluatesController < ApplicationController
   def show
     @eluate = Eluate.find(params[:id])
     @batches = @eluate.generators
-    @batches += Batch.find_by_sql('SELECT "batches".* FROM "batches" INNER JOIN "hasothers" ON "batches"."id" = "hasothers"."otherID" WHERE "hasothers"."ownerType" = "Eluaatti" AND "hasothers"."productID" = '+@eluate.id.to_s)
+    @batches += Batch.find_by_sql('SELECT "batches".* FROM "batches" INNER JOIN "hasothers" ON "batches"."id" = "hasothers"."otherID" WHERE "hasothers"."ownerType" = \'Eluaatti\' AND "hasothers"."productID" = '+@eluate.id.to_s)
   end
 
   def new
