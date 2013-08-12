@@ -29,7 +29,7 @@ class Batch < ActiveRecord::Base
   end
 
   def getEvents
-    Event.where('target_id='+self.id+' AND (event_type = 1 OR event_type = 2')
+    Event.where('"target_id"='+self.id+' AND ("event_type" = 1 OR "event_type" = 2')
   end
 
   def storageComment

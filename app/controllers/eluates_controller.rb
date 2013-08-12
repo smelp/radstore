@@ -18,8 +18,8 @@ class EluatesController < ApplicationController
 
   def new
     @eluate = Eluate.new
-    @generators = Hasstoragelocation.joins(:batch).where('"batches"."qualityControl" != 6 AND "hasstoragelocations"."batchType" ="Generaattori"')
-    @others = Hasstoragelocation.joins(:batch).where('"batches"."qualityControl" != 6 AND "hasstoragelocations"."batchType" = "Muu"')
+    @generators = Hasstoragelocation.joins(:batch).where("\"batches\".\"qualityControl\" != 6 AND \"hasstoragelocations\".\"batchType\" = 'Generaattori' ")
+    @others = Hasstoragelocation.joins(:batch).where("\"batches\".\"qualityControl\" != 6 AND \"hasstoragelocations\".\"batchType\" = 'Muu' ")
     @event = Event.new
     @storagelocations = Storagelocation.all
   end
