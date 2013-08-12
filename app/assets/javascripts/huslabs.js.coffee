@@ -24,3 +24,10 @@ window.revealQualityCheckForm = (event,id) ->
     $('#qualityCheckContainer').append(form)
 
 
+window.calcActivity = (created, volume, activity, decayConst) ->
+  timeDiff = ((new Date().getTime() - Date.parse(created))  / 1000 / 60 / 60)
+  actNow = activity*Math.pow(2.718282,-decayConst*timeDiff)
+  concetrat = actNow / volume
+  console.log concetrat
+
+

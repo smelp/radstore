@@ -17,7 +17,8 @@
               %thead
                 %th Nimi
                 %th Luotu
-                %th Aktiivisuus
+                %th Alkuaktiivisuus
+                %th Aktiivisuuskonsentraatio nyt
                 %th Varastopaikka
 
                 %tbody
@@ -25,6 +26,7 @@
                     %td= link_to eluate.name, eluate
                     %td= eluate.created.strftime("%H:%M")
                     %td= eluate.radioactivity + ' Gbq'
+                    %td= eluate.calc.to_s + ' Gbq / ml'
                     %td= eluate.storagelocation.name
                 - eluate.radiomedicines.each do |radiomedicine|
                   -if radiomedicine.created.to_date == Date.today
@@ -32,6 +34,8 @@
                       %td#radiomed= link_to radiomedicine.name, radiomedicine
                       %td= radiomedicine.created.strftime("%H:%M")
                       %td= radiomedicine.radioactivity+ ' Gbq'
+                      %td= radiomedicine.radioactivity
+                      %td= radiomedicine.calc.to_s + ' Gbq / ml'
                       %td= radiomedicine.storagelocation.name
 
   %p.pull-right='Sivu päivitetty: '+Time.now.strftime("%d.%m.%Y %H:%M")

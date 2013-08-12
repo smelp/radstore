@@ -24,4 +24,10 @@ class Radiomedicine < ActiveRecord::Base
     @event.signature
   end
 
+  def calc
+    timeDiff = ((Time.now - self.created) / 1.hour)
+    actNow = self.radioactivity.to_f*(2.718282**(-0.1151*timeDiff))
+    concetrat = actNow / self.volume.to_f
+  end
+
 end
