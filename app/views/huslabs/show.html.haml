@@ -34,7 +34,6 @@
                       %td#radiomed= link_to radiomedicine.name, radiomedicine
                       %td= radiomedicine.created.strftime("%H:%M")
                       %td= radiomedicine.radioactivity+ ' Gbq'
-                      %td= radiomedicine.radioactivity
                       %td= radiomedicine.calc.to_s + ' Gbq / ml'
                       %td= radiomedicine.storagelocation.name
 

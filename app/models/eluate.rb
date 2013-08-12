@@ -31,6 +31,7 @@ class Eluate < ActiveRecord::Base
     timeDiff = ((Time.now - self.created) / 1.hour)
     actNow = self.radioactivity.to_f*(2.718282**(-0.1151*timeDiff))
     concetrat = actNow / self.volume.to_f
+    concetrat.round(3)
   end
 
 end
