@@ -23,7 +23,7 @@ class ReportsController < ApplicationController
     end
     if params[:showCreated]
       @kitSums = sumsOfKits(@start, @end)
-      kitIDs = @kitSums.map{|t| t.ID}
+      kitIDs = @kitSums.map{|t| t.id}
       @kits = Batch.find_all_by_id(kitIDs)
     end
     if params[:showCreatedDetails]
@@ -35,7 +35,7 @@ class ReportsController < ApplicationController
 
   def sumsOfKits (startTime, endTime)
     medIds = Radiomedicine.joins(:events).where("\"events\".\"event_type\" = 21 AND \"events\".\"user_timestamp\" BETWEEN '"+startTime.to_date.to_s+"' AND '"+endTime.to_date.to_s+"'").map{|med| med.id}
-    kitSums = Haskit.select("\"kitID\" As ID,COUNT(\"amount\") as Amount").where(:productID => medIds).group("\"kitID\"")
+    kitSums = Haskit.select("\"kitID\" As id,COUNT(\"amount\") as amount").where(:productID => medIds).group("\"kitID\"")
   end
 
   def signed_in_user
