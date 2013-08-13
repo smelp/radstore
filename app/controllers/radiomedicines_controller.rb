@@ -76,7 +76,7 @@ class RadiomedicinesController < ApplicationController
     kitsToReturn = Haskit.find_all_by_ownerType_and_productID(Substance::RADIOMEDICINE, @radiomedicine.id)
 
     kitsToReturn.each do |kit|
-      tempRow = Hasstoragelocation.find_by_id(kit.fromStorage)
+      tempRow = Hasstoragelocation.find_by_batch_id(kit.kitID)
       tempRow.amount += kit.amount
       tempRow.save
     end
@@ -85,7 +85,7 @@ class RadiomedicinesController < ApplicationController
     Hasother.destroy_all(:ownerType => Substance::RADIOMEDICINE, :productID => @radiomedicine.id)
     @radiomedicine.destroy
 
-    createEvent Event::RADIOMEDICINE_REMOVED
+    #createEvent Event::RADIOMEDICINE_REMOVED
 
     flash[:success] = "Radioaktiivinen lääke poistettu."
     redirect_to @huslab

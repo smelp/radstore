@@ -28,6 +28,7 @@
                     %td= eluate.created.strftime("%H:%M")
                     %td= eluate.radioactivity + ' Gbq'
                     %td= eluate.calc.to_s + ' Gbq / ml'
+                    %td= eluate.volume
                     %td= eluate.storagelocation.name
                 - eluate.radiomedicines.each do |radiomedicine|
                   -if radiomedicine.created.to_date == Date.today
@@ -36,6 +37,7 @@
                       %td= radiomedicine.created.strftime("%H:%M")
                       %td= radiomedicine.radioactivity+ ' Gbq'
                       %td= radiomedicine.calc.to_s + ' Gbq / ml'
+                      %td= radiomedicine.volume
                       %td= radiomedicine.storagelocation.name
 
   %p.pull-right='Sivu päivitetty: '+Time.now.strftime("%d.%m.%Y %H:%M")
