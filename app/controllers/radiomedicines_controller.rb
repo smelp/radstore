@@ -57,6 +57,20 @@ class RadiomedicinesController < ApplicationController
     end
   end
 
+  def edit
+    @storagelocations = Storagelocation.all
+  end
+
+  def update
+    if @radiomedicine.update_attributes(params[:radiomedicine])
+      flash[:success] = 'Radiolääkkeen '+@radiomedicine.name+' tiedot päivitetty'
+      redirect_to @radiomedicine
+
+    else
+      flash[:error] = 'Erän '+@radiomedicine.name+' tietoja ei voitu päivittää'
+    end
+  end
+
   def destroy
 
     kitsToReturn = Haskit.find_all_by_ownerType_and_productID(Substance::RADIOMEDICINE, @radiomedicine.id)

@@ -21,7 +21,7 @@ class ReportsController < ApplicationController
     if params[:showCreated]
       @radiomedEvents = Event.getRadiomedicinesByDateRange(params[:startDate], params[:endDate])
     end
-    if params[:showArrivals]
+    if params[:showCreatedDetails]
       @arrivalEvents = Event.getArrivalsByDateRange(params[:startDate], params[:endDate])
     end
   end

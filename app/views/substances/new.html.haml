@@ -20,11 +20,11 @@
         = f.text_field :manufacturer
         = f.label :supplier, "Toimittaja"
         = f.text_field :supplier
-        = f.label :alert_amount, 'Varoituksen ala-raja, määrä'
+        = f.label :alert_amount, 'Varoituksen alaraja (ampullien lkm)'
         = f.text_field :alert_amount
-        = f.label :alert_days, 'Varoituksen ala-raja, pvm'
+        = f.label :alert_days, 'Varoituksen alaraja (päivien lkm)'
         = f.text_field :alert_days
-        = f.label :half_life, 'Puoliintumisaika'
+        = f.label :half_life, 'Hajoamisvakio (=ln2/t1/2, [1/h])'
         = f.text_field :half_life
 
           

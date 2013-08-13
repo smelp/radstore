@@ -47,9 +47,15 @@ class SubstancesController < ApplicationController
   end
 
   def destroy
-    @substance.destroy
-    flash[:success] = "Raaka-aine poistettu."
-    redirect_to @huslab
+    if @substance.batches
+      flash[:error] = "Aineella on eriä, ei voida poistaa."
+      redirect_to @huslab
+    else
+      @substance.destroy
+      flash[:success] = "Raaka-aine poistettu."
+      redirect_to @huslab
+    end
+
   end
 
   private

@@ -55,6 +55,13 @@ class EluatesController < ApplicationController
   end
 
   def update
+    if @eluate.update_attributes(params[:eluate])
+      flash[:success] = 'Eluaatin '+@eluate.name+' tiedot päivitetty'
+      redirect_to @eluate
+
+    else
+      flash[:error] = 'Eluaatin '+@eluate.name+' tietoja ei voitu päivittää'
+    end
   end
 
   def destroy

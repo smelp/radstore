@@ -98,7 +98,7 @@ class BatchesController < ApplicationController
     Hasstoragelocation.destroy_all(:batch_id => @batch.id)
     @batch.destroy
     flash[:success] = "Erä " + @batch.batchNumber + " poistettu."
-    redirect_to @batch.substance
+    redirect_to @huslab
   end
 
   private
