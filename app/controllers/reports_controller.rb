@@ -35,7 +35,7 @@ class ReportsController < ApplicationController
 
   def sumsOfKits (startTime, endTime)
     medIds = Radiomedicine.joins(:events).where("\"events\".\"event_type\" = 21 AND \"events\".\"user_timestamp\" BETWEEN '"+startTime.to_date.to_s+"' AND '"+endTime.to_date.to_s+"'").map{|med| med.id}
-    kitSums = Haskit.select("\"KitID\" As ID,COUNT(\"amount\") as Amount").where(:productID => medIds).group("\"KitID\"")
+    kitSums = Haskit.select("\"KitID\" As ID,COUNT(\"amount\") as Amount").where(:productID => medIds).group("\"kitID\"")
   end
 
   def signed_in_user
