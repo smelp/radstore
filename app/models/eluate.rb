@@ -7,6 +7,7 @@ class Eluate < ActiveRecord::Base
   has_many :others, :through => :hasothers
   has_many :hasgenerators, :foreign_key => "productID"
   has_many :generators, :through => :hasgenerators
+  has_many :events,:foreign_key => "target_id"
   belongs_to  :storagelocation
 
   attr_accessible :name, :others, :generators, :huslab, :storagelocation_id, :storagelocation, :volume, :radioactivity, :radiomedicines
@@ -32,6 +33,10 @@ class Eluate < ActiveRecord::Base
     actNow = self.radioactivity.to_f*(2.718282**(-0.1151*timeDiff))
     concetrat = actNow / self.volume.to_f
     concetrat.round(3)
+  end
+
+  def self.todays
+    Eluate.joins(:events).where("\"events\".\"event_type\" = 11 AND \"events\".\"user_timestamp\" BETWEEN '"+Time.now.to_date.to_s+"' AND '"+(Time.now+1.days).to_date.to_s+"'")
   end
 
 end

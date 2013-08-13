@@ -22,7 +22,7 @@ class RadiomedicinesController < ApplicationController
     @others = Hasstoragelocation.joins(:batch).where("\"batches\".\"qualityControl\" != 6 AND \"hasstoragelocations\".\"batchType\" = 'Muu' ")
     @kits = Hasstoragelocation.joins(:batch).where("\"batches\".\"qualityControl\" != 6 AND \"hasstoragelocations\".\"batchType\" = 'Kitti' ")
     @event = Event.new
-    @eluates = Eluate.all
+    @eluates = Eluate.todays
     @storagelocations = Storagelocation.all
   end
 
