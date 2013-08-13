@@ -248,11 +248,11 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.string   "manufacturer"
     t.string   "supplier"
     t.string   "half_life"
-    t.integer  "alert_amount"
-    t.integer  "alert_days"
+    t.integer  "alert_amount",  :default => 10
+    t.integer  "alert_days",    :default => 0
     t.decimal  "volume"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "huslab_id"
   end
 

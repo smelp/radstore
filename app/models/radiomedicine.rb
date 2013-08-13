@@ -7,6 +7,7 @@ class Radiomedicine < ActiveRecord::Base
   has_many :others, :through => :hasothers
   has_many :haskits, :foreign_key => 'productID'
   has_many :kits, :through => :haskits
+  has_many :events, :foreign_key => 'target_id'
   belongs_to  :storagelocation #was has_one before
   belongs_to  :eluate
 
@@ -29,6 +30,10 @@ class Radiomedicine < ActiveRecord::Base
     actNow = self.radioactivity.to_f*(2.718282**(-0.1151*timeDiff))
     concetrat = actNow / self.volume.to_f
     concetrat.round(3)
+  end
+
+  def sumOfKits (kitID)
+    Haskit.where('"productID" = '+self.id.to_s+' AND "kitID" = '+kitID.to_s).sum(:amount)
   end
 
 end

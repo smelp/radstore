@@ -1,16 +1,18 @@
 - provide(:title, 'Raportti')
 
 .container
-  .span12
+  .span12#reportnav
     = render "shared/nav"
 
 .container
   .span12
     .row.bordered
-      %h2 Raportti
+      %h2= 'Raportti ajalta ' + @start + ' - '+ @end
       - if @arrivalEvents
+        %h4 Saapuneet erät
         = render 'arrivals'
-      -if @radiomedEvents
+      -if @kits
+        %h4 Käyttökuntoon saatetut [lkm]
         = render 'products'
 
 

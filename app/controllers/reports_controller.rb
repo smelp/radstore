@@ -12,21 +12,31 @@ class ReportsController < ApplicationController
   end
 
   def show
+    @start = params[:startDate]
+    @end = params[:endDate]
+
     if params[:showArrivals]
-      @arrivalEvents = Event.getArrivalsByDateRange(params[:startDate], params[:endDate])
+      @arrivalEvents = Event.getArrivalsByDateRange(@start, @end)
     end
     if params[:showRemovals]
-      @arrivalEvents = Event.getRemovalsByDateRange(params[:startDate], params[:endDate])
+      @arrivalEvents = Event.getRemovalsByDateRange(@start, @end)
     end
     if params[:showCreated]
-      @radiomedEvents = Event.getRadiomedicinesByDateRange(params[:startDate], params[:endDate])
+      @kitSums = sumsOfKits(@start, @end)
+      kitIDs = @kitSums.map{|t| t.ID}
+      @kits = Batch.find_all_by_id(kitIDs)
     end
     if params[:showCreatedDetails]
-      @arrivalEvents = Event.getArrivalsByDateRange(params[:startDate], params[:endDate])
+      @arrivalEvents = Event.getArrivalsByDateRange(@start, @end)
     end
   end
 
   private
+
+  def sumsOfKits (startTime, endTime)
+    medIds = Radiomedicine.joins(:events).where("\"events\".\"event_type\" = 21 AND \"events\".\"user_timestamp\" BETWEEN '"+startTime.to_date.to_s+"' AND '"+endTime.to_date.to_s+"'").map{|med| med.id}
+    kitSums = Haskit.select('KitID As ID,COUNT(amount) as Amount').where(:productID => medIds).group(:KitID)
+  end
 
   def signed_in_user
     unless signed_in?

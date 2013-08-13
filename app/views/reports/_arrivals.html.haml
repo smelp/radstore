@@ -1,4 +1,4 @@
-%table.table.table-bordered#storageTable
+%table.table.table-bordered#reportTable
   %thead
     %tr
       %th Aine
@@ -8,10 +8,10 @@
     - @arrivalEvents.each do |event|
       %tr
         %td
-          = event.getBatch.substance.substanceType
+          = event.getBatch.substance.product_name
         %td
-          = event.getBatch.batchNumber
+          = event.user_timestamp.strftime("%d.%m.%y")
         %td
-          = event.user_timestamp.strftime("%d.%m.%y")+' '+ event.info+' '+event.getBatch.expDate.strftime("%d.%m.%y")
+          = 'Erä '+event.getBatch.batchNumber+' '+ event.info+' '+event.getBatch.expDate.strftime("%d.%m.%y")
 
 

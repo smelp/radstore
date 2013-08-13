@@ -298,4 +298,8 @@ legend {
 #main-container {
   min-height: 600px;
 }
+
+@media print {
+  header, footer, #reportnav, .nav-link {display:none;}
+}
   
