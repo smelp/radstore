@@ -12,32 +12,31 @@
           %i.icon-plus
           Luo radioaktiivinen lääke
         - @eluates.each do |eluate|
-          -if eluate.created.to_date == Date.today
-            %table.table.table-striped.table-condensed.table-bordered
-              %thead
-                %th Nimi
-                %th Luotu
-                %th Alkuaktiivisuus
-                %th c[GBq/ml]
-                %th Tilavuus [ml]
-                %th Varastopaikka
+          %table.table.table-striped.table-condensed.table-bordered
+            %thead
+              %th Nimi
+              %th Luotu
+              %th Alkuaktiivisuus
+              %th c[GBq/ml]
+              %th Tilavuus [ml]
+              %th Varastopaikka
 
-                %tbody
+              %tbody
+                %tr
+                  %td= link_to eluate.name, eluate
+                  %td= eluate.created.strftime("%H:%M")
+                  %td= eluate.radioactivity + ' Gbq'
+                  %td= eluate.calc.to_s + ' Gbq / ml'
+                  %td= eluate.volume
+                  %td= eluate.storagelocation.name
+              - eluate.radiomedicines.each do |radiomedicine|
+                -if radiomedicine.created.to_date == Date.today
                   %tr
-                    %td= link_to eluate.name, eluate
-                    %td= eluate.created.strftime("%H:%M")
-                    %td= eluate.radioactivity + ' Gbq'
-                    %td= eluate.calc.to_s + ' Gbq / ml'
-                    %td= eluate.volume
-                    %td= eluate.storagelocation.name
-                - eluate.radiomedicines.each do |radiomedicine|
-                  -if radiomedicine.created.to_date == Date.today
-                    %tr
-                      %td#radiomed= link_to radiomedicine.name, radiomedicine
-                      %td= radiomedicine.created.strftime("%H:%M")
-                      %td= radiomedicine.radioactivity+ ' Gbq'
-                      %td= radiomedicine.calc.to_s + ' Gbq / ml'
-                      %td= radiomedicine.volume
-                      %td= radiomedicine.storagelocation.name
+                    %td#radiomed= link_to radiomedicine.name, radiomedicine
+                    %td= radiomedicine.created.strftime("%H:%M")
+                    %td= radiomedicine.radioactivity+ ' Gbq'
+                    %td= radiomedicine.calc.to_s + ' Gbq / ml'
+                    %td= radiomedicine.volume
+                    %td= radiomedicine.storagelocation.name
 
   %p.pull-right='Sivu päivitetty: '+Time.now.strftime("%d.%m.%Y %H:%M")

@@ -12,7 +12,7 @@ class Eluate < ActiveRecord::Base
 
   attr_accessible :name, :others, :generators, :huslab, :storagelocation_id, :storagelocation, :volume, :radioactivity, :radiomedicines
 
-  validates :name, presence: { :message => "Nimi on pakollinen" }, :length => { :minimum => 2, :maximum => 50, :message => "Nimen täytyy olla 2-50 merkkiä pitkä" }
+  validates :name, presence: { :message => "Nimi on pakollinen" }
   
   def infoForSelectBox
     self.name

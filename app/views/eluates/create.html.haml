@@ -13,7 +13,7 @@
           %fieldset.span3
 
             = f.label :name, "Nimi"
-            = f.text_field :name, :required => true
+            = f.text_field :name
             = f.label :storagelocation_id, 'Varastopaikka'
             = f.select :storagelocation_id, @storagelocations.collect {|m| [ m.name, m.id ] }
             = f.label :radioactivity, 'Aktiivisuus [GBq]'
@@ -23,10 +23,10 @@
 
             = fields_for @event do |e|
               = e.label :signature, 'Kirjaaja'
-              = e.text_field :signature, :required => true
+              = e.text_field :signature
               = e.label :user_timestamp, 'Aika'
               .input-append.date#datetimepicker-eluate
-                = text_field_tag 'event[user_timestamp]',  nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm',:required => true, :placeholder => 'PP/KK/VVVV tt:mm'}
+                = text_field_tag 'event[user_timestamp]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm', :placeholder => 'PP/KK/VVVV tt:mm'}
                 %span.add-on
                   %i.icon-calendar{'data-time-icon' => 'icon-time', 'data-date-icon' => 'icon-calendar'}
 

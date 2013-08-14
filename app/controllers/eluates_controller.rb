@@ -28,7 +28,7 @@ class EluatesController < ApplicationController
     @eluate = Eluate.new(params[:eluate])
     @eluate.huslab = @huslab
 
-    if @eluate.save
+    if params[:new_generators] && @eluate.save
 
       if params[:new_generators]
         params[:new_generators].each do |generator|
@@ -46,7 +46,11 @@ class EluatesController < ApplicationController
       createEvent Event::NEW_ELUATE
       redirect_to @eluate
     else
-      redirect_to :action => "new"
+      flash[:error] = 'Generaattori on pakollinen!'
+      @generators = Hasstoragelocation.joins(:batch).where("\"batches\".\"qualityControl\" != 6 AND \"hasstoragelocations\".\"batchType\" = 'Generaattori' ")
+      @others = Hasstoragelocation.joins(:batch).where("\"batches\".\"qualityControl\" != 6 AND \"hasstoragelocations\".\"batchType\" = 'Muu' ")
+      @event = Event.new
+      @storagelocations = Storagelocation.all
     end
   end
 

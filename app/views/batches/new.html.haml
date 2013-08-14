@@ -10,7 +10,7 @@
 .row
   .span12.outline
     = form_for @batch do |f|
-      / = render 'shared/batch_error_messages'
+      = render 'shared/batch_error_messages'
       .span4
         %fieldset.span3
           = f.label :substance_id, 'Aine'

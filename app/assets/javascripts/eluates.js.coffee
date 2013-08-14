@@ -47,7 +47,7 @@ createAddition = (choice, amount, typeString) ->
   i_elem.setAttribute("class", "icon-remove")
 
   for option in choice
-    if option.value == val && option.innerHTML.indexOf('Valitse') != 1 && amount != ""
+    if option.value == val && option.innerHTML.indexOf('Valitse') != 0 && amount != ""
       td_elem.innerHTML = option.innerHTML + "</br>"
       a_elem.href = "#"
       a_elem.setAttribute("class","nav-link")
@@ -69,10 +69,8 @@ createAddition = (choice, amount, typeString) ->
 window.sumTotal = ()->
   sum = 0
   inputs = $('input[name^="new"]')
-  console.log inputs[0]
   $.each inputs, (t,input) ->
     sum += parseInt(input.value)
-
   $('#Total')[0].innerText = sum
 
 $(document).ready ->
@@ -88,14 +86,5 @@ $(document).ready ->
 
   $('#datetimepicker-eluate').datetimepicker
     language: 'fi'
-  $('#tableForProducts').dataTable
-    sDom: "t",
-    aaSorting: [[ 0, "asc" ], [1, "asc"]],
-    aoColumns: [
-        null,
-        null,
-        null,
-        null
-      ]
-    , fnDrawCallback: ( oSettings ) ->
-     console.log("h")
+  $('#tableForProducts').dataTable(
+    sDom: "t")
