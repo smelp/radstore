@@ -36,7 +36,23 @@ class BatchesController < ApplicationController
     @batch.save
 
     Event.create(:target_id => @batch.id, :event_type => @batch.qualityControl, :signature => params[:signature])
-    redirect_to :controller => 'substances', :action => 'show', :id => 1
+    redirect_to @batch
+  end
+
+  def removal
+    @batch = Batch.find_by_id(params[:id])
+    @event = Event.new
+  end
+
+  def remove_from
+
+    removalTarget = Hasstoragelocation.find_by_id(params[:post][:storagelocation_row_id])
+    removalTarget.amount -= params[:post][:amount].to_i
+    removalTarget.save
+    Event.create(params[:event])
+    flash[:success] = "Erästä vähennys onnistui!"
+    redirect_to :controller => 'batches', :action => 'show', :id => params[:event][:target_id]
+
   end
 
   def create
@@ -86,11 +102,11 @@ class BatchesController < ApplicationController
 
   def update
     if @batch.update_attributes(params[:batch])
-      flash[:success] = 'Erän '+@batch.batchNumber+' tiedot päivitetty'
-      redirect_to @substance
+      flash[:success] = 'Aineen '+@batch.substance.product_name+' erän '+@batch.batchNumber+' tiedot päivitetty'
+      redirect_to :controller => 'storagelocations', :action => 'show', :id => 1
 
     else
-      flash[:error] = 'Erän '+@batch.generic_name+' tietoja ei voitu päivittää'
+      flash[:error] = 'Erän '+@batch.product_name+' tietoja ei voitu päivittää'
     end
   end
 

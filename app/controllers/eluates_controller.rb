@@ -32,13 +32,13 @@ class EluatesController < ApplicationController
 
       if params[:new_generators]
         params[:new_generators].each do |generator|
-          Hasgenerator.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :generatorID => generator[0].to_f, :amount => generator[1])
+          Hasgenerator.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :generatorID => generator[0].to_f, :amount => 1)
         end
       end
 
       if params[:new_others]
         params[:new_others].each do |other|
-          Hasother.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :otherID => other[0].to_f, :amount => other[1])
+          Hasother.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :otherID => other[0].to_f, :amount => 1)
         end
       end
 

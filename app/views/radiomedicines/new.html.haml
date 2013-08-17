@@ -41,7 +41,7 @@
       .span3
         %fieldset
           %label Kitit
-          - values = @kits.collect {|m| [ m.infoForSelectBox, m.batch_id ] }
+          - values = @kits.collect {|m| [ m.infoForSelectBox, m.id ] }
 
           = select("post", "kit_id", values, {:prompt => 'Valitse kitti'})
 

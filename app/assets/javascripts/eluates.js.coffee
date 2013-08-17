@@ -3,7 +3,7 @@ window.add_generator = (e) ->
   amount = $('#generator_amount').get(0).value
   i = 0
   while i < amount
-    createAddition(choice, 1, "generators")
+    createAddition(choice, i, "generators")
     i++
   $('#generator_amount').get(0).value = ''
 
@@ -12,7 +12,7 @@ window.add_other = (e) ->
   amount = $('#other_amount').get(0).value
   i = 0
   while i < amount
-    createAddition(choice, 1, "others")
+    createAddition(choice, i, "others")
     i++
   $('#other_amount').get(0).value = ''
 
@@ -21,7 +21,7 @@ window.add_kit = (e) ->
   amount = $('#kit_amount').get(0).value
   i = 0
   while i < amount
-    createAddition(choice, 1, "kits")
+    createAddition(choice, i, "kits")
     i++
   $('#kit_amount').get(0).value = ''
 

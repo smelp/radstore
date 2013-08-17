@@ -1,0 +1,39 @@
+- provide(:title, 'Poista erästä')
+
+.span6.offset3
+  %h2= @batch.substance.generic_name+' erä '+@batch.batchNumber
+
+.container
+  .span6.offset3
+    = render "shared/nav"
+
+  .span6.offset3.outline
+    .row
+      .span4.offset1
+        = form_for @batch, :url => {:action => "remove_from"} do |f|
+          //= render 'shared/material_error_messages'
+          %p
+            = label 'amount','Määrä'
+            = number_field 'post', 'amount'
+            = label 'storagelocation_row_id', 'Varastopaikasta'
+            = select 'post','storagelocation_row_id', @batch.hasstoragelocations.collect{|s| [s.storageName.to_s+': '+s.amount.to_s+' kpl', s.id]}
+            = fields_for @event do |e|
+              = e.hidden_field :event_type,:value => 4
+              = e.hidden_field :target_id,:value => @batch.id
+              = e.label :signature, 'Kirjaaja'
+              = e.text_field :signature, :required => true
+              = e.label :info, 'Kommentti'
+              = e.text_field :info, :required => true
+              = e.label :user_timestamp, 'Aika'
+              .input-append.date#datetimepicker-eluate
+                = text_field_tag 'event[user_timestamp]',  nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy hh:mm',:required => true, :placeholder => 'PP/KK/VVVV tt:mm'}
+                %span.add-on
+                  %i.icon-calendar{'data-time-icon' => 'icon-time', 'data-date-icon' => 'icon-calendar'}
+
+          = f.submit "Poista", class: "btn btn-primary"
+        
+  .span6.offset3
+    %p
+      = link_to request.env["HTTP_REFERER"] do
+        %i.icon-arrow-left
+        Takaisin

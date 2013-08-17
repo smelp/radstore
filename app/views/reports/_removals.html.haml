@@ -1,17 +1,20 @@
-%table.table.table-bordered#storageTable
+%table.table.table-bordered#reportTable2
   %thead
     %tr
       %th Aine
       %th Erä
       %th Info
+      %th Käyt. ennen
   %tbody
-    - @arrivalEvents.each do |event|
+    - @removalEvents.each do |event|
       %tr
         %td
-          = event.getBatch.substance.substanceType
+          = event.getBatch.substance.product_name
         %td
           = event.getBatch.batchNumber
         %td
-          = event.user_timestamp.strftime("%d.%m.%y")+' '+ event.info+' '+event.getBatch.expDate.strftime("%d.%m.%y")
+          = event.info
+        %td
+          = event.getBatch.expDate.strftime("%d.%m.%y")
 
 

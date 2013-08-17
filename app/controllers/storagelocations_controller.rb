@@ -11,7 +11,7 @@ class StoragelocationsController < ApplicationController
   end
   
   def show
-    @generators = Substance.all
+    @substances = Substance.all
   end
 
   def new

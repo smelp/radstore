@@ -19,7 +19,7 @@ class ReportsController < ApplicationController
       @arrivalEvents = Event.getArrivalsByDateRange(@start, @end)
     end
     if params[:showRemovals]
-      @arrivalEvents = Event.getRemovalsByDateRange(@start, @end)
+      @removalEvents = Event.getRemovalsByDateRange(@start, @end)
     end
     if params[:showCreated]
       @kitSums = sumsOfKits(@start, @end)

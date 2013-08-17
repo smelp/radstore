@@ -9,8 +9,11 @@
     .row.bordered
       %h2= 'Raportti ajalta ' + @start + ' - '+ @end
       - if @arrivalEvents
-        %h4 Saapuneet erät
+        %h4 Saapuneet radiolääkkeet
         = render 'arrivals'
+      - if @removalEvents
+        %h4 Poistuneet radiolääkkeet
+        = render 'removals'
       -if @kits
         %h4 Käyttökuntoon saatetut [lkm]
         = render 'products'

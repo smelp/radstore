@@ -15,8 +15,7 @@
         %th Eränumero
         %th Laadunvarmistus
         %th Tyyppi
-        %th Varastopaikka
-        %th Määrä
+        %th Varastopaikat ja määrät
         %th
         %th
 
@@ -29,12 +28,13 @@
             %td{:id => 'qualityCheckContainer'}
               = link_to 'Tee laadunvarmistus','', :onclick => 'revealQualityCheckForm(event,'+@batch.id.to_s+')'
           %td= @batch.substance.substanceType
-          - @storagelocations.each do |storage|
-            %td= storage.storageName
-            %td= storage.amount
+          %td
+            - @storagelocations.each do |storage|
+              = storage.storageName + ': ' + storage.amount.to_s
+              <br/>
           %td
             = link_to :controller => "batches", :action => "edit", :id => @batch.id do
               %i.icon-edit
           %td
-            = link_to @batch, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
-              %i.icon-remove
+            = link_to :controller => "batches", :action => "removal", :id => @batch.id do
+              Poista erästä

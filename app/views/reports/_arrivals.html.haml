@@ -1,9 +1,11 @@
-%table.table.table-bordered#reportTable
+%table.table.table-bordered#reportTable1
   %thead
     %tr
       %th Aine
+      %th Luotu
       %th Erä
       %th Info
+      %th Käyt. ennen
   %tbody
     - @arrivalEvents.each do |event|
       %tr
@@ -12,6 +14,10 @@
         %td
           = event.user_timestamp.strftime("%d.%m.%y")
         %td
-          = 'Erä '+event.getBatch.batchNumber+' , '+ event.info+' , Vanhenemispvm '+event.getBatch.expDate.strftime("%d.%m.%y")
+          = event.getBatch.batchNumber
+        %td
+          = event.info
+        %td
+          = event.getBatch.expDate.strftime("%d.%m.%y")
 
 

@@ -1,7 +1,7 @@
 - provide(:title, 'Muokkaa erää')
 
 .span6.offset3
-  %h2= 'Muokkaa aineen '+@batch.substance.generic_name+' erää '+@batch.batchNumber
+  %h2= @batch.substance.generic_name+' erä '+@batch.batchNumber
 
 .container
   .span6.offset3
@@ -26,7 +26,5 @@
       = link_to request.env["HTTP_REFERER"] do
         %i.icon-arrow-left
         Takaisin
-      |
-      = link_to "Kaikki erät", :controller => "batches", :action => "index", :substance_id => @substance.id
       |
       = link_to "Poista", @batch, method: :delete, confirm: "Haluatko varmasti poistaa erän?"
