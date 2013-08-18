@@ -49,7 +49,9 @@ class BatchesController < ApplicationController
     removalTarget = Hasstoragelocation.find_by_id(params[:post][:storagelocation_row_id])
     removalTarget.amount -= params[:post][:amount].to_i
     removalTarget.save
-    Event.create(params[:event])
+    @event = Event.create(params[:event])
+    @event.info = 'Poistettu '+ params[:post][:amount]
+    @event.save
     flash[:success] = "Erästä vähennys onnistui!"
     redirect_to :controller => 'batches', :action => 'show', :id => params[:event][:target_id]
 

@@ -30,13 +30,15 @@ class Eluate < ActiveRecord::Base
 
   def calc
     timeDiff = ((Time.now - self.created) / 1.hour)
-    actNow = self.radioactivity.to_f*(2.718282**(-0.1151*timeDiff))
-    concentrat = actNow / self.volume.to_f
+    decayConst = self.generators[0].substance.half_life.gsub(',','.')
+    actNow = self.radioactivity.to_f*(2.718282**(-decayConst.to_f*timeDiff))
+    concentrat = actNow / self.volume.gsub(',','.').to_f
     concentrat.round(3)
   end
 
   def self.todays
     Eluate.joins(:events).where("\"events\".\"event_type\" = 11 AND \"events\".\"user_timestamp\" BETWEEN '"+Time.now.to_date.to_s+"' AND '"+(Time.now+1.days).to_date.to_s+"'")
   end
+
 
 end

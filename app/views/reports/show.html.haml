@@ -17,6 +17,9 @@
       -if @kits
         %h4 Käyttökuntoon saatetut [lkm]
         = render 'products'
+      -if @radioMedEvents
+        %h4 Käyttökuntoon saatetut, yksityiskohdat
+        = render 'product_details'
 
 
 

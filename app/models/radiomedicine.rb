@@ -8,7 +8,7 @@ class Radiomedicine < ActiveRecord::Base
   has_many :haskits, :foreign_key => 'productID'
   has_many :kits, :through => :haskits
   has_many :events, :foreign_key => 'target_id'
-  belongs_to  :storagelocation #was has_one before
+  belongs_to  :storagelocation
   belongs_to  :eluate
 
   attr_accessible :name, :others, :kits, :huslab, :storagelocation_id, :storagelocation, :eluate, :eluate_id, :radioactivity, :volume
@@ -27,8 +27,9 @@ class Radiomedicine < ActiveRecord::Base
 
   def calc
     timeDiff = ((Time.now - self.created) / 1.hour)
-    actNow = self.radioactivity.to_f*(2.718282**(-0.1151*timeDiff))
-    concetrat = actNow / self.volume.to_f
+    decayConst = self.eluate.generators[0].substance.half_life.gsub(',','.')
+    actNow = self.radioactivity.to_f*(2.718282**(-decayConst.to_f*timeDiff))
+    concetrat = actNow / self.volume.gsub(',','.').to_f
     concetrat.round(3)
   end
 

@@ -27,7 +27,7 @@ class ReportsController < ApplicationController
       @kits = Batch.find_all_by_id(kitIDs)
     end
     if params[:showCreatedDetails]
-      @arrivalEvents = Event.getArrivalsByDateRange(@start, @end)
+      @radioMedEvents = Event.getProductsByDateRange(@start, @end, Event::NEW_RADIOMEDICINE)
     end
   end
 

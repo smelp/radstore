@@ -1,17 +1,33 @@
-%table.table.table-bordered#storageTable
+%table.table.table-bordered#reportTable3
   %thead
     %tr
-      %th Aine
-      %th Erä
-      %th Info
+      %th Nimi
+      %th Luotu
+      %th Tilavuus
+      %th Radioaktiivisuus
+      %th Kitit
+      %th Muut
+      %th Eluaatin tiedot
   %tbody
-    - @arrivalEvents.each do |event|
+    - @radioMedEvents.each do |event|
       %tr
         %td
-          = event.getBatch.substance.substanceType
+          = event.getRadiomedicine.name
         %td
-          = event.getBatch.batchNumber
+          = event.user_timestamp.strftime("%d.%m.%y")
         %td
-          = event.user_timestamp.strftime("%d.%m.%y")+' '+ event.info+' '+event.getBatch.expDate.strftime("%d.%m.%y")
+          = event.getRadiomedicine.volume
+        %td
+          = event.getRadiomedicine.radioactivity
+        %td
+          -event.getRadiomedicine.kits.each do |k|
+            = k.substance.product_name+', '+k.batchNumber
+            <br/>
+        %td
+          -event.getRadiomedicine.others.each do |o|
+            = o.substance.product_name+', '+o.batchNumber
+            <br/>
+        %td
+          = event.getRadiomedicine.eluate.name
 
 
