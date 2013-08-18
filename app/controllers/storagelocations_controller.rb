@@ -11,7 +11,7 @@ class StoragelocationsController < ApplicationController
   end
   
   def show
-    @substances = Substance.all
+    @batches = Batch.joins(:hasstoragelocations).group(:batch_id).having("Sum(hasstoragelocations.amount) > 0")
   end
 
   def new
