@@ -22,11 +22,11 @@
       %tbody
         %tr
           %td= link_to @batch.batchNumber, @batch
-          -if @batch.qualityStatus != 'Ei suoritettu'
-            %td= @batch.qualityStatus
-          -else
+          -if @batch.substance.substanceType == 'Kitti' && @batch.qualityStatus == 'Ei suoritettu'
             %td{:id => 'qualityCheckContainer'}
               = link_to 'Tee laadunvarmistus','', :onclick => 'revealQualityCheckForm(event,'+@batch.id.to_s+')'
+          -else
+            %td= @batch.qualityStatus
           %td= @batch.substance.substanceType
           %td
             - @storagelocations.each do |storage|

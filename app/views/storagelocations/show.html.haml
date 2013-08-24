@@ -25,17 +25,22 @@
                 = batch.substance.substanceType
               %td
                 = batch.substance.product_name
-              -if batch.qualityStatus != 'OK'
+              -if batch.substance.substanceType == 'Kitti' && batch.qualityStatus == 'Ei suoritettu'
                 %td.span1.alert.alert{title:'Erälle ei ole tehty laadunvarmistusta!'}
                   = link_to batch.batchNumber, batch
+                  %span.pull-right !
+              -elsif batch.substance.substanceType == 'Kitti' && batch.qualityStatus == 'Ei OK'
+                %td.span1.alert.alert-error{title:'Erän laadunvarmistus EI OK!!'}
+                  = link_to batch.batchNumber, batch
+                  %span.pull-right !
               - else
                 %td.span1
                   = link_to batch.batchNumber, batch
 
               -if batch.amount < batch.substance.alert_amount
-                %td.span1.alert.alert-error{title:'Varastossa alle '+batch.substance.alert_amount.to_s+' kappaletta!'}
+                %td.span1.alert.alert{title:'Varastossa alle '+batch.substance.alert_amount.to_s+' kappaletta!'}
                   = batch.amount
-                  %span.pull-right !!!
+                  %span.pull-right !
               - else
                 %td.span1= batch.amount
               %td
@@ -45,11 +50,11 @@
               - if batch.expDate < Date.today
                 %td.alert.alert-error{title:'Erän päiväys mennyt umpeen!'}
                   = batch.expDate
-                  %span.pull-right !!!
+                  %span.pull-right !
               - elsif batch.substance.substanceType != 'Muu' && batch.expDate - batch.substance.alert_days.days < Date.today
                 %td.alert.alert{title:'Erän päiväys menossa umpeen!'}
                   = batch.expDate
-                  %span.pull-right !!!
+                  %span.pull-right !
               - else
                 %td= batch.expDate
               %td

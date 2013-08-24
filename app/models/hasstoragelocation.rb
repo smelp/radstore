@@ -14,7 +14,11 @@ class Hasstoragelocation < ActiveRecord::Base
   end
 
   def infoForSelectBox
-    self.batch.batchNumber+' '+self.batch.substance.generic_name+' '+self.storagelocation.name+' Käytettävissä: '+self.amount.to_s
+    qString = ''
+    if self.batch.substance.substanceType == 'Kitti' && self.batch.qualityStatus == 'Ei suoritettu'
+      qString = 'LAADUNVARMISTUS EI SUORITETTU!! '
+    end
+    qString+self.batch.batchNumber+' '+self.batch.substance.generic_name+' '+self.storagelocation.name+' Käytettävissä: '+self.amount.to_s
   end
 
 end

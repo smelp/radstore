@@ -18,6 +18,11 @@ class Eluate < ActiveRecord::Base
     self.name
   end
 
+  #This is because Rails does not do composite foreign keys and hasothers table can have nonunique product_ids
+  def getOthers
+    Batch.find_by_sql("SELECT \"batches\".* FROM \"batches\" INNER JOIN \"hasothers\" ON \"batches\".\"id\" = \"hasothers\".\"otherID\" WHERE \"hasothers\".\"ownerType\" = 'Eluaatti' AND \"hasothers\".\"productID\" = " + self.id.to_s)
+  end
+
   def created
     @event = Event.find_by_target_id_and_event_type(self.id, Event::NEW_ELUATE)
     @event.user_timestamp

@@ -1,7 +1,7 @@
 - provide(:title, @firm.name)
 .span12.bordered-top#main-container
   .row
-    .span8.offset2
+    .span10.offset1
       .row.well.green
         %h3 Valmisteet
 
@@ -12,7 +12,7 @@
           %i.icon-plus
           Luo radioaktiivinen lääke
         - @eluates.each do |eluate|
-          %table.table.table-striped.table-condensed.table-bordered
+          %table.white.table.table-condensed.table-bordered
             %thead
               %th Nimi
               %th Luotu

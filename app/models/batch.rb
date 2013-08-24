@@ -9,10 +9,6 @@ class Batch < ActiveRecord::Base
   attr_accessible :batchNumber, :substance_id, :qualityControl, :storagelocations, :expDate, :hasstoragelocations, :events
 
   validates :batchNumber, presence: { :message => 'Eränumero on pakollinen!' }
-  
-  def infoForSelectBox
-    self.substance.generic_name + ' Eränumero: ' + self.batchNumber.to_s() + ' Määrä: ' + self.amount.to_s()
-  end
 
   def amount
     Hasstoragelocation.where(:batch_id => self.id).sum(:amount)

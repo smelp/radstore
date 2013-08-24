@@ -48,7 +48,10 @@ createAddition = (choice, amount, typeString) ->
 
   for option in choice
     if option.value == val && option.innerHTML.indexOf('Valitse') != 0 && amount != ""
-      td_elem.innerHTML = option.innerHTML + "</br>"
+      if typeString == "storagelocations"
+        td_elem.innerHTML = option.innerHTML + ': '+amount+"</br>"
+      else
+        td_elem.innerHTML = option.innerHTML + "</br>"
       a_elem.href = "#"
       a_elem.setAttribute("class","nav-link")
       a_elem.setAttribute("onclick","remove_table_element(#{val})")

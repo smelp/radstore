@@ -47,7 +47,7 @@
 
           = fields_for :kit do |h|
             = h.label :amount, "Määrä"
-            = h.text_field :amount, min: 0, class: "span2"
+            = h.text_field :amount, min: 0, class: "span2", :value => '1'
 
           = button_to_function "Lisää", "add_kit(event)", { :class => "btn btn-small", :id => "add-substance-kit" }
 
@@ -60,7 +60,7 @@
 
           = fields_for :other do |h|
             = h.label :amount, "Määrä"
-            = h.text_field :amount, min: 0, class: "span2"
+            = h.text_field :amount, min: 0, class: "span2", :value => '1'
 
           = button_to_function "Lisää", "add_other(event)", { :class => "btn btn-small", :id => "add-substance-other" }
 

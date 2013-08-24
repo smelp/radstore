@@ -6,7 +6,6 @@
       %th Tilavuus
       %th Radioaktiivisuus
       %th Kitit
-      %th Muut
       %th Eluaatin tiedot
   %tbody
     - @radioMedEvents.each do |event|
@@ -14,7 +13,7 @@
         %td
           = event.getRadiomedicine.name
         %td
-          = event.user_timestamp.strftime("%d.%m.%y")
+          = event.user_timestamp.strftime("%H:%M %d.%m.%Y ")
         %td
           = event.getRadiomedicine.volume
         %td
@@ -24,10 +23,10 @@
             = k.substance.product_name+', '+k.batchNumber
             <br/>
         %td
-          -event.getRadiomedicine.others.each do |o|
-            = o.substance.product_name+', '+o.batchNumber
+          = event.getRadiomedicine.eluate.generators[0].substance.product_name + ', Eränumero: ' + event.getRadiomedicine.eluate.generators[0].batchNumber
+          <br/>
+          - event.getRadiomedicine.eluate.getOthers.each do |o|
+            = o.substance.product_name + ', Eränumero: ' + o.batchNumber
             <br/>
-        %td
-          = event.getRadiomedicine.eluate.name
 
 

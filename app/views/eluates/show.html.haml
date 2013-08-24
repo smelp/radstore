@@ -13,8 +13,10 @@
       %dl.dl-horizontal
         %dt  Luotu
         %dd= @eluate.created.strftime("%H:%M %d.%m.%Y")
-        %dt  Radioaktiivisuus
+        %dt  Radioaktiivisuus [GBq]
         %dd= @eluate.radioactivity.to_s
+        %dt  Tilavuus [ml]
+        %dd= @eluate.volume
         %dt  Varastopaikka
         %dd= @eluate.storagelocation.name
         %dt  Kirjaaja
@@ -30,14 +32,9 @@
           %tbody
             - @batches.each do |b|
               %tr
-                - if b.substance.substanceType == 'Generaattori'
-                  %td.alert.alert-success= b.substance.substanceType
-                - elsif b.substance.substanceType == 'Kitti'
-                  %td.alert.alert-info= b.substance.substanceType
-                - else
-                  %td.gray= b.substance.substanceType
+                %td= b.substance.substanceType
                 %td= link_to b.substance.generic_name, b.substance
-                %td= link_to b.batchNumber, b
+                %td= b.batchNumber
 
       = link_to :controller => "eluates", :action => "edit", :id => @eluate.id do
         %i.icon-edit

@@ -13,8 +13,10 @@
       %dl.dl-horizontal
         %dt  Luotu
         %dd= @radiomedicine.created.strftime("%H:%M %d.%m.%Y")
-        %dt  Radioaktiivisuus
+        %dt  Radioaktiivisuus [GBq]
         %dd= @radiomedicine.radioactivity.to_s
+        %dt  Tilavuus [ml]
+        %dd= @eluate.volume
         %dt  Varastopaikka
         %dd= @radiomedicine.storagelocation.name
         %dt  Kirjaaja
@@ -30,14 +32,14 @@
           %tbody
             - @batches.each do |b|
               %tr
-                - if b.substance.substanceType == 'Generaattori'
-                  %td.alert.alert-success= b.substance.substanceType
-                - elsif b.substance.substanceType == 'Kitti'
-                  %td.alert.alert-info= b.substance.substanceType
-                - else
-                  %td.gray= b.substance.substanceType
+                %td= b.substance.substanceType
                 %td= link_to b.substance.generic_name, b.substance
-                %td= link_to b.batchNumber, b
+                -if b.substance.substanceType == 'Kitti' && b.qualityStatus == 'Ei suoritettu'
+                  %td.span1.alert.alert{title:'Erälle ei ole tehty laadunvarmistusta!'}
+                    = link_to b.batchNumber, b
+                    %span.pull-right !
+                -else
+                  %td= b.batchNumber
 
 
       %h4 Eluaatti
