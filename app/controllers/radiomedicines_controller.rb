@@ -34,7 +34,8 @@ class RadiomedicinesController < ApplicationController
 
       if params[:new_others]
         params[:new_others].each do |other|
-          Hasother.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :otherID => other[0].to_f, :amount => 1)
+          storageLocation = Hasstoragelocation.find_by_id(other[0].to_f)
+          Hasother.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :otherID => storageLocation.batch_id, :amount => 1)
         end
       end
 
@@ -42,9 +43,9 @@ class RadiomedicinesController < ApplicationController
 
       if params[:new_kits]
         params[:new_kits].each do |kit|
-          batchToModify = Hasstoragelocation.find_by_id(kit[0])
-          batchToModify.amount -= 1
-          Haskit.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :kitID => batchToModify.batch_id, :amount => 1)
+          storageLocation = Hasstoragelocation.find_by_id(kit[0])
+          storageLocation.amount -= 1
+          Haskit.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :kitID => storageLocation.batch_id, :amount => 1)
           batchToModify.save
         end
       end

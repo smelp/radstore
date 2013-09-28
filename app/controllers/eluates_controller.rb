@@ -32,13 +32,15 @@ class EluatesController < ApplicationController
 
       if params[:new_generators]
         params[:new_generators].each do |generator|
-          Hasgenerator.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :generatorID => generator[0].to_f, :amount => 1)
+          storageLocation = Hasstoragelocation.find_by_id(generator[0].to_f)
+          Hasgenerator.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :generatorID => storageLocation.batch_id, :amount => 1)
         end
       end
 
       if params[:new_others]
         params[:new_others].each do |other|
-          Hasother.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :otherID => other[0].to_f, :amount => 1)
+          storageLocation = Hasstoragelocation.find_by_id(other[0].to_f)
+          Hasother.create(:ownerType => Substance::ELUATE,:productID => @eluate.id, :otherID => storageLocation.batch_id, :amount => 1)
         end
       end
 
