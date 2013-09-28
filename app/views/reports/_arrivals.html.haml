@@ -9,15 +9,16 @@
   %tbody
     - @arrivalEvents.each do |event|
       %tr
-        %td
-          = event.getBatch.substance.product_name
-        %td
-          = event.user_timestamp.strftime("%d.%m.%y")
-        %td
-          = event.getBatch.batchNumber
-        %td
-          = event.info
-        %td
-          = event.getBatch.expDate.strftime("%d.%m.%y")
+        -if event.getBatch
+          %td
+            = event.getBatch.substance.product_name
+          %td
+            = event.user_timestamp.strftime("%d.%m.%y")
+          %td
+            = event.getBatch.batchNumber
+          %td
+            = event.info
+          %td
+            = event.getBatch.expDate.strftime("%d.%m.%y")
 
 

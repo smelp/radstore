@@ -24,6 +24,4 @@
         %i.icon-arrow-left
         Takaisin
       |
-      = link_to "Kaikki raaka-aineet", :controller => "radiomedicines", :action => "index", :huslab_id => @huslab.id
-      |
-      = link_to "Poista", @radiomedicine, method: :delete, confirm: "Haluatko varmasti poistaa radiolääkkeen?"
+      = link_to "Kaikki radiolääkkeet", :controller => "radiomedicines", :action => "index", :huslab_id => @huslab.id

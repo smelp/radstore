@@ -33,7 +33,7 @@
             - @batches.each do |b|
               %tr
                 %td= b.substance.substanceType
-                %td= link_to b.substance.generic_name, b.substance
+                %td= link_to b.substance.product_name, b.substance
                 -if b.substance.substanceType == 'Kitti' && b.qualityStatus == 'Ei suoritettu'
                   %td.span1.alert.alert{title:'Erälle ei ole tehty laadunvarmistusta!'}
                     = link_to b.batchNumber, b

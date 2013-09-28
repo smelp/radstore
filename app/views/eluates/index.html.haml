@@ -27,9 +27,9 @@
             %td
               = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
                 %i.icon-edit
-            %td
-              = link_to eluate, method: :delete, confirm: "Haluatko varmasti poistaa eluuatin?" do
-                %i.icon-remove
+            %td#removalContainer
+              = link_to 'Poista', :onclick => 'revealRemoval(event, eluates,'+eluate.id.to_s+')' do
+                Poista eluaatti
 
 = will_paginate
 

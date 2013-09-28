@@ -18,7 +18,7 @@ class Hasstoragelocation < ActiveRecord::Base
     if self.batch.substance.substanceType == 'Kitti' && self.batch.qualityStatus == 'Ei suoritettu'
       qString = 'LAADUNVARMISTUS EI SUORITETTU!! '
     end
-    qString+self.batch.batchNumber+' '+self.batch.substance.generic_name+' '+self.storagelocation.name+' Käytettävissä: '+self.amount.to_s
+    qString+self.batch.batchNumber+' '+self.batch.substance.product_name+' '+self.storagelocation.name+' Käytettävissä: '+self.amount.to_s
   end
 
 end

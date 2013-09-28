@@ -72,6 +72,10 @@ class EluatesController < ApplicationController
 
     Hasgenerator.destroy_all(:ownerType => Substance::ELUATE, :productID => @eluate.id)
     Hasother.destroy_all(:ownerType => Substance::ELUATE, :productID => @eluate.id)
+
+    Event.destroy_all(:event_type => Event::NEW_ELUATE, :target_id => @eluate.id)
+    Event.create(:target_id => @eluate.id, :user_timestamp => DateTime.now, :event_type => Event::ELUATE_REMOVED, :signature => params[:signature])
+
     @eluate.destroy
 
     #createEvent Event::ELUATE_REMOVED*/
@@ -110,7 +114,7 @@ class EluatesController < ApplicationController
       admins = []
       flash[:error] = "Ei lupaa tehdä muutoksia."
     end
-    redirect_to(root_path) unless admins.include? current_user
+    #redirect_to(root_path) unless admins.include? current_user
   end
 
   def admin_user

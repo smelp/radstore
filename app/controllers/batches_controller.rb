@@ -50,6 +50,7 @@ class BatchesController < ApplicationController
     removalTarget.amount -= params[:post][:amount].to_i
     removalTarget.save
     @event = Event.create(params[:event])
+    @event.target_id = removalTarget.batch_id
     @event.info = 'Poistettu '+ params[:post][:amount]
     @event.save
     flash[:success] = "Erästä vähennys onnistui!"
@@ -85,7 +86,6 @@ class BatchesController < ApplicationController
         @event.event_type = Event::ADD_TO_BATCH
         @event.info = 'Saapui '+sumUp.to_s+' kpl, Kommentti: '+@event.info
         @event.save
-        createEvent Event::ADD_TO_BATCH
         flash[:success] = "Lähetys lisätty erään!"
         redirect_to @substance
       else

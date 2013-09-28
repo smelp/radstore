@@ -1,11 +1,15 @@
 # encoding: utf-8
 class HuslabsController < ApplicationController
   before_filter :signed_in_user
-  before_filter :firm_admin
   before_filter :admin_user,     only: [:new, :create, :destroy]
 
   LN_2 = 0.69314718056
   E = 2.71828182845904523536028747135266249775724709369995
+
+  def admin
+
+  end
+
 
   def index
     if current_user.admin?
@@ -68,7 +72,7 @@ class HuslabsController < ApplicationController
           admins = []
         end
       end
-      redirect_to(root_path) unless admins.include? current_user
+      redirect_to(root_path)
     end
     
     def admin_user

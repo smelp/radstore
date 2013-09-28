@@ -3,21 +3,20 @@
 %h1 Radiolääkkeet
 
 .container
-  .span6.offset3
+  .span8.offset2
     = render "shared/nav"
 
 = will_paginate
 
 .container
-  .span6.offset3.bordered
-    = link_to :controller => "radiomedicines", :action => "new", :huslab_id => @huslab.id do
-      %i.icon-plus
-      Lisää radiolääke
+  .span8.offset2.bordered
 
     %table.table
       %thead
         %th Nimi
         %th Luotu
+        %th
+        %th
 
       %tbody
         - @radiomedicines.each do |radiomedicine|
@@ -27,9 +26,9 @@
             %td
               = link_to :controller => "radiomedicines", :action => "edit", :id => radiomedicine.id do
                 %i.icon-edit
-            %td
-              = link_to radiomedicine, method: :delete, confirm: "Haluatko varmasti poistaa radiolääkkeen?" do
-                %i.icon-remove
+            %td#removalContainer
+              = link_to 'Poista', :onclick => 'revealRadiomedRemoval(event, radiomedicines,'+radiomedicine.id.to_s+')' do
+                Poista radiolääke
 
 = will_paginate
 

@@ -44,7 +44,7 @@ class RadiomedicinesController < ApplicationController
         params[:new_kits].each do |kit|
           batchToModify = Hasstoragelocation.find_by_id(kit[0])
           batchToModify.amount -= 1
-          Haskit.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :kitID => batchToModify.id, :amount => 1)
+          Haskit.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :kitID => batchToModify.batch_id, :amount => 1)
           batchToModify.save
         end
       end
@@ -83,6 +83,10 @@ class RadiomedicinesController < ApplicationController
 
     Haskit.destroy_all(:ownerType => Substance::RADIOMEDICINE, :productID => @radiomedicine.id)
     Hasother.destroy_all(:ownerType => Substance::RADIOMEDICINE, :productID => @radiomedicine.id)
+
+    Event.destroy_all(:event_type => Event::NEW_RADIOMEDICINE, :target_id => @radiomedicine.id)
+    Event.create(:target_id => @radiomedicine.id, :user_timestamp => DateTime.now, :event_type => Event::RADIOMEDICINE_REMOVED, :signature => params[:signature])
+
     @radiomedicine.destroy
 
     #createEvent Event::RADIOMEDICINE_REMOVED
@@ -121,7 +125,7 @@ class RadiomedicinesController < ApplicationController
       admins = []
       flash[:error] = 'Ei lupaa tehdä muutoksia.'
     end
-    redirect_to(root_path) unless admins.include? current_user
+    #redirect_to(root_path) unless admins.include? current_user
   end
 
   def admin_user

@@ -1,0 +1,12 @@
+= provide(:title, 'Admin')
+
+%h1 Admin
+
+.container.bordered
+
+  = link_to controller: 'radiomedicines', action: 'index', :huslab_id => current_user.primary_firm.resource.id do
+    Listaa radiolääkkeet
+  </br>
+  = link_to controller: 'eluates', action: 'index', :huslab_id => current_user.primary_firm.resource.id do
+    Listaa eluaatit
+
