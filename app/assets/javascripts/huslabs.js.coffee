@@ -14,7 +14,7 @@ window.revealQualityCheckForm = (event,id) ->
     input.name = 'signature'
     input.type = 'text'
     input.placeholder = 'Nimikirjaimet'
-    button.innerText = 'Kirjaa'
+    button.innerHTML = 'Kirjaa'
     button.type = 'submit'
     select.name = 'result'
     select.innerHTML = "<option value='OK'>OK</option><option value='Ei OK'>Ei OK</option>"

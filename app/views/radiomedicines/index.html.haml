@@ -11,11 +11,10 @@
 .container
   .span8.offset2.bordered
 
-    %table.table
+    %table.table.table-bordered#tableForProducts
       %thead
         %th Nimi
         %th Luotu
-        %th
         %th
 
       %tbody
@@ -23,12 +22,8 @@
           %tr
             %td= link_to radiomedicine.name, radiomedicine
             %td.span2= radiomedicine.created.strftime("%d.%m.%Y %H:%M")
-            %td
-              = link_to :controller => "radiomedicines", :action => "edit", :id => radiomedicine.id do
-                %i.icon-edit
-            %td#removalContainer
-              = link_to 'Poista', :onclick => 'revealRadiomedRemoval(event, radiomedicines,'+radiomedicine.id.to_s+')' do
-                Poista radiolääke
+            %td{:id => 'removalContainer'}
+              = link_to 'Poista','', :onclick => 'revealRemoval(event,"radiomedicines",'+radiomedicine.id.to_s+')'
 
 = will_paginate
 

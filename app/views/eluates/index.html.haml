@@ -18,6 +18,8 @@
       %thead
         %th Nimi
         %th Luotu
+        %th Eluaatin radiolääkkeet
+        %th
 
       %tbody
         - @eluates.each do |eluate|
@@ -25,11 +27,10 @@
             %td= link_to eluate.name, eluate
             %td.span2= eluate.created.strftime("%d.%m.%Y %H:%M")
             %td
-              = link_to :controller => "eluates", :action => "edit", :id => eluate.id do
-                %i.icon-edit
-            %td#removalContainer
-              = link_to 'Poista', :onclick => 'revealRemoval(event, eluates,'+eluate.id.to_s+')' do
-                Poista eluaatti
+              - eluate.radiomedicines.each do |r|
+                = link_to r.id.to_s+' ', r
+            %td{:id => 'removalContainer'}
+              = link_to 'Poista','', :onclick => 'revealRemoval(event,"eluates",'+eluate.id.to_s+')'
 
 = will_paginate
 

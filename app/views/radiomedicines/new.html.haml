@@ -16,8 +16,9 @@
           = f.text_field :name, :required => true, :oninvalid=>"setCustomValidity('Nimi on pakollinen!')"
           = f.label :storagelocation_id, 'Varastopaikka'
           = f.select :storagelocation_id, @storagelocations.collect {|m| [ m.name, m.id ] }
+          %input{:type=>"checkbox", :id=>'showOldEluates', :onclick=>'ShowOldEluates(this)', :checked=>true} Näytä 7 pv eluaatit
           = f.label :eluate_id, 'Eluaatti'
-          = f.select :eluate_id, @eluates.collect {|m| [ m.name, m.id ] }
+          = f.select :eluate_id, @eluates.collect {|m| [ m.name + ', Luotu: '+m.created.strftime("%d.%m.%Y"), m.id ] }
           = f.label :radioactivity, 'Aktiivisuus [GBq]'
           = f.text_field :radioactivity, :required => true, :oninvalid=>"setCustomValidity('Radioaktiivisuus on pakollinen!')"
           = f.label :volume, 'Tilavuus [ml]'

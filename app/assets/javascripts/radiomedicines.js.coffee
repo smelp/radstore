@@ -11,7 +11,7 @@ $(document).ready ->
     temp = parseFloat(@value.replace(/\,/g, '.')).toFixed(2)
     @value = temp.replace(/\./g, ',')
 
-window.revealRemoval = (event,controller, targetID) ->
+window.revealRemoval = (event,controller,targetID) ->
   event.preventDefault()
   form = document.createElement('form')
   signature = document.createElement('input')
@@ -24,9 +24,23 @@ window.revealRemoval = (event,controller, targetID) ->
   signature.type = 'text'
   signature.placeholder = 'Nimikirjaimet'
 
-  button.innerText = 'Poista'
+  button.innerHTML = 'Poista'
   button.type = 'submit'
 
   $(form).append(signature, button)
   $('#removalContainer').empty()
   $('#removalContainer').append(form)
+
+window.ShowOldEluates = (cb) ->
+    d = new Date()
+    day = d.getDate()
+    month = d.getMonth()+1
+    year = d.getFullYear()
+    date = day+'.'+month+'.'+year
+
+    $('#radiomedicine_eluate_id > option').each ->
+      elemDate = ($(this).text().split(':')[1]).trim()
+      if(elemDate != date)
+        $(this).toggle()
+
+

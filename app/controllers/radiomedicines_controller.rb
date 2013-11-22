@@ -22,7 +22,7 @@ class RadiomedicinesController < ApplicationController
     @others = Hasstoragelocation.joins(:batch).where("\"batches\".\"qualityControl\" != 6 AND \"hasstoragelocations\".\"batchType\" = 'Muu' AND \"hasstoragelocations\".\"amount\" > 0 ")
     @kits = Hasstoragelocation.joins(:batch).where("\"batches\".\"qualityControl\" != 6 AND \"hasstoragelocations\".\"batchType\" = 'Kitti' AND \"hasstoragelocations\".\"amount\" > 0 ")
     @event = Event.new
-    @eluates = Eluate.todays
+    @eluates = Eluate.weekOld
     @storagelocations = Storagelocation.all
   end
 
@@ -39,14 +39,12 @@ class RadiomedicinesController < ApplicationController
         end
       end
 
-
-
       if params[:new_kits]
         params[:new_kits].each do |kit|
           storageLocation = Hasstoragelocation.find_by_id(kit[0])
           storageLocation.amount -= 1
           Haskit.create(:ownerType => Substance::RADIOMEDICINE,:productID => @radiomedicine.id, :kitID => storageLocation.batch_id, :amount => 1)
-          batchToModify.save
+          storageLocation.save
         end
       end
 

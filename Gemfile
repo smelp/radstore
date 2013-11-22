@@ -49,7 +49,7 @@ group :development, :test do
   gem 'rspec-rails', '2.10.0'
   gem 'annotate', :git => 'git://github.com/jeremyolliver/annotate_models.git', :branch => 'rake_compatibility'
   # To use debugger
-  gem 'ruby-debug19'
+  #gem 'ruby-debug19'
 end
 
 group :test do

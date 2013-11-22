@@ -71,19 +71,23 @@ class EluatesController < ApplicationController
   end
 
   def destroy
+    if !@eluate.radiomedicines
+      Hasgenerator.destroy_all(:ownerType => Substance::ELUATE, :productID => @eluate.id)
+      Hasother.destroy_all(:ownerType => Substance::ELUATE, :productID => @eluate.id)
 
-    Hasgenerator.destroy_all(:ownerType => Substance::ELUATE, :productID => @eluate.id)
-    Hasother.destroy_all(:ownerType => Substance::ELUATE, :productID => @eluate.id)
+      Event.destroy_all(:event_type => Event::NEW_ELUATE, :target_id => @eluate.id)
+      Event.create(:target_id => @eluate.id, :user_timestamp => DateTime.now, :event_type => Event::ELUATE_REMOVED, :signature => params[:signature])
 
-    Event.destroy_all(:event_type => Event::NEW_ELUATE, :target_id => @eluate.id)
-    Event.create(:target_id => @eluate.id, :user_timestamp => DateTime.now, :event_type => Event::ELUATE_REMOVED, :signature => params[:signature])
+      @eluate.destroy
 
-    @eluate.destroy
+      #createEvent Event::ELUATE_REMOVED*/
 
-    #createEvent Event::ELUATE_REMOVED*/
-
-    flash[:success] = "Eluaatti poistettu."
-    redirect_to @huslab
+      flash[:success] = "Eluaatti poistettu."
+      redirect_to @huslab
+    else
+      flash[:error] = "Eluuatilla radiolääkkeitä, ei voida poistaa!"
+      redirect_to @huslab
+    end
   end
 
   private
