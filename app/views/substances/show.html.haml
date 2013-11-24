@@ -1,4 +1,4 @@
-- provide(:title, @substance.generic_name)
+- provide(:title, @substance.product_name)
 
 .container
   .span8.offset2
@@ -8,7 +8,7 @@
   .span8.offset2
     .row.bordered
 
-      %h2.bordered-bottom= @substance.generic_name
+      %h2.bordered-bottom= @substance.product_name
 
       %table.table
         %thead
@@ -44,7 +44,4 @@
       = link_to :controller => "substances", :action => "edit", :id => @substance.id do
         %i.icon-edit
         Muokkaa
-      
-      %a.nav-link{href: "#", onclick: "window.print()"}
-        %i.icon-print.margin-left10
-        Tulosta
+

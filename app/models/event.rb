@@ -25,7 +25,7 @@ class Event < ActiveRecord::Base
   STORAGE_COMMENT = 30
 
   def self.getArrivalsByDateRange (startTime, endTime)
-    Event.where("(\"event_type\" = 1 OR \"event_type\" = 2) AND \"user_timestamp\" BETWEEN '"+startTime.to_date.to_s+"' AND '"+endTime.to_date.to_s+"'")
+    Event.where("(\"event_type\" = 1 OR \"event_type\" = 2) AND \"user_timestamp\" >= '"+startTime.to_date.to_s+"' AND \"user_timestamp\" <= '"+endTime.to_date.to_s+"'")
   end
 
   def self.getRemovalsByDateRange (startTime, endTime)

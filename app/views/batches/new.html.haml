@@ -47,7 +47,7 @@
           = select("post", "storagelocation_id", values, {:prompt => 'Valitse varastopaikka'})
 
           = fields_for :storagelocation do |h|
-            = h.label :amount, "Syötä ampullimäärä"
+            = h.label :amount, "Syötä lukumäärä (generaattori/ampulli/pullo)"
             = h.text_field :amount, min: 0, class: "span2"
 
           = button_to_function "Lisää", "add_storagelocation(event)", :class => "btn btn-small", :id => "add-storagelocation"
@@ -55,7 +55,7 @@
       .span4.pull-right
         %table.table.table#product_storagelocations
           %thead.gray
-            %th Varastopaikat ja ampullimäärät:
+            %th Varastopaikat ja määrät:
             %th
         %tbody
 
@@ -63,5 +63,5 @@
           %dt Yhteensä
           %dd#Total 0
 
-      = f.submit "Tuo erä varastoon", class: "btn btn-primary pull-right", style: "margin-top: 50px; margin-right: 50px;"
+      = f.submit "Kirjaa erä varastoon", class: "btn btn-primary pull-right", style: "margin-top: 50px; margin-right: 50px;"
 

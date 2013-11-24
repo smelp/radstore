@@ -2,10 +2,11 @@
   %thead
     %tr
       %th Aine
-      %th Luotu
+      %th Saapumispvm
       %th Erä
-      %th Info
       %th Käyt. ennen
+      %th Info
+
   %tbody
     - @arrivalEvents.each do |event|
       %tr
@@ -17,8 +18,8 @@
           %td
             = event.getBatch.batchNumber
           %td
-            = event.info
-          %td
             = event.getBatch.expDate.strftime("%d.%m.%y")
+          %td
+            = event.info
 
 

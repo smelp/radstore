@@ -2,19 +2,24 @@
   %thead
     %tr
       %th Aine
+      %th Poistopvm
       %th Erä
-      %th Info
       %th Käyt. ennen
+      %th Info
+
   %tbody
     - @removalEvents.each do |event|
       %tr
         %td
           = event.getBatch.substance.product_name
         %td
+          = event.user_timestamp.strftime("%d.%m.%y")
+        %td
           = event.getBatch.batchNumber
         %td
-          = event.info
-        %td
           = event.getBatch.expDate.strftime("%d.%m.%y")
+        %td
+          = event.info
+
 
 
