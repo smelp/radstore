@@ -18,7 +18,7 @@ UserTutorial::Application.routes.draw do
 
   match '/firms/:firm_id/recipes', to: 'recipes#index'
   match '/batches/qualityCheck/:id', to:'batches#qualityCheck'
-  match 'bakeries/:id', to: 'bakeries#show', as: 'bakery', via: [:get, :post]
+
   match '/batches/new/:huslab_id', to: 'batches#new'
   match '/batches/removal/:id', to: 'batches#removal'
   match '/batches/remove_from', to: 'batches#remove_from'
@@ -30,14 +30,13 @@ UserTutorial::Application.routes.draw do
 
 
   resources :users
-  resources :clients
+
   
   resources :firms
-  resources :bakeries
+
   resources :huslabs
 
-  resources :recipes
-  resources :materials
+
   resources :substances
   resources :eluates
   resources :radiomedicines
@@ -46,11 +45,9 @@ UserTutorial::Application.routes.draw do
   resources :kits, :controller => :batches
   resources :storagelocations
   resources :batches
-  resources :bakeryorders
-  resources :bills
+
   resources :reports
 
-  resources :products, :controller => :recipes
   resources :sessions, only: [:new, :create, :destroy]
 
   # The priority is based upon order of creation:

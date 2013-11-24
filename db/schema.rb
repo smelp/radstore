@@ -13,32 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20130709104039) do
 
-  create_table "bakeries", :force => true do |t|
-    t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "bakeryorderrecipes", :force => true do |t|
-    t.integer  "recipe_id"
-    t.integer  "bakeryorder_id"
-    t.decimal  "amount",         :default => 0.0
-    t.decimal  "price",          :default => 0.0
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-  end
-
-  add_index "bakeryorderrecipes", ["bakeryorder_id"], :name => "index_bakeryorderrecipes_on_bakeryorder_id"
-  add_index "bakeryorderrecipes", ["recipe_id", "bakeryorder_id"], :name => "index_bakeryorderrecipes_on_recipe_id_and_bakeryorder_id", :unique => true
-
-  create_table "bakeryorders", :force => true do |t|
-    t.string   "delivery_type"
-    t.string   "state"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.integer  "bakery_id"
-  end
-
   create_table "batches", :force => true do |t|
     t.string   "batchNumber"
     t.date     "expDate"
@@ -146,17 +120,6 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "hasmaterials", :force => true do |t|
-    t.integer  "material_id"
-    t.integer  "recipe_id"
-    t.float    "amount",      :default => 0.0
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-  end
-
-  add_index "hasmaterials", ["material_id", "recipe_id"], :name => "index_hasmaterials_on_material_id_and_recipe_id", :unique => true
-  add_index "hasmaterials", ["recipe_id"], :name => "index_hasmaterials_on_recipe_id"
-
   create_table "hasothers", :force => true do |t|
     t.string   "ownerType"
     t.integer  "productID"
@@ -166,15 +129,6 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.integer  "fromStorage"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-  end
-
-  create_table "hasrecipes", :force => true do |t|
-    t.integer  "recipe_id"
-    t.integer  "subrecipe_id"
-    t.decimal  "amount",       :default => 0.0
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
-    t.string   "amount_type",  :default => "units"
   end
 
   create_table "hasstoragelocations", :force => true do |t|
@@ -192,14 +146,6 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "materials", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-    t.integer  "bakery_id"
-    t.decimal  "price",      :default => 0.0
-  end
-
   create_table "orders", :force => true do |t|
     t.integer  "client_id"
     t.integer  "bill_id"
@@ -207,7 +153,6 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
     t.string   "suborder_type"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.string   "description"
   end
 
   create_table "radiomedicines", :force => true do |t|
@@ -222,16 +167,6 @@ ActiveRecord::Schema.define(:version => 20130709104039) do
   end
 
   add_index "radiomedicines", ["name"], :name => "index_radiomedicines_on_name"
-
-  create_table "recipes", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.integer  "bakery_id"
-    t.decimal  "price",      :default => 0.0
-    t.decimal  "coverage",   :default => 0.0
-    t.boolean  "product",    :default => false
-  end
 
   create_table "storagelocations", :force => true do |t|
     t.string   "name"
