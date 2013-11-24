@@ -202,7 +202,7 @@ class BatchesController < ApplicationController
 
     def createEvent( eventType )
       if eventType == Event::STORAGE_COMMENT
-        Event.create(:target_id => @batch.id, :event_type => eventType, :user_timestamp => Date.today, :signature => 'SYSTEM', :info => '')
+        Event.create(:target_id => @batch.id, :event_type => eventType, :user_timestamp => Time.now.utc, :signature => 'SYSTEM', :info => '')
       end
     end
 
