@@ -10,13 +10,14 @@
 
       %h2.bordered-bottom= @substance.product_name
 
-      %table.table
+      %table.table#simpleTableWithoutSearch
         %thead
           %tr
             %th Eränumero
             %th Määrä
             %th Tyyppi
             %th Laadunvarmistus
+            %th
 
         %tbody
           - @batches.each do |batch|
@@ -33,9 +34,6 @@
               %td
                 = link_to :controller => "batches", :action => "edit", :id => batch.id do
                   %i.icon-edit
-              %td
-                = link_to batch, method: :delete, confirm: "Haluatko varmasti poistaa erän?" do
-                  %i.icon-remove
 
       = link_to :controller => "batches", :action => "new", :substance_id => @substance.id do
         %i.icon-plus

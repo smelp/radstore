@@ -91,3 +91,6 @@ $(document).ready ->
     language: 'fi'
   $('#tableForProducts').dataTable(
     sDom: "t")
+  $('#simpleTableWithoutSearch').dataTable(
+    sPaginationType: "bootstrap",
+    sDom: "<'row'<'span6'l><'span6'>r>t<'row'<'span6'i><'span6'p>>")
