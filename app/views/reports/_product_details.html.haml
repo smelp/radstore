@@ -1,19 +1,20 @@
-%table.table.table-bordered#reportTable3
+%table.table.table-bordered#simpleTableWithoutSearch
   %thead
     %tr
-      %th Nimi
-      %th Luotu
+      %th Luotu pvm
+      %th Luotu klo
       %th Tilavuus
       %th Radioaktiivisuus
       %th Kitit
       %th Eluaatin tiedot
+      %th Kirjannut
   %tbody
     - @radioMedEvents.each do |event|
       %tr
         %td
-          = event.getRadiomedicine.name
+          = event.user_timestamp.strftime("%d.%m.%Y")
         %td
-          = event.user_timestamp.strftime("%H:%M %d.%m.%Y ")
+          = event.user_timestamp.strftime("%H:%M")
         %td
           = event.getRadiomedicine.volume
         %td
@@ -28,5 +29,7 @@
           - event.getRadiomedicine.eluate.getOthers.each do |o|
             = o.substance.product_name + ', Eränumero: ' + o.batchNumber
             <br/>
+        %td
+          = event.signature
 
 
