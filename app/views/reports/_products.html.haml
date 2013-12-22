@@ -1,7 +1,7 @@
 %dl.dl-horizontal
-  -@kits.each_with_index do |kit, index|
-    %dt=  kit.substance.product_name
-    %dd= @kitSums[index].amount
+  -@kits.each do |kit|
+    %dt= kit[0]
+    %dd= kit[1]
 
 
 

@@ -22,9 +22,8 @@ class ReportsController < ApplicationController
       @removalEvents = Event.getRemovalsByDateRange(@start, @end)
     end
     if params[:showCreated]
-      @kitSums = sumsOfKits(@start, @end)
-      kitIDs = @kitSums.map{|t| t.id}
-      @kits = Batch.find_all_by_id(kitIDs)
+      kitSums = sumsOfKits(@start, @end)
+      @kits = kitSums.map{|t| [Batch.find_by_id(t.id).substance.product_name, t.amount]}
     end
     if params[:showCreatedDetails]
       @radioMedEvents = Event.getProductsByDateRange(@start, @end, Event::NEW_RADIOMEDICINE)
