@@ -73,7 +73,37 @@ $(document).ready ->
     sDom: "t"
   )
 
-  $('#reportTable3').dataTable(
-    sPaginationType: "bootstrap",
-    aaSorting: [[0,"desc"],[1, "desc"]] ,
-    sDom: "<'row'<'span6'l><'span6'>r>t<'row'<'span6'i><'span6'p>>")
+  $("#reportTable3").dataTable(
+    fnDrawCallback: (oSettings) ->
+      return  if oSettings.aiDisplay.length is 0
+      nTrs = $("#reportTable3 tbody tr")
+      iColspan = nTrs[0].getElementsByTagName("td").length
+      sLastGroup = ""
+      i = 0
+
+      while i < nTrs.length
+        iDisplayIndex = oSettings._iDisplayStart + i
+        sGroup = oSettings.aoData[oSettings.aiDisplay[iDisplayIndex]]._aData[0]
+        unless sGroup is sLastGroup
+          nGroup = document.createElement("tr")
+          nCell = document.createElement("td")
+          nCell.colSpan = iColspan
+          nCell.className = "group"
+          nCell.innerHTML = sGroup
+          nCell.style.fontWeight = 'bold'
+          nCell.style.backgroundColor = '#CCFFCC'
+          nCell.style.borderBottom = 'solid'
+          nCell.style.borderBottomWidth = '1px'
+          nGroup.appendChild nCell
+          nTrs[i].parentNode.insertBefore nGroup, nTrs[i]
+          sLastGroup = sGroup
+        i++
+
+    aoColumnDefs: [
+      bVisible: false
+      aTargets: [0]
+    ]
+    aaSortingFixed: [[0, "desc"]]
+    aaSorting: [[1, "desc"]]
+    sDom: "t"
+  )
