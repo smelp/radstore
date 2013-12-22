@@ -35,9 +35,6 @@ class SubstancesController < ApplicationController
   end
 
   def update
-    if params[:substance][:substanceType] == Substance::KIT
-
-    end
     if @substance.update_attributes(params[:substance])
       flash[:success] = 'Aineen '+@substance.generic_name+' tiedot päivitetty'
       redirect_to @substance
