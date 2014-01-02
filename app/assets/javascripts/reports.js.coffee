@@ -105,6 +105,6 @@ $(document).ready ->
     ],
     aaSortingFixed: [[0, "desc"]],
     aaSorting: [[1, "desc"]],
-    iDisplayLenght: 200,
+    iDisplayLength: 200,
     sDom: "t"
   )

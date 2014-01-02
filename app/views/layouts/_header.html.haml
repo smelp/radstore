@@ -48,10 +48,10 @@
                       = link_to controller: :users, action: :index do
                         %i.icon-user.icon
                         Käyttäjät
-                    %li
-                      = link_to controller: :huslabs, action: :admin do
-                        %i.icon-list.icon
-                        Admin
+                  %li
+                    = link_to controller: :huslabs, action: :admin do
+                      %i.icon-list.icon
+                      Admin
                   %li
                     = link_to controller: :users, action: :show , id: current_user.id do
                       %i.icon-user.icon
