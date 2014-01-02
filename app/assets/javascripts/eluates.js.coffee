@@ -92,6 +92,5 @@ $(document).ready ->
   $('#tableForProducts').dataTable(
     sDom: "t")
   $('#simpleTableWithoutSearch').dataTable(
-    iDisplayLength : "All",
     sPaginationType: "bootstrap",
     sDom: "<'row'<'span6'l><'span6'>r>t<'row'<'span6'i><'span6'p>>")

@@ -72,7 +72,7 @@ class BatchesController < ApplicationController
         @event.info = 'Saapui '+@batch.amount.to_s+' kpl, Kommentti: '+@event.info
         @event.save
         createEvent Event::STORAGE_COMMENT
-        redirect_to @substance
+        redirect_to :controller => 'storagelocations', :action => 'show', :id => 1
       else
         flash.now[:error] = "Erän luonti ei onnistunut"
         @event = Event.new
@@ -87,7 +87,7 @@ class BatchesController < ApplicationController
         @event.info = 'Saapui '+sumUp.to_s+' kpl, Kommentti: '+@event.info
         @event.save
         flash[:success] = "Lähetys lisätty erään!"
-        redirect_to @substance
+        redirect_to :controller => 'storagelocations', :action => 'show', :id => 1
       else
         flash.now[:error] = "Lähetyksen lisäys ei onnistunut"
         @event = Event.new
@@ -99,11 +99,16 @@ class BatchesController < ApplicationController
   end
 
   def edit
-    @event = Event.new
+    @event = Event.new()
   end
 
   def update
     if @batch.update_attributes(params[:batch])
+      @event = Event.new(params[:event])
+      @event.target_id = @batch.id
+      @event.event_type = Event::MODIFY_BATCH
+      @event.user_timestamp = Time.now.utc
+      @event.save
       flash[:success] = 'Aineen '+@batch.substance.product_name+' erän '+@batch.batchNumber+' tiedot päivitetty'
       redirect_to :controller => 'storagelocations', :action => 'show', :id => 1
 
