@@ -90,6 +90,7 @@ $(document).ready ->
   $('#datetimepicker-eluate').datetimepicker
     language: 'fi'
   $('#tableForProducts').dataTable(
+    iDisplayLength = "All",
     sDom: "t")
   $('#simpleTableWithoutSearch').dataTable(
     sPaginationType: "bootstrap",

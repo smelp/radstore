@@ -80,6 +80,7 @@ $(document).ready ->
       iColspan = nTrs[0].getElementsByTagName("td").length
       sLastGroup = ""
       i = 0
+      iDisplayLength = "All"
 
       while i < nTrs.length
         iDisplayIndex = oSettings._iDisplayStart + i
@@ -105,5 +106,6 @@ $(document).ready ->
     ]
     aaSortingFixed: [[0, "desc"]]
     aaSorting: [[1, "desc"]]
+
     sDom: "t"
   )
