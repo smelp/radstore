@@ -16,7 +16,7 @@
           = f.label :substance_id, 'Aine'
           = f.select :substance_id, @substances.collect {|m| [ m.product_name, m.id ] }
           = f.label :batchNumber, 'Eränumero'
-          = f.text_field :batchNumber, :required => true, :oninvalid=>"setCustomValidity('Eränumero on pakollinen!')"
+          = f.text_field :batchNumber, :required => true, :oninvalid=>"setCustomValidity('Eränumero on pakollinen!')", :oninput=>"setCustomValidity('')"
           = f.label :expDate, 'Viimeinen käyttöpäivä'
           .input-append.date#datetimepicker1
             = text_field_tag 'batch[expDate]', nil, { 'class' => 'span3', 'data-format' => 'dd/MM/yyyy'}
@@ -28,7 +28,7 @@
             / = render 'shared/event_error_messages'
 
             = e.label :signature, 'Kirjaaja'
-            = e.text_field :signature, :required => true, :oninvalid=>"setCustomValidity('Nimimerkki on pakollinen!')"
+            = e.text_field :signature, :required => true, :oninvalid=>"setCustomValidity('Nimimerkki on pakollinen!')", :oninput=>"setCustomValidity('')"
             = e.label :info, 'Kommentti'
             = e.text_field :info
             = e.label :user_timestamp, 'Vastaanottopäivä'

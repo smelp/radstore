@@ -46,7 +46,7 @@ class Eluate < ActiveRecord::Base
   end
 
   def self.weekOld
-    Eluate.joins(:events).where("\"events\".\"event_type\" = 11 AND \"events\".\"user_timestamp\" BETWEEN '"+(Time.now-7.days).to_date.to_s+"' AND '"+(Time.now+1.days).to_date.to_s+"'")
+    Eluate.joins(:events).where("\"events\".\"event_type\" = 11 AND \"events\".\"user_timestamp\" BETWEEN '"+(Time.now-7.days).to_date.to_s+"' AND '"+(Time.now+1.days).to_date.to_s+"'").order("user_timestamp DESC")
   end
 
 

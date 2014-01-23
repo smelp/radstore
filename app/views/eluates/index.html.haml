@@ -11,18 +11,22 @@
 .container
   .span6.offset3.bordered
 
-    %table.table#simpleTableWithoutSearch
+    %table.table.table-bordered#adminTableWithoutSearch
       %thead
-        %th Nimi
-        %th Luotu
+        %th Generaattori
+        %th Eränumero
+        %th Luotu pvm
+        %th Luotu klo
         %th Eluaatin radiolääkkeet
         %th
 
       %tbody
         - @eluates.each do |eluate|
           %tr
-            %td= link_to eluate.name, eluate
-            %td.span2= eluate.created.strftime("%d.%m.%Y %H:%M")
+            %td= link_to eluate.generators[0].substance.product_name, eluate
+            %td= eluate.generators[0].batchNumber
+            %td.span2= eluate.created.strftime("%d.%m.%Y")
+            %td.span2= eluate.created.strftime("%H:%M")
             %td
               - eluate.radiomedicines.each do |r|
                 = link_to r.id.to_s+' ', r

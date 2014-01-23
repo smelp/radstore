@@ -1,6 +1,6 @@
-= provide(:title, 'Radiolääkkeet')
+= provide(:title, 'Radioaktiiviset lääkkeet')
 
-%h1 Radiolääkkeet
+%h1 Radioaktiiviset lääkkeet
 
 .container
   .span8.offset2
@@ -11,18 +11,22 @@
 .container
   .span8.offset2.bordered
 
-    %table.table.table-bordered#simpleTableWithoutSearch
+    %table.table.table-bordered#adminTableWithoutSearch
       %thead
-        %th Nimi
-        %th Luotu
+        %th Kitti
+        %th Eränumero
+        %th Luotu pvm
+        %th Luotu klo
         %th
 
       %tbody
         - @radiomedicines.each do |radiomedicine|
           %tr
-            %td= link_to radiomedicine.name, radiomedicine
-            %td.span2= radiomedicine.created.strftime("%d.%m.%Y %H:%M")
-            %td{:id => 'removalContainer'}
+            %td= link_to radiomedicine.kits[0].substance.product_name, radiomedicine
+            %td= radiomedicine.kits[0].batchNumber
+            %td.span2= radiomedicine.created.strftime("%d.%m.%Y")
+            %td.span2= radiomedicine.created.strftime("%H:%M")
+            %td{:id => 'removalContainer'+radiomedicine.id.to_s}
               = link_to 'Poista','', :onclick => 'revealRemoval(event,"radiomedicines",'+radiomedicine.id.to_s+')'
 
 = will_paginate

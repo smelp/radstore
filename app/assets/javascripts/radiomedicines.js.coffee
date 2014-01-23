@@ -28,19 +28,28 @@ window.revealRemoval = (event,controller,targetID) ->
   button.type = 'submit'
 
   $(form).append(signature, button)
-  $('#removalContainer').empty()
-  $('#removalContainer').append(form)
+  $('#removalContainer'+targetID).empty()
+  $('#removalContainer'+targetID).append(form)
 
 window.ShowOldEluates = (cb) ->
     d = new Date()
-    day = d.getDate()
-    month = d.getMonth()+1
-    year = d.getFullYear()
-    date = day+'.'+month+'.'+year
+    date = new Date(d.getFullYear(), d.getMonth(), d.getDate())
 
     $('#radiomedicine_eluate_id > option').each ->
-      elemDate = ($(this).text().split(':')[1]).trim()
-      if(elemDate != date)
-        $(this).toggle()
+      if( $(this).text() != '')
+        elemDate = ($(this).text().split(' ')[2]).trim()
+        from = elemDate.split(".");
+        f = new Date(from[2], from[1] - 1, from[0])
 
+        if(f.toDateString() != date.toDateString())
+          $(this).toggle()
 
+    $('#radiomedicine_eluate_id').val($('#radiomedicine_eluate_id option:first').val())
+
+window.submit_radmed = (event) ->
+  if ($("#product_kits tr").length <= 1)
+    alert("Muista kirjata kitti!")
+  else if ($("#radiomedicine_eluate_id").val() == '')
+    alert("Muista valita eluaatti!")
+  else
+    $("#radmedsubmit").click()

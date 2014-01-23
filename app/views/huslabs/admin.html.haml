@@ -5,7 +5,7 @@
 .container.bordered
 
   = link_to controller: 'radiomedicines', action: 'index', :huslab_id => current_user.primary_firm.resource.id do
-    Listaa radiolääkkeet
+    Listaa radioaktiiviset lääkkeet
   </br>
   = link_to controller: 'eluates', action: 'index', :huslab_id => current_user.primary_firm.resource.id do
     Listaa eluaatit

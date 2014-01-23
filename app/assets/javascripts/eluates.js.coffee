@@ -94,3 +94,13 @@ $(document).ready ->
   $('#simpleTableWithoutSearch').dataTable(
     sPaginationType: "bootstrap",
     sDom: "<'row'<'span6'l><'span6'>r>t<'row'<'span6'i><'span6'p>>")
+  $('#adminTableWithoutSearch').dataTable(
+    sPaginationType: "bootstrap",
+    aaSorting: [[2, "desc"],[3, "desc"]],
+    sDom: "<'row'<'span6'l><'span6'>r>t<'row'<'span6'i><'span6'p>>")
+
+window.submit_eluate = (event) ->
+  if ($("#product_generators tr").length > 1)
+    $("#eluatesubmit").click()
+  else
+    alert("Muista kirjata generaattori!")
