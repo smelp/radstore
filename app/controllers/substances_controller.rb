@@ -44,7 +44,11 @@ class SubstancesController < ApplicationController
   end
 
   def destroy
-    if @substance.batches
+
+    if Hasgenerator.where(:generatorID => @substance.id).blank?
+      flash[:error] = "Generaattorista on luotu eluaatteja, ei voida poistaa."
+      redirect_to @huslab
+    elsif @substance.batches
       flash[:error] = "Aineella on eriä, ei voida poistaa."
       redirect_to @huslab
     else
