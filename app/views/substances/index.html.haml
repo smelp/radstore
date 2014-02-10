@@ -29,6 +29,8 @@
             %td
               = link_to :controller => "substances", :action => "edit", :id => substance.id do
                 %i.icon-edit
+            %td{:id => 'removalContainer'+substance.id.to_s}
+              = link_to 'Poista','', :onclick => 'revealRemoval(event,"substances",'+substance.id.to_s+')'
 
 = will_paginate
 

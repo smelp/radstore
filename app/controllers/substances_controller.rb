@@ -45,8 +45,14 @@ class SubstancesController < ApplicationController
 
   def destroy
 
-    if Hasgenerator.where(:generatorID => @substance.id).blank?
-      flash[:error] = "Generaattorista on luotu eluaatteja, ei voida poistaa."
+    if @substance.substanceType == 'Kitti' && Haskit.where(:kitID => @substance.id)
+      flash[:error] = "Aineesta on luotu tuotteita, ei voida poistaa."
+      redirect_to @huslab
+    elsif @substance.substanceType == 'Generaattori' && Hasgenerator.where(:generatorID => @substance.id)
+      flash[:error] = "Aineesta on luotu tuotteita, ei voida poistaa."
+      redirect_to @huslab
+    elsif @substance.substanceType == 'Muu' && Hasother.where(:otherID => @substance.id)
+      flash[:error] = "Aineesta on luotu tuotteita, ei voida poistaa."
       redirect_to @huslab
     elsif @substance.batches
       flash[:error] = "Aineella on eriä, ei voida poistaa."
@@ -55,6 +61,7 @@ class SubstancesController < ApplicationController
       @substance.destroy
       flash[:success] = "Raaka-aine poistettu."
       redirect_to @huslab
+
     end
 
   end

@@ -24,6 +24,7 @@ UserTutorial::Application.routes.draw do
   match '/batches/remove_from', to: 'batches#remove_from'
   match '/radiomedicines/destroy/:id', to: 'radiomedicines#destroy'
   match '/eluates/destroy/:id', to: 'eluates#destroy'
+  match '/substances/destroy/:id', to: 'substances#destroy'
   match '/storagelocations/storeComment/:id', to: 'storagelocations#storeComment'
   match '/reports/show', to: 'reports#show'
   match '/huslabs/admin', to: 'huslabs#admin'

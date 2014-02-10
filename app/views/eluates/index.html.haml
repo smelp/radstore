@@ -30,7 +30,7 @@
             %td
               - eluate.radiomedicines.each do |r|
                 = link_to r.id.to_s+' ', r
-            %td{:id => 'removalContainer'}
+            %td{:id => 'removalContainer'+eluate.id.to_s}
               = link_to 'Poista','', :onclick => 'revealRemoval(event,"eluates",'+eluate.id.to_s+')'
 
 = will_paginate
