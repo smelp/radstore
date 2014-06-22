@@ -68,6 +68,17 @@ textarea {
   }
 }
 
+.navbar-inner{
+  background-color: $successBackground !important;
+  background-image: none !important;
+  border-color: white !important;
+}
+
+.navbar-inverse .divider-vertical{
+  border-left-color: white;
+  border-right-color: white;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {

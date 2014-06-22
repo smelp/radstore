@@ -1,12 +1,16 @@
 ---
+download.jpg: download-c7d2d3c960eb6c1348d016ead01a108c.jpg
+download/index.jpg: download-c7d2d3c960eb6c1348d016ead01a108c.jpg
+logo.jpg: logo-04aa08c2b458dbff7288f562ce9b2932.jpg
+logo/index.jpg: logo-04aa08c2b458dbff7288f562ce9b2932.jpg
 logo.png: logo-72fc51cdf7c0de3b67e0e59627836b98.png
 logo/index.png: logo-72fc51cdf7c0de3b67e0e59627836b98.png
 rails.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
 rails/index.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
 application.js: application-bd2859e955a2767f44e9168851ba0972.js
 application/index.js: application-bd2859e955a2767f44e9168851ba0972.js
-application.css: application-24c49a81b5a957c715e2d16f272b7217.css
-application/index.css: application-24c49a81b5a957c715e2d16f272b7217.css
+application.css: application-dbd430cc74acbd1cd046aea344d2ba68.css
+application/index.css: application-dbd430cc74acbd1cd046aea344d2ba68.css
 dataTables/back_disabled.png: dataTables/back_disabled-7a902951219d10f938f642f8dcfbd0b2.png
 dataTables/back_disabled/index.png: dataTables/back_disabled-7a902951219d10f938f642f8dcfbd0b2.png
 dataTables/back_enabled.png: dataTables/back_enabled-6eb9125f3bb6cbca38c2f71664f9e000.png
