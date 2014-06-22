@@ -85,7 +85,7 @@ class StoragelocationsController < ApplicationController
         admins = []
         flash[:error] = "Ei lupaa tehdä muutoksia."
       end
-      redirect_to(root_path) unless admins.include? current_user
+      redirect_to(root_path) unless current_user.admin?
     end
 
     def admin_user
